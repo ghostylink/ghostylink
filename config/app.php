@@ -257,7 +257,7 @@ return [
             //'port' => 'nonstandard_port_number',
             'username' => 'ghostylink',
             'password' => 'ghostylink',
-            'database' => 'ghostylink',
+            'database' => 'ghostylink_test',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'cacheMetadata' => true,
