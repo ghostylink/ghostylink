@@ -105,3 +105,22 @@ Stack Trace:
 #14 {main}
 
 
+2015-04-04 20:22:04 Error: [Cake\Database\Exception] SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink.links' doesn't exist
+Stack Trace:
+#0 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Collection.php(96): Cake\Database\Schema\Collection->_reflect('Column', 'links', Array, Object(Cake\Database\Schema\Table))
+#1 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/CachedCollection.php(65): Cake\Database\Schema\Collection->describe('links', Array)
+#2 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/ORM/Table.php(422): Cake\Database\Schema\CachedCollection->describe('links')
+#3 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(241): Cake\ORM\Table->schema()
+#4 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(193): Bake\Shell\Task\ModelTask->findBelongsTo(Object(App\Model\Table\LinksTable), Array)
+#5 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(109): Bake\Shell\Task\ModelTask->getAssociations(Object(App\Model\Table\LinksTable))
+#6 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(95): Bake\Shell\Task\ModelTask->bake('Links')
+#7 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/BakeShell.php(241): Bake\Shell\Task\ModelTask->main('Links')
+#8 [internal function]: Bake\Shell\BakeShell->all('links')
+#9 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/Shell.php(376): call_user_func_array(Array, Array)
+#10 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(200): Cake\Console\Shell->runCommand(Array, true)
+#11 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(171): Cake\Console\ShellDispatcher->_dispatch()
+#12 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(122): Cake\Console\ShellDispatcher->dispatch()
+#13 /home/beljul/NetBeansProjects/ghostylink/bin/cake.php(20): Cake\Console\ShellDispatcher::run(Array)
+#14 {main}
+
+
