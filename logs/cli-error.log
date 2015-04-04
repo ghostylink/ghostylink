@@ -124,3 +124,89 @@ Stack Trace:
 #14 {main}
 
 
+2015-04-04 21:24:38 Warning: Warning (2): file_put_contents(/home/beljul/NetBeansProjects/ghostylink/tmp/Bake-config-skeleton-ctp.php): failed to open stream: Permission denied in [/home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/View/BakeView.php, line 173]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+file_put_contents - [internal], line ??
+Bake\View\BakeView::_evaluate() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 173
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Bake\View\BakeView::render() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 117
+Bake\Shell\Task\BakeTemplateTask::generate() - ROOT/vendor/cakephp/bake/src/Shell/Task/BakeTemplateTask.php, line 86
+Bake\Shell\Task\SimpleBakeTask::bake() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 99
+Migrations\Shell\Task\SimpleMigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/SimpleMigrationTask.php, line 69
+Migrations\Shell\Task\MigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/MigrationTask.php, line 37
+Bake\Shell\Task\SimpleBakeTask::main() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 85
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 387
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 382
+Cake\Console\ShellDispatcher::_dispatch() - CORE/src/Console/ShellDispatcher.php, line 200
+Cake\Console\ShellDispatcher::dispatch() - CORE/src/Console/ShellDispatcher.php, line 171
+Cake\Console\ShellDispatcher::run() - CORE/src/Console/ShellDispatcher.php, line 122
+[main] - ROOT/bin/cake.php, line 20
+
+
+
+2015-04-04 21:24:38 Warning: Warning (2): file_put_contents(/home/beljul/NetBeansProjects/ghostylink/tmp/Bake-Layout-default-ctp.php): failed to open stream: Permission denied in [/home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/View/BakeView.php, line 173]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+file_put_contents - [internal], line ??
+Bake\View\BakeView::_evaluate() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 173
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::renderLayout() - CORE/src/View/View.php, line 509
+Bake\View\BakeView::render() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 124
+Bake\Shell\Task\BakeTemplateTask::generate() - ROOT/vendor/cakephp/bake/src/Shell/Task/BakeTemplateTask.php, line 86
+Bake\Shell\Task\SimpleBakeTask::bake() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 99
+Migrations\Shell\Task\SimpleMigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/SimpleMigrationTask.php, line 69
+Migrations\Shell\Task\MigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/MigrationTask.php, line 37
+Bake\Shell\Task\SimpleBakeTask::main() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 85
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 387
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 382
+Cake\Console\ShellDispatcher::_dispatch() - CORE/src/Console/ShellDispatcher.php, line 200
+Cake\Console\ShellDispatcher::dispatch() - CORE/src/Console/ShellDispatcher.php, line 171
+Cake\Console\ShellDispatcher::run() - CORE/src/Console/ShellDispatcher.php, line 122
+[main] - ROOT/bin/cake.php, line 20
+
+
+
+2015-04-04 21:26:10 Warning: Warning (2): file_put_contents(/home/beljul/NetBeansProjects/ghostylink/tmp/Bake-config-skeleton-ctp.php): failed to open stream: Permission denied in [/home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/View/BakeView.php, line 173]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+file_put_contents - [internal], line ??
+Bake\View\BakeView::_evaluate() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 173
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Bake\View\BakeView::render() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 117
+Bake\Shell\Task\BakeTemplateTask::generate() - ROOT/vendor/cakephp/bake/src/Shell/Task/BakeTemplateTask.php, line 86
+Bake\Shell\Task\SimpleBakeTask::bake() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 99
+Migrations\Shell\Task\SimpleMigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/SimpleMigrationTask.php, line 69
+Migrations\Shell\Task\MigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/MigrationTask.php, line 37
+Bake\Shell\Task\SimpleBakeTask::main() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 85
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 387
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 382
+Cake\Console\ShellDispatcher::_dispatch() - CORE/src/Console/ShellDispatcher.php, line 200
+Cake\Console\ShellDispatcher::dispatch() - CORE/src/Console/ShellDispatcher.php, line 171
+Cake\Console\ShellDispatcher::run() - CORE/src/Console/ShellDispatcher.php, line 122
+[main] - ROOT/bin/cake.php, line 20
+
+
+
+2015-04-04 21:26:10 Warning: Warning (2): file_put_contents(/home/beljul/NetBeansProjects/ghostylink/tmp/Bake-Layout-default-ctp.php): failed to open stream: Permission denied in [/home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/View/BakeView.php, line 173]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+file_put_contents - [internal], line ??
+Bake\View\BakeView::_evaluate() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 173
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::renderLayout() - CORE/src/View/View.php, line 509
+Bake\View\BakeView::render() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 124
+Bake\Shell\Task\BakeTemplateTask::generate() - ROOT/vendor/cakephp/bake/src/Shell/Task/BakeTemplateTask.php, line 86
+Bake\Shell\Task\SimpleBakeTask::bake() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 99
+Migrations\Shell\Task\SimpleMigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/SimpleMigrationTask.php, line 69
+Migrations\Shell\Task\MigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/MigrationTask.php, line 37
+Bake\Shell\Task\SimpleBakeTask::main() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 85
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 387
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 382
+Cake\Console\ShellDispatcher::_dispatch() - CORE/src/Console/ShellDispatcher.php, line 200
+Cake\Console\ShellDispatcher::dispatch() - CORE/src/Console/ShellDispatcher.php, line 171
+Cake\Console\ShellDispatcher::run() - CORE/src/Console/ShellDispatcher.php, line 122
+[main] - ROOT/bin/cake.php, line 20
+
+
+
