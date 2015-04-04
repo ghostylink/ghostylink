@@ -3,6 +3,7 @@ class basicTest extends PHPUnit_Extensions_SeleniumTestCase
 {
   protected function setUp()
   {
+    parent::setUp();
     $this->setBrowser("*firefox");
     $this->setBrowserUrl("http://localhost/");
   }
