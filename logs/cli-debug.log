@@ -1,0 +1,242 @@
+2015-04-04 21:07:36 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
+Cake\TestSuite\Fixture\TestFixture::_schemaFromFields() - CORE/src/TestSuite/Fixture/TestFixture.php, line 147
+Cake\TestSuite\Fixture\TestFixture::init() - CORE/src/TestSuite/Fixture/TestFixture.php, line 127
+Cake\TestSuite\Fixture\TestFixture::__construct() - CORE/src/TestSuite/Fixture/TestFixture.php, line 105
+Cake\TestSuite\Fixture\FixtureManager::_loadFixtures() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 171
+Cake\TestSuite\Fixture\FixtureManager::fixturize() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 67
+Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 143
+PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-04 21:08:24 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
+Cake\TestSuite\Fixture\TestFixture::_schemaFromFields() - CORE/src/TestSuite/Fixture/TestFixture.php, line 147
+Cake\TestSuite\Fixture\TestFixture::init() - CORE/src/TestSuite/Fixture/TestFixture.php, line 127
+Cake\TestSuite\Fixture\TestFixture::__construct() - CORE/src/TestSuite/Fixture/TestFixture.php, line 105
+Cake\TestSuite\Fixture\FixtureManager::_loadFixtures() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 171
+Cake\TestSuite\Fixture\FixtureManager::fixturize() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 67
+Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 143
+PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-04 21:16:26 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
+Cake\TestSuite\Fixture\TestFixture::_schemaFromFields() - CORE/src/TestSuite/Fixture/TestFixture.php, line 147
+Cake\TestSuite\Fixture\TestFixture::init() - CORE/src/TestSuite/Fixture/TestFixture.php, line 127
+Cake\TestSuite\Fixture\TestFixture::__construct() - CORE/src/TestSuite/Fixture/TestFixture.php, line 105
+Cake\TestSuite\Fixture\FixtureManager::_loadFixtures() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 171
+Cake\TestSuite\Fixture\FixtureManager::fixturize() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 67
+Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 143
+PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-04 21:24:09 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
+Cake\TestSuite\Fixture\TestFixture::_schemaFromFields() - CORE/src/TestSuite/Fixture/TestFixture.php, line 147
+Cake\TestSuite\Fixture\TestFixture::init() - CORE/src/TestSuite/Fixture/TestFixture.php, line 127
+Cake\TestSuite\Fixture\TestFixture::__construct() - CORE/src/TestSuite/Fixture/TestFixture.php, line 105
+Cake\TestSuite\Fixture\FixtureManager::_loadFixtures() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 171
+Cake\TestSuite\Fixture\FixtureManager::fixturize() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 67
+Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 143
+PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-04 21:24:34 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
+Cake\TestSuite\Fixture\TestFixture::_schemaFromFields() - CORE/src/TestSuite/Fixture/TestFixture.php, line 147
+Cake\TestSuite\Fixture\TestFixture::init() - CORE/src/TestSuite/Fixture/TestFixture.php, line 127
+Cake\TestSuite\Fixture\TestFixture::__construct() - CORE/src/TestSuite/Fixture/TestFixture.php, line 105
+Cake\TestSuite\Fixture\FixtureManager::_loadFixtures() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 171
+Cake\TestSuite\Fixture\FixtureManager::fixturize() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 67
+Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 143
+PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-04 21:24:36 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
+Cake\TestSuite\Fixture\TestFixture::_schemaFromFields() - CORE/src/TestSuite/Fixture/TestFixture.php, line 147
+Cake\TestSuite\Fixture\TestFixture::init() - CORE/src/TestSuite/Fixture/TestFixture.php, line 127
+Cake\TestSuite\Fixture\TestFixture::__construct() - CORE/src/TestSuite/Fixture/TestFixture.php, line 105
+Cake\TestSuite\Fixture\FixtureManager::_loadFixtures() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 171
+Cake\TestSuite\Fixture\FixtureManager::fixturize() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 67
+Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 143
+PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-04 21:25:07 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
+Cake\TestSuite\Fixture\TestFixture::_schemaFromFields() - CORE/src/TestSuite/Fixture/TestFixture.php, line 147
+Cake\TestSuite\Fixture\TestFixture::init() - CORE/src/TestSuite/Fixture/TestFixture.php, line 127
+Cake\TestSuite\Fixture\TestFixture::__construct() - CORE/src/TestSuite/Fixture/TestFixture.php, line 105
+Cake\TestSuite\Fixture\FixtureManager::_loadFixtures() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 171
+Cake\TestSuite\Fixture\FixtureManager::fixturize() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 67
+Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 143
+PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-04 21:26:17 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
+Cake\TestSuite\Fixture\TestFixture::_schemaFromFields() - CORE/src/TestSuite/Fixture/TestFixture.php, line 147
+Cake\TestSuite\Fixture\TestFixture::init() - CORE/src/TestSuite/Fixture/TestFixture.php, line 127
+Cake\TestSuite\Fixture\TestFixture::__construct() - CORE/src/TestSuite/Fixture/TestFixture.php, line 105
+Cake\TestSuite\Fixture\FixtureManager::_loadFixtures() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 171
+Cake\TestSuite\Fixture\FixtureManager::fixturize() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 67
+Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 143
+PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-04 21:27:55 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
+Cake\TestSuite\Fixture\TestFixture::_schemaFromFields() - CORE/src/TestSuite/Fixture/TestFixture.php, line 147
+Cake\TestSuite\Fixture\TestFixture::init() - CORE/src/TestSuite/Fixture/TestFixture.php, line 127
+Cake\TestSuite\Fixture\TestFixture::__construct() - CORE/src/TestSuite/Fixture/TestFixture.php, line 105
+Cake\TestSuite\Fixture\FixtureManager::_loadFixtures() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 171
+Cake\TestSuite\Fixture\FixtureManager::fixturize() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 67
+Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 143
+PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-04 21:29:23 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
+Cake\TestSuite\Fixture\TestFixture::_schemaFromFields() - CORE/src/TestSuite/Fixture/TestFixture.php, line 147
+Cake\TestSuite\Fixture\TestFixture::init() - CORE/src/TestSuite/Fixture/TestFixture.php, line 127
+Cake\TestSuite\Fixture\TestFixture::__construct() - CORE/src/TestSuite/Fixture/TestFixture.php, line 105
+Cake\TestSuite\Fixture\FixtureManager::_loadFixtures() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 171
+Cake\TestSuite\Fixture\FixtureManager::fixturize() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 67
+Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 143
+PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-04 21:30:58 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
+Cake\TestSuite\Fixture\TestFixture::_schemaFromFields() - CORE/src/TestSuite/Fixture/TestFixture.php, line 147
+Cake\TestSuite\Fixture\TestFixture::init() - CORE/src/TestSuite/Fixture/TestFixture.php, line 127
+Cake\TestSuite\Fixture\TestFixture::__construct() - CORE/src/TestSuite/Fixture/TestFixture.php, line 105
+Cake\TestSuite\Fixture\FixtureManager::_loadFixtures() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 171
+Cake\TestSuite\Fixture\FixtureManager::fixturize() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 67
+Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 143
+PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
