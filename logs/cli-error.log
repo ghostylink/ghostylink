@@ -52,3 +52,56 @@ Stack Trace:
 #10 {main}
 
 
+2015-04-04 16:33:12 Error: [Cake\Core\Exception\Exception] Unable to insert fixtures for "App\Test\TestCase\Controller\LinksControllerTest" test case. SQLSTATE[HY000] [1049] Unknown database 'ghostylink_test'
+Stack Trace:
+#0 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(144): Cake\TestSuite\Fixture\FixtureManager->load(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#1 /home/beljul/NetBeansProjects/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#2 /home/beljul/NetBeansProjects/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#3 /home/beljul/NetBeansProjects/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#4 /home/beljul/NetBeansProjects/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#5 /home/beljul/NetBeansProjects/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
+#6 /home/beljul/NetBeansProjects/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
+#7 /home/beljul/NetBeansProjects/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#8 /home/beljul/NetBeansProjects/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
+#9 /home/beljul/NetBeansProjects/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
+#10 {main}
+
+
+2015-04-04 17:23:14 Error: [Cake\Database\Exception] SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink.links' doesn't exist
+Stack Trace:
+#0 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Collection.php(96): Cake\Database\Schema\Collection->_reflect('Column', 'links', Array, Object(Cake\Database\Schema\Table))
+#1 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/CachedCollection.php(65): Cake\Database\Schema\Collection->describe('links', Array)
+#2 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/ORM/Table.php(422): Cake\Database\Schema\CachedCollection->describe('links')
+#3 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(241): Cake\ORM\Table->schema()
+#4 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(193): Bake\Shell\Task\ModelTask->findBelongsTo(Object(App\Model\Table\LinksTable), Array)
+#5 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(109): Bake\Shell\Task\ModelTask->getAssociations(Object(App\Model\Table\LinksTable))
+#6 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(95): Bake\Shell\Task\ModelTask->bake('Links')
+#7 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/BakeShell.php(241): Bake\Shell\Task\ModelTask->main('Links')
+#8 [internal function]: Bake\Shell\BakeShell->all('links')
+#9 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/Shell.php(376): call_user_func_array(Array, Array)
+#10 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(200): Cake\Console\Shell->runCommand(Array, true)
+#11 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(171): Cake\Console\ShellDispatcher->_dispatch()
+#12 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(122): Cake\Console\ShellDispatcher->dispatch()
+#13 /home/beljul/NetBeansProjects/ghostylink/bin/cake.php(20): Cake\Console\ShellDispatcher::run(Array)
+#14 {main}
+
+
+2015-04-04 17:27:52 Error: [Cake\Database\Exception] SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink.links' doesn't exist
+Stack Trace:
+#0 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Collection.php(96): Cake\Database\Schema\Collection->_reflect('Column', 'links', Array, Object(Cake\Database\Schema\Table))
+#1 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/CachedCollection.php(65): Cake\Database\Schema\Collection->describe('links', Array)
+#2 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/ORM/Table.php(422): Cake\Database\Schema\CachedCollection->describe('links')
+#3 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(241): Cake\ORM\Table->schema()
+#4 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(193): Bake\Shell\Task\ModelTask->findBelongsTo(Object(App\Model\Table\LinksTable), Array)
+#5 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(109): Bake\Shell\Task\ModelTask->getAssociations(Object(App\Model\Table\LinksTable))
+#6 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(95): Bake\Shell\Task\ModelTask->bake('Links')
+#7 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/Shell/BakeShell.php(241): Bake\Shell\Task\ModelTask->main('Links')
+#8 [internal function]: Bake\Shell\BakeShell->all('links')
+#9 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/Shell.php(376): call_user_func_array(Array, Array)
+#10 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(200): Cake\Console\Shell->runCommand(Array, true)
+#11 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(171): Cake\Console\ShellDispatcher->_dispatch()
+#12 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(122): Cake\Console\ShellDispatcher->dispatch()
+#13 /home/beljul/NetBeansProjects/ghostylink/bin/cake.php(20): Cake\Console\ShellDispatcher::run(Array)
+#14 {main}
+
+
