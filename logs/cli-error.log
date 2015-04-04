@@ -124,393 +124,89 @@ Stack Trace:
 #14 {main}
 
 
-2015-04-04 21:07:36 Error: Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8"
-2015-04-04 21:07:36 Warning: Warning (512): Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8" in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/TestFixture.php, line 232]
+2015-04-04 21:24:38 Warning: Warning (2): file_put_contents(/home/beljul/NetBeansProjects/ghostylink/tmp/Bake-config-skeleton-ctp.php): failed to open stream: Permission denied in [/home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/View/BakeView.php, line 173]
 Trace:
 Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
-Cake\TestSuite\Fixture\TestFixture::create() - CORE/src/TestSuite/Fixture/TestFixture.php, line 232
-Cake\TestSuite\Fixture\FixtureManager::_setupTable() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 207
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 237
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 276
-Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
-Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 278
-Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 243
-Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 144
-PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
-PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
-PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
-PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
-PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
-[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+file_put_contents - [internal], line ??
+Bake\View\BakeView::_evaluate() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 173
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Bake\View\BakeView::render() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 117
+Bake\Shell\Task\BakeTemplateTask::generate() - ROOT/vendor/cakephp/bake/src/Shell/Task/BakeTemplateTask.php, line 86
+Bake\Shell\Task\SimpleBakeTask::bake() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 99
+Migrations\Shell\Task\SimpleMigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/SimpleMigrationTask.php, line 69
+Migrations\Shell\Task\MigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/MigrationTask.php, line 37
+Bake\Shell\Task\SimpleBakeTask::main() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 85
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 387
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 382
+Cake\Console\ShellDispatcher::_dispatch() - CORE/src/Console/ShellDispatcher.php, line 200
+Cake\Console\ShellDispatcher::dispatch() - CORE/src/Console/ShellDispatcher.php, line 171
+Cake\Console\ShellDispatcher::run() - CORE/src/Console/ShellDispatcher.php, line 122
+[main] - ROOT/bin/cake.php, line 20
 
 
 
-2015-04-04 21:07:36 Error: [Cake\Core\Exception\Exception] Unable to insert fixtures for "App\Test\TestCase\Controller\LinksControllerTest" test case. SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink_test.links' doesn't exist
-Stack Trace:
-#0 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(144): Cake\TestSuite\Fixture\FixtureManager->load(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#1 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#2 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#3 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#4 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
-#5 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#6 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
-#8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
-#9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
-#10 {main}
-
-
-2015-04-04 21:08:24 Error: Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8"
-2015-04-04 21:08:24 Warning: Warning (512): Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8" in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/TestFixture.php, line 232]
+2015-04-04 21:24:38 Warning: Warning (2): file_put_contents(/home/beljul/NetBeansProjects/ghostylink/tmp/Bake-Layout-default-ctp.php): failed to open stream: Permission denied in [/home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/View/BakeView.php, line 173]
 Trace:
 Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
-Cake\TestSuite\Fixture\TestFixture::create() - CORE/src/TestSuite/Fixture/TestFixture.php, line 232
-Cake\TestSuite\Fixture\FixtureManager::_setupTable() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 207
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 237
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 276
-Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
-Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 278
-Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 243
-Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 144
-PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
-PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
-PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
-PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
-PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
-[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+file_put_contents - [internal], line ??
+Bake\View\BakeView::_evaluate() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 173
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::renderLayout() - CORE/src/View/View.php, line 509
+Bake\View\BakeView::render() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 124
+Bake\Shell\Task\BakeTemplateTask::generate() - ROOT/vendor/cakephp/bake/src/Shell/Task/BakeTemplateTask.php, line 86
+Bake\Shell\Task\SimpleBakeTask::bake() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 99
+Migrations\Shell\Task\SimpleMigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/SimpleMigrationTask.php, line 69
+Migrations\Shell\Task\MigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/MigrationTask.php, line 37
+Bake\Shell\Task\SimpleBakeTask::main() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 85
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 387
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 382
+Cake\Console\ShellDispatcher::_dispatch() - CORE/src/Console/ShellDispatcher.php, line 200
+Cake\Console\ShellDispatcher::dispatch() - CORE/src/Console/ShellDispatcher.php, line 171
+Cake\Console\ShellDispatcher::run() - CORE/src/Console/ShellDispatcher.php, line 122
+[main] - ROOT/bin/cake.php, line 20
 
 
 
-2015-04-04 21:08:24 Error: [Cake\Core\Exception\Exception] Unable to insert fixtures for "App\Test\TestCase\Controller\LinksControllerTest" test case. SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink_test.links' doesn't exist
-Stack Trace:
-#0 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(144): Cake\TestSuite\Fixture\FixtureManager->load(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#1 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#2 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#3 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#4 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
-#5 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#6 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
-#8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
-#9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
-#10 {main}
-
-
-2015-04-04 21:16:26 Error: Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8"
-2015-04-04 21:16:26 Warning: Warning (512): Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8" in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/TestFixture.php, line 232]
+2015-04-04 21:26:10 Warning: Warning (2): file_put_contents(/home/beljul/NetBeansProjects/ghostylink/tmp/Bake-config-skeleton-ctp.php): failed to open stream: Permission denied in [/home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/View/BakeView.php, line 173]
 Trace:
 Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
-Cake\TestSuite\Fixture\TestFixture::create() - CORE/src/TestSuite/Fixture/TestFixture.php, line 232
-Cake\TestSuite\Fixture\FixtureManager::_setupTable() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 207
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 237
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 276
-Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
-Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 278
-Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 243
-Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 144
-PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
-PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
-PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
-PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
-PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
-[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+file_put_contents - [internal], line ??
+Bake\View\BakeView::_evaluate() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 173
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Bake\View\BakeView::render() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 117
+Bake\Shell\Task\BakeTemplateTask::generate() - ROOT/vendor/cakephp/bake/src/Shell/Task/BakeTemplateTask.php, line 86
+Bake\Shell\Task\SimpleBakeTask::bake() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 99
+Migrations\Shell\Task\SimpleMigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/SimpleMigrationTask.php, line 69
+Migrations\Shell\Task\MigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/MigrationTask.php, line 37
+Bake\Shell\Task\SimpleBakeTask::main() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 85
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 387
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 382
+Cake\Console\ShellDispatcher::_dispatch() - CORE/src/Console/ShellDispatcher.php, line 200
+Cake\Console\ShellDispatcher::dispatch() - CORE/src/Console/ShellDispatcher.php, line 171
+Cake\Console\ShellDispatcher::run() - CORE/src/Console/ShellDispatcher.php, line 122
+[main] - ROOT/bin/cake.php, line 20
 
 
 
-2015-04-04 21:16:26 Error: [Cake\Core\Exception\Exception] Unable to insert fixtures for "App\Test\TestCase\Controller\LinksControllerTest" test case. SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink_test.links' doesn't exist
-Stack Trace:
-#0 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(144): Cake\TestSuite\Fixture\FixtureManager->load(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#1 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#2 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#3 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#4 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
-#5 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#6 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
-#8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
-#9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
-#10 {main}
-
-
-2015-04-04 21:24:34 Error: Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8"
-2015-04-04 21:24:34 Warning: Warning (512): Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8" in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/TestFixture.php, line 232]
+2015-04-04 21:26:10 Warning: Warning (2): file_put_contents(/home/beljul/NetBeansProjects/ghostylink/tmp/Bake-Layout-default-ctp.php): failed to open stream: Permission denied in [/home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/bake/src/View/BakeView.php, line 173]
 Trace:
 Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
-Cake\TestSuite\Fixture\TestFixture::create() - CORE/src/TestSuite/Fixture/TestFixture.php, line 232
-Cake\TestSuite\Fixture\FixtureManager::_setupTable() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 207
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 237
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 276
-Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
-Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 278
-Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 243
-Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 144
-PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
-PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
-PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
-PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
-PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
-[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+file_put_contents - [internal], line ??
+Bake\View\BakeView::_evaluate() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 173
+Cake\View\View::_render() - CORE/src/View/View.php, line 775
+Cake\View\View::renderLayout() - CORE/src/View/View.php, line 509
+Bake\View\BakeView::render() - ROOT/vendor/cakephp/bake/src/View/BakeView.php, line 124
+Bake\Shell\Task\BakeTemplateTask::generate() - ROOT/vendor/cakephp/bake/src/Shell/Task/BakeTemplateTask.php, line 86
+Bake\Shell\Task\SimpleBakeTask::bake() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 99
+Migrations\Shell\Task\SimpleMigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/SimpleMigrationTask.php, line 69
+Migrations\Shell\Task\MigrationTask::bake() - ROOT/vendor/cakephp/migrations/src/Shell/Task/MigrationTask.php, line 37
+Bake\Shell\Task\SimpleBakeTask::main() - ROOT/vendor/cakephp/bake/src/Shell/Task/SimpleBakeTask.php, line 85
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 387
+Cake\Console\Shell::runCommand() - CORE/src/Console/Shell.php, line 382
+Cake\Console\ShellDispatcher::_dispatch() - CORE/src/Console/ShellDispatcher.php, line 200
+Cake\Console\ShellDispatcher::dispatch() - CORE/src/Console/ShellDispatcher.php, line 171
+Cake\Console\ShellDispatcher::run() - CORE/src/Console/ShellDispatcher.php, line 122
+[main] - ROOT/bin/cake.php, line 20
 
-
-
-2015-04-04 21:24:34 Error: [Cake\Core\Exception\Exception] Unable to insert fixtures for "App\Test\TestCase\Controller\LinksControllerTest" test case. SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink_test.links' doesn't exist
-Stack Trace:
-#0 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(144): Cake\TestSuite\Fixture\FixtureManager->load(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#1 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#2 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#3 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#4 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
-#5 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#6 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
-#8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
-#9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
-#10 {main}
-
-
-2015-04-04 21:24:36 Error: Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8"
-2015-04-04 21:24:36 Warning: Warning (512): Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8" in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/TestFixture.php, line 232]
-Trace:
-Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
-Cake\TestSuite\Fixture\TestFixture::create() - CORE/src/TestSuite/Fixture/TestFixture.php, line 232
-Cake\TestSuite\Fixture\FixtureManager::_setupTable() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 207
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 237
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 276
-Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
-Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 278
-Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 243
-Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 144
-PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
-PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
-PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
-PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
-PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
-[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
-
-
-
-2015-04-04 21:24:36 Error: [Cake\Core\Exception\Exception] Unable to insert fixtures for "App\Test\TestCase\Controller\LinksControllerTest" test case. SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink_test.links' doesn't exist
-Stack Trace:
-#0 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(144): Cake\TestSuite\Fixture\FixtureManager->load(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#1 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#2 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#3 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#4 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
-#5 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#6 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
-#8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
-#9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
-#10 {main}
-
-
-2015-04-04 21:25:08 Error: Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8"
-2015-04-04 21:25:08 Warning: Warning (512): Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8" in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/TestFixture.php, line 232]
-Trace:
-Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
-Cake\TestSuite\Fixture\TestFixture::create() - CORE/src/TestSuite/Fixture/TestFixture.php, line 232
-Cake\TestSuite\Fixture\FixtureManager::_setupTable() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 207
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 237
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 276
-Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
-Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 278
-Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 243
-Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 144
-PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
-PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
-PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
-PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
-PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
-[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
-
-
-
-2015-04-04 21:25:08 Error: [Cake\Core\Exception\Exception] Unable to insert fixtures for "App\Test\TestCase\Controller\LinksControllerTest" test case. SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink_test.links' doesn't exist
-Stack Trace:
-#0 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(144): Cake\TestSuite\Fixture\FixtureManager->load(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#1 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#2 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#3 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#4 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
-#5 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#6 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
-#8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
-#9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
-#10 {main}
-
-
-2015-04-04 21:26:17 Error: Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8"
-2015-04-04 21:26:17 Warning: Warning (512): Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8" in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/TestFixture.php, line 232]
-Trace:
-Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
-Cake\TestSuite\Fixture\TestFixture::create() - CORE/src/TestSuite/Fixture/TestFixture.php, line 232
-Cake\TestSuite\Fixture\FixtureManager::_setupTable() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 207
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 237
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 276
-Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
-Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 278
-Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 243
-Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 144
-PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
-PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
-PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
-PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
-PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
-[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
-
-
-
-2015-04-04 21:26:17 Error: [Cake\Core\Exception\Exception] Unable to insert fixtures for "App\Test\TestCase\Controller\LinksControllerTest" test case. SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink_test.links' doesn't exist
-Stack Trace:
-#0 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(144): Cake\TestSuite\Fixture\FixtureManager->load(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#1 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#2 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#3 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#4 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
-#5 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#6 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
-#8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
-#9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
-#10 {main}
-
-
-2015-04-04 21:27:55 Error: Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8"
-2015-04-04 21:27:55 Warning: Warning (512): Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8" in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/TestFixture.php, line 232]
-Trace:
-Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
-Cake\TestSuite\Fixture\TestFixture::create() - CORE/src/TestSuite/Fixture/TestFixture.php, line 232
-Cake\TestSuite\Fixture\FixtureManager::_setupTable() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 207
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 237
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 276
-Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
-Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 278
-Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 243
-Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 144
-PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
-PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
-PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
-PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
-PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
-[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
-
-
-
-2015-04-04 21:27:55 Error: [Cake\Core\Exception\Exception] Unable to insert fixtures for "App\Test\TestCase\Controller\LinksControllerTest" test case. SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink_test.links' doesn't exist
-Stack Trace:
-#0 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(144): Cake\TestSuite\Fixture\FixtureManager->load(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#1 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#2 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#3 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#4 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
-#5 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#6 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
-#8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
-#9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
-#10 {main}
-
-
-2015-04-04 21:29:23 Error: Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8"
-2015-04-04 21:29:23 Warning: Warning (512): Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8" in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/TestFixture.php, line 232]
-Trace:
-Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
-Cake\TestSuite\Fixture\TestFixture::create() - CORE/src/TestSuite/Fixture/TestFixture.php, line 232
-Cake\TestSuite\Fixture\FixtureManager::_setupTable() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 207
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 237
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 276
-Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
-Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 278
-Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 243
-Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 144
-PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
-PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
-PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
-PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
-PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
-[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
-
-
-
-2015-04-04 21:29:23 Error: [Cake\Core\Exception\Exception] Unable to insert fixtures for "App\Test\TestCase\Controller\LinksControllerTest" test case. SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink_test.links' doesn't exist
-Stack Trace:
-#0 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(144): Cake\TestSuite\Fixture\FixtureManager->load(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#1 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#2 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#3 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#4 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
-#5 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#6 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
-#8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
-#9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
-#10 {main}
-
-
-2015-04-04 21:30:58 Error: Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8"
-2015-04-04 21:30:58 Warning: Warning (512): Fixture creation for "links" failed "SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') ENGINE=InnoDB' at line 8" in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/TestFixture.php, line 232]
-Trace:
-Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
-Cake\TestSuite\Fixture\TestFixture::create() - CORE/src/TestSuite/Fixture/TestFixture.php, line 232
-Cake\TestSuite\Fixture\FixtureManager::_setupTable() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 207
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 237
-Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 276
-Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
-Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 278
-Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 243
-Cake\TestSuite\Fixture\FixtureInjector::startTest() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 144
-PHPUnit_Framework_TestResult::startTest() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 331
-PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 547
-PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
-PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
-PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
-PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
-[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
-
-
-
-2015-04-04 21:30:58 Error: [Cake\Core\Exception\Exception] Unable to insert fixtures for "App\Test\TestCase\Controller\LinksControllerTest" test case. SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink_test.links' doesn't exist
-Stack Trace:
-#0 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(144): Cake\TestSuite\Fixture\FixtureManager->load(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#1 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#2 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#3 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
-#4 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
-#5 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#6 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
-#7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
-#8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
-#9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
-#10 {main}
 
 
