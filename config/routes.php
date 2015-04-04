@@ -70,7 +70,9 @@ Router::scope('/', function ($routes) {
      * You can remove these routes once you've connected the
      * routes you want in your application.
      */
-    $routes->fallbacks('InflectedRoute');
+    // All actions of controllers are accessible
+    // Better to disable it for security reasons
+     $routes->fallbacks('InflectedRoute');
 });
 
 /**

@@ -1,0 +1,24 @@
+2015-04-04 14:41:08 Error: [Cake\Console\Exception\MissingShellException] Shell class for "All" could not be found.
+Exception Attributes: array (
+  'class' => 'All',
+)
+Stack Trace:
+#0 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(197): Cake\Console\ShellDispatcher->findShell('all')
+#1 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(171): Cake\Console\ShellDispatcher->_dispatch()
+#2 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(122): Cake\Console\ShellDispatcher->dispatch()
+#3 /home/beljul/NetBeansProjects/ghostylink/bin/cake.php(20): Cake\Console\ShellDispatcher::run(Array)
+#4 {main}
+
+
+2015-04-04 14:43:14 Error: [Cake\Console\Exception\MissingShellException] Shell class for "Model" could not be found.
+Exception Attributes: array (
+  'class' => 'Model',
+)
+Stack Trace:
+#0 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(197): Cake\Console\ShellDispatcher->findShell('model')
+#1 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(171): Cake\Console\ShellDispatcher->_dispatch()
+#2 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Console/ShellDispatcher.php(122): Cake\Console\ShellDispatcher->dispatch()
+#3 /home/beljul/NetBeansProjects/ghostylink/bin/cake.php(20): Cake\Console\ShellDispatcher::run(Array)
+#4 {main}
+
+
