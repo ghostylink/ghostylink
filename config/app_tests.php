@@ -221,7 +221,7 @@ return [
             //'port' => 'nonstandard_port_number',
             'username' => 'ghostylink',
             'password' => 'ghostylink',
-            'database' => 'ghostylink_test',//default base for selenium tests
+            'database' => 'ghostylink_test',//default base for selenium tests !
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'cacheMetadata' => true,
