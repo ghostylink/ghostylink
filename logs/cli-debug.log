@@ -239,12 +239,8 @@ PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.
 [main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
 
 
-
-<<<<<<< HEAD
 2015-04-04 21:43:52 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
-=======
 2015-04-04 22:04:57 Notice: Notice (8): Undefined index: type in [/home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
->>>>>>> 77ecd0b403ba9237da69b43c25d4d57efb1149d7
 Trace:
 Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
 Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
@@ -266,11 +262,8 @@ PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.
 
 
 
-<<<<<<< HEAD
 2015-04-04 21:44:01 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
-=======
 2015-04-04 22:07:15 Notice: Notice (8): Undefined index: type in [/home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
->>>>>>> 77ecd0b403ba9237da69b43c25d4d57efb1149d7
 Trace:
 Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
 Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
@@ -292,11 +285,9 @@ PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.
 
 
 
-<<<<<<< HEAD
 2015-04-04 21:44:32 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
-=======
+
 2015-04-04 22:07:31 Notice: Notice (8): Undefined index: type in [/home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
->>>>>>> 77ecd0b403ba9237da69b43c25d4d57efb1149d7
 Trace:
 Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
 Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
@@ -317,12 +308,9 @@ PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.
 [main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
 
 
-
-<<<<<<< HEAD
 2015-04-04 21:44:36 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
-=======
+
 2015-04-04 22:07:57 Notice: Notice (8): Undefined index: type in [/home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
->>>>>>> 77ecd0b403ba9237da69b43c25d4d57efb1149d7
 Trace:
 Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
 Cake\Database\Schema\Table::addColumn() - CORE/src/Database/Schema/Table.php, line 293
@@ -343,8 +331,6 @@ PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.
 [main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
 
 
-
-<<<<<<< HEAD
 2015-04-04 21:45:27 Notice: Notice (8): Undefined index: type in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/Database/Schema/Table.php, line 293]
 Trace:
 Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
