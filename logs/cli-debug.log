@@ -676,3 +676,165 @@ PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.
 
 
 
+2015-04-06 17:17:16 Notice: Notice (8): Array to string conversion in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureManager.php, line 267]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 267
+Cake\TestSuite\Fixture\FixtureManager::shutDown() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 371
+Cake\TestSuite\Fixture\FixtureInjector::__construct() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 54
+ReflectionClass::newInstanceArgs() - [internal], line ??
+PHPUnit_TextUI_TestRunner::handleConfiguration() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 729
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 153
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-06 17:17:34 Notice: Notice (8): Array to string conversion in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureManager.php, line 268]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 268
+Cake\TestSuite\Fixture\FixtureManager::shutDown() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 372
+Cake\TestSuite\Fixture\FixtureInjector::__construct() - CORE/src/TestSuite/Fixture/FixtureInjector.php, line 54
+ReflectionClass::newInstanceArgs() - [internal], line ??
+PHPUnit_TextUI_TestRunner::handleConfiguration() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 729
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 153
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-06 17:30:30 Notice: Notice (8): Undefined property: basicTest::$dropTables in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureManager.php, line 236]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 236
+Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 277
+Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
+Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 279
+Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 242
+basicTest::setUp() - ROOT/tests/TestCase/Selenium/BasicTest.php, line 20
+PHPUnit_Framework_TestCase::runBare() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 739
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 609
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Extensions_SeleniumTestCase::run() - ROOT/vendor/phpunit/phpunit-selenium/PHPUnit/Extensions/SeleniumTestCase.php, line 648
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-06 17:34:40 Notice: Notice (8): Undefined property: basicTest::$dropTables in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureManager.php, line 236]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 236
+Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 277
+Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
+Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 279
+Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 242
+basicTest::setUp() - ROOT/tests/TestCase/Selenium/BasicTest.php, line 20
+PHPUnit_Framework_TestCase::runBare() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 739
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 609
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Extensions_SeleniumTestCase::run() - ROOT/vendor/phpunit/phpunit-selenium/PHPUnit/Extensions/SeleniumTestCase.php, line 648
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-06 17:37:23 Notice: Notice (8): Undefined property: basicTest::$dropTables in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureManager.php, line 236]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 236
+Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 277
+Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
+Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 279
+Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 242
+basicTest::setUp() - ROOT/tests/TestCase/Selenium/BasicTest.php, line 20
+PHPUnit_Framework_TestCase::runBare() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 739
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 609
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Extensions_SeleniumTestCase::run() - ROOT/vendor/phpunit/phpunit-selenium/PHPUnit/Extensions/SeleniumTestCase.php, line 648
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-06 17:41:34 Notice: Notice (8): Undefined property: basicTest::$dropTables in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureManager.php, line 236]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 236
+Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 276
+Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
+Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 278
+Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 242
+basicTest::setUp() - ROOT/tests/TestCase/Selenium/BasicTest.php, line 20
+PHPUnit_Framework_TestCase::runBare() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 739
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 609
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Extensions_SeleniumTestCase::run() - ROOT/vendor/phpunit/phpunit-selenium/PHPUnit/Extensions/SeleniumTestCase.php, line 648
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-06 17:43:24 Notice: Notice (8): Undefined property: basicTest::$dropTables in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureManager.php, line 236]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 236
+Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 276
+Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
+Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 278
+Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 242
+basicTest::setUp() - ROOT/tests/TestCase/Selenium/BasicTest.php, line 20
+PHPUnit_Framework_TestCase::runBare() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 739
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 609
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Extensions_SeleniumTestCase::run() - ROOT/vendor/phpunit/phpunit-selenium/PHPUnit/Extensions/SeleniumTestCase.php, line 648
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+
+2015-04-06 17:44:42 Notice: Notice (8): Undefined property: basicTest::$dropTables in [/home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureManager.php, line 236]
+Trace:
+Cake\Error\BaseErrorHandler::handleError() - CORE/src/Error/BaseErrorHandler.php, line 138
+Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 236
+Cake\TestSuite\Fixture\FixtureManager::Cake\TestSuite\Fixture\{closure}() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 276
+Cake\Database\Connection::transactional() - CORE/src/Database/Connection.php, line 561
+Cake\TestSuite\Fixture\FixtureManager::_runOperation() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 278
+Cake\TestSuite\Fixture\FixtureManager::load() - CORE/src/TestSuite/Fixture/FixtureManager.php, line 242
+basicTest::setUp() - ROOT/tests/TestCase/Selenium/BasicTest.php, line 20
+PHPUnit_Framework_TestCase::runBare() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 739
+PHPUnit_Framework_TestResult::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestResult.php, line 609
+PHPUnit_Framework_TestCase::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestCase.php, line 699
+PHPUnit_Extensions_SeleniumTestCase::run() - ROOT/vendor/phpunit/phpunit-selenium/PHPUnit/Extensions/SeleniumTestCase.php, line 648
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_Framework_TestSuite::run() - ROOT/vendor/phpunit/phpunit/src/Framework/TestSuite.php, line 722
+PHPUnit_TextUI_TestRunner::doRun() - ROOT/vendor/phpunit/phpunit/src/TextUI/TestRunner.php, line 406
+PHPUnit_TextUI_Command::run() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 153
+PHPUnit_TextUI_Command::main() - ROOT/vendor/phpunit/phpunit/src/TextUI/Command.php, line 105
+[main] - ROOT/vendor/phpunit/phpunit/phpunit, line 36
+
+
+

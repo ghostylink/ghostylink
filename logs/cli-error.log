@@ -936,7 +936,6 @@ Stack Trace:
 #7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
 #8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
 #9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
-=======
 2015-04-04 22:08:47 Error: [Cake\Core\Exception\Exception] Unable to insert fixtures for "App\Test\TestCase\Controller\LinksControllerTest" test case. SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ghostylink_test.links' doesn't exist
 Stack Trace:
 #0 /home/beljul/NetBeansProjects/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(144): Cake\TestSuite\Fixture\FixtureManager->load(Object(App\Test\TestCase\Controller\LinksControllerTest))
@@ -949,7 +948,54 @@ Stack Trace:
 #7 /home/beljul/NetBeansProjects/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
 #8 /home/beljul/NetBeansProjects/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
 #9 /home/beljul/NetBeansProjects/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
->>>>>>> 77ecd0b403ba9237da69b43c25d4d57efb1149d7
 #10 {main}
+
+
+2015-04-06 09:53:02 Error: [UnexpectedValueException] Referenced fixture class "Test\Fixture\AppTests.linksFixture" not found. Fixture "app_tests.links" was referenced in test case "App\Test\TestCase\Controller\LinksControllerTest".
+Stack Trace:
+#0 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureManager.php(67): Cake\TestSuite\Fixture\FixtureManager->_loadFixtures(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#1 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(143): Cake\TestSuite\Fixture\FixtureManager->fixturize(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#2 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#3 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#4 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#5 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#6 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
+#7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
+#8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
+#10 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
+#11 {main}
+
+
+2015-04-06 09:58:30 Error: [UnexpectedValueException] Referenced fixture class "Test\Fixture\AppTests.linksFixture" not found. Fixture "app_tests.links" was referenced in test case "App\Test\TestCase\Controller\LinksControllerTest".
+Stack Trace:
+#0 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureManager.php(67): Cake\TestSuite\Fixture\FixtureManager->_loadFixtures(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#1 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(143): Cake\TestSuite\Fixture\FixtureManager->fixturize(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#2 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#3 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#4 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#5 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#6 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
+#7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
+#8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
+#10 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
+#11 {main}
+
+
+2015-04-06 09:58:38 Error: [UnexpectedValueException] Referenced fixture class "Test\Fixture\AppTests.linksFixture" not found. Fixture "app_tests.links" was referenced in test case "App\Test\TestCase\Controller\LinksControllerTest".
+Stack Trace:
+#0 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureManager.php(67): Cake\TestSuite\Fixture\FixtureManager->_loadFixtures(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#1 /home/kremy/Developments/web/ghostylink/vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php(143): Cake\TestSuite\Fixture\FixtureManager->fixturize(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#2 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(331): Cake\TestSuite\Fixture\FixtureInjector->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#3 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestResult.php(547): PHPUnit_Framework_TestResult->startTest(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#4 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestCase.php(699): PHPUnit_Framework_TestResult->run(Object(App\Test\TestCase\Controller\LinksControllerTest))
+#5 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+#6 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
+#7 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(406): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
+#8 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(153): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+#9 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/src/TextUI/Command.php(105): PHPUnit_TextUI_Command->run(Array, true)
+#10 /home/kremy/Developments/web/ghostylink/vendor/phpunit/phpunit/phpunit(36): PHPUnit_TextUI_Command::main()
+#11 {main}
 
 
