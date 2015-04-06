@@ -26,7 +26,7 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        //$this->markTestIncomplete('Not implemented yet.');
+        //$this->markTestIncomplete('Not implemented yet.');        
         $this->assertTrue(true);
     }
 
