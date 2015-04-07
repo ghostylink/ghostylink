@@ -68,15 +68,11 @@ class LinksController extends AppController
      */
     public function edit($id = null)
     {
-        echo "hello";
-        echo $id;
-        echo $this->request->method();
         $link = $this->Links->get($id, [
             'contain' => []
         ]);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            echo "coucou";
             $link = $this->Links->patchEntity($link, $this->request->data);
             if ($this->Links->save($link)) {
                 $this->Flash->success('The link has been saved.');

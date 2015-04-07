@@ -79,10 +79,9 @@ class LinksControllerTest extends IntegrationTestCase
             'content' => 'This is not Walter Hartwell « Walt » White.',
         ];
         // Get link from first fixture
-        $this->post('/links/edit', array('data' => $data));
+        $this->post('/links/edit/1', $data);
         $this->assertResponseSuccess();
 
-        sleep(60);
         // Check if the data has been modified in database
         $links = TableRegistry::get('Links');
         $query = $links->find()->where(['title' => $data['title']]);
@@ -96,6 +95,16 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        // Get link from first fixture
+        $links = TableRegistry::get('Links');
+        $data = $links->get(1);
+        
+        // Delete this one
+        $this->post('/links/delete/1');
+        $this->assertResponseSuccess();
+        
+        // Check if the data has been modified in database
+        $query = $links->find()->where(['title' => $data['title']]);
+        $this->assertEquals(0, $query->count());
     }
 }
