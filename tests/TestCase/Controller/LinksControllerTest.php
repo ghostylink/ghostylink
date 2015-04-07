@@ -3,6 +3,7 @@ namespace App\Test\TestCase\Controller;
 
 use App\Controller\LinksController;
 use Cake\TestSuite\IntegrationTestCase;
+use Cake\ORM\TableRegistry;
 
 /**
  * App\Controller\LinksController Test Case
@@ -26,8 +27,9 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testIndex()
     {
-        //$this->markTestIncomplete('Not implemented yet.');        
-        $this->assertTrue(true);
+        // Check we have the home page
+        $this->get('/');
+        $this->assertResponseOk();
     }
 
     /**
@@ -37,7 +39,10 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/links/view/1');
+        $this->assertResponseOk();
+        // First fixture's titles
+        $this->assertResponseContains('Lorem ipsum dolor sit amet');
     }
 
     /**
@@ -47,7 +52,18 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        // Add new data using POST method
+        $data = [
+            'title' => 'Heisenberg',
+            'content' => 'Walter Hartwell « Walt » White.',
+        ];
+        $this->post('/links/add', $data);
+        $this->assertResponseSuccess();
+
+        // Check if the data has been inserted in database
+        $links = TableRegistry::get('Links');
+        $query = $links->find()->where(['title' => $data['title']]);
+        $this->assertEquals(1, $query->count());
     }
 
     /**
@@ -57,7 +73,20 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        // Create new data
+        $data = [
+            'title' => 'Better call Saul',
+            'content' => 'This is not Walter Hartwell « Walt » White.',
+        ];
+        // Get link from first fixture
+        $this->post('/links/edit', array('data' => $data));
+        $this->assertResponseSuccess();
+
+        sleep(60);
+        // Check if the data has been modified in database
+        $links = TableRegistry::get('Links');
+        $query = $links->find()->where(['title' => $data['title']]);
+        $this->assertEquals(1, $query->count());
     }
 
     /**
