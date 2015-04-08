@@ -51,7 +51,14 @@ class LinksTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        // Check the table creation + attributes
+        assertNotEmpty($this->Links);
+        assertEquals("links", $this->Links->table());
+        assertEquals("id", $this->Links->primaryKey());
+        assertEquals(1, $this->Links->hasField('title'));
+        assertEquals(1, $this->Links->hasField('content'));
+        assertEquals(1, $this->Links->hasField('created'));
+        assertEquals(1, $this->Links->hasField('modified'));
     }
 
     /**
