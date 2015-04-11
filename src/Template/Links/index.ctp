@@ -1,10 +1,9 @@
 <div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('New Link'), ['action' => 'add']) ?></li>
-    </ul>
+    <h3><?= __("Cache me if you can...") ?></h3>
+    <?php echo $this->element('Link/add'); ?>
+    <!--<?= $this->Html->link(__('New Link'), ['action' => 'add']); ?>-->
 </div>
-<div class="links index large-10 medium-9 columns">
+<!--<div class="links index large-10 medium-9 columns">
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
@@ -40,4 +39,4 @@
         </ul>
         <p><?= $this->Paginator->counter() ?></p>
     </div>
-</div>
+</div>-->
