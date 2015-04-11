@@ -29,7 +29,7 @@ class basicTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->open("/ghostylink/");
     $this->assertTrue($this->isTextPresent("Ghostylink"));
     $this->assertTrue($this->isElementPresent("css=div#main-content"));
-    $this->open('/ghostylink/links/view/1');    
+    $this->open('/ghostylink/links/view/1');     
     $this->assertFalse($this->isTextPresent('Record not found'));
   }
   protected function tearDown() {
