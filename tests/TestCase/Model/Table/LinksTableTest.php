@@ -67,7 +67,35 @@ class LinksTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+    {        
+        $goodData = [
+            'title' => 'I am not in danger ...',
+            'content' => 'I am the danger !'            
+        ];
+        $nbRecords = $this->Links->find('all')->count();
+        //Check the content is required
+        $badData1 = $goodData; 
+        $badData1['content'] = '';        
+        assertFalse($this->Links->save($this->Links->newEntity($badData1)));
+        
+        //Check the title is required
+        $badData2 = $goodData;
+        $badData2['title'] = '';        
+        assertFalse($this->Links->save($this->Links->newEntity($badData2)));        
+                        
+        //Check no data has been inserted
+        assertEquals($nbRecords, $this->Links->find('all')->count());        
+        
+        //Check good data can be inserted
+        assertNotFalse($this->Links->save($this->Links->newEntity($goodData)));
+        assertEquals($nbRecords + 1, $this->Links->find('all')->count());
+        
+        //And the data inserted is ok        
+        assertArraySubset($goodData, 
+                          $this->Links->find('all')
+                                      ->where(['Links.title =' => $goodData['title']])
+                                      ->toArray()[0]->toArray());
+        
+                        
     }
 }
