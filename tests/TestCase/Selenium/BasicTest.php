@@ -35,7 +35,7 @@ class basicTest extends PHPUnit_Extensions_SeleniumTestCase
   protected function tearDown() {
     parent::setUp();
     $this->fixtureManager->unload($this);
-    $this->fixtureManager->shutDown();
+    //$this->fixtureManager->shutDown();
   }
 }
 
