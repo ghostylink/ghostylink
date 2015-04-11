@@ -56,8 +56,6 @@
     </div>
       
       <div id="main-content" class="content-wrapper container">
-            <span class="glyphicon glyphicon-link" aria-hidden="true">J'aime bien le web design</span>
-            <p>Verifiy jquery ui: <input type="text" id="datepicker"></p>
             <?php echo $this->fetch("content"); ?>
       </div>      
 
