@@ -64,6 +64,13 @@ class LinksControllerTest extends IntegrationTestCase
         $links = TableRegistry::get('Links');
         $query = $links->find()->where(['title' => $data['title']]);
         $this->assertEquals(1, $query->count());
+        
+        //Check controller set a flash message if link cannot be saved
+        $badData = $data;
+        $badData['content'] = '';
+        $this->post('/links/add', $badData);
+        $this->assertSession('The link could not be saved. Please, try again.',
+                             'Flash.flash.message');
     }
 
     /**
@@ -86,6 +93,13 @@ class LinksControllerTest extends IntegrationTestCase
         $links = TableRegistry::get('Links');
         $query = $links->find()->where(['title' => $data['title']]);
         $this->assertEquals(1, $query->count());
+        
+        //Test a flash message is set if something is wrong:                
+        $badData = $data;
+        $badData['content'] = '';
+        $this->post('/links/edit/1', $badData);
+        $this->assertSession('The link could not be saved. Please, try again.',
+                             'Flash.flash.message');
     }
 
     /**
@@ -96,7 +110,7 @@ class LinksControllerTest extends IntegrationTestCase
     public function testDelete()
     {
         // Get link from first fixture
-        $links = TableRegistry::get('Links');
+        $links = TableRegistry::get('Links');        
         $data = $links->get(1);
         
         // Delete this one
@@ -106,5 +120,7 @@ class LinksControllerTest extends IntegrationTestCase
         // Check if the data has been modified in database
         $query = $links->find()->where(['title' => $data['title']]);
         $this->assertEquals(0, $query->count());
+        
+        //TODO: check a flash message is set if something is wrong        
     }
 }
