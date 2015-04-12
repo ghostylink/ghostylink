@@ -11,3 +11,27 @@ and open the template in the editor.
 .content-wrapper.container {
     margin-top: 60px !important;
 }
+
+.link-heading h2{
+    display:inline-block;
+    margin-right: 0.5em;
+    text-transform : capitalize;
+}
+.link-heading a {
+    font-size: 2em;
+    color:#fff;
+    float:right;
+    margin-top:0.2em;
+}
+.link-heading a:hover {
+    text-decoration: none;
+    color:#e13027;
+}
+.link-heading date {
+    font-style: italic;
+}
+/***************** Start of Bootstrap overriding section **********************/
+/****************** Be carefull when changing something ***********************/
+.panel h1, .panel h2, .panel h3, .panel h4, .panel h5, .panel h6 {
+    margin-top:0;
+}

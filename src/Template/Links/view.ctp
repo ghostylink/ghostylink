@@ -1,13 +1,20 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('Edit Link'), ['action' => 'edit', $link->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Link'), ['action' => 'delete', $link->id], ['confirm' => __('Are you sure you want to delete # {0}?', $link->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Links'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Link'), ['action' => 'add']) ?> </li>
-    </ul>
-</div>
-<div class="links view large-10 medium-9 columns">
+<section class="col-lg-8 col-lg-offset-4">
+<article class="panel panel-primary">
+    <section class="link-heading panel panel-heading">
+        <h2><?= h($link->title) ?></h2>
+        <date>Created on <?= h($link->created) ?></date>
+        <?= $this->Form->postLink('', ['action' => 'delete', $link->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $link->id),
+                 'class'=>'glyphicon glyphicon-trash']) ?> </li>
+    </section>
+    <section class="link-content panel-body">
+        <?= $this->Text->autoParagraph(h($link->content)); ?>
+    </section>
+</article>
+</section>
+    
+
+<!--<div class="links view large-10 medium-9 columns">
     <h2><?= h($link->title) ?></h2>
     <div class="row">
         <div class="large-5 columns strings">
@@ -32,4 +39,4 @@
 
         </div>
     </div>
-</div>
+</div>-->
