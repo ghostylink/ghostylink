@@ -20,13 +20,12 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->fixtureManager->fixturize($this);
     $this->fixtureManager->load($this);
     $this->setBrowser("*firefox");
-    $this->setBrowserUrl("http://kevin-remy.fr/");
-    
+    $this->setBrowserUrl("http://localhost/");
   }
 
   public function testView()
   {
-    $this->open("/ghostylink/links/view/1");
+    $this->open("ghostylink/links/view/1");
     $this->chooseCancelOnNextConfirmation();
     $this->verifyTextPresent("Lorem ipsum dolor sit amet");
     $this->verifyTextPresent("qLorem ipsum dolor sit amet, aliquet feugiat.");
@@ -36,7 +35,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   }
   
   public function testAdd() {   
-    $this->open("/ghostylink/links/add");
+    $this->open("ghostylink/links/add");
     $this->assertTrue($this->isElementPresent("css=form"));
     $this->assertTrue($this->isElementPresent("css=input[type=text]"));
     $this->assertTrue($this->isElementPresent("css=input[type=text]"));
