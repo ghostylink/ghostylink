@@ -8,12 +8,12 @@ class rootTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->fixtureManager->fixturize($this);
     $this->fixtureManager->load($this);
     $this->setBrowser("*firefox");
-    $this->setBrowserUrl("http://kevin-remy.fr/");
+    $this->setBrowserUrl("http://localhost/");
   }
 
   public function testFormIsPresent()
   {
-    $this->open("/ghostylink/");
+    $this->open("ghostylink/");
     $this->verifyTextPresent("Cache me if you can", 'slogan is here');   
     $this->assertTrue($this->isElementPresent("css=form[action=\"/ghostylink/links/add\"]"), 'Add link form is here');
     $this->assertEquals("2", 
