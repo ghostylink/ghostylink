@@ -28,7 +28,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->open("ghostylink/links/view/1");
     $this->chooseCancelOnNextConfirmation();
     $this->verifyTextPresent("Lorem ipsum dolor sit amet");
-    $this->verifyTextPresent("qLorem ipsum dolor sit amet, aliquet feugiat.");
+    $this->verifyTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat.");
     $this->assertTrue($this->isElementPresent("css=a.delete-link"));
     $this->click("css=a.delete-link");
     $this->assertTrue((bool)preg_match('/^Are you sure you want to delete # 1[\s\S]$/',$this->getConfirmation()));
