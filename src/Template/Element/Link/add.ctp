@@ -15,7 +15,7 @@
                                               'class' => 'form-control', 
                                               'placeholder' => "Enter a title",
                                               'required' => 'false']);            
-            echo $this->Form->input('content', ['type' => 'text',
+            echo $this->Form->input('content', ['type' => 'textarea',
                                               'id' => 'inputContent',
                                               'class' => 'form-control', 
                                               'placeholder' => "Enter your private contents",
