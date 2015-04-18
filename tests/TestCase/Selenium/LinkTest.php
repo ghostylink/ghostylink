@@ -38,7 +38,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->open("ghostylink/links/add");
     $this->assertTrue($this->isElementPresent("css=form"));
     $this->assertTrue($this->isElementPresent("css=input[type=text]"));
-    $this->assertTrue($this->isElementPresent("css=input[type=text]"));
+    $this->assertTrue($this->isElementPresent("css=textarea"));
   }
   
   
