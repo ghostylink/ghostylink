@@ -30,6 +30,8 @@ class basicTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->assertTrue($this->isTextPresent("Ghostylink"));
     $this->assertTrue($this->isElementPresent("css=div#main-content"));
     $this->open('/ghostylink/links/view/1');     
+    $this->assertFalse($this->isTextPresent('was not found on this server'), 
+                      'The page is not a 404');
     $this->assertFalse($this->isTextPresent('Record not found'));
   }
   protected function tearDown() {
