@@ -71,8 +71,8 @@ try {
 // Load an environment local configuration file.
 // You can use a file like app_local.php to provide local overrides to your
 // shared configuration.
-// Configure::load('app', 'default');
-Configure::load('app_tests', 'default');
+Configure::load('app', 'default');
+//Configure::load('app_tests', 'default');
 
 // When debug = false the metadata cache should last
 // for a very very long time, as we don't want
