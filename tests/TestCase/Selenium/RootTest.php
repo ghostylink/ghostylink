@@ -8,7 +8,7 @@ class rootTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->fixtureManager->fixturize($this);
     $this->fixtureManager->load($this);
     $this->setBrowser("*firefox");
-    $this->setBrowserUrl("http://localhost/");
+    $this->setBrowserUrl("http://kevin-remy.fr/");
   }
 
   public function testFormIsPresent()
