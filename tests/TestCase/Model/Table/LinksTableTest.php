@@ -59,6 +59,7 @@ class LinksTableTest extends TestCase
         assertEquals(1, $this->Links->hasField('content'));
         assertEquals(1, $this->Links->hasField('created'));
         assertEquals(1, $this->Links->hasField('modified'));
+        assertEquals(1, $this->Links->hasField('token'));
     }
 
     /**
@@ -70,7 +71,8 @@ class LinksTableTest extends TestCase
     {        
         $goodData = [
             'title' => 'I am not in danger ...',
-            'content' => 'I am the danger !'            
+            'content' => 'I am the danger !',
+            'token' => md5('Say my name')
         ];
         $nbRecords = $this->Links->find('all')->count();
         //Check the content is required
@@ -82,7 +84,12 @@ class LinksTableTest extends TestCase
         $badData2 = $goodData;
         $badData2['title'] = '';        
         assertFalse($this->Links->save($this->Links->newEntity($badData2)));        
-                        
+        
+        //Check the token is required
+        $badData3 = $goodData;
+        $badData3['token'] = "";
+        assertFalse($this->Links->save($this->Links->newEntity($badData3)));
+        
         //Check no data has been inserted
         assertEquals($nbRecords, $this->Links->find('all')->count());        
         
