@@ -22,7 +22,7 @@ class rootTest extends PHPUnit_Extensions_SeleniumTestCase
   }
   
   protected function tearDown() {
-    parent::setUp();
+    parent::tearDown();
     $this->fixtureManager->unload($this);
     //$this->fixtureManager->shutDown();
   }

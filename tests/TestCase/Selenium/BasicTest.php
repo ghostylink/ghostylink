@@ -35,7 +35,7 @@ class basicTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->assertFalse($this->isTextPresent('Record not found'));
   }
   protected function tearDown() {
-    parent::setUp();
+    parent::tearDown();
     $this->fixtureManager->unload($this);
     //$this->fixtureManager->shutDown();
   }
