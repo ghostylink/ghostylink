@@ -13,7 +13,7 @@
             echo $this->Form->input('title', ['type' => 'text',
                                               'id' => 'inputTitle',
                                               'class' => 'form-control', 
-                                              'placeholder' => "Ensdfter a title",
+                                              'placeholder' => "Enter a title",
                                               'required' => 'false']);            
             echo $this->Form->input('content', ['type' => 'text',
                                               'id' => 'inputContent',

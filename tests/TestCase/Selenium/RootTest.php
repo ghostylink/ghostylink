@@ -13,7 +13,7 @@ class rootTest extends PHPUnit_Extensions_SeleniumTestCase
 
   public function testFormIsPresent()
   {
-    $this->open("/ghostylink/");
+    $this->open("ghostylink/");
     $this->verifyTextPresent("Cache me if you can", 'slogan is here');   
     $this->assertTrue($this->isElementPresent("css=form[action=\"/ghostylink/links/add\"]"), 'Add link form is here');
     $this->assertEquals("2", 
@@ -22,7 +22,7 @@ class rootTest extends PHPUnit_Extensions_SeleniumTestCase
   }
   
   protected function tearDown() {
-    parent::setUp();
+    parent::tearDown();
     $this->fixtureManager->unload($this);
     //$this->fixtureManager->shutDown();
   }

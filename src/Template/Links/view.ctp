@@ -5,7 +5,7 @@
         <date>Created on <?= h($link->created) ?></date>
         <?= $this->Form->postLink('', ['action' => 'delete', $link->id],
                 ['confirm' => __('Are you sure you want to delete # {0}?', $link->id),
-                 'class'=>'glyphicon glyphicon-trash']) ?> </li>
+                 'class'=>'glyphicon glyphicon-trash delete-link']) ?> </li>
     </section>
     <section class="link-content panel-body">
         <?= $this->Text->autoParagraph(h($link->content)); ?>
