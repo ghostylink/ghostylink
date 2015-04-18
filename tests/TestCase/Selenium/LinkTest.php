@@ -6,7 +6,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   public $dropTables = true;
   
   protected $captureScreenshotOnFailure = TRUE;
-  protected $screenshotPath = '/var/www/ghostylink_selenium/screenshots';
+  protected $screenshotPath = '/var/www/ghostylink/selenium_screenshots';
   protected $screenshotUrl = 'http://kevin.remy.fr/ghostylink_selenium/screenshots';    
   
   public $fixtures = [
