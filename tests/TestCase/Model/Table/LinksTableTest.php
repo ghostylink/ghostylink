@@ -87,7 +87,7 @@ class LinksTableTest extends TestCase
         
         //Check the token is required
         $badData3 = $goodData;
-        $badData3['token'] = "";
+        $badData3['token'] = '';
         assertFalse($this->Links->save($this->Links->newEntity($badData3)));
         
         //Check no data has been inserted
@@ -96,7 +96,9 @@ class LinksTableTest extends TestCase
         //Check good data can be inserted
         assertNotFalse($this->Links->save($this->Links->newEntity($goodData)));
         assertEquals($nbRecords + 1, $this->Links->find('all')->count());
-        
+        debug($this->Links->find('all')
+                                      ->where(['Links.title =' => $goodData['title']])
+                                      ->toArray()[0]->toArray());
         //And the data inserted is ok        
         assertArraySubset($goodData, 
                           $this->Links->find('all')

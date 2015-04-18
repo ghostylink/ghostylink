@@ -4,7 +4,7 @@ use Phinx\Migration\AbstractMigration;
 class AddTokenToLinks extends AbstractMigration
 {
     /**
-     * Change Method.
+     * Change Method.   
      *
      * More information on this method is available here:
      * http://docs.phinx.org/en/latest/migrations.html#the-change-method
@@ -17,6 +17,9 @@ class AddTokenToLinks extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
+        $table->addIndex('token', array('unique' => true));
+
         $table->update();
+       
     }
 }

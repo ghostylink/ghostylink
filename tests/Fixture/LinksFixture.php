@@ -22,8 +22,10 @@ class LinksFixture extends TestFixture
         'content' => ['type' => 'text', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
+        'token' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
+            'token' => ['type' => 'unique', 'columns' => ['token'], 'length' => []],
         ],
         '_options' => [
 'engine' => 'InnoDB', 'collation' => 'utf8_general_ci'
@@ -41,8 +43,9 @@ class LinksFixture extends TestFixture
             'id' => 1,
             'title' => 'Lorem ipsum dolor sit amet',
             'content' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-            'created' => '2015-04-04 14:56:06',
-            'modified' => '2015-04-04 14:56:06'
-        ],
+            'created' => '2015-04-18 16:36:35',
+            'modified' => '2015-04-18 16:36:35',
+            'token' => 'Lorem ipsum dolor sit amet1'
+        ]
     ];
 }
