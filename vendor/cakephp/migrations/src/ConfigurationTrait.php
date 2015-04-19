@@ -74,10 +74,7 @@ trait ConfigurationTrait
         $plugin = $plugin ? Inflector::underscore($plugin) . '_' : '';
         $plugin = str_replace(array('\\', '/', '.'), '_', $plugin);
 
-        $connection = 'default';
-        if ($this->input->getOption('connection')) {
-            $connection = $this->input->getOption('connection');
-        }
+        $connection = $this->getConnectionName($this->input);
 
         $config = ConnectionManager::config($connection);
         return $this->configuration = new Config([
@@ -131,9 +128,9 @@ trait ConfigurationTrait
 
     /**
      * Overrides the action execute method in order to vanish the idea of environments
-     * from phinx. CakePHP does not beleive in the idea of having in-app environments
+     * from phinx. CakePHP does not believe in the idea of having in-app environments
      *
-     * @param Symfony\Component\Console\Input\Inputnterface $input the input object
+     * @param Symfony\Component\Console\Input\InputInterface $input the input object
      * @param Symfony\Component\Console\Input\OutputInterface $output the output object
      * @return void
      */
@@ -149,7 +146,7 @@ trait ConfigurationTrait
      * Sets the input object that should be used for the command class. This object
      * is used to inspect the extra options that are needed for CakePHP apps.
      *
-     * @param Symfony\Component\Console\Input\Inputnterface $input the input object
+     * @param Symfony\Component\Console\Input\InputInterface $input the input object
      * @return void
      */
     public function setInput(InputInterface $input)
@@ -162,14 +159,30 @@ trait ConfigurationTrait
      * the CakePHP connection. This is needed in case the user decides to use tables
      * from the ORM and executes queries.
      *
-     * @param Symfony\Component\Console\Input\Inputnterface $input the input object
+     * @param Symfony\Component\Console\Input\InputInterface $input the input object
      * @param Symfony\Component\Console\Input\OutputInterface $output the output object
      * @return void
      */
     public function bootstrap(InputInterface $input, OutputInterface $output)
     {
         parent::bootstrap($input, $output);
-        $connection = $this->getManager()->getEnvironment('default')->getAdapter()->getConnection();
-        ConnectionManager::get('default')->driver()->connection($connection);
+        $connection = ConnectionManager::get($this->getConnectionName($input));
+        $pdo = $this->getManager()->getEnvironment('default')->getAdapter()->getConnection();
+        $connection->driver()->connection($pdo);
+    }
+
+    /**
+     * Returns the connection name that should be used for the migrations.
+     *
+     * @param Symfony\Component\Console\Input\InputInterface $input the input object
+     * @return string
+     */
+    protected function getConnectionName(InputInterface $input)
+    {
+        $connection = 'default';
+        if ($input->getOption('connection')) {
+            $connection = $this->input->getOption('connection');
+        }
+        return $connection;
     }
 }

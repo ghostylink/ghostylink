@@ -52,14 +52,14 @@ class LinksTableTest extends TestCase
     public function testInitialize()
     {
         // Check the table creation + attributes
-        assertNotEmpty($this->Links);
-        assertEquals("links", $this->Links->table());
-        assertEquals("id", $this->Links->primaryKey());
-        assertEquals(1, $this->Links->hasField('title'));
-        assertEquals(1, $this->Links->hasField('content'));
-        assertEquals(1, $this->Links->hasField('created'));
-        assertEquals(1, $this->Links->hasField('modified'));
-        assertEquals(1, $this->Links->hasField('token'));
+        $this->assertNotEmpty($this->Links);
+        $this->assertEquals("links", $this->Links->table());
+        $this->assertEquals("id", $this->Links->primaryKey());
+        $this->assertEquals(1, $this->Links->hasField('title'));
+        $this->assertEquals(1, $this->Links->hasField('content'));
+        $this->assertEquals(1, $this->Links->hasField('created'));
+        $this->assertEquals(1, $this->Links->hasField('modified'));
+        $this->assertEquals(1, $this->Links->hasField('token'));
     }
 
     /**
@@ -78,34 +78,34 @@ class LinksTableTest extends TestCase
         //Check the content is required
         $badData1 = $goodData; 
         $badData1['content'] = '';        
-        assertFalse($this->Links->save($this->Links->newEntity($badData1)));
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData1)));
         
         //Check the title is required
         $badData2 = $goodData;
         $badData2['title'] = '';        
-        assertFalse($this->Links->save($this->Links->newEntity($badData2)));        
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData2)));        
         
         //Check the token is required ...
         $badData3 = $goodData;
         unset($badData3['token']);
-        assertFalse($this->Links->save($this->Links->newEntity($badData3)), 
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData3)), 
                     'Token is required');
         $badData3['token'] = '';
         //.. and not empty
-        assertFalse($this->Links->save($this->Links->newEntity($badData3)),
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData3)),
                     'Token is not empty');
         
         //Check no data has been inserted
-        assertEquals($nbRecords, $this->Links->find('all')->count(),
+        $this->assertEquals($nbRecords, $this->Links->find('all')->count(),
                       'Bad data has not been inserted');        
         
         //Check good data can be inserted
-        assertNotFalse($this->Links->save($this->Links->newEntity($goodData)),
+        $this->assertNotFalse($this->Links->save($this->Links->newEntity($goodData)),
                        'Good data can be inserted');
-        assertEquals($nbRecords + 1, $this->Links->find('all')->count(),
+        $this->assertEquals($nbRecords + 1, $this->Links->find('all')->count(),
                         'A new record is in DB');        
         //And the data inserted is ok        
-        assertArraySubset($goodData, 
+        $this->assertArraySubset($goodData, 
                           $this->Links->find('all')
                                       ->where(['Links.title =' => $goodData['title']])
                                       ->toArray()[0]->toArray(),
@@ -117,6 +117,6 @@ class LinksTableTest extends TestCase
         $badData4['content'] = $badData4['content'] . date('');
         $this->setExpectedException('PDOException');
         $this->Links->save($this->Links->newEntity($badData4));
-        assertTrue(true,'An exception is thrown if two different links has the same token');
+        $this->assertTrue(true,'An exception is thrown if two different links has the same token');
     }
 }
