@@ -79,8 +79,7 @@ class LinksControllerTest extends IntegrationTestCase
         $this->post('/links/add', $badData);
         $this->assertSession('The link could not be saved. Please, try again.',
                              'Flash.flash.message');
-        //Uncomment this line when token generation is codded
-        //$this->checkTokenGeneration();
+        $this->checkTokenGeneration();
     }
 
     private function checkTokenGeneration() {
@@ -100,7 +99,6 @@ class LinksControllerTest extends IntegrationTestCase
         // /!\ seems that we need to rebind query... 
         $query2 = $links->find()->where(['title' => $goodData['title']]);
         $result = $query2->all()->toArray();
-        debug($result);
         $this->assertNotEquals($result[0]->token, $result[1]->token,
                 'Two similar links do not have the same tokens');
         
