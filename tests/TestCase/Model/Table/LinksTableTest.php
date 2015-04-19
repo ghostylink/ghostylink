@@ -85,28 +85,39 @@ class LinksTableTest extends TestCase
         $badData2['title'] = '';        
         assertFalse($this->Links->save($this->Links->newEntity($badData2)));        
         
-        //Check the token is required
+        //Check the token is required ...
         $badData3 = $goodData;
+        unset($badData3['token']);
+        assertFalse($this->Links->save($this->Links->newEntity($badData3)), 
+                    'Token is required');
         $badData3['token'] = '';
-        assertFalse($this->Links->save($this->Links->newEntity($badData3)));
-                
+        //.. and not empty
+        assertFalse($this->Links->save($this->Links->newEntity($badData3)),
+                    'Token is not empty');
+        
         //Check no data has been inserted
-        assertEquals($nbRecords, $this->Links->find('all')->count());        
+        assertEquals($nbRecords, $this->Links->find('all')->count(),
+                      'Bad data has not been inserted');        
         
         //Check good data can be inserted
-        assertNotFalse($this->Links->save($this->Links->newEntity($goodData)));
-        assertEquals($nbRecords + 1, $this->Links->find('all')->count());        
+        assertNotFalse($this->Links->save($this->Links->newEntity($goodData)),
+                       'Good data can be inserted');
+        assertEquals($nbRecords + 1, $this->Links->find('all')->count(),
+                        'A new record is in DB');        
         //And the data inserted is ok        
         assertArraySubset($goodData, 
                           $this->Links->find('all')
                                       ->where(['Links.title =' => $goodData['title']])
-                                      ->toArray()[0]->toArray());
+                                      ->toArray()[0]->toArray(),
+                           'The inserted data corresponds to what we expect');
         
         //Check token has to be unique and its cached by data base
         $badData4 = $goodData;
         $badData4['title'] = $badData4['title'] . date('YYYYMMDD');
         $badData4['content'] = $badData4['content'] . date('YYYYMMDD');
         $this->setExpectedException('PDOException');
-        $this->Links->save($this->Links->newEntity($badData4));
+        $this->Links->save($this->Links->newEntity($badData4),
+                            'An exception is thrown if two different links has'
+                . '         the same token');
     }
 }
