@@ -46,6 +46,7 @@ class LinksTable extends Table
             ->notEmpty('title')
             ->requirePresence('content', 'create')            
             ->notEmpty('content')            
+            ->requirePresence('token', 'create')
             ->notEmpty('token');
             
         return $validator;

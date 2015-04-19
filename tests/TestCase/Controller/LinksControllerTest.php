@@ -56,6 +56,7 @@ class LinksControllerTest extends IntegrationTestCase
         $data = [
             'title' => 'Heisenberg',
             'content' => 'Walter Hartwell « Walt » White.',
+            'token' => md5('Say my name')
         ];
         $this->post('/links/add', $data);
         $this->assertResponseSuccess();
@@ -63,7 +64,7 @@ class LinksControllerTest extends IntegrationTestCase
         // Check if the data has been inserted in database
         $links = TableRegistry::get('Links');
         $query = $links->find()->where(['title' => $data['title']]);
-        $this->assertEquals(1, $query->count());
+        $this->assertEquals(1, $query->count(), 'A good link is added in DB');
         
         //Check controller set a flash message if link cannot be saved
         $badData = $data;
