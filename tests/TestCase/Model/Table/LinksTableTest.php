@@ -89,22 +89,24 @@ class LinksTableTest extends TestCase
         $badData3 = $goodData;
         $badData3['token'] = '';
         assertFalse($this->Links->save($this->Links->newEntity($badData3)));
-        
+                
         //Check no data has been inserted
         assertEquals($nbRecords, $this->Links->find('all')->count());        
         
         //Check good data can be inserted
         assertNotFalse($this->Links->save($this->Links->newEntity($goodData)));
-        assertEquals($nbRecords + 1, $this->Links->find('all')->count());
-        debug($this->Links->find('all')
-                                      ->where(['Links.title =' => $goodData['title']])
-                                      ->toArray()[0]->toArray());
+        assertEquals($nbRecords + 1, $this->Links->find('all')->count());        
         //And the data inserted is ok        
         assertArraySubset($goodData, 
                           $this->Links->find('all')
                                       ->where(['Links.title =' => $goodData['title']])
                                       ->toArray()[0]->toArray());
         
-                        
+        //Check token has to be unique and its cached by data base
+        $badData4 = $goodData;
+        $badData4['title'] = $badData4['title'] . date('YYYYMMDD');
+        $badData4['content'] = $badData4['content'] . date('YYYYMMDD');
+        $this->setExpectedException('PDOException');
+        $this->Links->save($this->Links->newEntity($badData4));
     }
 }
