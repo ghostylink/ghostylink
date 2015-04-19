@@ -113,11 +113,10 @@ class LinksTableTest extends TestCase
         
         //Check token has to be unique and its cached by data base
         $badData4 = $goodData;
-        $badData4['title'] = $badData4['title'] . date('YYYYMMDD');
-        $badData4['content'] = $badData4['content'] . date('YYYYMMDD');
+        $badData4['title'] = $badData4['title'] . date('');
+        $badData4['content'] = $badData4['content'] . date('');
         $this->setExpectedException('PDOException');
-        $this->Links->save($this->Links->newEntity($badData4),
-                            'An exception is thrown if two different links has'
-                . '         the same token');
+        $this->Links->save($this->Links->newEntity($badData4));
+        assertTrue(true,'An exception is thrown if two different links has the same token');
     }
 }
