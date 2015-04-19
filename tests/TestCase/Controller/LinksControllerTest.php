@@ -21,6 +21,16 @@ class LinksControllerTest extends IntegrationTestCase
     ];
 
     /**
+     * Data which respect the model constraints
+     * @var array 
+     */
+    private $goodData = [
+            'title' => 'Heisenberg',
+            'content' => 'Walter Hartwell « Walt » White.',
+            'token' => 'Say my name'
+    ];
+    
+    /**
      * Test index method
      *
      * @return void
@@ -53,11 +63,7 @@ class LinksControllerTest extends IntegrationTestCase
     public function testAdd()
     {
         // Add new data using POST method
-        $data = [
-            'title' => 'Heisenberg',
-            'content' => 'Walter Hartwell « Walt » White.',
-            'token' => md5('Say my name')
-        ];
+        $data = $this->goodData;
         $this->post('/links/add', $data);
         $this->assertResponseSuccess();
 
@@ -72,8 +78,35 @@ class LinksControllerTest extends IntegrationTestCase
         $this->post('/links/add', $badData);
         $this->assertSession('The link could not be saved. Please, try again.',
                              'Flash.flash.message');
+        //Uncomment this line when token generation is codded
+        //$this->checkTokenGeneration();
     }
 
+    private function checkTokenGeneration() {
+        $goodData = $this->goodData;
+        $links = TableRegistry::get('Links');
+        
+        //token is 32 bytes long (generated with md5)
+        $this->post('/links/add', $goodData);
+        $query = $links->find()->where(['title' => $goodData['title']]);
+        // Execute the query        
+        $tokenQuery1 = $query->first()->token;        
+        $this->assertEquals(32,  strlen($tokenQuery1),'Tokens are 32 bytes long');
+        
+        //Two links with same information (title, content) have different token        
+        $this->post('/links/add', $goodData);
+        $this->assertResponseSuccess('Similar link can be added');
+        // /!\ seems that we need to rebind query... 
+        $query2 = $links->find()->where(['title' => $goodData['title']]);
+        $result = $query2->all()->toArray();
+        debug($result);
+        $this->assertNotEquals($result[0]->token, $result[1]->token,
+                'Two similar links do not have the same tokens');
+        
+        //Token is not generated from id avoiding a brute force attack        
+        $this->assertStringNotMatchesFormat($result[0]->token, md5($result[0]->id),
+                'The token is not generated from the link id');
+    }
     /**
      * Test edit method
      *
