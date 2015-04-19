@@ -49,9 +49,10 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
-        $this->get('/links/view/1');
-        $this->assertResponseOk();
+        $this->get('/links/view/1');        
+        $this->assertResponseError('Links is not accessbile by its id');
         // First fixture's titles
+        $this->get('/links/view/a1d0c6e83f027327d8461063f4ac58a6');
         $this->assertResponseContains('Lorem ipsum dolor sit amet');
     }
 

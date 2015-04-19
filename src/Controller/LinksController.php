@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Network\Exception\NotFoundException;
 /**
  * Links Controller
  *
@@ -29,11 +29,12 @@ class LinksController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($token = null)
     {
-        $link = $this->Links->get($id, [
-            'contain' => []
-        ]);
+        $link = $this->Links->findByToken($token)->first();
+        if(count($link) == 0) {
+            throw new NotFoundException();
+        }
         $this->set('link', $link);
         $this->set('_serialize', ['link']);
     }

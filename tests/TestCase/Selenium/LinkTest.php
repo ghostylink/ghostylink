@@ -25,7 +25,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
 
   public function testView()
   {
-    $this->open("ghostylink/links/view/1");
+    $this->open("ghostylink/links/view/a1d0c6e83f027327d8461063f4ac58a6");
     $this->chooseCancelOnNextConfirmation();
     $this->verifyTextPresent("Lorem ipsum dolor sit amet");
     $this->verifyTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat.");
