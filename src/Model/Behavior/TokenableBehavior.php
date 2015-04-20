@@ -23,8 +23,8 @@ class TokenableBehavior extends Behavior
     
     public function beforeSave(Event $event, Entity $entity)
     {
-        if (property_exists($entity, 'title') 
-            && property_exists($entity, 'created')) {
+        if (!($entity->has('title') &&
+            $entity->has('created'))) {
             $event->stopPropagation();
             return;
         }
