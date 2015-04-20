@@ -6,4 +6,5 @@
 /coverage/
 /reports/
 /tmp/*
+/tmp/cache
 /webroot/
