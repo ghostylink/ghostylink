@@ -7,4 +7,5 @@
 /reports/
 /tmp/*
 /tmp/cache
-/webroot/
+/tmp/
+/vendor/

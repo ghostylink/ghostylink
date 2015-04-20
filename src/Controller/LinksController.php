@@ -38,7 +38,7 @@ class LinksController extends AppController
         $this->set('link', $link);
         $this->set('_serialize', ['link']);
     }
-
+    
     /**
      * Add method
      *
@@ -49,6 +49,8 @@ class LinksController extends AppController
         $link = $this->Links->newEntity();
         if ($this->request->is('post')) {
             $link = $this->Links->patchEntity($link, $this->request->data);
+            // Initialize empty token to pass the validation
+            $link->token = "";
             if ($this->Links->save($link)) {
                 $this->Flash->success('The link has been saved.');
                 return $this->redirect(['action' => 'index']);
