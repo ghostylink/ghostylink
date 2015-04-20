@@ -104,19 +104,25 @@ class LinksTableTest extends TestCase
                        'Good data can be inserted');
         $this->assertEquals($nbRecords + 1, $this->Links->find('all')->count(),
                         'A new record is in DB');        
-        //And the data inserted is ok        
-        $this->assertArraySubset($goodData, 
+        //And the data inserted is ok
+        $data = $goodData;
+        unset($data['token']);
+        $this->assertArraySubset($data, 
                           $this->Links->find('all')
                                       ->where(['Links.title =' => $goodData['title']])
                                       ->toArray()[0]->toArray(),
                            'The inserted data corresponds to what we expect');
         
         //Check token has to be unique and its cached by data base
-        $badData4 = $goodData;
-        $badData4['title'] = $badData4['title'] . date('');
-        $badData4['content'] = $badData4['content'] . date('');
-        $this->setExpectedException('PDOException');
-        $this->Links->save($this->Links->newEntity($badData4));
-        $this->assertTrue(true,'An exception is thrown if two different links has the same token');
+        $data4 = $goodData;
+        unset($goodData['token']);
+        $data4['title'] = $data4['title'] . date('');
+        $data4['content'] = $data4['content'] . date('');        
+        $this->Links->save($this->Links->newEntity($data4));
+        $result = $this->Links->find("all")
+                              ->where(['Links.title =' => $goodData['title']])
+                              ->toArray();
+        $this->assertNotEquals($result[0]->token, $result[1]->token,
+                                'Two similar links do not have same tokn');
     }
 }
