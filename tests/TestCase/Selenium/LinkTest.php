@@ -35,10 +35,33 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   }
   
   public function testAdd() {   
-    $this->open("ghostylink/links/add");
-    $this->assertTrue($this->isElementPresent("css=form"));
-    $this->assertTrue($this->isElementPresent("css=input[type=text]"));
-    $this->assertTrue($this->isElementPresent("css=textarea"));
+    // Check that basic element are present
+    $this->open("/ghostylink/links/add");
+    try {
+        $this->assertTrue($this->isElementPresent("css=input[type=text]"));
+    } catch (PHPUnit_Framework_AssertionFailedError $e) {
+        array_push($this->verificationErrors, $e->toString());
+    }
+    try {
+        $this->assertTrue($this->isElementPresent("css=textarea"));
+    } catch (PHPUnit_Framework_AssertionFailedError $e) {
+        array_push($this->verificationErrors, $e->toString());
+    }
+    try {
+        $this->assertTrue($this->isElementPresent("css=[type=submit]"));
+    } catch (PHPUnit_Framework_AssertionFailedError $e) {
+        array_push($this->verificationErrors, $e->toString());
+    }
+    // Fill up the fields
+    $this->type("css=input[type=text][name=title]", "My super content");
+    $this->type("css=textarea[name=content]", "My super title");
+    $this->click("css=[type=submit]");
+    $this->waitForPageToLoad("30000");
+    // Check you are on the link view page
+    $this->assertTrue($this->isElementPresent("css=article section h2"));
+    // Check the shown information is what you have just inserted
+    $this->assertTrue($this->isTextPresent("My super title"));
+    $this->assertTrue($this->isTextPresent("My super content"));
   }
   
   

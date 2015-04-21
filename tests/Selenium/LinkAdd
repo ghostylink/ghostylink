@@ -11,42 +11,60 @@
 <thead>
 <tr><td rowspan="1" colspan="3">testLinkView</td></tr>
 </thead><tbody>
+<!--Check that basic element are present-->
 <tr>
 	<td>open</td>
-	<td>/ghostylink/links/view/1</td>
+	<td>/ghostylink/links/add</td>
 	<td></td>
 </tr>
 <tr>
-	<td>chooseCancelOnNextConfirmation</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>Lorem ipsum dolor sit amet</td>
+	<td>verifyElementPresent</td>
+	<td>css=input[type=text]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Lorem ipsum dolor sit amet, aliquet feugiat.</td>
+	<td>verifyElementPresent</td>
+	<td>css=textarea</td>
 	<td></td>
 </tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=[type=submit]</td>
+	<td></td>
+</tr>
+<!--Fill up the fields-->
+<tr>
+	<td>type</td>
+	<td>css=input[type=text][name=title]</td>
+	<td>My super content</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=textarea[name=content]</td>
+	<td>My super title</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=[type=submit]</td>
+	<td></td>
+</tr>
+<!--Check you are on the link view page-->
 <tr>
 	<td>assertElementPresent</td>
-	<td>css=a.delete-link</td>
+	<td>css=article section h2</td>
+	<td></td>
+</tr>
+<!--Check the shown information is what you have just inserted-->
+<tr>
+	<td>assertTextPresent</td>
+	<td>My super title</td>
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>css=a.delete-link</td>
+	<td>assertTextPresent</td>
+	<td>My super content</td>
 	<td></td>
 </tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete # 1?</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>
