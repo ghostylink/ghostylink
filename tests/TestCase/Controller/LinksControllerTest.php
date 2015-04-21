@@ -73,6 +73,9 @@ class LinksControllerTest extends IntegrationTestCase
         $query = $links->find()->where(['title' => $data['title']]);
         $this->assertEquals(1, $query->count(), 'A good link is added in DB');
         
+        //Check a good insertion implies a view redirection
+        $this->assertRedirect("/links/view/" . $query->toArray()[0]->token);
+        
         //Check controller set a flash message if link cannot be saved
         $badData = $data;
         $badData['content'] = '';
