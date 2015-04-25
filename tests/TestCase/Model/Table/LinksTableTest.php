@@ -180,4 +180,17 @@ class LinksTableTest extends TestCase
                            'The inserted data corresponds to what we expect');
        
     }
+    
+    /**
+     * Check default values for non required fields are initialized
+     */
+    public function testValidationDefault() {
+        $goodData = $this->goodData;
+        $goodData['title'] = 'titletestValidationDefault';
+        $this->Links->save($this->Links->newEntity($goodData));
+        $insertedData = $this->Links->find('all')
+                                ->where(['Links.title =' => $goodData['title']])
+                                ->toArray()[0];
+        $this->assertEquals(0,$insertedData->views,'views counter is set to 0');        
+    }
 }
