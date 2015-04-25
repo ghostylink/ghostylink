@@ -17,7 +17,8 @@ class Link extends Entity
     protected $_accessible = [
         'title' => true,
         'content' => true,
-        'token' => true
+        'token' => true,
+        'max_views' => true
     ];
    
     

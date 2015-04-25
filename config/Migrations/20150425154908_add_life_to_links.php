@@ -23,7 +23,7 @@ class AddLifeToLinks extends AbstractMigration
             'limit' => 11,
             'null' => true,
         ]);
-        $table->addColumn('death_time', 'timestamp', [
+        $table->addColumn('death_time', 'datetime', [
             'default' => null,
             'null' => true,
         ]);

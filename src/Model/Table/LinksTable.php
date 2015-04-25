@@ -22,7 +22,8 @@ class LinksTable extends Table
     public function initialize(array $config)
     {
         $this->table('links');
-        $this->displayField('title');
+        $this->displayField('title');          
+        $this->displayField('max_views');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
         $this->addBehavior('Tokenable');
@@ -48,7 +49,9 @@ class LinksTable extends Table
             ->requirePresence('content', 'create')            
             ->notEmpty('content')            
             ->requirePresence('token', 'create')
-            ->notEmpty('token');
+            ->notEmpty('token')
+            ->requirePresence('max_views', 'create')
+            ->notEmpty('max_views');
             
         return $validator;
     }
