@@ -19,7 +19,5 @@ class Link extends Entity
         'content' => true,
         'token' => true,
         'max_views' => true
-    ];
-   
-    
+    ];       
 }

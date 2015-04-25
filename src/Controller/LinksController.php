@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
+
 /**
  * Links Controller
  *
@@ -32,7 +33,7 @@ class LinksController extends AppController
     public function view($token = null)
     {
         $link = $this->Links->findByToken($token)->first();
-        if(count($link) == 0) {
+        if (count($link) == 0) {
             throw new NotFoundException();
         }
         $this->set('link', $link);
