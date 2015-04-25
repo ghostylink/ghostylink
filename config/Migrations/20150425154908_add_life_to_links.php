@@ -1,0 +1,32 @@
+<?php
+use Phinx\Migration\AbstractMigration;
+
+class AddLifeToLinks extends AbstractMigration
+{
+    /**
+     * Change Method.
+     *
+     * More information on this method is available here:
+     * http://docs.phinx.org/en/latest/migrations.html#the-change-method
+     * @return void
+     */
+    public function change()
+    {
+        $table = $this->table('links');
+        $table->addColumn('max_views', 'integer', [
+            'default' => 1,
+            'limit' => 11,
+            'null' => true,
+        ]);
+        $table->addColumn('views', 'integer', [
+            'default' => 0,
+            'limit' => 11,
+            'null' => true,
+        ]);
+        $table->addColumn('death_time', 'timestamp', [
+            'default' => null,
+            'null' => true,
+        ]);
+        $table->update();
+    }
+}
