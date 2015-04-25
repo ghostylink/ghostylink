@@ -27,6 +27,7 @@ class LinksTable extends Table
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
         $this->addBehavior('Tokenable');
+        $this->addBehavior('Ghostable');
         // Example for association with User in the future
         /*$this->hasOne('Users', [
             'foreignKey' => 'link_id'

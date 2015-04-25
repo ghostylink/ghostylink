@@ -35,7 +35,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   }
   
   public function testAdd() {   
-    // Check that basic element are present
+       // Check that basic element are present
     $this->open("/ghostylink/links/add");
     try {
         $this->assertTrue($this->isElementPresent("css=input[type=text]"));
@@ -55,6 +55,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     // Fill up the fields
     $this->type("css=input[type=text][name=title]", "My super content");
     $this->type("css=textarea[name=content]", "My super title");
+    $this->type("css=input[name=max_views]", "42");
     $this->click("css=[type=submit]");
     $this->waitForPageToLoad("30000");
     // Check you are on the link view page

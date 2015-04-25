@@ -27,7 +27,8 @@ class LinksControllerTest extends IntegrationTestCase
     private $goodData = [
             'title' => 'Heisenberg',
             'content' => 'Walter Hartwell « Walt » White.',
-            'token' => 'Say my name'
+            'token' => 'Say my name',
+            'max_views' => 1
     ];
     
     /**

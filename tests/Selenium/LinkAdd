@@ -44,6 +44,11 @@
 	<td>My super title</td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>css=input[name=max_views]</td>
+	<td>42</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
 	<td>css=[type=submit]</td>
 	<td></td>

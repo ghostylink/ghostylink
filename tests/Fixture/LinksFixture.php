@@ -48,7 +48,7 @@ class LinksFixture extends TestFixture
             'content' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
             'created' => '2015-04-25 16:19:23',
             'modified' => '2015-04-25 16:19:23',
-            'token' => 'Lorem ipsum dolor sit amet',
+            'token' => 'a1d0c6e83f027327d8461063f4ac58a6',
             'max_views' => 1,
             'views' => 0,
             'death_time' => '2015-04-25 16:19:23'
