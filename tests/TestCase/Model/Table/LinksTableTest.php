@@ -60,6 +60,8 @@ class LinksTableTest extends TestCase
         $this->assertEquals(1, $this->Links->hasField('created'));
         $this->assertEquals(1, $this->Links->hasField('modified'));
         $this->assertEquals(1, $this->Links->hasField('token'));
+        $this->assertEquals(1, $this->Links->hasField('max_views'),
+                            'max_views field is present');
     }
 
     /**
@@ -72,7 +74,8 @@ class LinksTableTest extends TestCase
         $goodData = [
             'title' => 'I am not in danger ...',
             'content' => 'I am the danger !',
-            'token' => md5('Say my name')
+            'token' => md5('Say my name'),
+            'max_views' => 80000 // big default value to avoid unexpected behaviors
         ];
         $nbRecords = $this->Links->find('all')->count();
         //Check the content is required
@@ -94,6 +97,12 @@ class LinksTableTest extends TestCase
         //.. and not empty
         $this->assertFalse($this->Links->save($this->Links->newEntity($badData3)),
                     'Token is not empty');
+        
+        //Check the max_views argument is required
+        $badData4 = $goodData;
+        unset($badData3['max_views']);
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData4)),
+                            'Save: Field max_views is required');
         
         //Check no data has been inserted
         $this->assertEquals($nbRecords, $this->Links->find('all')->count(),
