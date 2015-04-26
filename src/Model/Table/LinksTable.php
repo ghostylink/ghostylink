@@ -22,7 +22,7 @@ class LinksTable extends Table
     public function initialize(array $config)
     {
         $this->table('links');
-        $this->displayField('title');          
+        $this->displayField('title');
         $this->displayField('max_views');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
