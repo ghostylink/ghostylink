@@ -16,21 +16,25 @@ class TokenableBehavior extends Behavior
     
     /**
      * Tokenize an entity on his title and date concatenation
-     * @param Entity $entity
+     * @param Entity $entity the entity to generate token on
      */
-    public function tokenize(Entity $entity) {
+    public function tokenize(Entity $entity)
+    {
         $config = $this->config();
         $title = $entity->get($config['title']);
         $date = $entity->get($config['date']);
         $entity->set($config['token'], md5(uniqid($title . $date, true)));
     }
     
-    public function beforeSave(Event $event, Entity $entity) {
+    public function beforeSave(Event $event, Entity $entity)
+    {        
         if (!($entity->has('title') &&
             $entity->has('created'))) {
             $event->stopPropagation();
             return;
+        }        
+        if($entity->isNew()) {
+            $this->tokenize($entity);
         }
-        $this->tokenize($entity);
     }
 }

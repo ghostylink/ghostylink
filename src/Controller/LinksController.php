@@ -36,6 +36,11 @@ class LinksController extends AppController
         if (count($link) == 0) {
             throw new NotFoundException();
         }
+        $ghost = $this->Links->behaviors()->get('Ghostable');
+        $ghost->increaseViews($link);
+        
+        $this->Links->save($link);
+        
         $this->set('link', $link);
         $this->set('_serialize', ['link']);
     }

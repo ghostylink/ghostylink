@@ -58,6 +58,19 @@ class LinksControllerTest extends IntegrationTestCase
     }
 
     /**
+     * Test that the views counter increase when the page is consulted
+     * 
+     * @return void
+     */
+    public function testViewIncreaseCounter()
+    {
+        $links = TableRegistry::get('Links');
+        $linkBefore = $links->findByToken('a1d0c6e83f027327d8461063f4ac58a6')->first();
+        $this->get('/links/view/a1d0c6e83f027327d8461063f4ac58a6');
+        $linksAfter = $links->findByToken('a1d0c6e83f027327d8461063f4ac58a6')->first();
+        $this->assertEquals($linkBefore->views + 1, $linksAfter->views);
+    }
+    /**
      * Test add method
      *
      * @return void
