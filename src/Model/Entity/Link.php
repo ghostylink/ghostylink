@@ -18,6 +18,19 @@ class Link extends Entity
         'title' => true,
         'content' => true,
         'token' => true,
-        'max_views' => true
+        'max_views' => true        
     ];
+    
+    /**
+     * Get the remaining available view of a link
+     * @return type     
+     */
+    protected function _getRemainingViews()
+    {                
+        return max($this->_properties['max_views'] - $this->_properties['views'],0);
+    }
+    
+    protected function _getLifePercentage() {
+        return (100 * $this->_properties['views']) / $this->_properties['max_views'];
+    }
 }
