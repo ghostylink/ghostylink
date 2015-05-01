@@ -17,7 +17,8 @@
         "cakephp/bake": "~1.0",
         "phpunit/phpunit": "*",
         "phpunit/phpunit-selenium": ">=1.2",
-        "cakephp/cakephp-codesniffer":"2.*"
+        "cakephp/cakephp-codesniffer":"2.*",
+        "fabpot/php-cs-fixer":"*"
     },
     "suggest": {
         "phpunit/phpunit": "Allows automated tests to be run without system-wide install.",

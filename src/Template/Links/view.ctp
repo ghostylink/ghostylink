@@ -21,7 +21,7 @@
                 <h2><?= h($link->title) ?></h2>
                 <time>Created on <?= h($link->created) ?></time>
                 <?= $this->Form->postLink('', ['action' => 'delete', $link->id],
-                        ['confirm' => __('Are you sure you want to delete \' {1} \'?', $link->id, $link->title),
+                        ['confirm' => __("Are you sure you want to delete ' {1} '?", $link->id, $link->title),
                          'class'=>'glyphicon glyphicon-trash delete-link']) ?> </li>
             </section>
             <section class="link-content panel-body">

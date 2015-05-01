@@ -36,20 +36,7 @@
           </button>
           <a class="navbar-brand" href="#">Ghostylink</a>                  
         </div>
-        <div class="collapse navbar-collapse">
-            <?php
-                $logout_link = "";
-                if ($this->Session->read('Auth.User.username')) {
-                    $option = array(
-                        'controller' => 'Users',
-                        'action' => 'logout'                        
-                    );
-                $logout_link = $this->Html->tag("li", $this->Html->link('Logout', $option));
-                }
-            ?>
-            <ul class="nav navbar-nav">                
-                <?= $logout_link ?>
-            </ul>
+        <div class="collapse navbar-collapse">            
         </div><!--/.nav-collapse -->
       </div>
         
