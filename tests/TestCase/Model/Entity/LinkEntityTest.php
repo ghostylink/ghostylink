@@ -58,6 +58,11 @@ class LinkEntityTest extends TestCase
         $this->assertEquals($link->max_views - $link->views, $remaining_views, 'remaining_views field is correct');
     }
     
+    /**
+     * Test the virtual prperty life_percentage
+     * 
+     * @return void
+     */
     public function testLifePercentage()
     {
         $link = $this->Links->findByTitle('Half life')->first();        

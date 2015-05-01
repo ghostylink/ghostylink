@@ -37,7 +37,7 @@ class LinksController extends AppController
             throw new NotFoundException();
         }
         $ghost = $this->Links->behaviors()->get('Ghostable');
-        $ghost->increaseViews($link);
+        //$ghost->increaseViews($link);
         
         $this->Links->save($link);
         

@@ -1,0 +1,86 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 1 mai 2015, 12:18:43
+    Author     : kremy
+*/
+
+/******************************************************************************/
+/*********************** All link style ***************************************/
+.link-heading h2{
+    display:inline-block;
+    margin-right: 0.5em;
+    text-transform : capitalize;
+}
+.link-heading a {
+    font-size: 2em;
+    color:#fff;
+    float:right;
+    margin-top:0.2em;
+}
+.link-heading a:hover {
+    text-decoration: none;
+    color:#e13027;
+}
+.link-heading time {
+    font-style: italic;
+}
+
+aside.link-stats.panel {
+    padding:0;
+}
+/************* Link statistics ************************************************/
+div.round{
+    display: inline-block;
+    width: 200px; height: 200px;
+    vertical-align: middle;
+}
+
+div.round input{
+    position: absolute;
+    top:60px; left:50px;
+    font-size: 60px; text-align: center;
+    width: 80px;
+    border:none; background:none;
+    outline:none;
+}
+div.round canvas{
+    position: absolute;
+    top:0; left:0; right:0; bottom:0;
+}
+div.round {
+    position: relative;
+}
+meter.round  { display:none;
+               background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+               border: medium none;
+               font-size: 60px;
+               left: 50px;
+               outline: medium none;               
+               text-align: center;
+               top: 60px;
+               width: 100px;
+}
+meter.vertical {
+    transform: rotate(-90deg);
+    /* /!\ due to the previous rotate, width become height and height become width */
+    width: 10em;
+    height:4em;
+
+}
+div.meter-vertical-wrapper {
+    display:inline-block;  
+    vertical-align: bottom;
+}
+div.meter-vertical-wrapper {
+    text-align: center;
+}
+div.meter-vertical-wrapper div{    
+    margin-top: 3.5em;
+    font-size: 12pt;
+    font-family: "Calibri";
+    font-style: italic;    
+}
