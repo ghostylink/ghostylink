@@ -15,11 +15,12 @@ class GhostableBehavior extends Behavior
     /**
      * Increase the view counter
      * @param Entity $entity the entity the view counter has to be incremented
+     * @return
      */
-    public function increaseViews(Entity $entity)  
+    public function increaseViews(Entity $entity)
     {
         $config = $this->config();
         $views = $entity->get($config['views']);
         $entity->set($config['views'], $views + 1);
-    }    
+    }
 }

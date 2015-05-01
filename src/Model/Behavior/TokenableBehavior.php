@@ -34,13 +34,13 @@ class TokenableBehavior extends Behavior
      * @return void
      */
     public function beforeSave(Event $event, Entity $entity)
-    {        
+    {
         if (!($entity->has('title') &&
             $entity->has('created'))) {
             $event->stopPropagation();
             return;
-        }        
-        if($entity->isNew()) {
+        }
+        if ($entity->isNew()) {
             $this->tokenize($entity);
         }
     }

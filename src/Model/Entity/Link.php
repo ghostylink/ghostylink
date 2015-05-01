@@ -23,14 +23,19 @@ class Link extends Entity
     
     /**
      * Get the remaining available view of a link
-     * @return type     
+     * @return type
      */
     protected function _getRemainingViews()
-    {                
-        return max($this->_properties['max_views'] - $this->_properties['views'],0);
+    {  
+        return max($this->_properties['max_views'] - $this->_properties['views'], 0);
     }
     
-    protected function _getLifePercentage() {
-        return min((100 * $this->_properties['views']) / $this->_properties['max_views'],100);
+    /**
+     * Get the  life percentage of a link
+     * @return type
+     */
+    protected function _getLifePercentage()
+    {
+        return min((100 * $this->_properties['views']) / $this->_properties['max_views'], 100);
     }
 }

@@ -26,7 +26,7 @@ class LinksController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Link id.
+     * @param string|null $token Link token.
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
