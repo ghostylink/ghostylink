@@ -1,5 +1,5 @@
 <div class="meter-vertical-wrapper">
-    <meter class="vertical" min="0" max="<?= _($link->max_views); ?>" 
+    <meter class="vertical link-remaining-views" min="0" max="<?= _($link->max_views); ?>" 
            low="<?= _(round($link->max_views * 0.33)) ?>"
            high="<?= _(round($link->max_views * 0.66)); ?>" 
            optimum="<?= _($link->max_views); ?>"

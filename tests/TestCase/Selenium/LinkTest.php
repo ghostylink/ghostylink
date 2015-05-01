@@ -25,13 +25,18 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
 
   public function testView()
   {
-    $this->open("ghostylink/links/view/a1d0c6e83f027327d8461063f4ac58a6");
+    $this->open("/ghostylink/links/view/a1d0c6e83f027327d8461063f4ac58a6");
+    // Check the link itself is displayed
     $this->chooseCancelOnNextConfirmation();
     $this->verifyTextPresent("Lorem ipsum dolor sit amet");
     $this->verifyTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat.");
     $this->assertTrue($this->isElementPresent("css=a.delete-link"));
     $this->click("css=a.delete-link");
-    $this->assertTrue((bool)preg_match('/^Are you sure you want to delete # 1[\s\S]$/',$this->getConfirmation()));
+    $this->assertTrue((bool)preg_match("/^Are you sure you want to delete ' Lorem ipsum dolor sit amet '[\s\S]$/",$this->getConfirmation()));
+    // Check links statistics are displayed
+    $this->assertTrue($this->isElementPresent("css=.link-stats"));
+    $this->assertTrue((bool)preg_match('/^Ghostified at [\s\S]*$/',$this->getText("css=meter.link-life-percentage")));
+    $this->assertTrue((bool)preg_match('/^0 views left[\s\S]*$/',$this->getText("css=meter.link-remaining-views+div")));
   }
   
   public function testAdd() {   

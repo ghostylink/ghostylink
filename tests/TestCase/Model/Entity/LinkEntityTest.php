@@ -69,5 +69,7 @@ class LinkEntityTest extends TestCase
         $percent = $link->life_percentage;        
         $this->assertNotNull($percent);
         $this->assertEquals($percent, 50);
+        $deadLink = $this->Links->findByTitle('Dead link by views')->first();        
+        $this->assertLessThanOrEqual(100, $deadLink->life_percentage, 'Link percentage is less or equal to 100');
     }
 }

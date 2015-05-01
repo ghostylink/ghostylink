@@ -31,6 +31,6 @@ class Link extends Entity
     }
     
     protected function _getLifePercentage() {
-        return (100 * $this->_properties['views']) / $this->_properties['max_views'];
+        return min((100 * $this->_properties['views']) / $this->_properties['max_views'],100);
     }
 }

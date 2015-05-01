@@ -13,9 +13,10 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/ghostylink/links/view/1</td>
+	<td>/ghostylink/links/view/a1d0c6e83f027327d8461063f4ac58a6</td>
 	<td></td>
 </tr>
+<!--Check the link itself is displayed-->
 <tr>
 	<td>chooseCancelOnNextConfirmation</td>
 	<td></td>
@@ -43,10 +44,25 @@
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete # 1?</td>
+	<td>Are you sure you want to delete ' Lorem ipsum dolor sit amet '?</td>
 	<td></td>
 </tr>
-
+<!--Check links statistics are displayed-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=.link-stats</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=meter.link-life-percentage</td>
+	<td>Ghostified at *</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=meter.link-remaining-views+div</td>
+	<td>0 views left*</td>
+</tr>
 </tbody></table>
 </body>
 </html>

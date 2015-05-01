@@ -63,6 +63,17 @@ class LinksFixture extends TestFixture
             'max_views' => 42,
             'views' => 21,
             'death_time' => '2015-04-25 16:19:23'
+        ],
+        [
+            'id' => 3,
+            'title' => 'Dead link by views',
+            'content' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+            'created' => '2015-04-25 16:19:23',
+            'modified' => '2015-04-25 16:19:23',
+            'token' => '63f4ac58a6a1d0c6e83f027327d84610',
+            'max_views' => 42,
+            'views' => 43,
+            'death_time' => '2015-04-25 16:19:23'
         ]
     ];
 }
