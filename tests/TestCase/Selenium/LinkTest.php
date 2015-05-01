@@ -32,7 +32,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->verifyTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat.");
     $this->assertTrue($this->isElementPresent("css=a.delete-link"));
     $this->click("css=a.delete-link");
-    $this->assertTrue((bool)preg_match("/^Are you sure you want to delete ' Lorem ipsum dolor sit amet '[\s\S]$/",$this->getConfirmation()));
+    $this->assertTrue((bool)preg_match("/^Are you sure you want to delete : 'Lorem ipsum dolor sit amet' [\s\S]$/",$this->getConfirmation()));
     // Check links statistics are displayed
     $this->assertTrue($this->isElementPresent("css=.link-stats"));
     $this->assertTrue((bool)preg_match('/^Ghostified at [\s\S]*$/',$this->getText("css=meter.link-life-percentage")));
