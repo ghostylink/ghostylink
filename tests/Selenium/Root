@@ -23,15 +23,19 @@
 </tr>
 <tr>
 	<td>assertElementPresent</td>
-	<td>css=form[action=&quot;/ghostylink/links/add&quot;]</td>
+	<td>css=form[action=&quot;/ghostylink/add&quot;]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertCssCount</td>
-	<td>form[action=&quot;/ghostylink/links/add&quot;] input[type=&quot;text&quot;]</td>
-	<td>2</td>
+	<td>form[action=&quot;/ghostylink/add&quot;] input[type=&quot;text&quot;]</td>
+	<td>1</td>
 </tr>
-
+<tr>
+	<td>assertCssCount</td>
+	<td>form[action=&quot;/ghostylink/add&quot;] textarea</td>
+	<td>1</td>
+</tr>
 </tbody></table>
 </body>
 </html>

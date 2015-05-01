@@ -60,8 +60,7 @@ class LinksController extends AppController
             if ($this->Links->save($link)) {
                 $this->Flash->success('The link has been saved.');
                 //Redirect to the link view page
-                return $this->redirect(['controller' => 'links',
-                                        'action' => 'view',
+                return $this->redirect(['_name'=>'link-view',
                                         $link->token]);
             } else {
                 $this->Flash->error('The link could not be saved. Please, try again.');

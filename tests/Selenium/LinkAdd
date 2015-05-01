@@ -14,7 +14,7 @@
 <!--Check that basic element are present-->
 <tr>
 	<td>open</td>
-	<td>/ghostylink/links/add</td>
+	<td>/ghostylink/add</td>
 	<td></td>
 </tr>
 <tr>

@@ -25,7 +25,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
 
   public function testView()
   {
-    $this->open("/ghostylink/links/view/a1d0c6e83f027327d8461063f4ac58a6");
+    $this->open("/ghostylink/a1d0c6e83f027327d8461063f4ac58a6");
     // Check the link itself is displayed
     $this->chooseCancelOnNextConfirmation();
     $this->verifyTextPresent("Lorem ipsum dolor sit amet");
@@ -40,8 +40,8 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   }
   
   public function testAdd() {   
-       // Check that basic element are present
-    $this->open("/ghostylink/links/add");
+     // Check that basic element are present
+    $this->open("/ghostylink/add");
     try {
         $this->assertTrue($this->isElementPresent("css=input[type=text]"));
     } catch (PHPUnit_Framework_AssertionFailedError $e) {

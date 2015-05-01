@@ -19,8 +19,8 @@
         <article class="panel panel-primary">
             <section class="link-heading panel panel-heading">
                 <h2><?= h($link->title) ?></h2>
-                <time>Created on <?= h($link->created) ?></time>
-                <?= $this->Form->postLink('', ['action' => 'delete', $link->id],
+                <time>Created on <?= h($link->created) ?></time>                
+                <?= $this->Form->postLink('', ['_name' => 'link-delete', $link->id],
                         ['confirm' => __("Are you sure you want to delete : '") . $link->title . "' ?",
                          'class'=>'glyphicon glyphicon-trash delete-link']) ?> </li>
             </section>

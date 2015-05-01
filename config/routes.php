@@ -48,7 +48,18 @@ Router::scope('/', function ($routes) {
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('/', ['controller' => 'Links', 'action' => 'index']);
-
+    $routes->connect('index', ['controller' => 'Links', 'action' => 'index']);
+    $routes->connect('add', ['controller' => 'Links', 'action' => 'add']);
+    $routes->connect('edit/:id', 
+                    ['controller' => 'Links', 'action' => 'edit'],
+                    ['_name' => 'link-edit', 'id' => '\d+', 'pass'=> ['id']]);
+    $routes->connect('delete/:id',
+                    ['controller' => 'Links', 'action' => 'delete'],
+                    ['_name' => 'link-delete','pass' => ['id']]);
+    $routes->connect(':token', 
+                    ['controller' => 'Links', 'action' => 'view'],
+                    ['_name' => 'link-view','token'=>'\w{32}','pass' => ['token']]);
+    //die(Router::url(['_name' => 'link-view']));
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
      */
@@ -72,7 +83,7 @@ Router::scope('/', function ($routes) {
      */
     // All actions of controllers are accessible
     // Better to disable it for security reasons
-     $routes->fallbacks('InflectedRoute');
+     //$routes->fallbacks('InflectedRoute');
 });
 
 /**

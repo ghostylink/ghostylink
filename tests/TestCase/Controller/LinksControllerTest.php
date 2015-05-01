@@ -4,7 +4,6 @@ namespace App\Test\TestCase\Controller;
 use App\Controller\LinksController;
 use Cake\TestSuite\IntegrationTestCase;
 use Cake\ORM\TableRegistry;
-
 /**
  * App\Controller\LinksController Test Case
  */
@@ -49,11 +48,11 @@ class LinksControllerTest extends IntegrationTestCase
      * @return void
      */
     public function testView()
-    {
-        $this->get('/links/view/1');        
+    {        
+        $this->get('/1');        
         $this->assertResponseError('Links is not accessbile by its id');
         // First fixture's titles
-        $this->get('/links/view/a1d0c6e83f027327d8461063f4ac58a6');
+        $this->get('/a1d0c6e83f027327d8461063f4ac58a6');
         $this->assertResponseContains('Lorem ipsum dolor sit amet');
     }
 
@@ -66,7 +65,7 @@ class LinksControllerTest extends IntegrationTestCase
     {
         $links = TableRegistry::get('Links');
         $linkBefore = $links->findByToken('a1d0c6e83f027327d8461063f4ac58a6')->first();
-        $this->get('/links/view/a1d0c6e83f027327d8461063f4ac58a6');
+        $this->get('/a1d0c6e83f027327d8461063f4ac58a6');
         $linksAfter = $links->findByToken('a1d0c6e83f027327d8461063f4ac58a6')->first();
         $this->assertEquals($linkBefore->views + 1, $linksAfter->views);
     }
@@ -79,7 +78,7 @@ class LinksControllerTest extends IntegrationTestCase
     {
         // Add new data using POST method
         $data = $this->goodData;
-        $this->post('/links/add', $data);
+        $this->post('/add', $data);
         $this->assertResponseSuccess();
 
         // Check if the data has been inserted in database
@@ -88,12 +87,12 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertEquals(1, $query->count(), 'A good link is added in DB');
         
         //Check a good insertion implies a view redirection
-        $this->assertRedirect("/links/view/" . $query->toArray()[0]->token);
+        $this->assertRedirect($query->toArray()[0]->token);
         
         //Check controller set a flash message if link cannot be saved
         $badData = $data;
         $badData['content'] = '';
-        $this->post('/links/add', $badData);
+        $this->post('/add', $badData);
         $this->assertSession('The link could not be saved. Please, try again.',
                              'Flash.flash.message');
         $this->checkTokenGeneration();
@@ -104,14 +103,14 @@ class LinksControllerTest extends IntegrationTestCase
         $links = TableRegistry::get('Links');
         
         //token is 32 bytes long (generated with md5)
-        $this->post('/links/add', $goodData);
+        $this->post('/add', $goodData);
         $query = $links->find()->where(['title' => $goodData['title']]);
         // Execute the query        
         $tokenQuery1 = $query->first()->token;        
         $this->assertEquals(32,  strlen($tokenQuery1),'Tokens are 32 bytes long');
         
         //Two links with same information (title, content) have different token        
-        $this->post('/links/add', $goodData);
+        $this->post('/add', $goodData);
         $this->assertResponseSuccess('Similar link can be added');
         // /!\ seems that we need to rebind query... 
         $query2 = $links->find()->where(['title' => $goodData['title']]);
@@ -136,7 +135,7 @@ class LinksControllerTest extends IntegrationTestCase
             'content' => 'This is not Walter Hartwell « Walt » White.',
         ];
         // Get link from first fixture
-        $this->post('/links/edit/1', $data);
+        $this->post('/edit/1', $data);
         $this->assertResponseSuccess();
 
         // Check if the data has been modified in database
@@ -147,7 +146,7 @@ class LinksControllerTest extends IntegrationTestCase
         //Test a flash message is set if something is wrong:                
         $badData = $data;
         $badData['content'] = '';
-        $this->post('/links/edit/1', $badData);
+        $this->post('/edit/1', $badData);
         $this->assertSession('The link could not be saved. Please, try again.',
                              'Flash.flash.message');
     }
@@ -164,7 +163,7 @@ class LinksControllerTest extends IntegrationTestCase
         $data = $links->get(1);
         
         // Delete this one
-        $this->post('/links/delete/1');
+        $this->post('/delete/1');        
         $this->assertResponseSuccess();
         
         // Check if the data has been modified in database
