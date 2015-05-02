@@ -17,3 +17,6 @@ and open the template in the editor.
 .panel h1, .panel h2, .panel h3, .panel h4, .panel h5, .panel h6 {
     margin-top:0;
 }
+a.navbar-brand {
+    float:none;
+}

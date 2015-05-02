@@ -17,11 +17,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Cache me if you can</td>
-	<td></td>
-</tr>
-<tr>
 	<td>assertElementPresent</td>
 	<td>css=form[action=&quot;/ghostylink/add&quot;]</td>
 	<td></td>

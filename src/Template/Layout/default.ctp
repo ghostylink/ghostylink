@@ -4,14 +4,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?= $this->Html->meta('favicon.ico','/img/logos/favicon/favicon.ico',['type' => 'icon']);?>
     <title>Ghostylink - <?php echo $this->fetch("title");?></title>
-
+    
     <!-- Bootstrap and others css -->    
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <?php         
         echo $this->Html->css("bootstrap.min");
         echo $this->Html->css("jquery-ui.min");
         echo $this->Html->css("common");
+        echo $this->Html->css($this->name . '/' . $this->view);
         //fdfs
         echo $this->fetch("css");        
         echo $this->Html->script("jquery.min");
@@ -23,7 +25,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>    
+  <body>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -34,7 +36,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Ghostylink</a>                  
+          <?= $this->Html->image("logos/ghostylink-logo-60x50.png", 
+                                     array('class' => 'logo', 
+                                           'alt' => 'ghostylink logo'));?>  
+          <?= $this->Html->link('Ghostylink', "/", array('class' => 'navbar-brand'));?>
+          </a>                  
         </div>
         <div class="collapse navbar-collapse">            
         </div><!--/.nav-collapse -->

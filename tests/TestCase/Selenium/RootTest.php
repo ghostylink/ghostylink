@@ -13,8 +13,7 @@ class rootTest extends PHPUnit_Extensions_SeleniumTestCase
 
   public function testFormIsPresent()
   {
-    $this->open("/ghostylink/");
-    $this->verifyTextPresent("Cache me if you can");
+    $this->open("/ghostylink/");    
     $this->assertTrue($this->isElementPresent("css=form[action=\"/ghostylink/add\"]"));
     $this->assertEquals("1", $this->getCssCount("form[action=\"/ghostylink/add\"] input[type=\"text\"]"));
     $this->assertEquals("1", $this->getCssCount("form[action=\"/ghostylink/add\"] textarea"));
