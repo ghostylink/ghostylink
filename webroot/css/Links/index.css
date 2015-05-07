@@ -7,9 +7,40 @@ and open the template in the editor.
     Created on : 1 mai 2015, 12:18:43
     Author     : kremy
 */
-
+ul#link-components-available li{
+    cursor:move !important;     
+}
+ul#link-components-chosen {    
+    height:3em;    
+    font-style: italic;
+    text-align: center;
+    border-color:#0088cc;
+    border-style:dashed;
+    border-width:1px;
+    
+}
+ul#link-components-chosen span {
+    margin-top:0.8em;
+    display: block; 
+}
+ul#link-components-chosen li{
+    font-style: normal;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    font-size: 1.3em;            
+    display: inline-block;
+    margin-left: 0.5em;
+    cursor: move;
+}
+section {
+    padding: 0 !important;
+}
+section.link-components h2 {
+    font-size: 1.2em;
+}
 /******************************************************************************/
 /*********************** All link style ***************************************/
 div#left-block {
     text-align: center;
 }
+

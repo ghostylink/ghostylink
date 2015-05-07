@@ -1,3 +1,8 @@
+<?php
+    $this->start('script');
+    echo $this->Html->script("Links/components");
+    $this->end();
+?>
 <div class="links form col-lg-10 col-md-9">
     <?php
     if (!isset($link)){
@@ -19,13 +24,16 @@
                                               'id' => 'inputContent',
                                               'class' => 'form-control', 
                                               'placeholder' => "Enter your private contents",
-                                              'required' => 'false']);            
-            
-            echo $this->Form->input('max_views', ['type' => 'number',
-                                              'id' => 'inputContent',
-                                              'class' => 'form-control', 
-                                              'placeholder' => "Enter your links life expectancy (number of views)",
-                                              'required' => 'false']);
+                                              'required' => 'false']);?>
+        <label>Your components</label><ul id="link-components-chosen" class="col-lg-12">
+            <span class="legend">Drop some components here</span>
+        </ul>    
+        <?php
+//            echo $this->Form->input('max_views', ['type' => 'number',
+//                                              'id' => 'inputContent',
+//                                              'class' => 'form-control', 
+//                                              'placeholder' => "Enter your links life expectancy (number of views)",
+//                                              'required' => 'false']);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Create the link'), ['type' => 'submit',
