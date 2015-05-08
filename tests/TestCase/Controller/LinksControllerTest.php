@@ -87,7 +87,7 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertEquals(1, $query->count(), 'A good link is added in DB');
         
         //Check a good insertion implies a view redirection
-        $this->assertRedirect($query->toArray()[0]->token);
+        //TODO: Test token is present in the rendered template
         
         //Check controller set a flash message if link cannot be saved
         $badData = $data;
@@ -96,6 +96,8 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertSession('The link could not be saved. Please, try again.',
                              'Flash.flash.message');
         $this->checkTokenGeneration();
+        
+        $this->markTestIncomplete('Test token is present in the rendered template');
     }
 
     private function checkTokenGeneration() {

@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
-
+use Cake\Routing\Router;
 /**
  * Links Controller
  *
@@ -53,21 +53,25 @@ class LinksController extends AppController
     public function add()
     {
         $link = $this->Links->newEntity();
-        if ($this->request->is('post')) {
+        if ($this->request->is('ajax') || $this->request->is('post') ) {
             $link = $this->Links->patchEntity($link, $this->request->data);
             // Initialize empty token to pass the validation
             $link->token = "";
             if ($this->Links->save($link)) {
                 $this->Flash->success('The link has been saved.');
                 //Redirect to the link view page
-                return $this->redirect(['_name'=>'link-view',
-                                        $link->token]);
+                $this->set('url', $link->token);                
+                return $this->render('ajax/url','ajax');
             } else {
+                $this->layout = 'ajax';                
                 $this->Flash->error('The link could not be saved. Please, try again.');
+                $this->set(compact('link'));
+                $this->set('_serialize', ['link']);
+                return $this->render('add', 'ajax');
+                
             }
         }
-        $this->set(compact('link'));
-        $this->set('_serialize', ['link']);
+        
     }
 
     /**

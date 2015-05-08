@@ -41,7 +41,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   
   public function testAdd() {   
      // Check that basic element are present
-    $this->open("/ghostylink/add");
+    $this->open("/ghostylink/");
     try {
         $this->assertTrue($this->isElementPresent("css=input[type=text]"));
     } catch (PHPUnit_Framework_AssertionFailedError $e) {
@@ -62,12 +62,19 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->type("css=textarea[name=content]", "My super title");
     $this->type("css=input[name=max_views]", "42");
     $this->click("css=[type=submit]");
-    $this->waitForPageToLoad("30000");
-    // Check you are on the link view page
-    $this->assertTrue($this->isElementPresent("css=article section h2"));
-    // Check the shown information is what you have just inserted
-    $this->assertTrue($this->isTextPresent("My super title"));
-    $this->assertTrue($this->isTextPresent("My super content"));
+    for ($second = 0; ; $second++) {
+        if ($second >= 60) $this->fail("timeout");
+        try {
+            if ($this->isElementPresent("css=section.generated-link")) break;
+        } catch (Exception $e) {}
+        sleep(1);
+    }
+
+    // Check we have the link
+    $this->assertTrue($this->isElementPresent("css=section.generated-link"));
+    // Click on the select button
+    $this->click("css=button.link-copy");
+    $this->assertTrue($this->isTextPresent("Press Ctrl-C"));  
   }
   
   
