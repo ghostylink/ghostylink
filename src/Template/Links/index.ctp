@@ -1,5 +1,13 @@
-<div class="col-lg-6">
-<div id="left-block" class="col-lg-12">
+<?php
+    $this->start('script');
+    echo $this->Html->script("Links/index");
+    $this->end(); 
+    
+    $this->start('css');
+    echo $this->Html->css("Links/view");
+    $this->end();
+    ?>
+<div id="left-block" class="col-lg-6">
     <?= $this->Html->image("logos/ghostylink-logo-300x250.png", array('class' => 'logo', 'alt' => 'ghostylink logo'));?>
 </div>
 <section class="panel panel-info col-lg-12 link-components">

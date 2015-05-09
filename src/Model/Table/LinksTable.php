@@ -56,4 +56,17 @@ class LinksTable extends Table
             
         return $validator;
     }
+    
+    /**
+     * 
+     */
+    public function increaseViews(Link $entity)
+    {
+        $ghost = $this->behaviors()->get('Ghostable');
+        if(!$ghost->increaseViews($entity)) {
+            $this->delete($entity);
+            return false;
+        }
+        return true;
+    }
 }

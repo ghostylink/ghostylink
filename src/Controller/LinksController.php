@@ -3,7 +3,6 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
-
 /**
  * Links Controller
  *
@@ -36,13 +35,14 @@ class LinksController extends AppController
         if (count($link) == 0) {
             throw new NotFoundException();
         }
-        $ghost = $this->Links->behaviors()->get('Ghostable');
-        $ghost->increaseViews($link);
-        
-        $this->Links->save($link);
-        
-        $this->set('link', $link);
-        $this->set('_serialize', ['link']);
+        // The link has not been deleted
+        if ($this->Links->increaseViews($link)) {
+            $this->Links->save($link);
+            $this->set('link', $link);
+            $this->set('_serialize', ['link']);
+        } else { // The link has been deleted
+            throw new NotFoundException();
+        }
     }
     
     /**
@@ -53,21 +53,25 @@ class LinksController extends AppController
     public function add()
     {
         $link = $this->Links->newEntity();
-        if ($this->request->is('post')) {
+        if ($this->request->is('ajax') || $this->request->is('post') ) {
             $link = $this->Links->patchEntity($link, $this->request->data);
             // Initialize empty token to pass the validation
             $link->token = "";
             if ($this->Links->save($link)) {
                 $this->Flash->success('The link has been saved.');
                 //Redirect to the link view page
-                return $this->redirect(['_name'=>'link-view',
-                                        $link->token]);
+                $this->set('url', $link->token);                
+                return $this->render('ajax/url','ajax');
             } else {
+                $this->layout = 'ajax';                
                 $this->Flash->error('The link could not be saved. Please, try again.');
+                $this->set(compact('link'));
+                $this->set('_serialize', ['link']);
+                return $this->render('add', 'ajax');
+                
             }
         }
-        $this->set(compact('link'));
-        $this->set('_serialize', ['link']);
+        
     }
 
     /**

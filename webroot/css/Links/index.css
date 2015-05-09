@@ -44,3 +44,19 @@ div#left-block {
     text-align: center;
 }
 
+
+
+div.link-url {
+    display: inline-block;
+}
+button.link-copy{
+    height: 3em;
+    font-size: 0.9em;
+}
+
+section.generated-link .copy-instruction {
+    margin-bottom: 0.3em !important;
+    display: inline-block;
+}
+
+

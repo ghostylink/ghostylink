@@ -14,7 +14,7 @@
 <!--Check that basic element are present-->
 <tr>
 	<td>open</td>
-	<td>/ghostylink/add</td>
+	<td>/ghostylink/</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,25 +49,30 @@
 	<td>42</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>click</td>
 	<td>css=[type=submit]</td>
 	<td></td>
 </tr>
-<!--Check you are on the link view page-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=section.generated-link</td>
+	<td></td>
+</tr>
+<!--Check we have the link-->
 <tr>
 	<td>assertElementPresent</td>
-	<td>css=article section h2</td>
+	<td>css=section.generated-link</td>
 	<td></td>
 </tr>
-<!--Check the shown information is what you have just inserted-->
+<!--Click on the select button-->
 <tr>
-	<td>assertTextPresent</td>
-	<td>My super title</td>
+	<td>click</td>
+	<td>css=button.link-copy</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertTextPresent</td>
-	<td>My super content</td>
+	<td>Press Ctrl-C</td>
 	<td></td>
 </tr>
 </tbody></table>
