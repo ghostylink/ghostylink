@@ -60,7 +60,7 @@ class LinksTable extends Table
     /**
      * 
      */
-    public function increaseViews(Entity $entity)
+    public function increaseViews(Link $entity)
     {
         $ghost = $this->behaviors()->get('Ghostable');
         if(!$ghost->increaseViews($entity)) {
