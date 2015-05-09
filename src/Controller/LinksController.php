@@ -3,7 +3,6 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
-use Cake\Routing\Router;
 /**
  * Links Controller
  *
