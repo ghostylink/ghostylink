@@ -18,7 +18,7 @@ class Link extends Entity
         'title' => true,
         'content' => true,
         'token' => true,
-        'max_views' => true        
+        'max_views' => true      
     ];
     
     /**

@@ -57,13 +57,16 @@ class LinksTable extends Table
         return $validator;
     }
     
-    /**
-     * 
+    /**      
+     * increase the number of views
+     *
+     * @param Link $entity the Link entity to increase the view on
+     * @return boolean true if the link has been deleted
      */
     public function increaseViews(Link $entity)
     {
         $ghost = $this->behaviors()->get('Ghostable');
-        if(!$ghost->increaseViews($entity)) {
+        if (!$ghost->increaseViews($entity)) {
             $this->delete($entity);
             return false;
         }

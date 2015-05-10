@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\Behavior;
 
 use Cake\Event\Event;
@@ -23,7 +22,7 @@ class GhostableBehavior extends Behavior
         $config = $this->config();
         $views = $entity->get($config['views']);
         $entity->set($config['views'], $views + 1);
-        if(!$this->checkNbViews($entity)) {
+        if (!$this->checkNbViews($entity)) {
             return false;
         }
         return true;
@@ -37,8 +36,8 @@ class GhostableBehavior extends Behavior
     private function checkNbViews(Entity $entity)
     {
         $config = $this->config();
-        if($entity->get($config['views']) > 
-           $entity->get($config['max_views'])) {
+        if($entity->get($config['views']) >
+            $entity->get($config['max_views'])) {
             return false;
         }
         return true;
