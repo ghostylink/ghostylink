@@ -40,7 +40,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   }
   
   public function testAdd() {   
-     // Check that basic element are present
+       // Check that basic element are present
     $this->open("/ghostylink/");
     try {
         $this->assertTrue($this->isElementPresent("css=input[type=text]"));
@@ -60,6 +60,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     // Fill up the fields
     $this->type("css=input[type=text][name=title]", "My super content");
     $this->type("css=textarea[name=content]", "My super title");
+    $this->click("css=ul#link-components-available li#[data-related-field=max_views]");
     $this->type("css=input[name=max_views]", "42");
     $this->click("css=[type=submit]");
     for ($second = 0; ; $second++) {
@@ -74,9 +75,50 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->assertTrue($this->isElementPresent("css=section.generated-link"));
     // Click on the select button
     $this->click("css=button.link-copy");
-    $this->assertTrue($this->isTextPresent("Press Ctrl-C"));  
+    $this->assertTrue($this->isTextPresent("Press Ctrl-C"));
   }
   
+  public function testAddComponents() {
+    $this->open("/ghostylink/");
+    $this->assertTrue($this->isTextPresent("Drop some components here"));
+    // Checks the components is moved when we click on it
+    $this->click("css=ul#link-components-available li[data-related-field=max_views]");
+    $this->assertFalse($this->isTextPresent("Drop some components here"));
+    $this->assertTrue($this->isElementPresent("css=ul#link-components-chosen li[data-related-field=max_views]"));
+    $this->assertFalse($this->isElementPresent("css=ul#link-components-available li[data-related-field=max_views]"));
+    // Checks the field + the flag have been added
+    $this->assertTrue($this->isElementPresent("css=fieldset input[name=max_views]"));
+    $this->assertTrue($this->isElementPresent("css=fieldset input[type=hidden][name=flag-max_views]=max_views]"));
+    // Checks the components is removed when we click on it
+    $this->click("css=ul#link-components-chosen li[data-related-field=max_views]");
+    $this->assertTrue($this->isElementPresent("css=ul#link-components-available li[data-related-field=max_views]"));
+    $this->assertFalse($this->isElementPresent("css=ul#link-components-chosen li[data-related-field=max_views]"));
+    // Checks the field + flage have removed from the form
+    $this->assertFalse($this->isElementPresent("css=fieldset input[type=hidden][name=flag-max_views]=max_views]"));
+    $this->assertFalse($this->isElementPresent("css=fieldset input[name=max_views]"));
+    // ###################################
+    // Check  the component iteraction is still here when errors are retrieved
+    // ###################################
+    $this->open("/ghostylink/");
+    $this->type("css=input[name=title]", "Myawesome title");
+    $this->type("css=textarea[name=content]", "My awesome private content");
+    $this->click("css=ul#link-components-available li[data-related-field=max_views]");
+    $this->click("css=form [type=submit]");
+    // Checks the components is removed when we click on it
+    $this->click("css=ul#link-components-chosen li[data-related-field=max_views]");
+    $this->assertTrue($this->isElementPresent("css=ul#link-components-available li[data-related-field=max_views]"));
+    $this->assertFalse($this->isElementPresent("css=ul#link-components-chosen li[data-related-field=max_views]"));
+    $this->assertFalse($this->isElementPresent("form div.error"));
+    $this->assertFalse($this->isElementPresent("css=fieldset input[name=max_views]"));
+    $this->assertFalse($this->isElementPresent("css=fieldset input[type=hidden][name=flag-max_views]=max_views]"));
+    // Checks the components is moved when we click on it
+    $this->click("css=ul#link-components-available li[data-related-field=max_views]");
+    $this->assertFalse($this->isTextPresent("Drop some components here"));
+    $this->assertTrue($this->isElementPresent("css=ul#link-components-chosen li[data-related-field=max_views]"));
+    $this->assertFalse($this->isElementPresent("css=ul#link-components-available li[data-related-field=max_views]"));
+    $this->assertTrue($this->isElementPresent("css=fieldset input[name=max_views]"));
+    $this->assertTrue($this->isElementPresent("css=fieldset input[type=hidden][name=flag-max_views]=max_views]"));
+  }
   
   protected function tearDown() {
     parent::tearDown();

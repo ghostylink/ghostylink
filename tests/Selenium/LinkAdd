@@ -44,6 +44,11 @@
 	<td>My super title</td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>css=ul#link-components-available li#[data-related-field=max_views]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>css=input[name=max_views]</td>
 	<td>42</td>

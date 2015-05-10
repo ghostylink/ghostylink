@@ -79,15 +79,17 @@ function componentsChosenClick($li, $dropArea) {
     var fieldName = $li.attr("data-related-field");
     var classWrapper = $fieldWrapper.attr("class").replace(/\s/g, ".");
     
-    //Elements in the fieldset to remove
+    //Elements in the fieldset to remove                            
     var $toRemove = $('input[name=' + fieldName + ']').parents('.' + classWrapper);
-    
+    $('in')
     //Mark the component as available
     $('ul#link-components-available').append($component);
         
     initLinkComponents($component);
     $li.remove();
     $toRemove.remove();
+    //Remove also the hidden flag
+    $('input[type=hidden][name=flag-' + fieldName + ']').remove();
     
     //Restore legend if it was the last element
     if ($dropArea.children('li').size() === 0) {        
