@@ -14,6 +14,78 @@
 <!--###################################-->
 <!--Check  the component iteraction is still here when errors are retrieved-->
 <!--###################################-->
+<!--When the error is not on a component field-->
+<tr>
+	<td>open</td>
+	<td>/ghostylink/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=input[name=title]</td>
+	<td>Myawesome title</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=ul#link-components-available li[data-related-field=max_views]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=input[name=max_views]</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=form [type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=div.error textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=ul#link-components-chosen li[data-related-field=max_views]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=input[name=max_views]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=input[name=title]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=textarea[name=content]</td>
+	<td>Myawesome contenet</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=form [type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=div.error input[name=title]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=ul#link-components-chosen li[data-related-field=max_views]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=input[name=max_views]</td>
+	<td></td>
+</tr>
+<!--When the error is on a component field-->
 <tr>
 	<td>open</td>
 	<td>/ghostylink/</td>

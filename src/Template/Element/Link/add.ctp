@@ -28,7 +28,8 @@
                                                 'label label-primary" ' .
                                                 'data-related-field="max_views">'
                                 .   ' </li>';                                                                                            
-                    echo $htmlComponent;                    
+                    echo $htmlComponent;
+                    echo $this->Form->hidden("flag-max_views");
                 }
                 else {
                     echo '<span class="legend">Drop some components here</span>';
@@ -36,13 +37,13 @@
             ?>
         </ul>    
         <?php        
-        if($this->Form->isFieldError('max_views')) {
+        if(isset($_POST['flag-max_views'])) {
             echo $this->Form->input('max_views', ['type' => 'number',
                                               'id' => 'inputContent',
                                               'class' => 'form-control', 
                                               'placeholder' => "Enter your links life expectancy (number of views)",
                                               'required' => 'false']);
-        }
+        }        
         ?>
     </fieldset>
     <?= $this->Form->button(__('Create the link'), ['type' => 'submit',
