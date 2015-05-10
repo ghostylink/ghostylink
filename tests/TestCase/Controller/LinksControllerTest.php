@@ -78,16 +78,18 @@ class LinksControllerTest extends IntegrationTestCase
     {
         // Add new data using POST method
         $data = $this->goodData;
-        $this->post('/add', $data);
+        $this->post('/add', $data);        
         $this->assertResponseSuccess();
 
         // Check if the data has been inserted in database
         $links = TableRegistry::get('Links');
-        $query = $links->find()->where(['title' => $data['title']]);
+        $query = $links->find()->where(['title' => $data['title']]);       
         $this->assertEquals(1, $query->count(), 'A good link is added in DB');
         
-        //Check a good insertion implies a view redirection
-        //TODO: Test token is present in the rendered template
+        //The rendered template is an ajax one
+        $this->assertTemplate('ajax/url');
+        //The generated token is present in the response
+        $this->assertResponseContains( $query->first()->token);        
         
         //Check controller set a flash message if link cannot be saved
         $badData = $data;
@@ -96,8 +98,7 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertSession('The link could not be saved. Please, try again.',
                              'Flash.flash.message');
         $this->checkTokenGeneration();
-        
-        $this->markTestIncomplete('Test token is present in the rendered template');
+                
     }
 
     private function checkTokenGeneration() {
