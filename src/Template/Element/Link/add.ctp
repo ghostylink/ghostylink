@@ -1,8 +1,3 @@
-<?php
-    $this->start('script');
-    echo $this->Html->script("Links/components");
-    $this->end();
-?>
 <div class="links form col-lg-10 col-md-9">
     <?php
     if (!isset($link)){
@@ -25,15 +20,29 @@
                                               'class' => 'form-control', 
                                               'placeholder' => "Enter your private contents",
                                               'required' => 'false']);?>
-        <label>Your components</label><ul id="link-components-chosen" class="col-lg-12">
-            <span class="legend">Drop some components here</span>
+        <label>Your components</label>
+        <ul id="link-components-chosen" class="col-lg-12">                        
+            <?php
+                if(isset($_POST['flag-max_views'])) {
+                    $htmlComponent = '<li class="glyphicon glyphicon-eye-open ' .
+                                                'label label-primary" ' .
+                                                'data-related-field="max_views">'
+                                .   ' </li>';                                                                                            
+                    echo $htmlComponent;                    
+                }
+                else {
+                    echo '<span class="legend">Drop some components here</span>';
+                }
+            ?>
         </ul>    
-        <?php
-//            echo $this->Form->input('max_views', ['type' => 'number',
-//                                              'id' => 'inputContent',
-//                                              'class' => 'form-control', 
-//                                              'placeholder' => "Enter your links life expectancy (number of views)",
-//                                              'required' => 'false']);
+        <?php        
+        if($this->Form->isFieldError('max_views')) {
+            echo $this->Form->input('max_views', ['type' => 'number',
+                                              'id' => 'inputContent',
+                                              'class' => 'form-control', 
+                                              'placeholder' => "Enter your links life expectancy (number of views)",
+                                              'required' => 'false']);
+        }
         ?>
     </fieldset>
     <?= $this->Form->button(__('Create the link'), ['type' => 'submit',

@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : kremy
 */
 ul#link-components-available li{
-    cursor:move !important;     
+    cursor:move !important;    
 }
 ul#link-components-chosen {    
     height:3em;    
@@ -32,11 +32,16 @@ ul#link-components-chosen li{
     margin-left: 0.5em;
     cursor: move;
 }
-section {
-    padding: 0 !important;
+section.link-components {
+    padding: 0;
+    margin-bottom: 0.5em;
 }
 section.link-components h2 {
     font-size: 1.2em;
+    margin-bottom: 0;
+}
+section.link-components  .panel-body{    
+    padding: 0.4em;
 }
 /******************************************************************************/
 /*********************** All link style ***************************************/

@@ -9,67 +9,92 @@
  * @returns {void}
  */
 function initLinkComponents($JqueryLi) {
+    //An available component can be dragged
     $JqueryLi.draggable({
         cursor: "move",
         revert: "invalid"
     });
+    //A click on an available component selects it
     $JqueryLi.on('click',function() {
         moveLinkComponents($(this),$('ul#link-components-chosen')); 
+    });
+    
+    //An available component can be dropped on the chosen components area
+    $('ul#link-components-chosen').droppable({
+        accept:"ul#link-components-available > li",
+        drop: function(event, ui) {
+            var $target = $(this);                        
+            var $component = ui.draggable;
+            moveLinkComponents($component, $target);        
+        }
     });
 }
 
 /**
  * Move the given component to the given area
- * @param {Jquery} $JqueryElem the elem to move
- * @param {Jquery} $JqueryTo    the area wich will receive the component
+ * @param {Jquery} $component the li elem to move
+ * @param {Jquery} $targetArea  the ul area wich will receive the component
  * @returns {void}
  */
-function moveLinkComponents($JqueryElem, $JqueryTo){
+function moveLinkComponents($component, $targetArea){
         //Retrieve the closer fieldset
-        var $fieldset = $JqueryTo.parent('fieldset').eq(0);
+        var $fieldset = $targetArea.parent('fieldset').eq(0);        
+        //Add the html corresponding to the field
+        var $newField = $($component.attr("data-field-html"));        
+        $fieldset.append($newField);
         
-        //Add the html corresponding to the element
-        $fieldset.append($JqueryElem.attr("data-field-html"));                
-        if($JqueryTo.children('li').size() === 0){
-            $JqueryTo.find('span.legend').remove();
+        //Add a hidden field to detect the chosen components
+        var nameNewField = $newField.find('input').attr("name"); 
+        $fieldset.append('<input type="hidden" name="flag-' + nameNewField + '"/>');
+        
+        //No component was here, remove the legend
+        if($targetArea.children('li').size() === 0){
+            $targetArea.find('span.legend').remove();
         }
         
         //Jquery ui put inline style (principaly positions) we do not want.
-        $JqueryTo.append($JqueryElem.remove().removeAttr("style"));
-        var legend = $JqueryElem.text();
+        $targetArea.append($component.remove().removeAttr("style"));
+        var legend = $component.text();
         
-        //Save the original component for an evenutal future delete
-        $JqueryElem.data('component', $JqueryElem.clone());
-        $JqueryElem.text('').removeClass('ui-widget-header').attr("title", legend);
+        //Save the original component for an evenutal future delete                                           
+        $('section.link-components').data('link-component-' + nameNewField, $component.clone());        
+        
+        //Remove the available component specific class and the text
+        $component.text('').removeClass('ui-widget-header').attr("title", legend);
         
         /* When the chosen component will be clicked, remove it and the corresponding
         html field */
-        $JqueryElem.on('click', function() {
-           var $this = $(this);
-           var $component = $this.data('component');
-           var $fieldWrapper = $($component.attr("data-field-html"));
-           var $field = $fieldWrapper.find('input');
-           var fieldName = $field.attr('name');           
-           var classWrapper = $fieldWrapper.attr("class").replace(/\s/g, ".");                     
-           var $toRemove = $('input[name=' + fieldName + ']').parents('.' + classWrapper);
-           $('ul#link-components-available').append($component);
-           initLinkComponents($component);           
-           $this.remove();
-           $toRemove.remove();           
-           if($JqueryTo.children().size() === 0) {
-               $JqueryTo.html('<span class="legend">Drop some components here</span>');
-           }
+        $component.on('click', function() {
+            componentsChosenClick($(this), $targetArea);
         });
+}
+
+function componentsChosenClick($li, $dropArea) {    
+    //Retrieve the component from the saving area
+    var dataName = 'link-component-' + $li.attr("data-related-field");
+    var $component = $('section.link-components').data(dataName);
+    
+    //Retrieve the name of the field
+    var $fieldWrapper = $($component.attr("data-field-html"));    
+    var fieldName = $li.attr("data-related-field");
+    var classWrapper = $fieldWrapper.attr("class").replace(/\s/g, ".");
+    
+    //Elements in the fieldset to remove
+    var $toRemove = $('input[name=' + fieldName + ']').parents('.' + classWrapper);
+    
+    //Mark the component as available
+    $('ul#link-components-available').append($component);
+        
+    initLinkComponents($component);
+    $li.remove();
+    $toRemove.remove();
+    
+    //Restore legend if it was the last element
+    if ($dropArea.children('li').size() === 0) {        
+        $dropArea.html('<span class="legend">Drop some components here</span>');
+    }
 }
 
 initLinkComponents($('ul#link-components-available li'));
 
 
-$('ul#link-components-chosen').droppable({
-    accept:"ul#link-components-available > li",
-    drop: function(event, ui) {
-        $target = $(this);                        
-        $component = ui.draggable;
-        moveLinkComponents($component, $target);        
-    }
-});

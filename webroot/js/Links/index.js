@@ -5,24 +5,6 @@
  */
 var request;
 
-//javascript copy function
-function copy(inElement) {
-  if (inElement.createTextRange) {
-    var range = inElement.createTextRange();
-    if (range && BodyLoaded==1)
-     range.execCommand('Copy');
-  } else {
-    var flashcopier = 'flashcopier';
-    if(!document.getElementById(flashcopier)) {
-      var divholder = document.createElement('div');
-      divholder.id = flashcopier;
-      document.body.appendChild(divholder);
-    }
-    document.getElementById(flashcopier).innerHTML = '';
-    var divinfo = '<embed src="http://davidwalsh.name/demo/ZeroClipboard.swf" FlashVars="clipboard='+escape(inElement.value)+'" width="0" height="0" type="application/x-shockwave-flash"/>';
-    document.getElementById(flashcopier).innerHTML = divinfo;
-  }
-}
 function initAjaxSubmission() {
     $("form").on("submit", function (event) {
 
@@ -58,13 +40,20 @@ function initAjaxSubmission() {
             var $responseHTML = $(response);
             
             if($responseHTML.find('form div.error').size() === 0) {
+                //No error have been found 
                 $('form div.error div.alert.alert-danger').remove();
                 $('section.generated-link').remove();
                 $('#left-block').append($responseHTML);
                 initCopyButton();
             }
             else {
+                //At least one error, rebind events on components
                 $form.html($responseHTML.find('form').html());
+                $form.find("ul#link-components-chosen li").each(function() {
+                    $(this).on('click', function() {
+                        componentsChosenClick($(this),$('ul#link-components-chosen'));
+                    });
+                });                
             }
             
         });
