@@ -1,5 +1,5 @@
 # CakePHP Application Skeleton
-
+[![Build Status](http://www.kevin-remy.fr:8080/job/cakePHP-ghostylink_tests/36/badge/icon)](http://www.kevin-remy.fr:8080/job/cakePHP-ghostylink_tests/36/)
 [![Build Status](https://api.travis-ci.org/cakephp/app.png)](https://travis-ci.org/cakephp/app)
 [![License](https://poser.pugx.org/cakephp/app/license.svg)](https://packagist.org/packages/cakephp/app)
 
