@@ -54,10 +54,20 @@ class LinksTable extends Table
             ->notEmpty('token');
         
         $validator->allowEmpty('death_time', function ($context) {
-            return !($context['data']['max_views'] == '');
+            if(array_key_exists('max_views', $context['data'])) {
+                return !($context['data']['max_views'] == '');
+            }
+            else {
+                return false;
+            }
         });
         $validator->allowEmpty('max_views', function ($context) {
-            return !($context['data']['death_time'] == '');
+            if(array_key_exists('death_time', $context['data'])) {
+                return !($context['data']['death_time'] == '');
+            }
+            else {
+                return false;
+            }
         });
         return $validator;
     }
