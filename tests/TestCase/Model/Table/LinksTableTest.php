@@ -133,10 +133,10 @@ class LinksTableTest extends TestCase
     public function testMaxViewsErrors() {
         //Check the max_views argument is required
         $badData = $this->goodData;
-        unset($badData['max_views']);
-        //TODO: correct this test
-        //$this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
-        //                    'Save: Field max_views is required'); 
+        $badData['title'] = 'titleTestMaxViewsErrors';         
+        unset($badData['max_views']);                               
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
+                            'Save: Field max_views is required'); 
     }
     
     /**

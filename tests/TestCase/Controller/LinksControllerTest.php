@@ -135,7 +135,7 @@ class LinksControllerTest extends IntegrationTestCase
         // Create new data
         $data = [
             'title' => 'Better call Saul',
-            'content' => 'This is not Walter Hartwell « Walt » White.',
+            'content' => 'This is not Walter Hartwell « Walt » White.'            
         ];
         // Get link from first fixture
         $this->post('/edit/1', $data);

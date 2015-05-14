@@ -51,10 +51,12 @@ class LinksTable extends Table
             ->requirePresence('content', 'create')
             ->notEmpty('content')
             ->requirePresence('token', 'create')
-            ->notEmpty('token');
-        
-        $validator->allowEmpty('death_time', function ($context) {
-            if(array_key_exists('max_views', $context['data'])) {
+            ->notEmpty('token');     
+        $validator->allowEmpty('death_time', function ($context) {            
+            if (!$context['newRecord']) {
+               return true; 
+            }
+            if (array_key_exists('max_views', $context['data'])) {                
                 return !($context['data']['max_views'] == '');
             }
             else {
@@ -62,7 +64,10 @@ class LinksTable extends Table
             }
         });
         $validator->allowEmpty('max_views', function ($context) {
-            if(array_key_exists('death_time', $context['data'])) {
+            if (!$context['newRecord']) {               
+               return true; 
+            }
+            if (array_key_exists('death_time', $context['data'])) {
                 return !($context['data']['death_time'] == '');
             }
             else {
@@ -86,5 +91,5 @@ class LinksTable extends Table
             return false;
         }
         return true;
-    }
+    }   
 }
