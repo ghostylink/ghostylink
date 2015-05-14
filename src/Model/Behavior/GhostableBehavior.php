@@ -15,7 +15,7 @@ class GhostableBehavior extends Behavior
     /**
      * Increase the view counter
      * @param Entity $entity the entity the view counter has to be incremented
-     * @return Return if the counter views reached his limit or not
+     * @return Return false if the counter view reached is limit
      */
     public function increaseViews(Entity $entity)
     {
@@ -31,7 +31,7 @@ class GhostableBehavior extends Behavior
     /**
      * Check the counter views
      * @param Entity $entity the entity the view counter has to be incremented
-     * @return Return if the counter views reached his limit or not
+     * @return Return false if the counter views reached his limit or not
      */
     private function checkNbViews(Entity $entity)
     {

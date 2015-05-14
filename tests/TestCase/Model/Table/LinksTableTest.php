@@ -193,4 +193,30 @@ class LinksTableTest extends TestCase
                                 ->toArray()[0];
         $this->assertEquals(0,$insertedData->views,'views counter is set to 0');        
     }
+    
+    public function testIncreaseViews() {
+        $goodData = $this->goodData;
+        $goodData['title'] = 'titleDeleteLink';
+        $goodData['max_views'] = 3;
+        $link = $this->Links->newEntity($goodData);
+        $this->Links->save($link);
+        $this->Links->increaseViews($link);
+        $this->Links->save($link);
+        $linkDB = $this->Links->find('all')
+                                ->where(['Links.title =' => $goodData['title']])
+                                ->toArray()[0];        
+        $this->assertEquals(1,$linkDB->views,'views counter is set to 1');
+        $this->Links->increaseViews($link);
+        $this->Links->increaseViews($link);
+        $this->Links->save($link);
+        $linkDB = $this->Links->find('all')
+                                ->where(['Links.title =' => $goodData['title']])
+                                ->toArray()[0];
+        $this->assertEquals(3,$linkDB->views,'views counter is at 3 before delete');
+        $this->Links->increaseViews($link);
+        $linkDB = $this->Links->find('all')
+                                ->where(['Links.title =' => $goodData['title']])
+                                ->toArray();
+        $this->assertEmpty($linkDB, 'Link has been deleted');
+    }
 }

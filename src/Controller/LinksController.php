@@ -20,7 +20,7 @@ class LinksController extends AppController
     public function index()
     {
         $this->set('links', $this->paginate($this->Links));
-        $this->set('_serialize', ['links']);
+        $this->set('_serialize', ['links']);        
     }
 
     /**
@@ -56,7 +56,7 @@ class LinksController extends AppController
         $link = $this->Links->newEntity();
         if ($this->request->is('ajax') || $this->request->is('post')) {
             $link = $this->Links->patchEntity($link, $this->request->data);
-            // Initialize empty token to pass the validation
+            // Initialize empty token to pass the validation                                
             $link->token = "";
             if ($this->Links->save($link)) {
                 $this->Flash->success('The link has been saved.');
