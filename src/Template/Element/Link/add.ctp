@@ -31,7 +31,15 @@
                     echo $htmlComponent;
                     echo $this->Form->hidden("flag-max_views");
                 }
-                else {
+                if(isset($_POST['flag-death_time'])) {
+                    $htmlComponent = '<li class="glyphicon glyphicon-time ' .
+                                                'label label-primary" ' .
+                                                'data-related-field="death_time">'
+                                .   ' </li>';                                                                                            
+                    echo $htmlComponent;
+                    echo $this->Form->hidden("flag-death_time");
+                }
+                if(!isset($_POST['flag-max_views']) && !isset($_POST['flag-death_time'])) {
                     echo '<span class="legend">Drop some components here</span>';
                 }
             ?>
@@ -43,7 +51,14 @@
                                               'class' => 'form-control', 
                                               'placeholder' => "Enter your links life expectancy (number of views)",
                                               'required' => 'false']);
-        }        
+        }
+        if(isset($_POST['flag-death_time'])) {
+            echo $this->Form->input('death_time', ['type' => 'number',
+                                              'id' => 'inputContent',
+                                              'class' => 'form-control', 
+                                              'placeholder' => "Enter your links life expectancy (number of days)",
+                                              'required' => 'false']);
+        } 
         ?>
     </fieldset>
     <?= $this->Form->button(__('Create the link'), ['type' => 'submit',

@@ -12,8 +12,12 @@
     <h2 class="panel panel-heading ">Choose component to add to your link</h2>
     <div class="panel-body">
         <ul id="link-components-available">
-            <li data-related-field="fake" class="glyphicon glyphicon-time label label-primary ui-widget-header"
-                data-field-html="<?= htmlspecialchars('<p class="wrapper"><span>Not yet implemented</span><input name="fake"/>');?>"> Time limit</li>
+            <li data-related-field="death_time" class="glyphicon glyphicon-time label label-primary ui-widget-header"
+                data-field-html="<?= htmlspecialchars($this->Form->input('death_time', ['type' => 'number',
+                                              'id' => 'inputContent',
+                                              'class' => 'form-control', 
+                                              'placeholder' => "Enter your links life expectancy (number of days)",
+                                              'required' => 'false'])); ?>"> Time limit</li>
             <li data-related-field="max_views" class="glyphicon glyphicon-eye-open label label-primary ui-widget-header"
                 data-field-html="<?= htmlspecialchars($this->Form->input('max_views', ['type' => 'number',
                                               'id' => 'inputContent',

@@ -24,6 +24,7 @@ class LinksTable extends Table
         $this->table('links');
         $this->displayField('title');
         $this->displayField('max_views');
+        $this->displayField('death_time');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
         $this->addBehavior('Tokenable');
@@ -50,10 +51,14 @@ class LinksTable extends Table
             ->requirePresence('content', 'create')
             ->notEmpty('content')
             ->requirePresence('token', 'create')
-            ->notEmpty('token')
-            ->requirePresence('max_views', 'create')
-            ->notEmpty('max_views');
-            
+            ->notEmpty('token');
+        
+        $validator->allowEmpty('death_time', function ($context) {
+            return !($context['data']['max_views'] == '');
+        });
+        $validator->allowEmpty('max_views', function ($context) {
+            return !($context['data']['death_time'] == '');
+        });
         return $validator;
     }
     

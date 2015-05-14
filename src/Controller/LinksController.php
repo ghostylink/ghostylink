@@ -11,7 +11,6 @@ use Cake\Network\Exception\NotFoundException;
  */
 class LinksController extends AppController
 {
-
     /**
      * Index method
      *
@@ -55,6 +54,25 @@ class LinksController extends AppController
     {
         $link = $this->Links->newEntity();
         if ($this->request->is('ajax') || $this->request->is('post')) {
+            // Compute the death_time according to now and nb days in parameter
+            if(array_key_exists('death_time', $this->request->data)) {
+                if($this->request->data['death_time']) {
+                $death_time = new \DateTime();
+                $death_time->format('Y-m-d H:i:s');
+                $this->request->data['death_time'] = $death_time->add(new \DateInterval('P' . $this->request->data['death_time'] . 'D'));
+                } 
+                else { // Create an empty death_time in order to check in validator
+                    $this->request->data['death_time'] = '';
+                }
+            }
+            // Create an empty max_views in order to check in validator
+            if(!(array_key_exists('max_views', $this->request->data))) {
+                $this->request->data['max_views'] = '';
+            }
+            // Create an empty death_time in order to check in validator
+            if(!(array_key_exists('death_time', $this->request->data))) {
+                $this->request->data['death_time'] = '';
+            }
             $link = $this->Links->patchEntity($link, $this->request->data);
             // Initialize empty token to pass the validation
             $link->token = "";
