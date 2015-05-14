@@ -10,6 +10,23 @@ use Cake\TestSuite\TestCase;
  */
 class GhostableBehaviorTest extends TestCase
 {
+    /**
+     * Call protected/private method of a class.
+     *
+     * @param object &$object    Instantiated object that we will run method on.
+     * @param string $methodName Method name to call
+     * @param array  $parameters Array of parameters to pass into method.
+     *
+     * @return mixed Method return.
+     */
+    public function invokeMethod(&$object, $methodName, array $parameters = array())
+    {
+        $reflection = new \ReflectionClass(get_class($object));
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+
+        return $method->invokeArgs($object, $parameters);
+    }
 
     /**
      * Fixtures
@@ -66,6 +83,7 @@ class GhostableBehaviorTest extends TestCase
     public function testIncreaseViews() {
         $goodData = $this->goodData;
         $goodData['title'] = 'titletestIncreaseView';
+        $goodData['max_views'] = 3;
         $entity = $this->TargetTable->newEntity($goodData);
         $this->TargetTable->save($entity);
         $viewsBefore = $this->TargetTable->find('all')
@@ -83,6 +101,41 @@ class GhostableBehaviorTest extends TestCase
         $viewsAfter = $this->TargetTable->find('all')
                            ->where(['title =' => $goodData['title']])
                            ->toArray()[0]->views;
-        $this->assertEquals($viewsBefore + 1, $viewsAfter);               
+        $this->assertEquals($viewsBefore + 1, $viewsAfter);
+        
+        $this->assertTrue($behavior->increaseViews($entity), 'True when ghost is alive (1/2)');        
+        $this->TargetTable->save($entity);
+        
+        $this->assertTrue($behavior->increaseViews($entity), 'True when ghost is alive (2/2)');
+        $this->TargetTable->save($entity);
+                
+        $this->assertFalse($behavior->increaseViews($entity), 'False when ghost is dead');
+    }
+    
+    /**
+     * Test the checkNbViews of the ghostable component
+     */
+    function testCheckNbViews() {
+        $goodData = $this->goodData;
+        $goodData['title'] = 'titletestCheckNbViews';
+        $goodData['max_views'] = 3;
+        $entity = $this->TargetTable->newEntity($goodData);
+        $this->TargetTable->save($entity);
+                
+        //Apply the behavior function;
+        $behavior = $this->TargetTable->behaviors()->get('Ghostable');                        
+        $behavior->increaseViews($entity);
+        $this->TargetTable->save($entity);
+        
+        //as checkNbViews is private, we must call invokeMetho defined above
+        $this->assertTrue($this->invokeMethod($behavior, 'checkNbViews', array($entity)));
+        $behavior->increaseViews($entity);        
+        $behavior->increaseViews($entity);        
+        $behavior->increaseViews($entity);
+        $this->TargetTable->save($entity);
+        
+        //The max_views has been reached
+        $this->assertFalse($this->invokeMethod($behavior, 'checkNbViews', array($entity)));
+        
     }
 }
