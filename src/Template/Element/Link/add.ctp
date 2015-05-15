@@ -52,13 +52,17 @@
                                               'placeholder' => "Enter your links life expectancy (number of views)",
                                               'required' => 'false']);
         }
+        else if ($this->Form->isFieldError('max_views')){
+            echo  $this->Form->error('max_views');
+        }
         if(isset($_POST['flag-death_time'])) {
             echo $this->Form->input('death_time', ['type' => 'number',
                                               'id' => 'inputContent',
                                               'class' => 'form-control', 
                                               'placeholder' => "Enter your links life expectancy (number of days)",
                                               'required' => 'false']);
-        } 
+        }
+
         ?>
     </fieldset>
     <?= $this->Form->button(__('Create the link'), ['type' => 'submit',

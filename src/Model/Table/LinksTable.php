@@ -52,23 +52,23 @@ class LinksTable extends Table
             ->notEmpty('content')
             ->requirePresence('token', 'create')
             ->notEmpty('token');     
-        $validator->allowEmpty('death_time', function ($context) {            
+        $validator->notEmpty('death_time', 'At least one component is required', function ($context) {            
             if (!$context['newRecord']) {
-               return true; 
+               return false; 
             }
             if (array_key_exists('max_views', $context['data'])) {                
-                return !($context['data']['max_views'] == '');
+                return ($context['data']['max_views'] == '');
             }
             else {
                 return false;
             }
         });
-        $validator->allowEmpty('max_views', function ($context) {
+        $validator->notEmpty('max_views','At least one component is required', function ($context) {
             if (!$context['newRecord']) {               
-               return true; 
+               return false; 
             }
             if (array_key_exists('death_time', $context['data'])) {
-                return !($context['data']['death_time'] == '');
+                return ($context['data']['death_time'] == '');
             }
             else {
                 return false;

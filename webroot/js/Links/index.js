@@ -28,7 +28,7 @@ function initAjaxSubmission() {
 
         // Fire off the request to /form.php
         request = $.ajax({
-            url: "/add",
+            url: "add",
             type: "post",
             data: serializedData
         });
@@ -39,9 +39,9 @@ function initAjaxSubmission() {
             console.log(response);
             var $responseHTML = $(response);
             
-            if($responseHTML.find('form div.error').size() === 0) {
+            if($responseHTML.find('form').size() === 0) {
                 //No error have been found 
-                $('form div.error div.alert.alert-danger').remove();
+                $('form div.alert.alert-danger').remove();
                 $('section.generated-link').remove();
                 $('#left-block').append($responseHTML);
                 initCopyButton();
