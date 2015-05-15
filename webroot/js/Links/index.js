@@ -28,7 +28,7 @@ function initAjaxSubmission() {
 
         // Fire off the request to /form.php
         request = $.ajax({
-            url: "/ghostylink/add",
+            url: "/add",
             type: "post",
             data: serializedData
         });

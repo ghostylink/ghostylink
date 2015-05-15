@@ -20,12 +20,12 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->fixtureManager->fixturize($this);
     $this->fixtureManager->load($this);
     $this->setBrowser("*firefox");
-    $this->setBrowserUrl("http://localhost/");
+    $this->setBrowserUrl("http://localhost:8765/");
   }
 
   public function testView()
   {
-    $this->open("/ghostylink/a1d0c6e83f027327d8461063f4ac58a6");
+    $this->open("/a1d0c6e83f027327d8461063f4ac58a6");
     // Check the link itself is displayed
     $this->chooseCancelOnNextConfirmation();
     $this->verifyTextPresent("Lorem ipsum dolor sit amet");
@@ -41,7 +41,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   
   public function testAdd() {   
        // Check that basic element are present
-    $this->open("/ghostylink/");
+    $this->open("/");
     try {
         $this->assertTrue($this->isElementPresent("css=input[type=text]"));
     } catch (PHPUnit_Framework_AssertionFailedError $e) {
@@ -83,7 +83,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     // Check  the component iteraction is still here when errors are retrieved
     // ###################################
     // When the error is not on a component field
-    $this->open("/ghostylink/");
+    $this->open("/");
     $this->type("css=input[name=title]", "Myawesome title");
     $this->click("css=ul#link-components-available li[data-related-field=max_views]");
     $this->type("css=input[name=max_views]", "2");
@@ -112,7 +112,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->assertTrue($this->isElementPresent("css=ul#link-components-chosen li[data-related-field=max_views]"));
     $this->assertTrue($this->isElementPresent("css=input[name=max_views]"));
     // When the error is on a component field
-    $this->open("/ghostylink/");
+    $this->open("/");
     $this->type("css=input[name=title]", "Myawesome title");
     $this->type("css=textarea[name=content]", "My awesome private content");
     $this->click("css=ul#link-components-available li[data-related-field=max_views]");
@@ -134,7 +134,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   }  
   
   public function testAddComponentsNoSubmit() {
-    $this->open("/ghostylink/");
+    $this->open("/");
     $this->assertTrue($this->isTextPresent("Drop some components here"));
     // Checks the components is moved when we click on it
     $this->click("css=ul#link-components-available li[data-related-field=max_views]");
