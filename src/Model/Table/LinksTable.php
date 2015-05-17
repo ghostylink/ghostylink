@@ -50,7 +50,7 @@ class LinksTable extends Table
             ->requirePresence('content', 'create')
             ->notEmpty('content')
             ->requirePresence('token', 'create')
-            ->notEmpty('token');     
+            ->notEmpty('token');
         $validator->notEmpty('death_time', 'At least one component is required', function ($context) {
                 if (!$context['newRecord']) {
                     return false;
@@ -62,7 +62,7 @@ class LinksTable extends Table
                 }
         });
         $validator->notEmpty('max_views', 'At least one component is required', function ($context) {
-                if (!$context['newRecord']) {               
+                if (!$context['newRecord']) {
                    return false;
                 }
                 if (array_key_exists('death_time', $context['data'])) {
@@ -88,5 +88,5 @@ class LinksTable extends Table
             return false;
         }
         return true;
-    }   
+    }
 }

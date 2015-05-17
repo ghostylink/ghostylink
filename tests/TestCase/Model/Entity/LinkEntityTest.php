@@ -57,6 +57,10 @@ class LinkEntityTest extends TestCase
         $remaining_views = $link->remaining_views;        
         $this->assertNotNull($remaining_views, 'remaining_views virtual field is defined');
         $this->assertEquals($link->max_views - $link->views, $remaining_views, 'remaining_views field is correct');
+        
+        $noMaxViewsLink = $this->Links->findByTitle('No max_views')->first();
+        $remaining_views = $noMaxViewsLink->remaining_views;
+        $this->assertNull($remaining_views, 'Remaining_views is null when max_views is null');
     }
     
     /**

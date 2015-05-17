@@ -1,8 +1,8 @@
 <?php
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
 use Cake\I18n\Time;
+use Cake\ORM\Entity;
 
 /**
  * Link Entity.
@@ -52,10 +52,10 @@ class Link extends Entity
             $death = new Time($this->_properties['death_time']);
             $elapseTime = $currentTime->diffInSeconds($created);
             $totalTime = $death->diffInSeconds($created);
-            if($totalTime != 0) {
+            if ($totalTime != 0) {
                 $percentageTime = (100 * $elapseTime) / $totalTime;
             }
-        }        
+        }  
         return min(100, max($percentageViews, $percentageTime));
     }
 }

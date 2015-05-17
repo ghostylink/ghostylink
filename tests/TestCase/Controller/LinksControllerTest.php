@@ -54,6 +54,15 @@ class LinksControllerTest extends IntegrationTestCase
         // First fixture's titles
         $this->get('/a1d0c6e83f027327d8461063f4ac58a6');
         $this->assertResponseContains('Lorem ipsum dolor sit amet');
+        
+        //A random token throw 404
+        $this->get('/6063f4ac58a6a1d7383f02d10c6e2874');
+        $this->assertResponseError('A random token throw 404');
+        
+        //This link has 1 view left
+        $this->get('/6063f4ac58a6a1d7383f02d10c6e2874');
+        $this->get('/6063f4ac58a6a1d7383f02d10c6e2874');
+        $this->assertResponseError('Dead link throw an error');
     }
 
     /**
@@ -76,6 +85,9 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
+        //add action is not accessible from get
+        $this->get("/add");
+        $this->assertResponseError();
         // Add new data using POST method
         $data = $this->goodData;
         $this->post('/add', $data);        
