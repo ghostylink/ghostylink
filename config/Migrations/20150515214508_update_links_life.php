@@ -1,7 +1,7 @@
 <?php
 use Phinx\Migration\AbstractMigration;
 
-class AddLifeToLinks extends AbstractMigration
+class UpdateLinksLife extends AbstractMigration
 {
     /**
      * Change Method.
@@ -13,20 +13,11 @@ class AddLifeToLinks extends AbstractMigration
     public function change()
     {
         $table = $this->table('links');        
-        $table->addColumn('max_views', 'integer', [
-            'default' => 1,
-            'limit' => 11,
-            'null' => true,
-        ]);
-        $table->addColumn('views', 'integer', [
-            'default' => 0,
-            'limit' => 11,
-            'null' => true,
-        ]);
-        $table->addColumn('death_time', 'datetime', [
+        $table->changeColumn('max_views', 'integer', [
             'default' => null,
+            'limit' => 11,
             'null' => true,
-        ]);
+        ]);        
         $table->update();
     }
 }
