@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\I18n\Time;
 
 /**
  * Link Entity.
@@ -27,16 +28,34 @@ class Link extends Entity
      * @return type
      */
     protected function _getRemainingViews()
-    {  
+    {
+        if ($this->_properties['max_views'] == null) {
+            return null;
+        }
         return max($this->_properties['max_views'] - $this->_properties['views'], 0);
     }
     
     /**
-     * Get the  life percentage of a link
+     * Get the  life percentage of a link considering maw_views or death_time
      * @return type
      */
     protected function _getLifePercentage()
     {
-        return min((100 * $this->_properties['views']) / $this->_properties['max_views'], 100);
+        $percentageViews = 0;
+        $percentageTime = 0;
+        if ($this->_properties['max_views'] != null) {
+            $percentageViews = (100 * $this->_properties['views']) / $this->_properties['max_views'];
+        }
+        if ($this->_properties['death_time'] != null) {
+            $currentTime = new Time();
+            $created = new Time($this->_properties['created']);
+            $death = new Time($this->_properties['death_time']);
+            $elapseTime = $currentTime->diffInSeconds($created);
+            $totalTime = $death->diffInSeconds($created);
+            if($totalTime != 0) {
+                $percentageTime = (100 * $elapseTime) / $totalTime;
+            }
+        }        
+        return min(100, max($percentageViews, $percentageTime));
     }
 }

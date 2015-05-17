@@ -4,6 +4,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Table\LinksTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use Cake\I18n\Time;
 
 /**
  * App\Model\Entity\Link Test Case
@@ -67,8 +68,8 @@ class LinkEntityTest extends TestCase
     {
         $link = $this->Links->findByTitle('Half life')->first();        
         $percent = $link->life_percentage;        
-        $this->assertNotNull($percent);
-        $this->assertEquals($percent, 50);
+        $this->assertNotNull($percent, 'Half life : life_percentage is set');
+        $this->assertEquals(50,$percent);
         $deadLink = $this->Links->findByTitle('Dead link by views')->first();        
         $this->assertLessThanOrEqual(100, $deadLink->life_percentage, 'Link percentage is less or equal to 100');
         
@@ -81,13 +82,15 @@ class LinkEntityTest extends TestCase
         // Fixate time. Look in the fixture 4 with title 'No max_views'
         $now = new Time('1955-11-07 18:38:00');
         Time::setTestNow($now);
+        $noMaxViewsLink = $this->Links->findByTitle('No max_views')->first();
+        $percent = $noMaxViewsLink->life_percentage;        
         $this->assertEquals($percent, 37.5, 'LifePercentage is good when it is computed from a date');
         
         //No death_time is provided
         $noDeathTimeLink = $this->Links->findByTitle('No death_time')->first();
         $percent = $noDeathTimeLink->life_percentage;        
         $this->assertNotNull($percent);        
-        $this->assertNotEquals($percent, 20, 'When death_time is null, max_views is used');
+        $this->assertEquals($percent, 20, 'When death_time is null, max_views is used');
         
         //Both max_views and death_time fields are specified
         $now = new Time('1955-11-07 18:38:00');
