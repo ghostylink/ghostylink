@@ -57,6 +57,9 @@
         ctx.fillText($meter.text(), 20, 100);
 
 
-    })
-
+    });
+    var deathDate = $('ul.countdown').attr("data-death-date");
+    $('.countdown').downCount({
+      date: deathDate
+    });
 })(jQuery);

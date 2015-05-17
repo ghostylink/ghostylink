@@ -7,7 +7,7 @@ and open the template in the editor.
     Created on : 1 mai 2015, 12:18:43
     Author     : kremy
 */
-
+@import url(http://fonts.googleapis.com/css?family=roboto:300,400);
 /******************************************************************************/
 /*********************** All link style ***************************************/
 .link-heading h2{
@@ -84,3 +84,44 @@ div.meter-vertical-wrapper div{
     font-family: "Calibri";
     font-style: italic;    
 }
+
+/***************** time counter *********************************************/
+
+#link-death-time {
+    margin-bottom: 0;
+    margin-top:1em;
+}
+
+ul.countdown {
+  list-style: none;  
+  padding: 0;
+  display: block;
+  text-align: center;
+  margin:0
+}
+
+ul.countdown li { display: inline-block; border-width: 0!important;margin-left:0 !important;}
+
+ul.countdown li span {
+  font-size: 1.5em;
+  font-weight: 300;
+  line-height: 80px;
+  padding: 0 20px;
+  border-top: 1px solid #C0392B;
+  border-bottom: 1px solid #C0392B;
+  margin-left: -4px;
+}
+
+ul.countdown li p {
+  color: #a7abb1;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.days {
+  background-color: #C0392B;
+  padding: 0 10px;
+  color: #fff;
+}
+
+.last { border-right: 1px solid #C0392B; }

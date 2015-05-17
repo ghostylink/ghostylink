@@ -1,6 +1,7 @@
 <?php
     $this->start('script');
-    echo $this->Html->script("Links/life");
+    echo $this->Html->script("libs/jquery.downCount");
+    echo $this->Html->script("Links/life");    
     $this->end(); 
     
     $this->start('css');
@@ -11,8 +12,15 @@
     <aside class="link-stats panel panel-default col-lg-4">
         <h2 class="panel-heading">Link statistics</h2>
         <div class="panel-body">
-            <?= $this->element("Link/life_percentage",array("link"=>$link)); ?>
-            <?= $this->element("Link/remaining_views",array("link"=>$link)); ?>
+            <?= $this->element("Link/life_percentage", array("link"=>$link)); ?>            
+            <?php
+                if($link->max_views != null) {
+                    echo $this->element("Link/remaining_views", array("link"=>$link));
+                }
+                if ($link->death_time != null) {
+                    echo $this->element("Link/remaining_time", array("link"=>$link));
+                }
+            ?>
         </div>
     </aside>
     <section class="col-lg-8">

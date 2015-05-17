@@ -33,6 +33,6 @@ class AppView extends View
     {
         $this->loadHelper('Form', [
             'templates' => 'app_form',
-        ]);
+        ], 'Time');
     }
 }
