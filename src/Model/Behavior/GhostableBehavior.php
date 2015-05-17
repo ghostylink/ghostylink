@@ -31,16 +31,17 @@ class GhostableBehavior extends Behavior
     /**
      * Event triggered before data is converted to an entity
      * @param Event $event the event which is triggered
-     * @param \ArrayObject $data the request data 
+     * @param \ArrayObject $data the request data
      * @param \ArrayObject $options additional options
      */
-    public function beforeMarshal(Event $event, \ArrayObject $data, \ArrayObject $options){        
+    public function beforeMarshal(Event $event, \ArrayObject $data, \ArrayObject $options)
+    {
         // Compute the death_time according to now and nb days in parameter
         if (array_key_exists('death_time', $data)) {
             if ($data['death_time']) {
-                $death_time = new \DateTime();
-                $death_time->format('Y-m-d H:i:s');
-                $data['death_time'] = $death_time->add(new \DateInterval('P' . $data['death_time'] . 'D'));
+                $deathTime = new \DateTime();
+                $deathTime->format('Y-m-d H:i:s');
+                $data['death_time'] = $deathTime->add(new \DateInterval('P' . $data['death_time'] . 'D'));
             } else { // Create an empty death_time in order to check in validator
                 $data['death_time'] = '';
             }
@@ -63,7 +64,7 @@ class GhostableBehavior extends Behavior
     private function checkNbViews(Entity $entity)
     {
         $config = $this->config();
-        if($entity->get($config['views']) >
+        if ($entity->get($config['views']) >
             $entity->get($config['max_views'])) {
             return false;
         }

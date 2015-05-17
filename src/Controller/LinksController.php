@@ -19,7 +19,7 @@ class LinksController extends AppController
     public function index()
     {
         $this->set('links', $this->paginate($this->Links));
-        $this->set('_serialize', ['links']);        
+        $this->set('_serialize', ['links']);
     }
 
     /**
@@ -55,7 +55,7 @@ class LinksController extends AppController
         $link = $this->Links->newEntity();
         if ($this->request->is('ajax') || $this->request->is('post')) {
             $link = $this->Links->patchEntity($link, $this->request->data);
-            // Initialize empty token to pass the validation                                
+            // Initialize empty token to pass the validation
             $link->token = "";
             if ($this->Links->save($link)) {
                 $this->Flash->success('The link has been saved.');
@@ -63,14 +63,13 @@ class LinksController extends AppController
                 $this->set('url', $link->token);
                 return $this->render('ajax/url', 'ajax');
             } else {
-                $this->layout = 'ajax';      
+                $this->layout = 'ajax';
                 $this->Flash->error('The link could not be saved. Please, try again.');
                 $this->set(compact('link'));
                 $this->set('_serialize', ['link']);
                 return $this->render('add', 'ajax');
             }
         }
-        
     }
 
     /**
