@@ -9,7 +9,8 @@ class GhostableBehavior extends Behavior
 {
     protected $_defaultConfig = [
         'views' => 'views',
-        'max_views' => 'max_views'
+        'max_views' => 'max_views',
+        'life_percentage' => 'life_percentage'
     ];
     
     /**
@@ -20,9 +21,11 @@ class GhostableBehavior extends Behavior
     public function increaseViews(Entity $entity)
     {
         $config = $this->config();
-        $views = $entity->get($config['views']);
-        $entity->set($config['views'], $views + 1);
-        if (!$this->checkNbViews($entity)) {
+        if ($entity->get($config['max_views']) != null) {
+            $views = $entity->get($config['views']);
+            $entity->set($config['views'], $views + 1);
+        }
+        if (!$this->checkLife($entity)) {
             return false;
         }
         return true;
@@ -57,15 +60,15 @@ class GhostableBehavior extends Behavior
     }
     
     /**
-     * Check the counter views
+     * Check the life percentage of the link
      * @param Entity $entity the entity the view counter has to be incremented
-     * @return Return false if the counter views reached his limit or not
+     * @return Return false if the link is dead
      */
-    private function checkNbViews(Entity $entity)
+    private function checkLife(Entity $entity)
     {
         $config = $this->config();
-        if ($entity->get($config['views']) >
-            $entity->get($config['max_views'])) {
+        // The link is dead
+        if ($entity->life_percentage == 100) {
             return false;
         }
         return true;
