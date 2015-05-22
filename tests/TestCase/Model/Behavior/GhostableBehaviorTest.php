@@ -128,14 +128,14 @@ class GhostableBehaviorTest extends TestCase
         $this->TargetTable->save($entity);
         
         //as checkNbViews is private, we must call invokeMetho defined above
-        $this->assertTrue($this->invokeMethod($behavior, 'checkNbViews', array($entity)));
+        $this->assertTrue($this->invokeMethod($behavior, 'checkLife', array($entity)));
         $behavior->increaseViews($entity);        
         $behavior->increaseViews($entity);        
         $behavior->increaseViews($entity);
         $this->TargetTable->save($entity);
         
         //The max_views has been reached
-        $this->assertFalse($this->invokeMethod($behavior, 'checkNbViews', array($entity)));
+        $this->assertFalse($this->invokeMethod($behavior, 'checkLife', array($entity)));
         
     }
 }

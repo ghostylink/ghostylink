@@ -23,6 +23,7 @@ class LinksTable extends Table
         $this->table('links');
         $this->displayField('title');
         $this->displayField('max_views');
+        $this->displayField('views');
         $this->displayField('death_time');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');

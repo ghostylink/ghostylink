@@ -19,7 +19,8 @@ class Link extends Entity
         'title' => true,
         'content' => true,
         'token' => true,
-        'max_views' => true,
+        'max_views' => true,        
+        'views' => true,
         'death_time' => true
     ];
     
@@ -43,6 +44,7 @@ class Link extends Entity
     {
         $percentageViews = 0;
         $percentageTime = 0;
+        //FIXME this computation generate  warning on unit tests
         if ($this->_properties['max_views'] != null) {
             $percentageViews = (100 * $this->_properties['views']) / $this->_properties['max_views'];
         }

@@ -21,12 +21,12 @@ class GhostableBehavior extends Behavior
     public function increaseViews(Entity $entity)
     {
         $config = $this->config();
+        if (!$this->checkLife($entity)) {
+            return false;
+        }
         if ($entity->get($config['max_views']) != null) {
             $views = $entity->get($config['views']);
             $entity->set($config['views'], $views + 1);
-        }
-        if (!$this->checkLife($entity)) {
-            return false;
         }
         return true;
     }

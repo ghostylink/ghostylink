@@ -51,7 +51,7 @@ class LinksFixture extends TestFixture
             'token' => 'a1d0c6e83f027327d8461063f4ac58a6',
             'max_views' => 1,
             'views' => 0,
-            'death_time' => '2015-04-25 16:19:23'
+            'death_time' => null
         ],
         [
             'id' => 2,
@@ -62,7 +62,7 @@ class LinksFixture extends TestFixture
             'token' => 'f027327d8461063f4ac58a6a1d0c6e83',
             'max_views' => 42,
             'views' => 21,
-            'death_time' => '2015-04-25 16:19:23'
+            'death_time' => null
         ],
         [
             'id' => 3,
@@ -73,7 +73,7 @@ class LinksFixture extends TestFixture
             'token' => '63f4ac58a6a1d0c6e83f027327d84610',
             'max_views' => 42,
             'views' => 43,
-            'death_time' => '2015-04-25 16:19:23'
+            'death_time' => null
         ],
         [
             'id' => 4,
