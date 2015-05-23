@@ -7,6 +7,9 @@ use Cake\TestSuite\TestCase;
 
 /**
  * App\Model\Table\LinksTable Test Case
+ * @group Unit
+ * @group Behavior
+ * @group Model
  */
 class GhostableBehaviorTest extends TestCase
 {

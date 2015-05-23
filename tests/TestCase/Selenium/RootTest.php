@@ -1,4 +1,7 @@
 <?php
+/**
+ * @group Functional 
+ */
 class rootTest extends PHPUnit_Extensions_SeleniumTestCase
 {
     public $fixtureManager = null ;  

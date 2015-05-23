@@ -8,6 +8,9 @@ use Cake\I18n\Time;
 
 /**
  * App\Model\Entity\Link Test Case
+ * @group Unit
+ * @group Entity
+ * @group Model
  */
 class LinkEntityTest extends TestCase
 {

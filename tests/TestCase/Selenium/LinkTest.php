@@ -1,4 +1,8 @@
 <?php
+/**
+ * @group Functional
+ * @group Link 
+ */
 class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
 {
   public $fixtureManager = null ;  

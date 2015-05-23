@@ -7,6 +7,9 @@ use Cake\TestSuite\TestCase;
 
 /**
  * App\Model\Table\LinksTable Test Case
+ * @group Unit
+ * @group Table
+ * @group Model
  */
 class LinksTableTest extends TestCase
 {
@@ -200,7 +203,11 @@ class LinksTableTest extends TestCase
         $this->Links->save($link);        
         $insertedData = $this->Links->find('all')
                                 ->where(['Links.title =' => $goodData['title']])
-                                ->toArray()[0];        
+                                ->toArray()[0];
+        // FIXME Pass those tests
+        // TODO fsdfs
+        /* FIXME fs */
+        /* TODO fslkfj */
         //$this->assertNotNull($insertedData->views,'views is not null');        
         //$this->assertEquals(0,$insertedData->views,'views counter is set to 0');        
     }

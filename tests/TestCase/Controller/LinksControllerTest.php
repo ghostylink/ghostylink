@@ -6,6 +6,8 @@ use Cake\TestSuite\IntegrationTestCase;
 use Cake\ORM\TableRegistry;
 /**
  * App\Controller\LinksController Test Case
+ * @group Unit 
+ * @group Controller
  */
 class LinksControllerTest extends IntegrationTestCase
 {

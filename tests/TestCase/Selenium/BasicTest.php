@@ -1,4 +1,7 @@
 <?php
+/**
+ * @group Functional 
+ */
 class basicTest extends PHPUnit_Extensions_SeleniumTestCase
 {
     /**
