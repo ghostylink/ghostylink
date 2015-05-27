@@ -12,13 +12,19 @@ function initLinkComponents($JqueryLi) {
     //An available component can be dragged
     $JqueryLi.draggable({
         cursor: "move",
-        revert: "invalid"
+        revert: "invalid",
+        // At the end of the drag the moveLinkComponents will be called
+        stop: function(event, ui) {
+            var $component = ui.draggable;
+            moveLinkComponents($component,$('ul#link-components-chosen'))
+        }
     });
+
     //A click on an available component selects it
     $JqueryLi.on('click',function() {
         moveLinkComponents($(this),$('ul#link-components-chosen')); 
     });
-    
+
     //An available component can be dropped on the chosen components area
     $('ul#link-components-chosen').droppable({
         accept:"ul#link-components-available > li",
@@ -62,10 +68,17 @@ function moveLinkComponents($component, $targetArea){
         //Remove the available component specific class and the text
         $component.text('').removeClass('ui-widget-header').attr("title", legend);
         
+
         /* When the chosen component will be clicked, remove it and the corresponding
         html field */
         $component.on('click', function() {
             componentsChosenClick($(this), $targetArea);
+        });
+
+        // The new component is now draggable
+        $component.draggable({
+            cursor: "move",
+            revert: "invalid"
         });
 }
 
