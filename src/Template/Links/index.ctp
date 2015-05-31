@@ -6,9 +6,7 @@
         
     ?>
 
-<div id="left-block" class="col-lg-6">    
-    <?= $this->Url->build('/', true); ?>
-    <?= $_SERVER['SERVER_NAME'];//Router::fullbaseUrl();?>
+<div id="left-block" class="col-lg-6">            
     <?= $this->Html->image("logos/ghostylink-logo-300x250.png", array('class' => 'logo', 'alt' => 'ghostylink logo'));?>
 <section class="panel panel-info col-lg-12 link-components">
     
