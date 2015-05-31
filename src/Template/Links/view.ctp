@@ -7,7 +7,7 @@
     $this->start('css');
     echo $this->Html->css("Links/view");
     $this->end();
-?>
+?> 
 <div class="row">
     <aside class="link-stats panel panel-default col-lg-4">
         <h2 class="panel-heading">Link statistics</h2>
