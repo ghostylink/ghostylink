@@ -19,7 +19,7 @@ class Link extends Entity
         'title' => true,
         'content' => true,
         'token' => true,
-        'max_views' => true,        
+        'max_views' => true,
         'views' => true,
         'death_time' => true
     ];
@@ -57,7 +57,7 @@ class Link extends Entity
             if ($totalTime != 0) {
                 $percentageTime = (100 * $elapseTime) / $totalTime;
             }
-        }  
+        }
         return min(100, max($percentageViews, $percentageTime));
     }
 }

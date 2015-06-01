@@ -205,9 +205,6 @@ class LinksTableTest extends TestCase
                                 ->where(['Links.title =' => $goodData['title']])
                                 ->toArray()[0];
         // FIXME Pass those tests
-        // TODO fsdfs
-        /* FIXME fs */
-        /* TODO fslkfj */
         //$this->assertNotNull($insertedData->views,'views is not null');        
         //$this->assertEquals(0,$insertedData->views,'views counter is set to 0');        
     }

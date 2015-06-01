@@ -53,24 +53,24 @@ class LinksTable extends Table
             ->requirePresence('token', 'create')
             ->notEmpty('token');
         $validator->notEmpty('death_time', 'At least one component is required', function ($context) {
-                if (!$context['newRecord']) {
-                    return false;
-                }
-                if (array_key_exists('max_views', $context['data'])) {                
-                    return ($context['data']['max_views'] == '');
-                } else {
-                    return false;
-                }
+            if (!$context['newRecord']) {
+                return false;
+            }
+            if (array_key_exists('max_views', $context['data'])) {                
+                return ($context['data']['max_views'] == '');
+            } else {
+                return false;
+            }
         });
         $validator->notEmpty('max_views', 'At least one component is required', function ($context) {
-                if (!$context['newRecord']) {
-                   return false;
-                }
-                if (array_key_exists('death_time', $context['data'])) {
-                    return ($context['data']['death_time'] == '');
-                } else {
-                    return false;
-                }
+            if (!$context['newRecord']) {
+                return false;
+            }
+            if (array_key_exists('death_time', $context['data'])) {
+                return ($context['data']['death_time'] == '');
+            } else {
+                return false;
+            }
         });
         return $validator;
     }
