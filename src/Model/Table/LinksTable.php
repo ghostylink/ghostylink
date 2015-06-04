@@ -51,7 +51,9 @@ class LinksTable extends Table
             ->requirePresence('content', 'create')
             ->notEmpty('content')
             ->requirePresence('token', 'create')
-            ->notEmpty('token');
+            ->notEmpty('token')
+            ->add('max_views', 'valid', ['rule' => 'numeric'])
+            ->add('max_views', 'valid', ['rule' => ['range', 0, 1000]]);
         $validator->notEmpty('death_time', 'At least one component is required', function ($context) {
             if (!$context['newRecord']) {
                 return false;

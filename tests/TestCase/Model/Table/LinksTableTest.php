@@ -145,6 +145,19 @@ class LinksTableTest extends TestCase
         $badData['max_views'] = 0;
         $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
                             'Save: Field max_views is > 0');
+        
+        $badData['max_views'] = -1;
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
+                            'Save: Field max_views cannot be negative');
+        
+        $badData['max_views'] = 1001;
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
+                            'Save: Field max_views cannot be more than 1000');
+        
+        $badData = $this->goodData;
+        $badData['max_views'] = 'You shall not pass!';
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
+                            'Save: Field max_views is integer');
     }
     
     /**
