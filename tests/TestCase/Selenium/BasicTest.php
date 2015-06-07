@@ -34,8 +34,7 @@ class BasicTest extends PHPUnit_Extensions_SeleniumTestCase
 
   public function testMyTestCase()
   {
-    $this->open("/");
-    $this->assertTrue(false);
+    $this->open("/");    
     $this->assertTrue($this->isTextPresent("Ghostylink"));
     $this->assertTrue($this->isElementPresent("css=div#main-content"));
     $this->open('/a1d0c6e83f027327d8461063f4ac58a6');    

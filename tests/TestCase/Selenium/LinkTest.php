@@ -29,8 +29,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
 
   public function testView()
   {
-    $this->open("/a1d0c6e83f027327d8461063f4ac58a6");
-    $this->assertTrue(false);
+    $this->open("/a1d0c6e83f027327d8461063f4ac58a6");    
     // Check the link itself is displayed
     // It has a max_views, check the information is not yet present
     try {
