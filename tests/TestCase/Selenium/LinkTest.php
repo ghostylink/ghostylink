@@ -9,9 +9,9 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   public $autoFixtures = true ;
   public $dropTables = true;
   
-  protected $captureScreenshotOnFailure = TRUE;
-  protected $screenshotPath = '/var/www/ghostylink/selenium_screenshots/';
-  protected $screenshotUrl = 'http://kevin-remy.fr/ghostylink_selenium/screenshots';    
+  protected $captureScreenshotOnFailure = true;
+  protected $screenshotPath = '/var/www/html/ghostylink_failures/links';  
+  protected $screenshotUrl = 'http://localhost/html/ghostylink_failures/links';    
   
   public $fixtures = [
         'Links' => 'app.links'
@@ -30,6 +30,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   public function testView()
   {
     $this->open("/a1d0c6e83f027327d8461063f4ac58a6");
+    $this->assertTrue(false);
     // Check the link itself is displayed
     // It has a max_views, check the information is not yet present
     try {
