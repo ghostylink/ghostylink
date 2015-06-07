@@ -28,20 +28,12 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   }
 
   public function testView()
-  {
-    $this->open("/a1d0c6e83f027327d8461063f4ac58a6");    
+    {
+    $this->open("/a1d0c6e83f027327d8461063f4ac58a6");
     // Check the link itself is displayed
     // It has a max_views, check the information is not yet present
-    try {
-        $this->assertFalse($this->isTextPresent("Lorem ipsum dolor sit amet"));
-    } catch (PHPUnit_Framework_AssertionFailedError $e) {
-        array_push($this->verificationErrors, $e->toString());
-    }
-    try {
-        $this->assertFalse($this->isTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat."));
-    } catch (PHPUnit_Framework_AssertionFailedError $e) {
-        array_push($this->verificationErrors, $e->toString());
-    }
+    $this->assertFalse($this->isTextPresent("Lorem ipsum dolor sit amet"));
+    $this->assertFalse($this->isTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat."));
     $this->click("css=button#load-link");
     for ($second = 0; ; $second++) {
         if ($second >= 60) $this->fail("timeout");
@@ -51,30 +43,20 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
         sleep(1);
     }
 
-    $this->chooseCancelOnNextConfirmation();
-    $this->verifyTextPresent("Lorem ipsum dolor sit amet");
     $this->verifyTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat.");
+    $this->verifyTextPresent("Lorem ipsum dolor sit amet");
+    $this->chooseCancelOnNextConfirmation();
     $this->assertTrue($this->isElementPresent("css=a.delete-link"));
     $this->click("css=a.delete-link");
-    $this->assertTrue((bool)preg_match("/^Are you sure you want to delete : 'Lorem ipsum dolor sit amet' [\s\S]$/",$this->getConfirmation()));
+    $this->assertTrue((bool)preg_match('/^Are you sure you want to delete : \'Lorem ipsum dolor sit amet\' [\s\S]$/',$this->getConfirmation()));
     // Check links statistics are displayed
     $this->assertTrue($this->isElementPresent("css=.link-stats"));
     $this->assertTrue((bool)preg_match('/^Ghostified at [\s\S]*$/',$this->getText("css=meter.link-life-percentage")));
     $this->assertTrue((bool)preg_match('/^0 views left[\s\S]*$/',$this->getText("css=meter.link-remaining-views+div")));
     // No max_views, check the information is displayed in 1 step
-    $this->open("/a1d0c6e83f027327d8461063f4ac58a6");
+    $this->open("/6c6e83f027327d846103f4ac58a6a1d0");
     $this->assertFalse($this->isElementPresent("css=section.unloaded button"));
     $this->assertFalse($this->isElementPresent("css=section.unloaded img"));
-    try {
-        $this->assertFalse($this->isTextPresent("Lorem ipsum dolor sit amet"));
-    } catch (PHPUnit_Framework_AssertionFailedError $e) {
-        array_push($this->verificationErrors, $e->toString());
-    }
-    try {
-        $this->assertFalse($this->isTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat."));
-    } catch (PHPUnit_Framework_AssertionFailedError $e) {
-        array_push($this->verificationErrors, $e->toString());
-    }
   }
   
   public function testAdd() {   

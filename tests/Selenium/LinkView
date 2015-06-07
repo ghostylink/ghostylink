@@ -19,12 +19,12 @@
 <!--Check the link itself is displayed-->
 <!--It has a max_views, check the information is not yet present-->
 <tr>
-	<td>verifyTextNotPresent</td>
+	<td>assertTextNotPresent</td>
 	<td>Lorem ipsum dolor sit amet</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyTextNotPresent</td>
+	<td>assertTextNotPresent</td>
 	<td>Lorem ipsum dolor sit amet, aliquet feugiat.</td>
 	<td></td>
 </tr>
@@ -87,7 +87,7 @@
 <!--No max_views, check the information is displayed in 1 step-->
 <tr>
 	<td>open</td>
-	<td>/a1d0c6e83f027327d8461063f4ac58a6</td>
+	<td>/6c6e83f027327d846103f4ac58a6a1d0</td>
 	<td></td>
 </tr>
 <tr>
