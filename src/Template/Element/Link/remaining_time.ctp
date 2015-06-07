@@ -1,7 +1,7 @@
 <h4 id="link-death-time">Ghostified in :</h4>
 <ul class="countdown" data-death-date="<?= $this->Time->format($link->death_time,
                                                                'MM/dd/YYYY HH:mm:ss',
-                                                               null);?>">
+                                                               null, 'UTC');?>">
     <li>
         <span class="days">00</span>
         <p class="days_ref">days</p>

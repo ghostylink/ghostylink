@@ -13,13 +13,34 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/ghostylink/a1d0c6e83f027327d8461063f4ac58a6</td>
+	<td>/a1d0c6e83f027327d8461063f4ac58a6</td>
 	<td></td>
 </tr>
 <!--Check the link itself is displayed-->
+<!--It has a max_views, check the information is not yet present-->
 <tr>
-	<td>chooseCancelOnNextConfirmation</td>
+	<td>verifyTextNotPresent</td>
+	<td>Lorem ipsum dolor sit amet</td>
 	<td></td>
+</tr>
+<tr>
+	<td>verifyTextNotPresent</td>
+	<td>Lorem ipsum dolor sit amet, aliquet feugiat.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=button#load-link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>Lorem ipsum dolor sit amet</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Lorem ipsum dolor sit amet, aliquet feugiat.</td>
 	<td></td>
 </tr>
 <tr>
@@ -28,8 +49,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
-	<td>Lorem ipsum dolor sit amet, aliquet feugiat.</td>
+	<td>chooseCancelOnNextConfirmation</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -62,6 +83,22 @@
 	<td>assertText</td>
 	<td>css=meter.link-remaining-views+div</td>
 	<td>0 views left*</td>
+</tr>
+<!--No max_views, check the information is displayed in 1 step-->
+<tr>
+	<td>open</td>
+	<td>/a1d0c6e83f027327d8461063f4ac58a6</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>css=section.unloaded button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>css=section.unloaded img</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

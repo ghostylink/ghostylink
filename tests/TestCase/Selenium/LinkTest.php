@@ -31,6 +31,26 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   {
     $this->open("/a1d0c6e83f027327d8461063f4ac58a6");
     // Check the link itself is displayed
+    // It has a max_views, check the information is not yet present
+    try {
+        $this->assertFalse($this->isTextPresent("Lorem ipsum dolor sit amet"));
+    } catch (PHPUnit_Framework_AssertionFailedError $e) {
+        array_push($this->verificationErrors, $e->toString());
+    }
+    try {
+        $this->assertFalse($this->isTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat."));
+    } catch (PHPUnit_Framework_AssertionFailedError $e) {
+        array_push($this->verificationErrors, $e->toString());
+    }
+    $this->click("css=button#load-link");
+    for ($second = 0; ; $second++) {
+        if ($second >= 60) $this->fail("timeout");
+        try {
+            if ($this->isTextPresent("Lorem ipsum dolor sit amet")) break;
+        } catch (Exception $e) {}
+        sleep(1);
+    }
+
     $this->chooseCancelOnNextConfirmation();
     $this->verifyTextPresent("Lorem ipsum dolor sit amet");
     $this->verifyTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat.");
@@ -41,6 +61,20 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->assertTrue($this->isElementPresent("css=.link-stats"));
     $this->assertTrue((bool)preg_match('/^Ghostified at [\s\S]*$/',$this->getText("css=meter.link-life-percentage")));
     $this->assertTrue((bool)preg_match('/^0 views left[\s\S]*$/',$this->getText("css=meter.link-remaining-views+div")));
+    // No max_views, check the information is displayed in 1 step
+    $this->open("/a1d0c6e83f027327d8461063f4ac58a6");
+    $this->assertFalse($this->isElementPresent("css=section.unloaded button"));
+    $this->assertFalse($this->isElementPresent("css=section.unloaded img"));
+    try {
+        $this->assertFalse($this->isTextPresent("Lorem ipsum dolor sit amet"));
+    } catch (PHPUnit_Framework_AssertionFailedError $e) {
+        array_push($this->verificationErrors, $e->toString());
+    }
+    try {
+        $this->assertFalse($this->isTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat."));
+    } catch (PHPUnit_Framework_AssertionFailedError $e) {
+        array_push($this->verificationErrors, $e->toString());
+    }
   }
   
   public function testAdd() {   

@@ -31,15 +31,25 @@ class LinksController extends AppController
      */
     public function view($token = null)
     {
+        if ($this->request->is('ajax')) {
+            //Retrieve the stored link in session
+            $link = $this->request->session()->read('link-' . $token);
+            $this->set('link', $link);
+            $this->set('_serialize', ['link']);
+            return $this->render('ajax/information', 'ajax');
+        }   
         $link = $this->Links->findByToken($token)->first();
         if (count($link) == 0) {
             throw new NotFoundException();
-        }
+        }             
         // The link has not been deleted
         if ($this->Links->increaseViews($link)) {
             $this->Links->save($link);
             $this->set('link', $link);
             $this->set('_serialize', ['link']);
+            //The link must be stored in a session variable to avoid a 
+            //concurent deletion by an other user
+            $this->request->session()->write('link-' . $token, $link);
         } else { // The link has been deleted
             throw new NotFoundException();
         }

@@ -33,6 +33,22 @@ aside.link-stats.panel {
     padding:0;
 }
 /************* Link statistics ************************************************/
+section#link-information.unloaded {
+    text-align: center;
+    padding-top: 3em;
+}
+
+section#link-information.unloaded img {
+    border: dashed 1px #08C;
+    padding: 1em;
+}
+section#link-information.unloaded > div.row {
+    margin-bottom: 0.5em;
+}
+
+section#link-information.unloaded p span.highlight{
+    font-weight: bold;
+}
 div.round{
     display: inline-block;
     width: 200px; height: 200px;

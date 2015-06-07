@@ -1,40 +1,46 @@
 <?php
     $this->start('script');
     echo $this->Html->script("libs/jquery.downCount");
-    echo $this->Html->script("Links/life");    
+    echo $this->Html->script("Links/life");
+    echo $this->Html->script("Links/view");
     $this->end(); 
     
     $this->start('css');
     echo $this->Html->css("Links/view");
     $this->end();
 ?> 
-<div class="row">
-    <aside class="link-stats panel panel-default col-lg-4">
-        <h2 class="panel-heading">Link statistics</h2>
-        <div class="panel-body">
-            <?= $this->element("Link/life_percentage", array("link"=>$link)); ?>            
-            <?php
-                if($link->max_views != null) {
-                    echo $this->element("Link/remaining_views", array("link"=>$link));
-                }
-                if ($link->death_time != null) {
-                    echo $this->element("Link/remaining_time", array("link"=>$link));
-                }
-            ?>
+<?php    
+if ($link->max_views) {?>
+    <section id="link-information" class="row unloaded">        
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <?= $this->Html->image('logos/ghostylink-logo-300x250.png',
+                                        array('class' => 'hidden-xs hidden-sm'));?>
+            </div>        
+            <p class="col-lg-6 col-md-6 alert alert-info">
+                The link you try to access has a maximum views component. This
+                page prevent sharing systems (chats/social networks) from increasing the view 
+                counter when a link preview is loaded. <br/><br/>
+                <span class="hidden-xs hidden-sm">
+                    <span class="highlight">Move your mouse on the ghost</span> or 
+                </span> 
+                <span class="highlight"> click on the following button</span>
+                to view the link
+            </p>
         </div>
-    </aside>
-    <section class="col-lg-8">
-        <article class="panel panel-primary">
-            <section class="link-heading panel panel-heading">
-                <h2><?= h($link->title) ?></h2>
-                <time>Created on <?= h($link->created) ?></time>                
-                <?= $this->Form->postLink('', ['_name' => 'link-delete', $link->id],
-                        ['confirm' => __("Are you sure you want to delete : '") . $link->title . "' ?",
-                         'class'=>'glyphicon glyphicon-trash delete-link']) ?> </li>
-            </section>
-            <section class="link-content panel-body">
-                <?= $this->Text->autoParagraph(h($link->content)); ?>
-            </section>
-        </article>
+        <div class="row">
+            <button id="load-link" class="btn btn-primary btn-lg">
+                View link information
+            </button>
+        </div>
     </section>
-</div>
+<?php    
+}
+else {?>
+    <section id="link-information" class="row">
+        <?= $this->element('Link/information');?>
+    </section>
+<?php
+}
+?>
+

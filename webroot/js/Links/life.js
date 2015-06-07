@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 (function ($) {
+    initRemainingViews();
+    initDownCount();
+})(jQuery);
+
+function initRemainingViews() {
     /** Code adapted from  a grafikart tutorial 
      *  http://www.grafikart.fr/tutoriels/jquery/canvas-jauge-circulaire-317
      */
@@ -58,8 +63,17 @@
 
 
     });
-    var deathDate = $('ul.countdown').attr("data-death-date");
-    $('.countdown').downCount({
-      date: deathDate
-    });
-})(jQuery);
+}
+/**
+ * Initialize a countdown based on the ul.countdown element
+ * @returns {undefined}
+ */
+function initDownCount() {
+    $countDown = $('ul.countdown');
+    if ($countDown.size()) {
+        var deathDate = $('ul.countdown').attr("data-death-date");
+        $('.countdown').downCount({
+            date: deathDate
+        });
+    }
+}
