@@ -74,7 +74,7 @@ class LinksControllerTest extends IntegrationTestCase
      * 
      * @return void
      */
-    public function tesqViewIncreaseCounter()
+    public function testViewIncreaseCounter()
     {
         $links = TableRegistry::get('Links');
         $linkBefore = $links->findByToken('a1d0c6e83f027327d8461063f4ac58a6')->first();
@@ -87,7 +87,7 @@ class LinksControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function tesqtAdd()
+    public function testAdd()
     {
         //add action is not accessible from get
         $this->get("/add");
@@ -146,7 +146,7 @@ class LinksControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function teqstEdit()
+    public function testEdit()
     {
         // Create new data
         $data = [
@@ -175,7 +175,7 @@ class LinksControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function teqstDelete()
+    public function testDelete()
     {
         // Get link from first fixture
         $links = TableRegistry::get('Links');        
