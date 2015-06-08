@@ -28,7 +28,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   }
 
   public function testView()
-    {
+    {      
     $this->open("/a1d0c6e83f027327d8461063f4ac58a6");
     // Check the link itself is displayed
     // It has a max_views, check the information is not yet present
@@ -43,18 +43,22 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
         sleep(1);
     }
 
-    $this->verifyTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat.");
-    $this->verifyTextPresent("Lorem ipsum dolor sit amet");
+    $this->assertTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat.");
+    $this->assertTextPresent("Lorem ipsum dolor sit amet");
+    
     $this->chooseCancelOnNextConfirmation();
     $this->assertTrue($this->isElementPresent("css=a.delete-link"));
+    
     $this->click("css=a.delete-link");
     $this->assertTrue((bool)preg_match('/^Are you sure you want to delete : \'Lorem ipsum dolor sit amet\' [\s\S]$/',$this->getConfirmation()));
+    
     // Check links statistics are displayed
     $this->assertTrue($this->isElementPresent("css=.link-stats"));
     $this->assertTrue((bool)preg_match('/^Ghostified at [\s\S]*$/',$this->getText("css=meter.link-life-percentage")));
-    $this->assertTrue((bool)preg_match('/^0 views left[\s\S]*$/',$this->getText("css=meter.link-remaining-views+div")));
-    // No max_views, check the information is displayed in 1 step
-    $this->open("/6c6e83f027327d846103f4ac58a6a1d0");
+    $this->assertTrue((bool)preg_match('/^0 views left[\s\S]*$/',$this->getText("css=meter.link-remaining-views+div")));    
+    // No max_views, check the information is displayed in 1 step    
+    $this->open("/f27d846103f4ac6c6e8358a6a1d00273");    
+    $this->assertFalse($this->isTextPresent("NotFound"));
     $this->assertFalse($this->isElementPresent("css=section.unloaded button"));
     $this->assertFalse($this->isElementPresent("css=section.unloaded img"));
   }

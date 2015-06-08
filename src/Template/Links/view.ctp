@@ -10,7 +10,7 @@
     $this->end();
 ?> 
 <?php    
-if ($link->max_views) {?>
+if (isset($link->max_views)) {?>
     <section id="link-information" class="row unloaded">        
         <div class="row">
             <div class="col-lg-6 col-md-6">
