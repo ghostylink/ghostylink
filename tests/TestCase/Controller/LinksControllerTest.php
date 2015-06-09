@@ -58,7 +58,10 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertResponseContains('The link you try to access has a maximum views component');
          
         //TODO: mock an ajax request to check the link with max_views can be seen
-        
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $this->get('/a1d0c6e83f027327d8461063f4ac58a6');
+        $this->assertResponseContains('Lorem ipsum dolor sit amet');
+        unset( $_SERVER['HTTP_X_REQUESTED_WITH']);
         //A random token throw 404
         $this->get('/6063f4ac58a6a1d7383f02d10c6e2874');
         $this->assertResponseError('A random token throw 404');
@@ -78,7 +81,9 @@ class LinksControllerTest extends IntegrationTestCase
     {
         $links = TableRegistry::get('Links');
         $linkBefore = $links->findByToken('a1d0c6e83f027327d8461063f4ac58a6')->first();
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $this->get('/a1d0c6e83f027327d8461063f4ac58a6');
+        unset( $_SERVER['HTTP_X_REQUESTED_WITH']);
         $linksAfter = $links->findByToken('a1d0c6e83f027327d8461063f4ac58a6')->first();
         $this->assertEquals($linkBefore->views + 1, $linksAfter->views);
     }
