@@ -41,9 +41,9 @@ function initHandlers() {
         $section.find('button').off('click');                
         retrieveLinkInformation();
     });
-//    $('section#link-information.unloaded img').hover(function() {        
-//        $('section#link-information').find('img');        
-//        retrieveLinkInformation();
-//    });
+    $('section#link-information.unloaded img').hover(function() {        
+        $('section#link-information').find('img');        
+        retrieveLinkInformation();
+    });
 }
 

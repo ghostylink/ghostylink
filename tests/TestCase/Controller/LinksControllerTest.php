@@ -4,6 +4,7 @@ namespace App\Test\TestCase\Controller;
 use App\Controller\LinksController;
 use Cake\TestSuite\IntegrationTestCase;
 use Cake\ORM\TableRegistry;
+use Cake\I18n\Time;
 /**
  * App\Controller\LinksController Test Case
  * @group Unit 
@@ -86,6 +87,17 @@ class LinksControllerTest extends IntegrationTestCase
         unset( $_SERVER['HTTP_X_REQUESTED_WITH']);
         $linksAfter = $links->findByToken('a1d0c6e83f027327d8461063f4ac58a6')->first();
         $this->assertEquals($linkBefore->views + 1, $linksAfter->views);
+    }
+    
+    public function testDeleteByTime() {
+          // Fixate time. Look in the fixture 4 with title 'No max_views'
+        $now = new Time('1935-11-07 18:38:00');
+        Time::setTestNow($now);
+        $this->get('/6c6e83f027327d846103f4ac58a6a1d0');
+        $now = new Time('1955-11-10 6:38:01');
+        Time::setTestNow($now);
+        $this->get('/6c6e83f027327d846103f4ac58a6a1d0');
+        $this->assertResponseError('Time limit involve link deletion');
     }
     /**
      * Test add method

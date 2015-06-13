@@ -37,7 +37,7 @@ class LinksController extends AppController
         }
         if ($this->request->is('ajax')) {
             //Retrieve the stored link in session                                    
-            if ($this->Links->increaseViews($link)) {
+            if ($this->Links->increaseLife($link)) {
                 $this->Links->save($link);
             }
             else {
@@ -45,7 +45,14 @@ class LinksController extends AppController
             }
             $this->set('link', $link);            
             return $this->render('ajax/information', 'ajax');
-        }   
+        }
+        else {
+            if ($link->max_views == null) {
+                if ($this->Links->increaseLife($link)) {
+                    $this->Links->save($link);
+                }
+            }
+        }
         $this->set('link', $link);        
     }
     

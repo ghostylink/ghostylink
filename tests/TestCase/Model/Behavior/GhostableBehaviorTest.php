@@ -83,7 +83,7 @@ class GhostableBehaviorTest extends TestCase
      * Test the view attribute is increased
      * @return void
      */
-    public function testIncreaseViews() {
+    public function testIncreaseLife() {
         $goodData = $this->goodData;
         $goodData['title'] = 'titletestIncreaseView';
         $goodData['max_views'] = 3;
@@ -95,7 +95,7 @@ class GhostableBehaviorTest extends TestCase
         
         //Apply the behavior function;
         $behavior = $this->TargetTable->behaviors()->get('Ghostable');                        
-        $behavior->increaseViews($entity);
+        $behavior->increaseLife($entity);
         
         //Save the increased entity
         $this->TargetTable->save($entity);
@@ -106,13 +106,13 @@ class GhostableBehaviorTest extends TestCase
                            ->toArray()[0]->views;
         $this->assertEquals($viewsBefore + 1, $viewsAfter);
         
-        $this->assertTrue($behavior->increaseViews($entity), 'True when ghost is alive (1/2)');        
+        $this->assertTrue($behavior->increaseLife($entity), 'True when ghost is alive (1/2)');        
         $this->TargetTable->save($entity);
         
-        $this->assertTrue($behavior->increaseViews($entity), 'True when ghost is alive (2/2)');
+        $this->assertTrue($behavior->increaseLife($entity), 'True when ghost is alive (2/2)');
         $this->TargetTable->save($entity);
                 
-        $this->assertFalse($behavior->increaseViews($entity), 'False when ghost is dead');
+        $this->assertFalse($behavior->increaseLife($entity), 'False when ghost is dead');
     }
     
     /**
@@ -127,14 +127,14 @@ class GhostableBehaviorTest extends TestCase
                 
         //Apply the behavior function;
         $behavior = $this->TargetTable->behaviors()->get('Ghostable');                        
-        $behavior->increaseViews($entity);
+        $behavior->increaseLife($entity);
         $this->TargetTable->save($entity);
         
         //as checkNbViews is private, we must call invokeMetho defined above
         $this->assertTrue($this->invokeMethod($behavior, 'checkLife', array($entity)));
-        $behavior->increaseViews($entity);        
-        $behavior->increaseViews($entity);        
-        $behavior->increaseViews($entity);
+        $behavior->increaseLife($entity);        
+        $behavior->increaseLife($entity);        
+        $behavior->increaseLife($entity);
         $this->TargetTable->save($entity);
         
         //The max_views has been reached
