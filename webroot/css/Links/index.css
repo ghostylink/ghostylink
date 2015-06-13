@@ -7,6 +7,12 @@ and open the template in the editor.
     Created on : 1 mai 2015, 12:18:43
     Author     : kremy
 */
+p.description {
+    text-align: left;
+    margin-top:1em;
+    font-size: 1.2em;
+}
+
 ul#link-components-available li{
     cursor:move !important;    
 }
@@ -48,9 +54,6 @@ section.link-components  .panel-body{
 div#left-block {
     text-align: center;
 }
-
-
-
 div.link-url {
     display: inline-block;
 }
@@ -64,4 +67,10 @@ section.generated-link .copy-instruction {
     display: inline-block;
 }
 
+section.generated-link {
+    text-align: center;
+}
 
+form.link-add button {
+    margin-top:2em !important;
+}

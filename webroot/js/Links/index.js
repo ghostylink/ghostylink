@@ -43,7 +43,7 @@ function initAjaxSubmission() {
                 //No error have been found 
                 $('form div.alert.alert-danger').remove();
                 $('section.generated-link').remove();
-                $('#left-block').append($responseHTML);
+                $('#main-content').append($responseHTML);
                 initCopyButton();
             }
             else {

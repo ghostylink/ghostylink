@@ -28,7 +28,7 @@ if (isset($link->max_views)) {?>
                 to view the link
             </p>
         </div>
-        <div class="row">
+        <div class="centered-text">
             <button id="load-link" class="btn btn-primary btn-lg">
                 View link information
             </button>

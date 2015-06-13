@@ -26,7 +26,7 @@
     <![endif]-->
   </head>
   <body>
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" 
@@ -40,17 +40,17 @@
                                      array('class' => 'logo', 
                                            'alt' => 'ghostylink logo'));?>  
           <?= $this->Html->link('Ghostylink', "/", array('class' => 'navbar-brand'));?>
-          </a>                  
+          <h1 class="navbar-text hidden-xs">Keep control on data you share !</h1>
         </div>
         <div class="collapse navbar-collapse">            
         </div><!--/.nav-collapse -->
       </div>
         
-    </div>
-      
-      <div id="main-content" class="content-wrapper container">
-            <?php echo $this->fetch("content"); ?>
-      </div>      
+    </nav>
+
+    <div id="main-content" class="content-wrapper container">
+        <?php echo $this->fetch("content"); ?>
+    </div>      
 
     <!--</div> /.container -->    
     <!-- Bootstrap and other plugins -->    

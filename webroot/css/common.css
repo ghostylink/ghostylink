@@ -10,6 +10,14 @@ and open the template in the editor.
 .content-wrapper.container {
     margin-top: 60px !important;
 }
+
+
+h1.navbar-text {
+    float:right;
+    font-size: 1.2em;
+    font-style: italic;
+}
+
 /******************************* CSS3 loader **********************************/
 /*** source : http://www.css-spinners.com/css/spinner/three-quarters.css ******/
 @-moz-keyframes three-quarters-loader {

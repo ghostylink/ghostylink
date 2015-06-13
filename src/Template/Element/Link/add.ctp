@@ -12,7 +12,7 @@
         <?php
             echo $this->Form->input('title', ['type' => 'text',
                                               'id' => 'inputTitle',
-                                              'class' => 'form-control', 
+                                              'class' => 'form-control link-add', 
                                               'placeholder' => "Enter a title",
                                               'required' => 'false']);            
             echo $this->Form->input('content', ['type' => 'textarea',
@@ -66,6 +66,10 @@
         ?>
     </fieldset>
     <?= $this->Form->button(__('Create the link'), ['type' => 'submit',
-                                                   'class' => 'btn btn-success']) ?>
+                                                   'class' => 'col-lg-6 col-lg-offset-3 '.
+                                                              'col-md-6 col-md-offset-3 '.
+                                                              'col-sm-6 col-sm-offset-3 '.
+                                                              'col-xs-6 col-xs-offset-3 '.
+                                                              'btn btn-success']) ?>
     <?= $this->Form->end() ?>    
 </div>
