@@ -48,6 +48,10 @@ class LinksTable extends Table
             ->allowEmpty('id', 'create')
             ->requirePresence('title', 'create')
             ->notEmpty('title')
+            ->add('title', ['length' => [
+                            'rule' => ['maxLength', 100],
+                            'message' => 'Titles need to be at least 10 characters long',
+            ]])
             ->requirePresence('content', 'create')
             ->notEmpty('content')
             ->requirePresence('token', 'create')

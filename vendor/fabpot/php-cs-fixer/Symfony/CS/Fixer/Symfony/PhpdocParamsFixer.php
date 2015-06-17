@@ -36,7 +36,7 @@ class PhpdocParamsFixer extends AbstractFixer
         $desc = '(?:\s+(?P<desc>.*)|\s*)';
 
         $this->regex = '/^ {5}\* @(?:'.$paramTag.'|'.$otherTags.')'.$desc.'$/';
-        $this->regexCommentLine = '/^ {5}\*(?:\s+(?P<desc>.+))(?<!\*\/)$/';
+        $this->regexCommentLine = '/^ {5}\*(?! @)(?:\s+(?P<desc>.+))(?<!\*\/)$/';
     }
 
     /**
@@ -112,7 +112,7 @@ class PhpdocParamsFixer extends AbstractFixer
 
                     $tagMax = max($tagMax, strlen($item['tag']));
                     $hintMax = max($hintMax, strlen($item['hint']));
-                    $varMax  = max($varMax, strlen($item['var']));
+                    $varMax = max($varMax, strlen($item['var']));
                 }
 
                 $currTag = null;

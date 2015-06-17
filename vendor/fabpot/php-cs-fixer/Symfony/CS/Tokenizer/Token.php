@@ -390,17 +390,19 @@ class Token
      */
     public function isWhitespace(array $opts = array())
     {
-        $whitespaces = isset($opts['whitespaces']) ? $opts['whitespaces'] : " \t\n\r\0\x0B";
-
         if ($this->isArray && !$this->isGivenKind(T_WHITESPACE)) {
             return false;
         }
+
+        $whitespaces = isset($opts['whitespaces']) ? $opts['whitespaces'] : " \t\n\r\0\x0B";
 
         return '' === trim($this->content, $whitespaces);
     }
 
     /**
      * Override token.
+     *
+     * If called on Token inside Tokens collection please use `Tokens::overrideAt` instead.
      *
      * @param string|array $prototype token prototype
      */
@@ -441,10 +443,10 @@ class Token
     public function toArray()
     {
         return array(
-            'id'      => $this->id,
-            'name'    => $this->getName(),
+            'id' => $this->id,
+            'name' => $this->getName(),
             'content' => $this->content,
-            'line'    => $this->line,
+            'line' => $this->line,
             'isArray' => $this->isArray,
         );
     }

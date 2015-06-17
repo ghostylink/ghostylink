@@ -34,6 +34,9 @@ class AppController extends Controller
      *
      * @return void
      */
+    public $helpers = array(
+        'AssetCompress.AssetCompress'
+    );
     public function initialize()
     {
         $this->loadComponent('Flash');

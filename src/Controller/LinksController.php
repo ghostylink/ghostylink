@@ -97,12 +97,13 @@ class LinksController extends AppController
         ]);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $link = $this->Links->patchEntity($link, $this->request->data);
+            $link = $this->Links->patchEntity($link, $this->request->data);            
             if ($this->Links->save($link)) {
                 $this->Flash->success('The link has been saved.');
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error('The link could not be saved. Please, try again.');
+                return $this->redirect(['action' => 'index']);
             }
         }
         $this->set(compact('link'));

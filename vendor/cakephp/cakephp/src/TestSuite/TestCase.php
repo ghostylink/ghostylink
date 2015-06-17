@@ -16,6 +16,8 @@ namespace Cake\TestSuite;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
+use Cake\Event\EventManager;
+use Cake\ORM\Exception\MissingTableClassException;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
@@ -99,6 +101,8 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         if (class_exists('Cake\Routing\Router', false)) {
             Router::reload();
         }
+ 
+        EventManager::instance(new EventManager());
     }
 
     /**
@@ -582,7 +586,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             $class = Inflector::camelize($alias);
             $className = App::className($class, 'Model/Table', 'Table');
             if (!$className) {
-                throw new \Cake\ORM\Exception\MissingTableClassException([$alias]);
+                throw new MissingTableClassException([$alias]);
             }
             $options['className'] = $className;
         }

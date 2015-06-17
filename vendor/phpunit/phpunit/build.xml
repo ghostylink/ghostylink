@@ -204,7 +204,7 @@
   <exec executable="php">
    <arg value="composer.phar"/>
    <arg value="require"/>
-   <arg value="phpunit/dbunit:~1.3"/>
+   <arg value="phpunit/dbunit:~1.4"/>
    <arg value="phpunit/phpunit-selenium:~1.4"/>
    <arg value="phpunit/php-invoker:~1.1"/>
   </exec>
@@ -319,7 +319,7 @@
    </fileset>
   </copy>
 
-  <copy file="${basedir}/vendor/symfony/yaml/Symfony/Component/Yaml/LICENSE" tofile="${basedir}/build/phar/symfony/LICENSE"/>
+  <copy file="${basedir}/vendor/symfony/yaml/LICENSE" tofile="${basedir}/build/phar/symfony/LICENSE"/>
   <copy todir="${basedir}/build/phar/symfony">
    <fileset dir="${basedir}/vendor/symfony">
     <include name="**/*.php" />

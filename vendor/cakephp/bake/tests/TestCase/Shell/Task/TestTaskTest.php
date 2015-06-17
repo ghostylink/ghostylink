@@ -205,6 +205,7 @@ class TestTaskTest extends TestCase
 
         $expected = [
             'AuthorsTable',
+            'BakeArticlesTable',
             'BakeTestCommentsTable',
             'CommentsTable'
         ];
@@ -496,6 +497,14 @@ class TestTaskTest extends TestCase
 
         $result = $this->Task->generateConstructor('entity', 'TestBake\Model\Entity\Article');
         $expected = ["", "new Article();", ''];
+        $this->assertEquals($expected, $result);
+
+        $result = $this->Task->generateConstructor('form', 'TestBake\Form\ExampleForm');
+        $expected = [
+            '',
+            "new ExampleForm();",
+            ''
+        ];
         $this->assertEquals($expected, $result);
     }
 

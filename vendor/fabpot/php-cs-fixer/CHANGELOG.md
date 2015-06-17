@@ -3,32 +3,70 @@ CHANGELOG for PHP CS Fixer
 
 This file contains changelogs for stable releases only.
 
+Changelog for v1.9
+------------------
+
+* feature #1097 Added ShortEchoTagFixer (vinkla)
+* minor #1238 Fixed error handler to respect current error_reporting (JanJakes)
+* minor #1234 Add class to exception message, use sprintf for exceptions (SpacePossum)
+* minor #1210 set custom error handler for application run (keradus)
+* minor #1214 Tokens::isMonolithicPhp - enhance performance (keradus)
+* minor #1207 Update code documentation (keradus)
+* minor #1202 Update IDE tool urls (keradus)
+* minor #1195 PreIncrementFixer - move to Symfony level (gharlan)
+
+Changelog for v1.8.1
+--------------------
+
+* bug #1193 EofEndingFixer - do not add an empty line at EOF if the PHP tags have been closed (SpacePossum)
+* bug #1209 PhpdocParamsFixer - fix corrupting following custom annotation (keradus)
+* bug #1205 BracesFixer - fix missing indentation fixes for class level (keradus)
+* bug #1204 Tag - fix treating complex tag as simple PhpDoc tag (keradus)
+* bug #1198 Tokens - fixed unary/binary operator check for type-hinted reference arguments (gharlan)
+* bug #1201 Php4ConstructorFixer - fix invalid handling of subnamespaces (gharlan)
+* minor #1221 Add more tests (SpacePossum)
+* minor #1216 Tokens - Add unit test for array detection (SpacePossum)
+
+Changelog for v1.8
+------------------
+
+* feature #1168 Added UnalignEqualsFixer (keradus)
+* feature #1167 Added UnalignDoubleArrowFixer (keradus)
+* bug #1169 ToolInfo - Fix way to find script dir (sp-ian-monge)
+* minor #1181 composer.json - Update description (SpacePossum)
+* minor #1180 create Tokens::overrideAt method (keradus)
+
+Changelog for v1.7.1
+--------------------
+
+* bug #1165 BracesFixer - fix bug when comment is a first statement in control structure without braces (keradus)
+
 Changelog for v1.7
 ------------------
 
-feature #1113 Added PreIncrementFixer (gharlan)
-feature #1144 Added PhpdocNoAccessFixer (GrahamCampbell)
-feature #1116 Added SelfAccessorFixer (gharlan)
-feature #1064 OperatorsSpacesFixer enhancements (gharlan)
-bug #1151 Prevent token collection corruption by fixers (stof, keradus)
-bug #1152 LintManager - fix handling of temporary file (keradus)
-bug #1139 NamespaceNoLeadingWhitespaceFixer - remove need for ctype extension (keradus)
-bug #1117 Tokens - fix iterator used with foreach by reference (keradus)
-minor #1148 code grooming (keradus)
-minor #1142 We are actually PSR-4, not PSR-0 (GrahamCampbell)
-minor #1131 Phpdocs and typos (SpacePossum)
-minor #1069 state min HHVM version (keradus)
-minor #1129 [DX] Help developers choose the right branch (SpacePossum)
-minor #1138 PhpClosingTagFixer - simplify flow, no need for loop (keradus)
-minor #1123 Reference mismatches fixed, SCA (kalessil)
-minor #1109 SingleQuoteFixer - made fixer more accurate (gharlan)
-minor #1110 code grooming (kalessil)
+* feature #1113 Added PreIncrementFixer (gharlan)
+* feature #1144 Added PhpdocNoAccessFixer (GrahamCampbell)
+* feature #1116 Added SelfAccessorFixer (gharlan)
+* feature #1064 OperatorsSpacesFixer enhancements (gharlan)
+* bug #1151 Prevent token collection corruption by fixers (stof, keradus)
+* bug #1152 LintManager - fix handling of temporary file (keradus)
+* bug #1139 NamespaceNoLeadingWhitespaceFixer - remove need for ctype extension (keradus)
+* bug #1117 Tokens - fix iterator used with foreach by reference (keradus)
+* minor #1148 code grooming (keradus)
+* minor #1142 We are actually PSR-4, not PSR-0 (GrahamCampbell)
+* minor #1131 Phpdocs and typos (SpacePossum)
+* minor #1069 state min HHVM version (keradus)
+* minor #1129 [DX] Help developers choose the right branch (SpacePossum)
+* minor #1138 PhpClosingTagFixer - simplify flow, no need for loop (keradus)
+* minor #1123 Reference mismatches fixed, SCA (kalessil)
+* minor #1109 SingleQuoteFixer - made fixer more accurate (gharlan)
+* minor #1110 code grooming (kalessil)
 
 Changelog for v1.6.2
 --------------------
 
-bug #1149 UnusedUseFixer - must be run before LineAfterNamespaceFixer, fix token collection corruption (keradus)
-minor #1145 AbstractLinesBeforeNamespaceFixer - fix docs for fixLinesBeforeNamespace (GrahamCampbell)
+* bug #1149 UnusedUseFixer - must be run before LineAfterNamespaceFixer, fix token collection corruption (keradus)
+* minor #1145 AbstractLinesBeforeNamespaceFixer - fix docs for fixLinesBeforeNamespace (GrahamCampbell)
 
 Changelog for v1.6.1
 --------------------

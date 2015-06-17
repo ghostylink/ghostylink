@@ -14,7 +14,6 @@
 namespace Cake\TestSuite;
 
 use Cake\Core\Configure;
-use Cake\Event\EventManager;
 use Cake\Network\Request;
 use Cake\Network\Session;
 use Cake\Routing\DispatcherFactory;
@@ -49,6 +48,13 @@ abstract class IntegrationTestCase extends TestCase
      * @var \Cake\Network\Response
      */
     protected $_response;
+
+    /**
+     * The exception being thrown if the case.
+     *
+     * @var \Cake\Core\Exception\Exception
+     */
+    protected $_exception;
 
     /**
      * Session data to use in the next request.
@@ -93,17 +99,6 @@ abstract class IntegrationTestCase extends TestCase
     protected $_requestSession;
 
     /**
-     * Resets the EventManager for before each test.
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        EventManager::instance(new EventManager());
-    }
-
-    /**
      * Clears the state used for requests.
      *
      * @return void
@@ -115,6 +110,7 @@ abstract class IntegrationTestCase extends TestCase
         $this->_session = [];
         $this->_cookie = [];
         $this->_response = null;
+        $this->_exception = null;
         $this->_controller = null;
         $this->_viewName = null;
         $this->_layoutName = null;
@@ -280,6 +276,7 @@ abstract class IntegrationTestCase extends TestCase
         } catch (\PHPUnit_Exception $e) {
             throw $e;
         } catch (\Exception $e) {
+            $this->_exception = $e;
             $this->_handleError($e);
         }
     }
@@ -298,7 +295,9 @@ abstract class IntegrationTestCase extends TestCase
         $this->_controller = $event->data['controller'];
         $events = $this->_controller->eventManager();
         $events->on('View.beforeRender', function ($event, $viewFile) {
-            $this->_viewName = $viewFile;
+            if (!$this->_viewName) {
+                $this->_viewName = $viewFile;
+            }
         });
         $events->on('View.beforeLayout', function ($event, $viewFile) {
             $this->_layoutName = $viewFile;
@@ -341,11 +340,13 @@ abstract class IntegrationTestCase extends TestCase
         $session = Session::create($sessionConfig);
         $session->write($this->_session);
 
+        list ($url, $query) = $this->_url($url);
         $props = [
-            'url' => Router::url($url),
+            'url' => $url,
             'post' => $data,
             'cookies' => $this->_cookie,
             'session' => $session,
+            'query' => $query
         ];
         $env = [];
         if (isset($this->_request['headers'])) {
@@ -358,6 +359,25 @@ abstract class IntegrationTestCase extends TestCase
         $props['environment'] = $env;
         $props = Hash::merge($props, $this->_request);
         return new Request($props);
+    }
+
+    /**
+     * Creates a valid request url and parameter array more like Request::_url()
+     *
+     * @param string|array $url The URL
+     * @return array Qualified URL and the query parameters
+     */
+    protected function _url($url)
+    {
+        $url = Router::url($url);
+        $query = [];
+
+        if (strpos($url, '?') !== false) {
+            list($url, $parameters) = explode('?', $url, 2);
+            parse_str($parameters, $query);
+        }
+
+        return [$url, $query];
     }
 
     /**
@@ -445,6 +465,11 @@ abstract class IntegrationTestCase extends TestCase
             $this->fail('No response set, cannot assert status code.');
         }
         $status = $this->_response->statusCode();
+
+        if ($this->_exception && ($status < $min || $status > $max)) {
+            $this->fail($this->_exception);
+        }
+
         $this->assertGreaterThanOrEqual($min, $status, $message);
         $this->assertLessThanOrEqual($max, $status, $message);
     }

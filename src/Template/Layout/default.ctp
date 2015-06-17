@@ -8,16 +8,10 @@
     <title>Ghostylink - <?php echo $this->fetch("title");?></title>
     
     <!-- Bootstrap and others css -->    
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <?php         
-        echo $this->Html->css("bootstrap.min");
-        echo $this->Html->css("jquery-ui.min");
-        echo $this->Html->css("common");
-        echo $this->Html->css($this->name . '/' . $this->view);
-        //fdfs
-        echo $this->fetch("css");        
-        echo $this->Html->script("jquery.min");
-    ?>  
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->    
+    <?= $this->AssetCompress->css('libs');?>        
+    <?= $this->AssetCompress->css($this->view); ?>
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -53,11 +47,11 @@
     </div>      
 
     <!--</div> /.container -->    
-    <!-- Bootstrap and other plugins -->    
-    <?php echo $this->Html->script("bootstrap.min");?>
-    <?php echo $this->Html->script("jquery-ui.min");?>
-    <?php echo $this->Html->script("common");?>
+    <!-- Common librairies -->
+    <?= $this->AssetCompress->script('libs');?>
+    
     <!-- Include all scripts of the page -->
-    <?php echo $this->fetch("script");?>    
+    <?= $this->AssetCompress->script($this->view);?>
+      
   </body>  
 </html>

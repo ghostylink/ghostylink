@@ -79,8 +79,8 @@ PHP;
     {
         $tokens = Tokens::fromCode($source);
 
-        foreach ($expected as $index => $expected) {
-            $this->assertSame($expected, $tokens->isLambda($index));
+        foreach ($expected as $index => $expectedValue) {
+            $this->assertSame($expectedValue, $tokens->isLambda($index));
         }
     }
 
@@ -128,8 +128,8 @@ preg_replace_callback(
     {
         $tokens = Tokens::fromCode($source);
 
-        foreach ($expected as $index => $expected) {
-            $this->assertSame($expected, $tokens->isShortArray($index));
+        foreach ($expected as $index => $expectedValue) {
+            $this->assertSame($expectedValue, $tokens->isShortArray($index));
         }
     }
 
@@ -210,9 +210,9 @@ preg_replace_callback(
     {
         $tokens = Tokens::fromCode($source);
 
-        foreach ($expected as $index => $expected) {
-            $this->assertSame($expected, $tokens->isUnarySuccessorOperator($index));
-            if ($expected) {
+        foreach ($expected as $index => $expectedValue) {
+            $this->assertSame($expectedValue, $tokens->isUnarySuccessorOperator($index));
+            if ($expectedValue) {
                 $this->assertFalse($tokens->isUnaryPredecessorOperator($index));
                 $this->assertFalse($tokens->isBinaryOperator($index));
             }
@@ -264,9 +264,9 @@ preg_replace_callback(
     {
         $tokens = Tokens::fromCode($source);
 
-        foreach ($expected as $index => $expected) {
-            $this->assertSame($expected, $tokens->isUnaryPredecessorOperator($index));
-            if ($expected) {
+        foreach ($expected as $index => $expectedValue) {
+            $this->assertSame($expectedValue, $tokens->isUnaryPredecessorOperator($index));
+            if ($expectedValue) {
                 $this->assertFalse($tokens->isUnarySuccessorOperator($index));
                 $this->assertFalse($tokens->isBinaryOperator($index));
             }
@@ -312,6 +312,10 @@ preg_replace_callback(
                 '<?php foo(+ $a, -$b);',
                 array(3 => true, 8 => true),
             ),
+            array(
+                '<?php function foo(&$a, array &$b, Bar &$c) {}',
+                array(5 => true, 11 => true, 17 => true),
+            ),
 
         );
     }
@@ -324,9 +328,9 @@ preg_replace_callback(
     {
         $tokens = Tokens::fromCode($source);
 
-        foreach ($expected as $index => $expected) {
-            $this->assertSame($expected, $tokens->isUnaryPredecessorOperator($index));
-            if ($expected) {
+        foreach ($expected as $index => $expectedValue) {
+            $this->assertSame($expectedValue, $tokens->isUnaryPredecessorOperator($index));
+            if ($expectedValue) {
                 $this->assertFalse($tokens->isUnarySuccessorOperator($index));
                 $this->assertFalse($tokens->isBinaryOperator($index));
             }
@@ -366,9 +370,9 @@ preg_replace_callback(
     {
         $tokens = Tokens::fromCode($source);
 
-        foreach ($expected as $index => $expected) {
-            $this->assertSame($expected, $tokens->isBinaryOperator($index));
-            if ($expected) {
+        foreach ($expected as $index => $expectedValue) {
+            $this->assertSame($expectedValue, $tokens->isBinaryOperator($index));
+            if ($expectedValue) {
                 $this->assertFalse($tokens->isUnarySuccessorOperator($index));
                 $this->assertFalse($tokens->isUnaryPredecessorOperator($index));
             }
@@ -447,6 +451,10 @@ $b;',
                 array(2 => false, 4 => true),
             ),
             array(
+                '<?php $a = FOO & $bar;',
+                array(7 => true),
+            ),
+            array(
                 '<?php __LINE__ - 1;',
                 array(3 => true),
             ),
@@ -478,9 +486,9 @@ $b;',
     {
         $tokens = Tokens::fromCode($source);
 
-        foreach ($expected as $index => $expected) {
-            $this->assertSame($expected, $tokens->isBinaryOperator($index));
-            if ($expected) {
+        foreach ($expected as $index => $expectedValue) {
+            $this->assertSame($expectedValue, $tokens->isBinaryOperator($index));
+            if ($expectedValue) {
                 $this->assertFalse($tokens->isUnarySuccessorOperator($index));
                 $this->assertFalse($tokens->isUnaryPredecessorOperator($index));
             }
@@ -509,9 +517,9 @@ $b;',
     {
         $tokens = Tokens::fromCode($source);
 
-        foreach ($expected as $index => $expected) {
-            $this->assertSame($expected, $tokens->isBinaryOperator($index));
-            if ($expected) {
+        foreach ($expected as $index => $expectedValue) {
+            $this->assertSame($expectedValue, $tokens->isBinaryOperator($index));
+            if ($expectedValue) {
                 $this->assertFalse($tokens->isUnarySuccessorOperator($index));
                 $this->assertFalse($tokens->isUnaryPredecessorOperator($index));
             }
@@ -774,7 +782,7 @@ PHP;
         $newPublicIndexes = array_keys($tokens->findGivenKind(T_PUBLIC));
         $this->assertEquals($barIndex, reset($newPublicIndexes));
 
-        for ($i = $fooIndex; $i < $barIndex; $i++) {
+        for ($i = $fooIndex; $i < $barIndex; ++$i) {
             $this->assertTrue($tokens[$i]->isWhiteSpace());
         }
     }
@@ -873,5 +881,121 @@ PHP;
             array("<?=' '\n?><?php\n", false),
             array("<?=' '\n?><?=' ';\n", false),
         );
+    }
+
+    /**
+     * @dataProvider provideIsArray
+     * @requires PHP 5.4
+     */
+    public function testIsArray($source, $tokenIndex, $isMultilineArray = false, $isShortArray = false)
+    {
+        $tokens = Tokens::fromCode($source);
+        $this->assertTrue($tokens->isArray($tokenIndex), 'Expected to be an array.');
+        $this->assertSame($isMultilineArray, $tokens->isArrayMultiLine($tokenIndex), sprintf('Expected %sto be a multiline array', $isMultilineArray ? '' : 'not '));
+        $this->assertSame($isShortArray, $tokens->isShortArray($tokenIndex), sprintf('Expected %sto be a short array', $isShortArray ? '' : 'not '));
+    }
+
+    public function provideIsArray()
+    {
+        $cases = array(
+            array(
+                '<?php
+                    array("a" => 1);
+                ',
+                2,
+            ),
+            array(
+                // short array PHP 5.4 single line
+                '<?php
+                    ["a" => 2];
+                ',
+                2, false, true,
+            ),
+            array(
+                '<?php
+                    array(
+                        "a" => 3
+                    );
+                ',
+                2, true,
+            ),
+            array(
+                // short array PHP 5.4 multi line
+                '<?php
+                    [
+                        "a" => 4
+                    ];
+                ',
+                2, true, true,
+            ),
+            array(
+                '<?php
+                    array(
+                        "a" => array(5, 6, 7),
+8 => new \Exception(\'Ellow\')
+                    );
+                ',
+                2, true,
+            ),
+            array(
+                // mix short array syntax
+                '<?php
+                    array(
+                        "a" => [9, 10, 11],
+12 => new \Exception(\'Ellow\')
+                    );
+                ',
+                2, true,
+            ),
+            // Windows/Max EOL testing
+            array(
+                "<?php\r\narray('a' => 13);\r\n",
+                1,
+            ),
+            array(
+                "<?php\r\n   array(\r\n       'a' => 14,\r\n       'b' =>  15\r\n   );\r\n",
+                2, true,
+            ),
+        );
+
+        return $cases;
+    }
+
+    /**
+     * @dataProvider provideArrayExceptions
+     */
+    public function testIsNotArray($source, $tokenIndex)
+    {
+        $tokens = Tokens::fromCode($source);
+        $this->assertFalse($tokens->isArray($tokenIndex));
+    }
+
+    /**
+     * @dataProvider provideArrayExceptions
+     */
+    public function testIsNotShortArray($source, $tokenIndex)
+    {
+        $tokens = Tokens::fromCode($source);
+        $this->assertFalse($tokens->isShortArray($tokenIndex));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @dataProvider provideArrayExceptions
+     */
+    public function testIsMultiLineArrayException($source, $tokenIndex)
+    {
+        $tokens = Tokens::fromCode($source);
+        $tokens->isArrayMultiLine($tokenIndex);
+    }
+
+    public function provideArrayExceptions()
+    {
+        $cases = array(
+            array('<?php $a;', 1),
+            array("<?php\n \$a = (0+1); // [0,1]", 4),
+        );
+
+        return $cases;
     }
 }

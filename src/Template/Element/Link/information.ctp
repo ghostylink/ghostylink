@@ -1,4 +1,4 @@
-<aside class="col-lg-4 col-md-4">
+<aside class="col-lg-5 col-md-5">
     <article class="link-stats panel panel-default">
         <h2 class="panel-heading">Link statistics</h2>
         <div class="panel-body">
@@ -14,7 +14,7 @@
         </div>
     </article>
 </aside>
-<section class="col-lg-8 col-md-8">
+<section class="col-lg-7 col-md-7">
     <article class="panel panel-primary">
         <section class="link-heading panel panel-heading">
             <h2><?= h($link->title) ?></h2>

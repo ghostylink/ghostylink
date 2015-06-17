@@ -448,10 +448,6 @@ if (1) {
                 '<?php
     class ClassName
     {
-
-
-
-
         /**
          * comment
          */
@@ -716,6 +712,71 @@ if (true)
         echo 3;
 else
     echo 4;',
+            ),
+            array(
+                '<?php
+foreach ($data as $val) {
+    // test val
+    if ($val === "errors") {
+        echo "!";
+    }
+}',
+                '<?php
+foreach ($data as $val)
+    // test val
+    if ($val === "errors") {
+        echo "!";
+    }',
+            ),
+            array(
+                '<?php
+if (1) {
+    foreach ($data as $val) {
+        // test val
+        if ($val === "errors") {
+            echo "!";
+        }
+    }
+}',
+                '<?php
+if (1)
+    foreach ($data as $val)
+        // test val
+        if ($val === "errors") {
+            echo "!";
+        }',
+            ),
+            array(
+                '<?php
+class Foo
+{
+    public function main()
+    {
+        echo "Hello";
+    }
+}',
+                '<?php
+class Foo
+{
+  public function main()
+  {
+    echo "Hello";
+  }
+}',
+            ),
+            array(
+                '<?php
+    class Foo
+    {
+        public $bar;
+        public $baz;
+    }',
+                '<?php
+    class Foo
+    {
+                public $bar;
+                public $baz;
+    }',
             ),
         );
     }

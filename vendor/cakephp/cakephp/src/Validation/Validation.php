@@ -53,7 +53,7 @@ class Validation
      * @deprecated 3.0.2 Use Validation::notBlank() instead.
      * @see Validation::notBlank()
      */
-    public function notEmpty($check)
+    public static function notEmpty($check)
     {
         trigger_error('Validation::notEmpty() is deprecated. Use Validation::notBlank() instead.', E_USER_DEPRECATED);
         return static::notBlank($check);
@@ -1037,6 +1037,9 @@ class Validation
 
         if (isset($value['hour'])) {
             if (isset($value['meridian'])) {
+                if ($value['hour'] === 12) {
+                    $value['hour'] = 0;
+                }
                 $value['hour'] = strtolower($value['meridian']) === 'am' ? $value['hour'] : $value['hour'] + 12;
             }
             $value += ['minute' => 0, 'second' => 0];

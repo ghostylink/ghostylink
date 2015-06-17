@@ -25,9 +25,9 @@ class FixerTest extends \PHPUnit_Framework_TestCase
         $fixer = new Fixer();
 
         $fxPrototypes = array(
-            array('getPriority' =>   0),
+            array('getPriority' => 0),
             array('getPriority' => -10),
-            array('getPriority' =>  10),
+            array('getPriority' => 10),
             array('getPriority' => -10),
         );
 
@@ -198,6 +198,7 @@ class FixerTest extends \PHPUnit_Framework_TestCase
             array($fixers['phpdoc_var_without_name'], $fixers['phpdoc_trim']),
             array($fixers['phpdoc_order'], $fixers['phpdoc_trim']),
             array($fixers['unused_use'], $fixers['line_after_namespace']),
+            array($fixers['linefeed'], $fixers['eof_ending']),
         );
 
         $docFixerNames = array_filter(

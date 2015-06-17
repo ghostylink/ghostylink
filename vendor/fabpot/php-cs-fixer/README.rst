@@ -199,8 +199,8 @@ Choose from the list of available fixers:
                 keywords looks like single words.
 
 * **eof_ending** [PSR-2]
-                A file must always end with an empty
-                line feed.
+                A file must always end with a single
+                empty line feed.
 
 * **function_call_space** [PSR-2]
                 When making a method or function call,
@@ -390,6 +390,10 @@ Choose from the list of available fixers:
                 @var and @type annotations should not
                 contain the variable name.
 
+* **pre_increment** [symfony]
+                Pre incrementation/decrementation
+                should be used if possible.
+
 * **remove_leading_slash_use** [symfony]
                 Remove leading slashes in use clauses.
 
@@ -436,6 +440,12 @@ Choose from the list of available fixers:
                 Arrays should be formatted like
                 function/method arguments, without
                 leading or trailing single line space.
+
+* **unalign_double_arrow** [symfony]
+                Unalign double arrow symbols.
+
+* **unalign_equals** [symfony]
+                Unalign equals symbols.
 
 * **unary_operators_spaces** [symfony]
                 Unary operators should be placed
@@ -502,13 +512,13 @@ Choose from the list of available fixers:
                 @var should always be written as
                 @type.
 
-* **pre_increment** [contrib]
-                Pre incrementation/decrementation
-                should be used if possible.
-
 * **short_array_syntax** [contrib]
                 PHP arrays should use the PHP 5.4
                 short-syntax.
+
+* **short_echo_tag** [contrib]
+                Replace short-echo <?= with long
+                format <?php echo syntax.
 
 * **strict** [contrib]
                 Comparison should be strict. Warning!
@@ -639,10 +649,11 @@ Helpers
 
 Dedicated plugins exist for:
 
-* `Vim`_
-* `Sublime Text`_
+* `Atom`_
 * `NetBeans`_
 * `PhpStorm`_
+* `Sublime Text`_
+* `Vim`_
 
 Contribute
 ----------
@@ -665,8 +676,9 @@ projects that follow a well-known directory structures (like for Symfony
 projects for instance).
 
 .. _php-cs-fixer.phar: http://get.sensiolabs.org/php-cs-fixer.phar
-.. _Vim:               https://github.com/stephpy/vim-php-cs-fixer
-.. _Sublime Text:      https://github.com/benmatselby/sublime-phpcs
+.. _Atom:              https://github.com/Glavin001/atom-beautify
 .. _NetBeans:          http://plugins.netbeans.org/plugin/49042/php-cs-fixer
-.. _PhpStorm:          http://arnolog.net/post/92715936483/use-fabpots-php-cs-fixer-tool-in-phpstorm-in-2-steps
+.. _PhpStorm:          http://tzfrs.de/2015/01/automatically-format-code-to-match-psr-standards-with-phpstorm
+.. _Sublime Text:      https://github.com/benmatselby/sublime-phpcs
+.. _Vim:               https://github.com/stephpy/vim-php-cs-fixer
 .. _contribute:        https://github.com/FriendsOfPhp/php-cs-fixer/blob/master/CONTRIBUTING.md

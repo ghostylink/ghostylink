@@ -35,4 +35,5 @@ class AppView extends View
             'templates' => 'app_form',
         ], 'Time', 'Url');
     }
+
 }

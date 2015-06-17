@@ -23,6 +23,8 @@ use Cake\Database\Type;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\Exception\InvalidPrimaryKeyException;
 use Cake\Datasource\RepositoryInterface;
+use Cake\Datasource\RulesAwareTrait;
+use Cake\Event\EventDispatcherInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
 use Cake\Event\EventManagerTrait;
@@ -37,7 +39,7 @@ use Cake\ORM\Marshaller;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Rule\IsUnique;
 use Cake\Utility\Inflector;
-use Cake\Validation\Validator;
+use Cake\Validation\ValidatorAwareTrait;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -117,10 +119,12 @@ use RuntimeException;
  *
  * @see \Cake\Event\EventManager for reference on the events system.
  */
-class Table implements RepositoryInterface, EventListenerInterface
+class Table implements RepositoryInterface, EventListenerInterface, EventDispatcherInterface
 {
 
     use EventManagerTrait;
+    use RulesAwareTrait;
+    use ValidatorAwareTrait;
 
     /**
      * Name of default validation set.
@@ -128,6 +132,20 @@ class Table implements RepositoryInterface, EventListenerInterface
      * @var string
      */
     const DEFAULT_VALIDATOR = 'default';
+
+    /**
+     * The alias this object is assigned to validators as.
+     *
+     * @var string
+     */
+    const VALIDATOR_PROVIDER_NAME = 'table';
+
+    /**
+     * The rules class name that is used.
+     *
+     * @var string
+     */
+    const RULES_CLASS = 'Cake\ORM\RulesChecker';
 
     /**
      * Name of the table as it can be found in the database
@@ -199,20 +217,6 @@ class Table implements RepositoryInterface, EventListenerInterface
      * @var string
      */
     protected $_registryAlias;
-
-    /**
-     * A list of validation objects indexed by name
-     *
-     * @var array
-     */
-    protected $_validators = [];
-
-    /**
-     * The domain rules to be applied to entities saved by this table
-     *
-     * @var \Cake\ORM\RulesChecker
-     */
-    protected $_rulesChecker;
 
     /**
      * Initializes a new instance
@@ -622,7 +626,7 @@ class Table implements RepositoryInterface, EventListenerInterface
     /**
      * Returns the behavior registry for this table.
      *
-     * @return \Cake\ORM\BehaviorRegistry
+     * @return \Cake\ORM\BehaviorRegistry The BehaviorRegistry instance.
      */
     public function behaviors()
     {
@@ -633,7 +637,7 @@ class Table implements RepositoryInterface, EventListenerInterface
      * Check if a behavior with the given alias has been loaded.
      *
      * @param string $name The behavior alias to check.
-     * @return bool
+     * @return bool Whether or not the behavior exists.
      */
     public function hasBehavior($name)
     {
@@ -643,8 +647,8 @@ class Table implements RepositoryInterface, EventListenerInterface
     /**
      * Returns an association object configured for the specified alias if any
      *
-     * @param string $name the alias used for the association
-     * @return \Cake\ORM\Association
+     * @param string $name the alias used for the association.
+     * @return \Cake\ORM\Association|null Either the association or null.
      */
     public function association($name)
     {
@@ -654,7 +658,7 @@ class Table implements RepositoryInterface, EventListenerInterface
     /**
      * Get the associations collection for this table.
      *
-     * @return \Cake\ORM\AssociationCollection
+     * @return \Cake\ORM\AssociationCollection The collection of association objects.
      */
     public function associations()
     {
@@ -863,6 +867,11 @@ class Table implements RepositoryInterface, EventListenerInterface
     /**
      * {@inheritDoc}
      *
+     * ### Model.beforeFind event
+     *
+     * Each find() will trigger a `Model.beforeFind` event for all attached
+     * listeners. Any listener can set a valid result set using $query
+     *
      * By default, `$options` will recognize the following keys:
      *
      * - fields
@@ -875,7 +884,40 @@ class Table implements RepositoryInterface, EventListenerInterface
      * - having
      * - contain
      * - join
-     * @return \Cake\ORM\Query
+     *
+     * ### Usage
+     *
+     * Using the options array:
+     *
+     * ```
+     * $query = $articles->find('all', [
+     *   'conditions' => ['published' => 1],
+     *   'limit' => 10,
+     *   'contain' => ['Users', 'Comments']
+     * ]);
+     * ```
+     *
+     * Using the builder interface:
+     *
+     * ```
+     * $query = $articles->find()
+     *   ->where(['published' => 1])
+     *   ->limit(10)
+     *   ->contain(['Users', 'Comments']);
+     * ```
+     *
+     * ### Calling finders
+     *
+     * The find() method is the entry point for custom finder methods.
+     * You can invoke a finder by specifying the type:
+     *
+     * ```
+     * $query = $articles->find('published');
+     * ```
+     *
+     * Would invoke the `findPublished` method.
+     *
+     * @return \Cake\ORM\Query The query builder
      */
     public function find($type = 'all', $options = [])
     {
@@ -885,11 +927,14 @@ class Table implements RepositoryInterface, EventListenerInterface
     }
 
     /**
-     * Returns the query as passed
+     * Returns the query as passed.
+     *
+     * By default findAll() applies no conditions, you
+     * can override this method in subclasses to modify how `find('all')` works.
      *
      * @param \Cake\ORM\Query $query The query to find with
      * @param array $options The options to use for the find
-     * @return \Cake\ORM\Query
+     * @return \Cake\ORM\Query The query builder
      */
     public function findAll(Query $query, array $options)
     {
@@ -951,7 +996,7 @@ class Table implements RepositoryInterface, EventListenerInterface
      *
      * @param \Cake\ORM\Query $query The query to find with
      * @param array $options The options for the find
-     * @return \Cake\ORM\Query
+     * @return \Cake\ORM\Query The query builder
      */
     public function findList(Query $query, array $options)
     {
@@ -965,6 +1010,22 @@ class Table implements RepositoryInterface, EventListenerInterface
             $options['keyField'] = $options['idField'];
             unset($options['idField']);
             trigger_error('Option "idField" is deprecated, use "keyField" instead.', E_USER_WARNING);
+        }
+
+        if (!$query->clause('select') &&
+            !is_object($options['keyField']) &&
+            !is_object($options['valueField']) &&
+            !is_object($options['groupField'])
+        ) {
+            $fields = array_merge(
+                (array)$options['keyField'],
+                (array)$options['valueField'],
+                (array)$options['groupField']
+            );
+            $columns = $this->schema()->columns();
+            if (count($fields) === count(array_intersect($fields, $columns))) {
+                $query->select($fields);
+            }
         }
 
         $options = $this->_setFieldMatchers(
@@ -1002,7 +1063,7 @@ class Table implements RepositoryInterface, EventListenerInterface
      *
      * @param \Cake\ORM\Query $query The query to find with
      * @param array $options The options to find with
-     * @return \Cake\ORM\Query
+     * @return \Cake\ORM\Query The query builder
      */
     public function findThreaded(Query $query, array $options)
     {
@@ -1065,6 +1126,14 @@ class Table implements RepositoryInterface, EventListenerInterface
     /**
      * {@inheritDoc}
      *
+     * ### Usage
+     *
+     * Get an article and some relationships:
+     *
+     * ```
+     * $article = $articles->get(1, ['contain' => ['Users', 'Comments']]);
+     * ```
+     *
      * @throws \Cake\Datasource\Exception\InvalidPrimaryKeyException When $primaryKey has an
      *      incorrect number of elements.
      */
@@ -1114,9 +1183,13 @@ class Table implements RepositoryInterface, EventListenerInterface
      * Finds an existing record or creates a new one.
      *
      * Using the attributes defined in $search a find() will be done to locate
-     * an existing record. If that record exists it will be returned. If it does
-     * not exist, a new entity will be created with the $search properties, and
-     * the $defaults. When a new entity is created, it will be saved.
+     * an existing record. If records matches the conditions, the first record
+     * will be returned.
+     *
+     * If no record can be found, a new entity will be created
+     * with the $search properties. If a callback is provided, it will be
+     * called allowing you to define additional default values. The new
+     * entity will be saved and returned.
      *
      * @param array $search The criteria to find existing records by.
      * @param callable|null $callback A callback that will be invoked for newly
@@ -1162,77 +1235,6 @@ class Table implements RepositoryInterface, EventListenerInterface
     }
 
     /**
-     * Returns the validation rules tagged with $name. It is possible to have
-     * multiple different named validation sets, this is useful when you need
-     * to use varying rules when saving from different routines in your system.
-     *
-     * There are two different ways of creating and naming validation sets: by
-     * creating a new method inside your own Table subclass, or by building
-     * the validator object yourself and storing it using this method.
-     *
-     * For example, if you wish to create a validation set called 'forSubscription',
-     * you will need to create a method in your Table subclass as follows:
-     *
-     * ```
-     * public function validationForSubscription($validator)
-     * {
-     *  return $validator
-     *  ->add('email', 'valid-email', ['rule' => 'email'])
-     *  ->add('password', 'valid', ['rule' => 'notEmpty'])
-     *  ->requirePresence('username');
-     * }
-     * ```
-     *
-     * Otherwise, you can build the object by yourself and store it in the Table object:
-     *
-     * ```
-     * $validator = new \Cake\Validation\Validator($table);
-     * $validator
-     *  ->add('email', 'valid-email', ['rule' => 'email'])
-     *  ->add('password', 'valid', ['rule' => 'notEmpty'])
-     *  ->allowEmpty('bio');
-     * $table->validator('forSubscription', $validator);
-     * ```
-     *
-     * You can implement the method in `validationDefault` in your Table subclass
-     * should you wish to have a validation set that applies in cases where no other
-     * set is specified.
-     *
-     * @param string $name the name of the validation set to return
-     * @param \Cake\Validation\Validator|null $validator The validator instance to store,
-     *   use null to get a validator.
-     * @return \Cake\Validation\Validator
-     */
-    public function validator($name = self::DEFAULT_VALIDATOR, Validator $validator = null)
-    {
-        if ($validator === null && isset($this->_validators[$name])) {
-            return $this->_validators[$name];
-        }
-
-        if ($validator === null) {
-            $validator = new Validator();
-            $validator = $this->{'validation' . ucfirst($name)}($validator);
-            $this->dispatchEvent('Model.buildValidator', compact('validator', 'name'));
-        }
-
-        $validator->provider('table', $this);
-        return $this->_validators[$name] = $validator;
-    }
-
-    /**
-     * Returns the default validator object. Subclasses can override this function
-     * to add a default validation set to the validator object.
-     *
-     * @param \Cake\Validation\Validator $validator The validator that can be modified to
-     * add some rules to it.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        return $validator;
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function deleteAll($conditions)
@@ -1265,7 +1267,7 @@ class Table implements RepositoryInterface, EventListenerInterface
      *
      * ### Options
      *
-     * The options array can receive the following keys:
+     * The options array accepts the following keys:
      *
      * - atomic: Whether to execute the save and callbacks inside a database
      *   transaction (default: true)
@@ -1288,7 +1290,7 @@ class Table implements RepositoryInterface, EventListenerInterface
      * - Model.beforeRules: Will be triggered right before any rule checking is done
      *   for the passed entity if the `checkRules` key in $options is not set to false.
      *   Listeners will receive as arguments the entity, options array and the operation type.
-     *   If the event is stopped the checking result will be set to the result of the event itself.
+     *   If the event is stopped the rules check result will be set to the result of the event itself.
      * - Model.afterRules: Will be triggered right after the `checkRules()` method is
      *   called for the entity. Listeners will receive as arguments the entity,
      *   options array, the result of checking the rules and the operation type.
@@ -2122,73 +2124,6 @@ class Table implements RepositoryInterface, EventListenerInterface
     }
 
     /**
-     * Returns whether or not the passed entity complies with all the rules stored in
-     * the rules checker.
-     *
-     * @param \Cake\Datasource\EntityInterface $entity The entity to check for validity.
-     * @param string $operation The operation being run. Either 'create', 'update' or 'delete'.
-     * @param \ArrayObject|array $options The options To be passed to the rules.
-     * @return bool
-     */
-    public function checkRules(EntityInterface $entity, $operation = RulesChecker::CREATE, $options = null)
-    {
-        $rules = $this->rulesChecker();
-        $options = $options ?: new ArrayObject;
-        $options = is_array($options) ? new ArrayObject($options) : $options;
-
-        $event = $this->dispatchEvent(
-            'Model.beforeRules',
-            compact('entity', 'options', 'operation')
-        );
-
-        if ($event->isStopped()) {
-            return $event->result;
-        }
-
-        $result = $rules->check($entity, $operation, $options->getArrayCopy());
-        $event = $this->dispatchEvent(
-            'Model.afterRules',
-            compact('entity', 'options', 'result', 'operation')
-        );
-
-        if ($event->isStopped()) {
-            return $event->result;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Returns the rule checker for this table. A rules checker object is used to
-     * test an entity for validity on rules that may involve complex logic or data that
-     * needs to be fetched from the database or other sources.
-     *
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function rulesChecker()
-    {
-        if ($this->_rulesChecker !== null) {
-            return $this->_rulesChecker;
-        }
-        $this->_rulesChecker = $this->buildRules(new RulesChecker(['repository' => $this]));
-        $this->dispatchEvent('Model.buildRules', ['rules' => $this->_rulesChecker]);
-        return $this->_rulesChecker;
-    }
-
-    /**
-     * Returns rules checker object after modifying the one that was passed. Subclasses
-     * can override this method in order to initialize the rules to be applied to
-     * entities saved by this table.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        return $rules;
-    }
-
-    /**
      * Get the Model callbacks this table is interested in.
      *
      * By implementing the conventional methods a table class is assumed
@@ -2196,6 +2131,19 @@ class Table implements RepositoryInterface, EventListenerInterface
      *
      * Override this method if you need to add non-conventional event listeners.
      * Or if you want you table to listen to non-standard events.
+     *
+     * The conventional method map is:
+     *
+     * - Model.beforeMarshal => beforeMarshal
+     * - Model.beforeFind => beforeFind
+     * - Model.beforeSave => beforeSave
+     * - Model.afterSave => afterSave
+     * - Model.afterSaveCommit => afterSaveCommit
+     * - Model.beforeDelete => beforeDelete
+     * - Model.afterDelete => afterDelete
+     * - Model.afterDeleteCommit => afterDeleteCommit
+     * - Model.beforeRules => beforeRules
+     * - Model.afterRules => afterRules
      *
      * @return array
      */
@@ -2222,6 +2170,17 @@ class Table implements RepositoryInterface, EventListenerInterface
             $events[$event] = $method;
         }
         return $events;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        return $rules;
     }
 
     /**

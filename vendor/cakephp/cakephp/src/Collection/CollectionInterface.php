@@ -213,6 +213,19 @@ interface CollectionInterface extends Iterator, JsonSerializable
      * ['Mark', 'Renan']
      * ```
      *
+     * It is also possible to extract a flattened collection out of nested properties
+     *
+     * ```
+     *  $items = [
+     *      ['comment' => ['votes' => [['value' => 1], ['value' => 2], ['value' => 3]]],
+     *      ['comment' => ['votes' => [['value' => 4]]
+     * ];
+     * $extracted = (new Collection($items))->extract('comment.votes.{*}.value');
+     *
+     * // Result will contain
+     * [1, 2, 3, 4]
+     * ```
+     *
      * @param string $matcher a dot separated string symbolizing the path to follow
      * inside the hierarchy of each value so that the column can be extracted.
      * @return \Cake\Collection\CollectionInterface
@@ -444,13 +457,17 @@ interface CollectionInterface extends Iterator, JsonSerializable
      * $total = (new Collection($items))->sumOf('invoice.total');
      *
      * // Total: 300
+     *
+     * $total = (new Colletion([1, 2, 3]))->sumOf();
+     * // Total: 6
      * ```
      *
      * @param string|callable $matcher The property name to sum or a function
+     * If no value is passed, an identity function will be used.
      * that will return the value of the property to sum.
      * @return float|int
      */
-    public function sumOf($matcher);
+    public function sumOf($matcher = null);
 
     /**
      * Returns a new collection with the elements placed in a random order,
@@ -481,6 +498,15 @@ interface CollectionInterface extends Iterator, JsonSerializable
      * @return \Cake\Collection\CollectionInterface
      */
     public function take($size = 1, $from = 0);
+
+    /**
+     * Returns a new collection that will skip the specified amount of elements
+     * at the beginning of the iteration.
+     *
+     * @param int $howMany The number of elements to skip.
+     * @return \Cake\Collection\CollectionInterface
+     */
+    public function skip($howMany);
 
     /**
      * Looks through each value in the list, returning a Collection of all the
@@ -527,6 +553,14 @@ interface CollectionInterface extends Iterator, JsonSerializable
      * @return mixed The first value in the collection will be returned.
      */
     public function first();
+
+    /**
+     * Returns the last result in this collection
+     *
+     * @return mixed The last value in the collection will be returned.
+     */
+    public function last();
+
     /**
      * Returns a new collection as the result of concatenating the list of elements
      * in this collection with the passed list of elements
@@ -819,7 +853,7 @@ interface CollectionInterface extends Iterator, JsonSerializable
      * ### Example:
      *
      * ```
-     * $items [1, 2, 3];
+     * $items = [1, 2, 3];
      * $decorated = (new Collection($items))->through(function ($collection) {
      *      return new MyCustomCollection($collection);
      * });
@@ -830,4 +864,69 @@ interface CollectionInterface extends Iterator, JsonSerializable
      * @return \Cake\Collection\CollectionInterface
      */
     public function through(callable $handler);
+
+    /**
+     * Combines the elements of this collection with each of the elements of the
+     * passed iterables, using their positional index as a reference.
+     *
+     * ### Example:
+     *
+     * ```
+     * $collection = new Collection([1, 2]);
+     * $collection->zip([3, 4], [5, 6])->toList(); // returns [[1, 3, 5], [2, 4, 6]]
+     * ```
+     *
+     * @param array|\Traversable ...$items The collections to zip.
+     * @return \Cake\Collection\CollectionInterface
+     */
+    public function zip($items);
+
+    /**
+     * Combines the elements of this collection with each of the elements of the
+     * passed iterables, using their positional index as a reference.
+     *
+     * The resulting element will be the return value of the $callable function.
+     *
+     * ### Example:
+     *
+     * ```
+     * $collection = new Collection([1, 2]);
+     * $zipped = $collection->zipWith([3, 4], [5, 6], function () {
+     *   return array_sum(func_get_args());
+     * });
+     * $zipped->toList(); // returns [9, 12]; [(1 + 3 + 5), (2 + 4 + 6)]
+     * ```
+     *
+     * @param array|\Traversable ...$items The collections to zip.
+     * @param callable $callable The function to use for zipping the elements together.
+     * @return \Cake\Collection\CollectionInterface
+     */
+    public function zipWith($items, $callable);
+
+    /**
+     * Returns whether or not there are elements in this collection
+     *
+     * ### Example:
+     *
+     * ```
+     * $items [1, 2, 3];
+     * (new Collection($items))->isEmpty(); // false
+     * ```
+     *
+     * ```
+     * (new Collection([]))->isEmpty(); // true
+     * ```
+     *
+     * @return bool
+     */
+    public function isEmpty();
+
+    /**
+     * Returns the closest nested iterator that can be safely traversed without
+     * losing any possible transformations. This is used mainly to remove empty
+     * IteratorIterator wrappers that can only slowdown the iteration process.
+     *
+     * @return \Iterator
+     */
+    public function unwrap();
 }

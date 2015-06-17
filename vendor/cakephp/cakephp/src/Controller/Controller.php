@@ -17,6 +17,7 @@ namespace Cake\Controller;
 use Cake\Controller\Exception\MissingActionException;
 use Cake\Datasource\ModelAwareTrait;
 use Cake\Event\Event;
+use Cake\Event\EventDispatcherInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManagerTrait;
 use Cake\Log\LogTrait;
@@ -80,7 +81,7 @@ use RuntimeException;
  * @property      \Cake\Controller\Component\SecurityComponent $Security
  * @link          http://book.cakephp.org/3.0/en/controllers.html
  */
-class Controller implements EventListenerInterface
+class Controller implements EventListenerInterface, EventDispatcherInterface
 {
 
     use EventManagerTrait;
@@ -250,37 +251,23 @@ class Controller implements EventListenerInterface
      */
     public function __construct(Request $request = null, Response $response = null, $name = null, $eventManager = null)
     {
-        if ($this->name === null && $name === null) {
-            list(, $name) = namespaceSplit(get_class($this));
-            $name = substr($name, 0, -10);
-        }
         if ($name !== null) {
             $this->name = $name;
         }
 
-        if (!$this->viewPath) {
-            $viewPath = $this->name;
-            if (isset($request->params['prefix'])) {
-                $prefixes = array_map(
-                    'Cake\Utility\Inflector::camelize',
-                    explode('/', $request->params['prefix'])
-                );
-                $viewPath = implode(DS, $prefixes) . DS . $viewPath;
-            }
-            $this->viewPath = $viewPath;
+        if ($this->name === null && isset($request->params['controller'])) {
+            $this->name = $request->params['controller'];
         }
 
-        if (!($request instanceof Request)) {
-            $request = new Request();
+        if ($this->name === null) {
+            list(, $name) = namespaceSplit(get_class($this));
+            $this->name = substr($name, 0, -10);
         }
-        $this->setRequest($request);
 
-        if (!($response instanceof Response)) {
-            $response = new Response();
-        }
-        $this->response = $response;
+        $this->setRequest($request !== null ? $request : new Request);
+        $this->response = $response !== null ? $response : new Response;
 
-        if ($eventManager) {
+        if ($eventManager !== null) {
             $this->eventManager($eventManager);
         }
 
@@ -383,6 +370,18 @@ class Controller implements EventListenerInterface
 
         if (isset($request->params['pass'])) {
             $this->passedArgs = $request->params['pass'];
+        }
+
+        if (!$this->viewPath) {
+            $viewPath = $this->name;
+            if (isset($request->params['prefix'])) {
+                $prefixes = array_map(
+                    'Cake\Utility\Inflector::camelize',
+                    explode('/', $request->params['prefix'])
+                );
+                $viewPath = implode(DS, $prefixes) . DS . $viewPath;
+            }
+            $this->viewPath = $viewPath;
         }
     }
 
@@ -525,7 +524,7 @@ class Controller implements EventListenerInterface
             return;
         }
 
-        if ($url !== null && !$response->location()) {
+        if (!$response->location()) {
             $response->location(Router::url($url, true));
         }
 

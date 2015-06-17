@@ -66,7 +66,7 @@ class FixCommand extends Command
     /**
      * Config instance.
      *
-     * @var Config
+     * @var ConfigInterface
      */
     protected $defaultConfig;
 
@@ -311,13 +311,13 @@ EOF
             }
 
             if (null === $config) {
-                throw new \InvalidArgumentException(sprintf('The configuration "%s" is not defined', $input->getOption('config')));
+                throw new \InvalidArgumentException(sprintf('The configuration "%s" is not defined.', $input->getOption('config')));
             }
         } elseif (file_exists($configFile)) {
             $config = include $configFile;
             // verify that the config has an instance of Config
             if (!$config instanceof Config) {
-                throw new \UnexpectedValueException(sprintf('The config file "%s" does not return an instance of Symfony\CS\Config\Config', $configFile));
+                throw new \UnexpectedValueException(sprintf('The config file "%s" does not return a "Symfony\CS\Config\Config" instance. Got: "%s".', $configFile, is_object($config) ? get_class($config) : gettype($config)));
             }
 
             if ('txt' === $input->getOption('format')) {
@@ -349,9 +349,9 @@ EOF
             ->setAllFixers($this->fixer->getFixers())
             ->setConfig($config)
             ->setOptions(array(
-                'level'     => $input->getOption('level'),
-                'fixers'    => $input->getOption('fixers'),
-                'progress'  => (OutputInterface::VERBOSITY_VERBOSE <= $verbosity) && 'txt' === $input->getOption('format'),
+                'level' => $input->getOption('level'),
+                'fixers' => $input->getOption('fixers'),
+                'progress' => (OutputInterface::VERBOSITY_VERBOSE <= $verbosity) && 'txt' === $input->getOption('format'),
             ))
             ->resolve();
 
@@ -425,7 +425,7 @@ EOF
                 $output->writeln(sprintf('Fixed all files in %.3f seconds, %.3f MB memory used', $fixEvent->getDuration() / 1000, $fixEvent->getMemory() / 1024 / 1024));
                 break;
             case 'xml':
-                $dom      = new \DOMDocument('1.0', 'UTF-8');
+                $dom = new \DOMDocument('1.0', 'UTF-8');
                 $filesXML = $dom->createElement('files');
                 $dom->appendChild($filesXML);
 
@@ -509,9 +509,9 @@ EOF
                 $fixEvent = $this->stopwatch->getEvent('fixFiles');
 
                 $json = array(
-                    'files'  => $jFiles,
+                    'files' => $jFiles,
                     'memory' => round($fixEvent->getMemory() / 1024 / 1024, 3),
-                    'time'   => array(
+                    'time' => array(
                         'total' => round($fixEvent->getDuration() / 1000, 3),
                     ),
                 );

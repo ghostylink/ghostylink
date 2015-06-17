@@ -159,15 +159,15 @@ class Tokens extends \SplFixedArray
         return array(
             self::BLOCK_TYPE_CURLY_BRACE => array(
                 'start' => '{',
-                'end'   => '}',
+                'end' => '}',
             ),
             self::BLOCK_TYPE_PARENTHESIS_BRACE => array(
                 'start' => '(',
-                'end'   => ')',
+                'end' => ')',
             ),
             self::BLOCK_TYPE_SQUARE_BRACE => array(
                 'start' => '[',
-                'end'   => ']',
+                'end' => ']',
             ),
             self::BLOCK_TYPE_DYNAMIC_PROP_BRACE => array(
                 'start' => array(CT_DYNAMIC_PROP_BRACE_OPEN, '{'),
@@ -190,7 +190,7 @@ class Tokens extends \SplFixedArray
     private static function getCache($key)
     {
         if (!self::hasCache($key)) {
-            throw new \OutOfBoundsException('Unknown cache key: '.$key);
+            throw new \OutOfBoundsException(sprintf('Unknown cache key: %s', $key));
         }
 
         return self::$cache[$key];
@@ -296,16 +296,14 @@ class Tokens extends \SplFixedArray
             }
         };
 
-        $token = $this[$index];
-
-        if ($token->isWhitespace()) {
+        if ($this[$index]->isWhitespace()) {
             $removeLastCommentLine($this[$index - 1], $indexOffset);
-            $token->override(array(T_WHITESPACE, $whitespace, $token->getLine()));
+            $this->overrideAt($index, array(T_WHITESPACE, $whitespace, $this[$index]->getLine()));
 
             return false;
         }
 
-        $removeLastCommentLine($token, $indexOffset);
+        $removeLastCommentLine($this[$index], $indexOffset);
 
         $this->insertAt(
             $index + $indexOffset,
@@ -331,7 +329,7 @@ class Tokens extends \SplFixedArray
         $blockEdgeDefinitions = self::getBlockEdgeDefinitions();
 
         if (!isset($blockEdgeDefinitions[$type])) {
-            throw new \InvalidArgumentException('Invalid param $type');
+            throw new \InvalidArgumentException(sprintf('Invalid param type: %s', $type));
         }
 
         $startEdge = $blockEdgeDefinitions[$type]['start'];
@@ -793,7 +791,7 @@ class Tokens extends \SplFixedArray
                 $token = new Token($token);
             }
             if ($token->isWhitespace() || $token->isComment() || $token->isEmpty()) {
-                throw new \InvalidArgumentException('Non-meaningful token at position: '.$key);
+                throw new \InvalidArgumentException(sprintf('Non-meaningful token at position: %s', $key));
             }
         }
 
@@ -892,6 +890,10 @@ class Tokens extends \SplFixedArray
      */
     public function isArrayMultiLine($index)
     {
+        if (!$this->isArray($index)) {
+            throw new \InvalidArgumentException('Not an array at given index');
+        }
+
         // Skip only when its an array, for short arrays we need the brace for correct
         // level counting
         if ($this[$index]->isGivenKind(T_ARRAY)) {
@@ -904,8 +906,8 @@ class Tokens extends \SplFixedArray
         ;
 
         for (++$index; $index < $endIndex; ++$index) {
-            $token      = $this[$index];
-            $blockType  = static::detectBlockType($token);
+            $token = $this[$index];
+            $blockType = static::detectBlockType($token);
 
             if ($blockType && $blockType['isStart']) {
                 $index = $this->findBlockEnd($blockType['type'], $index);
@@ -1095,7 +1097,25 @@ class Tokens extends \SplFixedArray
 
         $prevToken = $this[$this->getPrevMeaningfulToken($index)];
 
-        return !$prevToken->equalsAny($disallowedPrevTokens);
+        if (!$prevToken->equalsAny($disallowedPrevTokens)) {
+            return true;
+        }
+
+        if (!$token->equals('&') || !$prevToken->isGivenKind(T_STRING)) {
+            return false;
+        }
+
+        static $searchTokens = array(
+            ';',
+            '{',
+            '}',
+            array(T_FUNCTION),
+            array(T_OPEN_TAG),
+            array(T_OPEN_TAG_WITH_ECHO),
+        );
+        $prevToken = $this[$this->getPrevTokenOfKind($index, $searchTokens)];
+
+        return $prevToken->isGivenKind(T_FUNCTION);
     }
 
     /**
@@ -1127,34 +1147,34 @@ class Tokens extends \SplFixedArray
         static $arrayOperators;
         if (null === $arrayOperators) {
             $arrayOperators = array(
-                T_AND_EQUAL             => true,    // &=
-                T_BOOLEAN_AND           => true,    // &&
-                T_BOOLEAN_OR            => true,    // ||
-                T_CONCAT_EQUAL          => true,    // .=
-                T_DIV_EQUAL             => true,    // /=
-                T_DOUBLE_ARROW          => true,    // =>
-                T_IS_EQUAL              => true,    // ==
-                T_IS_GREATER_OR_EQUAL   => true,    // >=
-                T_IS_IDENTICAL          => true,    // ===
-                T_IS_NOT_EQUAL          => true,    // !=, <>
-                T_IS_NOT_IDENTICAL      => true,    // !==
-                T_IS_SMALLER_OR_EQUAL   => true,    // <=
-                T_LOGICAL_AND           => true,    // and
-                T_LOGICAL_OR            => true,    // or
-                T_LOGICAL_XOR           => true,    // xor
-                T_MINUS_EQUAL           => true,    // -=
-                T_MOD_EQUAL             => true,    // %=
-                T_MUL_EQUAL             => true,    // *=
-                T_OR_EQUAL              => true,    // |=
-                T_PLUS_EQUAL            => true,    // +=
-                T_SL                    => true,    // <<
-                T_SL_EQUAL              => true,    // <<=
-                T_SR                    => true,    // >>
-                T_SR_EQUAL              => true,    // >>=
-                T_XOR_EQUAL             => true,    // ^=
+                T_AND_EQUAL => true,            // &=
+                T_BOOLEAN_AND => true,          // &&
+                T_BOOLEAN_OR => true,           // ||
+                T_CONCAT_EQUAL => true,         // .=
+                T_DIV_EQUAL => true,            // /=
+                T_DOUBLE_ARROW => true,         // =>
+                T_IS_EQUAL => true,             // ==
+                T_IS_GREATER_OR_EQUAL => true,  // >=
+                T_IS_IDENTICAL => true,         // ===
+                T_IS_NOT_EQUAL => true,         // !=, <>
+                T_IS_NOT_IDENTICAL => true,     // !==
+                T_IS_SMALLER_OR_EQUAL => true,  // <=
+                T_LOGICAL_AND => true,          // and
+                T_LOGICAL_OR => true,           // or
+                T_LOGICAL_XOR => true,          // xor
+                T_MINUS_EQUAL => true,          // -=
+                T_MOD_EQUAL => true,            // %=
+                T_MUL_EQUAL => true,            // *=
+                T_OR_EQUAL => true,             // |=
+                T_PLUS_EQUAL => true,           // +=
+                T_SL => true,                   // <<
+                T_SL_EQUAL => true,             // <<=
+                T_SR => true,                   // >>
+                T_SR_EQUAL => true,             // >>=
+                T_XOR_EQUAL => true,            // ^=
             );
             if (defined('T_POW')) {
-                $arrayOperators[T_POW]       = true;    // **
+                $arrayOperators[T_POW] = true;          // **
                 $arrayOperators[T_POW_EQUAL] = true;    // **=
             }
             if (defined('T_SPACESHIP')) {
@@ -1180,6 +1200,16 @@ class Tokens extends \SplFixedArray
         }
 
         return false;
+    }
+
+    /*
+     * Override token at given index and register it.
+     *
+     * @param Token|array|string $token token prototype
+     */
+    public function overrideAt($index, $token)
+    {
+        $this[$index]->override($token);
     }
 
     /**
@@ -1284,6 +1314,17 @@ class Tokens extends \SplFixedArray
      */
     public function isMonolithicPhp()
     {
+        $size = $this->count();
+
+        if (0 === $size) {
+            return false;
+        }
+
+        // If code is not monolithic there is a great chance that first or last token is `T_INLINE_HTML`:
+        if ($this[0]->isGivenKind(T_INLINE_HTML) || $this[$size - 1]->isGivenKind(T_INLINE_HTML)) {
+            return false;
+        }
+
         $kinds = $this->findGivenKind(array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, T_INLINE_HTML));
 
         /*

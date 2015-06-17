@@ -17,6 +17,7 @@ namespace Cake\View;
 use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Core\Plugin;
+use Cake\Event\EventDispatcherInterface;
 use Cake\Event\EventManager;
 use Cake\Event\EventManagerTrait;
 use Cake\Log\LogTrait;
@@ -56,7 +57,7 @@ use RuntimeException;
  * @property      \Cake\View\Helper\TimeHelper $Time
  * @property      \Cake\View\ViewBlock $Blocks
  */
-class View
+class View implements EventDispatcherInterface
 {
 
     use CellTrait;
@@ -551,6 +552,23 @@ class View
     /**
      * Start capturing output for a 'block'
      *
+     * You can use start on a block multiple times to
+     * append or prepend content in a capture mode.
+     *
+     * ```
+     * // Append content to an existing block.
+     * $this->start('content');
+     * echo $this->fetch('content');
+     * echo 'Some new content';
+     * $this->end();
+     *
+     * // Prepend content to an existing block
+     * $this->start('content');
+     * echo 'Some new content';
+     * echo $this->fetch('content');
+     * $this->end();
+     * ```
+     *
      * @param string $name The name of the block to capture for.
      * @return void
      * @see ViewBlock::start()
@@ -1005,7 +1023,8 @@ class View
     /**
      * Find all sub templates path, based on $basePath
      * If a prefix is defined in the current request, this method will prepend
-     * the prefixed template path to the $basePath.
+     * the prefixed template path to the $basePath, cascading up in case the prefix
+     * is nested.
      * This is essentially used to find prefixed template paths for elements
      * and layouts.
      *
@@ -1016,14 +1035,16 @@ class View
     {
         $paths = [$basePath];
         if (!empty($this->request->params['prefix'])) {
-            $prefixPath = array_map(
-                'Cake\Utility\Inflector::camelize',
-                explode('/', $this->request->params['prefix'])
-            );
-            array_unshift(
-                $paths,
-                implode('/', $prefixPath) . DS . $basePath
-            );
+            $prefixPath = explode('/', $this->request->params['prefix']);
+            $path = '';
+            foreach ($prefixPath as $prefixPart) {
+                $path .= Inflector::camelize($prefixPart) . DS;
+
+                array_unshift(
+                    $paths,
+                    $path . $basePath
+                );
+            }
         }
 
         return $paths;

@@ -1,14 +1,3 @@
-<?php
-    $this->start('script');
-    echo $this->Html->script("libs/jquery.downCount");
-    echo $this->Html->script("Links/life");
-    echo $this->Html->script("Links/view");
-    $this->end(); 
-    
-    $this->start('css');
-    echo $this->Html->css("Links/view");
-    $this->end();
-?> 
 <?php    
 if (isset($link->max_views)) {?>
     <section id="link-information" class="row unloaded">        

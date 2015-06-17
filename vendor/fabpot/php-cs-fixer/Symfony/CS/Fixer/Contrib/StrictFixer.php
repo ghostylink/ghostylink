@@ -26,22 +26,22 @@ class StrictFixer extends AbstractFixer
     {
         static $map = array(
             T_IS_EQUAL => array(
-                'id'      => T_IS_IDENTICAL,
+                'id' => T_IS_IDENTICAL,
                 'content' => '===',
             ),
             T_IS_NOT_EQUAL => array(
-                'id'      => T_IS_NOT_IDENTICAL,
+                'id' => T_IS_NOT_IDENTICAL,
                 'content' => '!==',
             ),
         );
 
         $tokens = Tokens::fromCode($content);
 
-        foreach ($tokens as $token) {
+        foreach ($tokens as $index => $token) {
             $tokenId = $token->getId();
 
             if (isset($map[$tokenId])) {
-                $token->override(array($map[$tokenId]['id'], $map[$tokenId]['content'], $token->getLine()));
+                $tokens->overrideAt($index, array($map[$tokenId]['id'], $map[$tokenId]['content'], $token->getLine()));
             }
         }
 

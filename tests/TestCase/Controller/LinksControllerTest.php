@@ -177,12 +177,12 @@ class LinksControllerTest extends IntegrationTestCase
         // Check if the data has been modified in database
         $links = TableRegistry::get('Links');
         $query = $links->find()->where(['title' => $data['title']]);
-        $this->assertEquals(1, $query->count());
-        
-        //Test a flash message is set if something is wrong:                
+        $this->assertEquals(1, $query->count());            
+
         $badData = $data;
-        $badData['content'] = '';
-        $this->post('/edit/1', $badData);
+        $badData['title'] = str_repeat( '42', 100);        
+        $this->post('/edit/1', $badData);        
+       //Test a flash message is set if something is wrong:
         $this->assertSession('The link could not be saved. Please, try again.',
                              'Flash.flash.message');
     }

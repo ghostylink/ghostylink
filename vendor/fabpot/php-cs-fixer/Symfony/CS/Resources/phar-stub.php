@@ -20,6 +20,12 @@ if (defined('HHVM_VERSION_ID')) {
     exit(1);
 }
 
+set_error_handler(function ($severity, $message, $file, $line) {
+    if ($severity & error_reporting()) {
+        throw new ErrorException($message, 0, $severity, $file, $line);
+    }
+});
+
 Phar::mapPhar('php-cs-fixer.phar');
 
 require_once 'phar://php-cs-fixer.phar/vendor/autoload.php';
