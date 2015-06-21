@@ -36,17 +36,15 @@ class LinksController extends AppController
             throw new NotFoundException();
         }
         if ($this->request->is('ajax')) {
-            //Retrieve the stored link in session                                    
+            //Retrieve the stored link in session
             if ($this->Links->increaseLife($link)) {
                 $this->Links->save($link);
-            }
-            else {
+            } else {
                 throw new NotFoundException();
             }
-            $this->set('link', $link);            
+            $this->set('link', $link);
             return $this->render('ajax/information', 'ajax');
-        }
-        else {
+        } else {
             if ($link->max_views == null) {
                 if ($this->Links->increaseLife($link)) {
                     $this->Links->save($link);
@@ -55,7 +53,7 @@ class LinksController extends AppController
         }
         $this->set('link', $link);        
     }
-    
+
     /**
      * Add method
      *
@@ -97,7 +95,7 @@ class LinksController extends AppController
         ]);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $link = $this->Links->patchEntity($link, $this->request->data);            
+            $link = $this->Links->patchEntity($link, $this->request->data);
             if ($this->Links->save($link)) {
                 $this->Flash->success('The link has been saved.');
                 return $this->redirect(['action' => 'index']);

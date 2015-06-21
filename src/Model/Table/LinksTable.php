@@ -62,7 +62,7 @@ class LinksTable extends Table
             if (!$context['newRecord']) {
                 return false;
             }
-            if (array_key_exists('max_views', $context['data'])) {                
+            if (array_key_exists('max_views', $context['data'])) {
                 return ($context['data']['max_views'] == '');
             } else {
                 return false;
@@ -81,7 +81,7 @@ class LinksTable extends Table
         return $validator;
     }
     
-    /**      
+    /**
      * increase the life of the link
      *
      * @param Link $entity the Link entity to increase the view on

@@ -27,16 +27,17 @@ use Cake\Controller\Controller;
 class AppController extends Controller
 {
 
-    /**
+    public $helpers = array(
+        'AssetCompress.AssetCompress'
+    );
+    
+   /**
      * Initialization hook method.
      *
      * Use this method to add common initialization code like loading components.
      *
      * @return void
      */
-    public $helpers = array(
-        'AssetCompress.AssetCompress'
-    );
     public function initialize()
     {
         $this->loadComponent('Flash');
