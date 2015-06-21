@@ -58,7 +58,7 @@ class LinksControllerTest extends IntegrationTestCase
         $this->get('/a1d0c6e83f027327d8461063f4ac58a6');
         $this->assertResponseContains('The link you try to access has a maximum views component');
          
-        //TODO: mock an ajax request to check the link with max_views can be seen
+        //Mock an ajax request to check the link with max_views can be seen
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $this->get('/a1d0c6e83f027327d8461063f4ac58a6');
         $this->assertResponseContains('Lorem ipsum dolor sit amet');
