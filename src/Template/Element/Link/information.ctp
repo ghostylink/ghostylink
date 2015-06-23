@@ -18,8 +18,9 @@
     <article class="panel panel-primary">
         <section class="link-heading panel panel-heading">
             <h2><?= h($link->title) ?></h2>
-            <time>Created on <?= h($link->created) ?></time>                
-            <?=
+            Created on <time class="utc" data-utc-time="<?= $this->Time->format($link->created, 'MM/dd/YYYY hh:mm:ss a ') ?>UTC">
+                <?= _($link->created) ?></time>
+            <?=                    
             $this->Form->postLink('', ['_name' => 'link-delete', $link->id], ['confirm' => __("Are you sure you want to delete : '") . $link->title . "' ?",
                 'class' => 'glyphicon glyphicon-trash delete-link'])
             ?> </li>

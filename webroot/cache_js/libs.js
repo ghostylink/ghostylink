@@ -28,7 +28,18 @@ this.tablist=this._getList().addClass("ui-tabs-nav ui-helper-reset ui-helper-cle
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-(function ($) {
-    ;
-
+$(function(){   
+    init_utc_time();
 })(jQuery);
+
+function init_utc_time() {
+    $('time.utc').each(function() {
+        var $time = $(this);        
+        var time = $time.attr('data-utc-time');
+        var date = new Date(time);
+        var gmt_date =date.toString();
+        var index = gmt_date.indexOf('GMT');
+        var str_date = gmt_date.substr(0, index -1);        
+        $time.text(str_date);
+    });
+}
