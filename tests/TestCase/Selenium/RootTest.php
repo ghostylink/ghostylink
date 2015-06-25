@@ -10,6 +10,9 @@ class rootTest extends PHPUnit_Extensions_SeleniumTestCase
   public $fixtures = [
         'Links' => 'app.links'
   ];
+  protected $screenshotPath = '/var/www/html/ghostylink_failures/root';  
+  protected $screenshotUrl = 'http://localhost/html/ghostylink_failures/root';
+  
   protected function setUp()
   {
      parent::setUp();

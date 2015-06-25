@@ -145,6 +145,19 @@ class LinksTableTest extends TestCase
         $badData['max_views'] = 0;
         $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
                             'Save: Field max_views is > 0');
+        
+        $badData['max_views'] = -1;
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
+                            'Save: Field max_views cannot be negative');
+        
+        $badData['max_views'] = 1001;
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
+                            'Save: Field max_views cannot be more than 1000');
+        
+        $badData = $this->goodData;
+        $badData['max_views'] = 'You shall not pass!';
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
+                            'Save: Field max_views is integer');
     }
     
     /**
@@ -215,20 +228,20 @@ class LinksTableTest extends TestCase
         $goodData['max_views'] = 3;        
         $link = $this->Links->newEntity($goodData);
         $this->Links->save($link);
-        $this->Links->increaseViews($link);
+        $this->Links->increaseLife($link);
         $this->Links->save($link);
         $linkDB = $this->Links->find('all')
                                 ->where(['Links.title =' => $goodData['title']])
                                 ->toArray()[0];        
         $this->assertEquals(1,$linkDB->views,'views counter is set to 1');
-        $this->Links->increaseViews($link);
-        $this->Links->increaseViews($link);
+        $this->Links->increaseLife($link);
+        $this->Links->increaseLife($link);
         $this->Links->save($link);
         $linkDB = $this->Links->find('all')
                                 ->where(['Links.title =' => $goodData['title']])
                                 ->toArray()[0];        
         $this->assertEquals(3,$linkDB->views,'views counter is at 3 before delete');
-        $this->Links->increaseViews($link);        
+        $this->Links->increaseLife($link);        
         $linkDB = $this->Links->find('all')
                                 ->where(['Links.title =' => $goodData['title']])
                                 ->toArray();

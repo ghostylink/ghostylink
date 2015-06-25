@@ -107,6 +107,17 @@ class LinksFixture extends TestFixture
             'max_views' => 5,
             'views' => 2,
             'death_time' => '1955-11-10 6:38:00'
+        ],        
+        [
+            'id' => 7,
+            'title' => 'Unlimited link',
+            'content' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => 'f27d846103f4ac6c6e8358a6a1d00273',
+            'max_views' => null,
+            'views' => 2,
+            'death_time' => '2155-11-10 6:38:00'
         ]
     ];
 }

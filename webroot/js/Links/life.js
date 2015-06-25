@@ -3,12 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-(function ($) {
+(function ($) {    
+    initRemainingViews();
+    $(window).resize(function() {
+        $('canvas.round').remove();
+        initRemainingViews();
+    });
+    initDownCount();
+})(jQuery);
+  
+function initRemainingViews() {
+    if ($(window).width() < 981) {        
+        return;
+    }
     /** Code adapted from  a grafikart tutorial 
      *  http://www.grafikart.fr/tutoriels/jquery/canvas-jauge-circulaire-317
      */
-    $('meter.round').wrap('<div class="round" />').each(function () {
-        var $meter = $(this);
+    $('meter.link-life-percentage').wrap('<div class="round" />').each(function () {        
+        var $meter = $(this);        
+        $meter.addClass('round');
         var $div = $meter.parent();
         var min = $meter.attr('min');
         var max = $meter.attr('max');
@@ -28,8 +41,8 @@
             color = "#ffbf00";
         }
 
-        var $circle = $('<canvas width="200px" height="200px"/>');
-        var $color = $('<canvas width="200px" height="200px"/>');
+        var $circle = $('<canvas class="round" width="200px" height="200px"/>');
+        var $color = $('<canvas class="round" width="200px" height="200px"/>');
         $div.append($circle);
         $div.append($color);
         var ctx = $circle[0].getContext('2d');
@@ -43,7 +56,7 @@
         ctx.shadowBlur = 5;
         ctx.shadowColor = "rgba(0,0,0,0.1)";
         ctx.stroke();
-
+        
         // Colored circle
         var ctx = $color[0].getContext('2d');
         ctx.beginPath();
@@ -51,15 +64,21 @@
         ctx.lineWidth = 20;
         ctx.strokeStyle = color;
         ctx.stroke();
-
         ctx.lineWidth = 10;
         ctx.font = 'italic 13pt Calibri';
         ctx.fillText($meter.text(), 20, 100);
-
-
     });
-    var deathDate = $('ul.countdown').attr("data-death-date");
-    $('.countdown').downCount({
-      date: deathDate
-    });
-})(jQuery);
+}
+/**
+ * Initialize a countdown based on the ul.countdown element
+ * @returns {undefined}
+ */
+function initDownCount() {
+    $countDown = $('ul.countdown');
+    if ($countDown.size()) {
+        var deathDate = $('ul.countdown').attr("data-death-date");
+        $('.countdown').downCount({
+            date: deathDate
+        });
+    }
+}

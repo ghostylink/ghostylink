@@ -48,15 +48,21 @@ class LinksTable extends Table
             ->allowEmpty('id', 'create')
             ->requirePresence('title', 'create')
             ->notEmpty('title')
+            ->add('title', ['length' => [
+                            'rule' => ['maxLength', 100],
+                            'message' => 'Titles need to be at least 10 characters long',
+            ]])
             ->requirePresence('content', 'create')
             ->notEmpty('content')
             ->requirePresence('token', 'create')
-            ->notEmpty('token');
+            ->notEmpty('token')
+            ->add('max_views', 'valid', ['rule' => 'numeric'])
+            ->add('max_views', 'valid', ['rule' => ['range', 0, 1000]]);
         $validator->notEmpty('death_time', 'At least one component is required', function ($context) {
             if (!$context['newRecord']) {
                 return false;
             }
-            if (array_key_exists('max_views', $context['data'])) {                
+            if (array_key_exists('max_views', $context['data'])) {
                 return ($context['data']['max_views'] == '');
             } else {
                 return false;
@@ -75,16 +81,16 @@ class LinksTable extends Table
         return $validator;
     }
     
-    /**      
-     * increase the number of views
+    /**
+     * increase the life of the link
      *
      * @param Link $entity the Link entity to increase the view on
      * @return boolean true if the link has been deleted
      */
-    public function increaseViews(Link $entity)
+    public function increaseLife(Link $entity)
     {
         $ghost = $this->behaviors()->get('Ghostable');
-        if (!$ghost->increaseViews($entity)) {
+        if (!$ghost->increaseLife($entity)) {
             $this->delete($entity);
             return false;
         }

@@ -35,16 +35,25 @@ class LinksController extends AppController
         if (count($link) == 0) {
             throw new NotFoundException();
         }
-        // The link has not been deleted
-        if ($this->Links->increaseViews($link)) {
-            $this->Links->save($link);
+        if ($this->request->is('ajax')) {
+            //Retrieve the stored link in session
+            if ($this->Links->increaseLife($link)) {
+                $this->Links->save($link);
+            } else {
+                throw new NotFoundException();
+            }
             $this->set('link', $link);
-            $this->set('_serialize', ['link']);
-        } else { // The link has been deleted
-            throw new NotFoundException();
+            return $this->render('ajax/information', 'ajax');
+        } else {
+            if ($link->max_views == null) {
+                if ($this->Links->increaseLife($link)) {
+                    $this->Links->save($link);
+                }
+            }
         }
+        $this->set('link', $link);        
     }
-    
+
     /**
      * Add method
      *
@@ -92,6 +101,7 @@ class LinksController extends AppController
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error('The link could not be saved. Please, try again.');
+                return $this->redirect(['action' => 'index']);
             }
         }
         $this->set(compact('link'));

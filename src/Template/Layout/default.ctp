@@ -8,16 +8,10 @@
     <title>Ghostylink - <?php echo $this->fetch("title");?></title>
     
     <!-- Bootstrap and others css -->    
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <?php         
-        echo $this->Html->css("bootstrap.min");
-        echo $this->Html->css("jquery-ui.min");
-        echo $this->Html->css("common");
-        echo $this->Html->css($this->name . '/' . $this->view);
-        //fdfs
-        echo $this->fetch("css");        
-        echo $this->Html->script("jquery.min");
-    ?>  
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->    
+    <?= $this->AssetCompress->css('libs');?>        
+    <?= $this->AssetCompress->css($this->view); ?>
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -26,7 +20,7 @@
     <![endif]-->
   </head>
   <body>
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" 
@@ -40,24 +34,24 @@
                                      array('class' => 'logo', 
                                            'alt' => 'ghostylink logo'));?>  
           <?= $this->Html->link('Ghostylink', "/", array('class' => 'navbar-brand'));?>
-          </a>                  
+          <h1 class="navbar-text hidden-xs">Keep control on data you share !</h1>
         </div>
         <div class="collapse navbar-collapse">            
         </div><!--/.nav-collapse -->
       </div>
         
-    </div>
-      
-      <div id="main-content" class="content-wrapper container">
-            <?php echo $this->fetch("content"); ?>
-      </div>      
+    </nav>
+
+    <div id="main-content" class="content-wrapper container">
+        <?php echo $this->fetch("content"); ?>
+    </div>      
 
     <!--</div> /.container -->    
-    <!-- Bootstrap and other plugins -->    
-    <?php echo $this->Html->script("bootstrap.min");?>
-    <?php echo $this->Html->script("jquery-ui.min");?>
-    <?php echo $this->Html->script("common");?>
+    <!-- Common librairies -->
+    <?= $this->AssetCompress->script('libs');?>
+    
     <!-- Include all scripts of the page -->
-    <?php echo $this->fetch("script");?>    
+    <?= $this->AssetCompress->script($this->view);?>
+      
   </body>  
 </html>

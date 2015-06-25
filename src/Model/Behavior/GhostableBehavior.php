@@ -18,7 +18,7 @@ class GhostableBehavior extends Behavior
      * @param Entity $entity the entity the view counter has to be incremented
      * @return Return false if the counter view reached is limit
      */
-    public function increaseViews(Entity $entity)
+    public function increaseLife(Entity $entity)
     {
         $config = $this->config();
         if (!$this->checkLife($entity)) {

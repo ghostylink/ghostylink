@@ -4,6 +4,7 @@ namespace App\Test\TestCase\Controller;
 use App\Controller\LinksController;
 use Cake\TestSuite\IntegrationTestCase;
 use Cake\ORM\TableRegistry;
+use Cake\I18n\Time;
 /**
  * App\Controller\LinksController Test Case
  * @group Unit 
@@ -43,7 +44,7 @@ class LinksControllerTest extends IntegrationTestCase
         $this->get('/');
         $this->assertResponseOk();
     }
-
+    
     /**
      * Test view method
      *
@@ -55,8 +56,13 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertResponseError('Links is not accessbile by its id');
         // First fixture's titles
         $this->get('/a1d0c6e83f027327d8461063f4ac58a6');
+        $this->assertResponseContains('The link you try to access has a maximum views component');
+         
+        //Mock an ajax request to check the link with max_views can be seen
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $this->get('/a1d0c6e83f027327d8461063f4ac58a6');
         $this->assertResponseContains('Lorem ipsum dolor sit amet');
-        
+        unset( $_SERVER['HTTP_X_REQUESTED_WITH']);
         //A random token throw 404
         $this->get('/6063f4ac58a6a1d7383f02d10c6e2874');
         $this->assertResponseError('A random token throw 404');
@@ -76,9 +82,22 @@ class LinksControllerTest extends IntegrationTestCase
     {
         $links = TableRegistry::get('Links');
         $linkBefore = $links->findByToken('a1d0c6e83f027327d8461063f4ac58a6')->first();
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $this->get('/a1d0c6e83f027327d8461063f4ac58a6');
+        unset( $_SERVER['HTTP_X_REQUESTED_WITH']);
         $linksAfter = $links->findByToken('a1d0c6e83f027327d8461063f4ac58a6')->first();
         $this->assertEquals($linkBefore->views + 1, $linksAfter->views);
+    }
+    
+    public function testDeleteByTime() {
+          // Fixate time. Look in the fixture 4 with title 'No max_views'
+        $now = new Time('1935-11-07 18:38:00');
+        Time::setTestNow($now);
+        $this->get('/6c6e83f027327d846103f4ac58a6a1d0');
+        $now = new Time('1955-11-10 6:38:01');
+        Time::setTestNow($now);
+        $this->get('/6c6e83f027327d846103f4ac58a6a1d0');
+        $this->assertResponseError('Time limit involve link deletion');
     }
     /**
      * Test add method
@@ -158,12 +177,12 @@ class LinksControllerTest extends IntegrationTestCase
         // Check if the data has been modified in database
         $links = TableRegistry::get('Links');
         $query = $links->find()->where(['title' => $data['title']]);
-        $this->assertEquals(1, $query->count());
-        
-        //Test a flash message is set if something is wrong:                
+        $this->assertEquals(1, $query->count());            
+
         $badData = $data;
-        $badData['content'] = '';
-        $this->post('/edit/1', $badData);
+        $badData['title'] = str_repeat( '42', 100);        
+        $this->post('/edit/1', $badData);        
+       //Test a flash message is set if something is wrong:
         $this->assertSession('The link could not be saved. Please, try again.',
                              'Flash.flash.message');
     }

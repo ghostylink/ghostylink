@@ -1,4 +1,4 @@
-<section class="generated-link">    
+<section class="generated-link col-lg-12">    
     <div id="link-url" class="alert alert-success link-url">
         <?= $this->Url->build('/', true) . $url ?>
     </div>
