@@ -45,10 +45,8 @@ class LinksController extends AppController
             $this->set('link', $link);
             return $this->render('ajax/information', 'ajax');
         } else {
-            if ($link->max_views == null) {
-                if ($this->Links->increaseLife($link)) {
-                    $this->Links->save($link);
-                }
+            if ($link->max_views == null) {                
+                $this->Links->increaseLife($link);                 
             }
         }
         $this->set('link', $link);        
