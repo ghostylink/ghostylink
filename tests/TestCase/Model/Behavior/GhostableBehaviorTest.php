@@ -152,6 +152,8 @@ class GhostableBehaviorTest extends TestCase
         $this->TargetTable->save($entity);
         $death_time = $this->TargetTable->findByTitle($goodData['title'])->toArray()[0]->death_time;
         $this->assertNotNull($death_time, 'Death time is not null');        
+        debug($now);
+        debug($death_time);
         $this->assertEquals($now->diffInDays($death_time), 3, 'The link expires in 3 days');
         $this->assertEquals($now->diffInMinutes($death_time), 3 * 24 * 60, 
                             'The links exprires in exactly 3 days');
