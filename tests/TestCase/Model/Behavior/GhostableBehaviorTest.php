@@ -147,7 +147,12 @@ class GhostableBehaviorTest extends TestCase
         $goodData = $this->goodData;
         $goodData['title'] = 'titletestBeforeMarshal';
         $goodData['death_time'] = 3;        
+        
         Time::setTestNow();
+       
+        $now = Time::now();
+        Time::setTestNow($now);
+        
         $entity = $this->TargetTable->newEntity($goodData);
         $this->TargetTable->save($entity);
         $death_time = $this->TargetTable->findByTitle($goodData['title'])->toArray()[0]->death_time;
