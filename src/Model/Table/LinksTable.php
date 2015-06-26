@@ -95,6 +95,7 @@ class LinksTable extends Table
             $this->save($entity);            
             return false;
         }
+        $this->save($entity);
         return true;
     }
 }

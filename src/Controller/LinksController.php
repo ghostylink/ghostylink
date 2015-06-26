@@ -36,10 +36,8 @@ class LinksController extends AppController
             throw new NotFoundException();
         }
         if ($this->request->is('ajax')) {
-            //Retrieve the stored link in session
-            if ($this->Links->increaseLife($link)) {
-                $this->Links->save($link);
-            } else {
+            //Check the link has not been seen by an other people
+            if (!$this->Links->increaseLife($link)) {               
                 throw new NotFoundException();
             }
             $this->set('link', $link);
