@@ -146,8 +146,8 @@ class GhostableBehaviorTest extends TestCase
     function testBeforeMarshal() {
         $goodData = $this->goodData;
         $goodData['title'] = 'titletestBeforeMarshal';
-        $goodData['death_time'] = 3;
-        $now = new Time();
+        $goodData['death_time'] = 3;        
+        Time::setTestNow();
         $entity = $this->TargetTable->newEntity($goodData);
         $this->TargetTable->save($entity);
         $death_time = $this->TargetTable->findByTitle($goodData['title'])->toArray()[0]->death_time;
