@@ -186,6 +186,11 @@ class LinksControllerTest extends IntegrationTestCase
        //Test a flash message is set if something is wrong:
         $this->assertSession('The link could not be saved. Please, try again.',
                              'Flash.flash.message');
+        
+        //Test to get method
+        $this->get('/edit/2');
+        $this->assertResponseCode(200);
+        $this->assertResponseContains('Edit');
     }
 
     /**

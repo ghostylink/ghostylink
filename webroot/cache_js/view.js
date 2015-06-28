@@ -209,7 +209,8 @@ function retrieveLinkInformation() {
         $section.removeClass('unloaded');
         $section.html(html);
         initRemainingViews();
-        initDownCount();            
+        initDownCount();
+        init_utc_time();
     }).fail(function(error) {
         $section.html(savedHtml);
         $section.prepend('<div class="alert alert-danger col-lg-12">Problem while retrieving information</div>');
