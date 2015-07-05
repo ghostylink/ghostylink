@@ -49,6 +49,9 @@ section.link-components h2 {
 section.link-components  .panel-body{    
     padding: 0.4em;
 }
+fieldset {
+    margin-bottom:1em;
+}   
 /******************************************************************************/
 /*********************** All link style ***************************************/
 div#left-block {
@@ -66,9 +69,9 @@ section.generated-link .copy-instruction {
     margin-bottom: 0.3em !important;
     display: inline-block;
 }
-
 section.generated-link {
     text-align: center;
+    margin-top: 1em;
 }
 
 form.link-add button {

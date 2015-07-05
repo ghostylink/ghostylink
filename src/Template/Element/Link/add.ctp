@@ -19,7 +19,7 @@
                                               'id' => 'inputContent',
                                               'class' => 'form-control', 
                                               'placeholder' => "Enter your private contents",
-                                              'required' => 'false']);?>
+                                              'required' => 'false']);?>        
         <label>Your components</label>
         <ul id="link-components-chosen" class="col-lg-12">                        
             <?php
@@ -43,7 +43,7 @@
                     echo '<span class="legend">Drop some components here</span>';
                 }
             ?>
-        </ul>    
+        </ul>         
         <?php        
         if(isset($_POST['flag-max_views'])) {
             echo $this->Form->input('max_views', ['type' => 'number',
