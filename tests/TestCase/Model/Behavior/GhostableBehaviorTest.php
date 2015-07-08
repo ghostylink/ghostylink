@@ -4,6 +4,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Table\LinksTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use Cake\I18n\Time;
 
 /**
  * App\Model\Table\LinksTable Test Case
@@ -140,5 +141,24 @@ class GhostableBehaviorTest extends TestCase
         //The max_views has been reached
         $this->assertFalse($this->invokeMethod($behavior, 'checkLife', array($entity)));
         
+    }
+    
+    function testBeforeMarshal() {
+        $goodData = $this->goodData;
+        $goodData['title'] = 'titletestBeforeMarshal';
+        $goodData['death_time'] = 3;        
+        
+        Time::setTestNow();
+       
+        $now = Time::now();
+        Time::setTestNow($now);
+        
+        $entity = $this->TargetTable->newEntity($goodData);
+        $this->TargetTable->save($entity);
+        $death_time = $this->TargetTable->findByTitle($goodData['title'])->toArray()[0]->death_time;
+        $this->assertNotNull($death_time, 'Death time is not null');        
+        $this->assertEquals($now->diffInDays($death_time), 3, 'The link expires in 3 days');
+        $this->assertEquals($now->diffInMinutes($death_time), 3 * 24 * 60, 
+                            'The links exprires in exactly 3 days');
     }
 }

@@ -68,7 +68,7 @@ class GhostableBehavior extends Behavior
     {
         $config = $this->config();
         // The link is dead
-        if ($entity->life_percentage == 100) {
+        if ($entity->life_percentage >= 100) {            
             return false;
         }
         return true;

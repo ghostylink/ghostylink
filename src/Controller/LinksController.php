@@ -36,19 +36,15 @@ class LinksController extends AppController
             throw new NotFoundException();
         }
         if ($this->request->is('ajax')) {
-            //Retrieve the stored link in session
-            if ($this->Links->increaseLife($link)) {
-                $this->Links->save($link);
-            } else {
+            //Check the link has not been seen by an other people
+            if (!$this->Links->increaseLife($link)) {               
                 throw new NotFoundException();
             }
             $this->set('link', $link);
             return $this->render('ajax/information', 'ajax');
         } else {
-            if ($link->max_views == null) {
-                if ($this->Links->increaseLife($link)) {
-                    $this->Links->save($link);
-                }
+            if ($link->max_views == null) {                
+                $this->Links->increaseLife($link);                 
             }
         }
         $this->set('link', $link);        

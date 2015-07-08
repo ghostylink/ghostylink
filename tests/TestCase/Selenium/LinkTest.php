@@ -19,7 +19,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   protected function setUp()
   {
     parent::setUp();
-    
+    parent::shareSession(true);
     $this->fixtureManager = new Cake\TestSuite\Fixture\FixtureManager();
     $this->fixtureManager->fixturize($this);
     $this->fixtureManager->load($this);

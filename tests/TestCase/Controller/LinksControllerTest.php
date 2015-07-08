@@ -90,7 +90,7 @@ class LinksControllerTest extends IntegrationTestCase
     }
     
     public function testDeleteByTime() {
-          // Fixate time. Look in the fixture 4 with title 'No max_views'
+          // Fixate time. Look in the fixture 4 with title 'No max_views'        
         $now = new Time('1935-11-07 18:38:00');
         Time::setTestNow($now);
         $this->get('/6c6e83f027327d846103f4ac58a6a1d0');
@@ -98,6 +98,7 @@ class LinksControllerTest extends IntegrationTestCase
         Time::setTestNow($now);
         $this->get('/6c6e83f027327d846103f4ac58a6a1d0');
         $this->assertResponseError('Time limit involve link deletion');
+        
     }
     /**
      * Test add method
@@ -185,6 +186,11 @@ class LinksControllerTest extends IntegrationTestCase
        //Test a flash message is set if something is wrong:
         $this->assertSession('The link could not be saved. Please, try again.',
                              'Flash.flash.message');
+        
+        //Test to get method
+        $this->get('/edit/2');
+        $this->assertResponseCode(200);
+        $this->assertResponseContains('Edit');
     }
 
     /**
