@@ -56,6 +56,10 @@ Router::scope('/', function ($routes) {
     $routes->connect('delete/:id',
                     ['controller' => 'Links', 'action' => 'delete'],
                     ['_name' => 'link-delete','pass' => ['id']]);
+    $routes->connect('signup', ['controller' => 'Users', 'action' => 'add']);
+    $routes->connect('login', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('logout', ['controller' => 'Users', 'action' => 'logout']);
+    $routes->connect('me', ['controller' => 'Users', 'action' => 'index']);
     $routes->connect(':token', 
                     ['controller' => 'Links', 'action' => 'view'],
                     ['_name' => 'link-view','token'=>'\w{32}','pass' => ['token']]);

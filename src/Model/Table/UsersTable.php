@@ -24,6 +24,9 @@ class UsersTable extends Table
     {
         $this->table('users');
         $this->displayField('id');
+        $this->displayField('email');
+        $this->displayField('password');
+        $this->displayField('username');
         $this->primaryKey('id');
     }
 

@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Event\Event;
 /**
  * Users Controller
  *
@@ -50,7 +50,7 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->login();
             } else {
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
@@ -101,5 +101,45 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+    
+    /**
+     * Login method.
+     * 
+     * @return void Redirects to Users view action.
+     */
+    public function login()
+    {
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error(__("Username or password not valid, try again."));
+        }
+    }
+
+    /**
+     * 
+     * @return void Redirects to home page.
+     */
+    public function logout()
+    {
+        return $this->redirect($this->Auth->logout());
+    }
+
+    /**
+     * BeforeFilter method.
+     * 
+     * Specify actions authorized before authentification for Userss controller.
+     * 
+     * @param \App\Controller\Event $event
+     */
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        // Permet aux utilisateurs de s'enregistrer et de se déconnecter.
+        $this->Auth->allow(['add', 'logout']);
     }
 }

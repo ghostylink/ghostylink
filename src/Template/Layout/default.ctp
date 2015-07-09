@@ -11,7 +11,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->    
     <?= $this->AssetCompress->css('libs');?>        
     <?= $this->AssetCompress->css($this->view); ?>
-    
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

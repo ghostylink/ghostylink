@@ -22,11 +22,6 @@
             <td><?= h($user->username) ?></td>
             <td><?= h($user->password) ?></td>
             <td><?= h($user->email) ?></td>
-            <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
-            </td>
         </tr>
 
     <?php endforeach; ?>

@@ -15,6 +15,7 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Event\Event;
 
 /**
  * Application Controller
@@ -41,5 +42,27 @@ class AppController extends Controller
     public function initialize()
     {
         $this->loadComponent('Flash');
+        $this->loadComponent('Auth', [
+            'loginRedirect' => [
+                'controller' => 'Users',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [
+                'controller' => 'Links',
+                'action' => 'index'
+            ]
+        ]);
+    }
+    
+    /**
+     * BeforeFilter method.
+     * 
+     * Specify actions authorized before authentification.
+     * 
+     * @param \App\Controller\Event $event
+     */
+    public function beforeFilter(Event $event)
+    {
+        $this->Auth->allow(['index', 'view']);
     }
 }

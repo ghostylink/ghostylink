@@ -30,9 +30,9 @@ class LinksTable extends Table
         $this->addBehavior('Tokenable');
         $this->addBehavior('Ghostable');
         // Example for association with User in the future
-        /*$this->hasOne('Users', [
-            'foreignKey' => 'link_id'
-        ]);*/
+        $this->hasOne('Users', [
+            'foreignKey' => 'user_id'
+        ]);
     }
 
     /**
