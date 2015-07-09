@@ -35,10 +35,10 @@ $fields = collection($fields)
         $done = [];
         foreach ($associations as $type => $data) {
             foreach ($data as $alias => $details) {
-                if ($details['controller'] != $this->name && !in_array($details['controller'], $done)) {
+                if ($details['controller'] !== $this->name && !in_array($details['controller'], $done)) {
 ?>
-        <li><CakePHPBakeOpenTag= $this->Html->link(__('List <?= $this->_pluralHumanName($alias) ?>'), ['controller' => '<?= $details['controller'] ?>', 'action' => 'index']) ?> </li>
-        <li><CakePHPBakeOpenTag= $this->Html->link(__('New <?= $this->_singularHumanName($alias) ?>'), ['controller' => '<?= $details['controller'] ?>', 'action' => 'add']) ?> </li>
+        <li><CakePHPBakeOpenTag= $this->Html->link(__('List <?= $this->_pluralHumanName($alias) ?>'), ['controller' => '<?= $details['controller'] ?>', 'action' => 'index']) ?></li>
+        <li><CakePHPBakeOpenTag= $this->Html->link(__('New <?= $this->_singularHumanName($alias) ?>'), ['controller' => '<?= $details['controller'] ?>', 'action' => 'add']) ?></li>
 <?php
                     $done[] = $details['controller'];
                 }
@@ -48,7 +48,7 @@ $fields = collection($fields)
     </ul>
 </div>
 <div class="<?= $pluralVar ?> form large-10 medium-9 columns">
-    <CakePHPBakeOpenTag= $this->Form->create($<?= $singularVar ?>); CakePHPBakeCloseTag>
+    <CakePHPBakeOpenTag= $this->Form->create($<?= $singularVar ?>) CakePHPBakeCloseTag>
     <fieldset>
         <legend><CakePHPBakeOpenTag= __('<?= Inflector::humanize($action) ?> <?= $singularHumanName ?>') CakePHPBakeCloseTag></legend>
         <CakePHPBakeOpenTagphp
@@ -74,7 +74,7 @@ $fields = collection($fields)
                 $fieldData = $schema->column($field);
                 if (($fieldData['type'] === 'date') && (!empty($fieldData['null']))) {
 ?>
-            echo $this->Form->input('<?= $field ?>', array('empty' => true, 'default' => ''));
+            echo $this->Form->input('<?= $field ?>', ['empty' => true, 'default' => '']);
 <?php
                 } else {
 ?>

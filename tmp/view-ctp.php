@@ -62,7 +62,7 @@ $pk = "\$$singularVar->{$primaryKey[0]}";
     $done = [];
     foreach ($associations as $type => $data) {
         foreach ($data as $alias => $details) {
-            if ($details['controller'] != $this->name && !in_array($details['controller'], $done)) {
+            if ($details['controller'] !== $this->name && !in_array($details['controller'], $done)) {
 ?>
         <li><CakePHPBakeOpenTag= $this->Html->link(__('List <?= $this->_pluralHumanName($alias) ?>'), ['controller' => '<?= $details['controller'] ?>', 'action' => 'index']) CakePHPBakeCloseTag> </li>
         <li><CakePHPBakeOpenTag= $this->Html->link(__('New <?= Inflector::humanize(Inflector::singularize(Inflector::underscore($alias))) ?>'), ['controller' => '<?= $details['controller'] ?>', 'action' => 'add']) CakePHPBakeCloseTag> </li>
@@ -122,8 +122,7 @@ $pk = "\$$singularVar->{$primaryKey[0]}";
     <div class="row texts">
         <div class="columns large-9">
             <h6 class="subheader"><CakePHPBakeOpenTag= __('<?= Inflector::humanize($field) ?>') CakePHPBakeCloseTag></h6>
-            <CakePHPBakeOpenTag= $this->Text->autoParagraph(h($<?= $singularVar ?>-><?= $field ?>)); CakePHPBakeCloseTag>
-
+            <CakePHPBakeOpenTag= $this->Text->autoParagraph(h($<?= $singularVar ?>-><?= $field ?>)) CakePHPBakeCloseTag>
         </div>
     </div>
 <?php endforeach; ?>
@@ -133,7 +132,7 @@ $pk = "\$$singularVar->{$primaryKey[0]}";
 $relations = $associations['HasMany'] + $associations['BelongsToMany'];
 foreach ($relations as $alias => $details):
     $otherSingularVar = Inflector::variable($alias);
-    $otherPluralHumanName = Inflector::humanize($details['controller']);
+    $otherPluralHumanName = Inflector::humanize(Inflector::underscore($details['controller']));
     ?>
 <div class="related row">
     <div class="column large-12">

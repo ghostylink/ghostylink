@@ -32,6 +32,15 @@ echo implode("\n", $uses);
 
 /**
  * <?= $name ?> Model
+<?php if ($associations): ?>
+ *
+<?php foreach ($associations as $type => $assocs): ?>
+<?php foreach ($assocs as $assoc): ?>
+ * @property \Cake\ORM\Association\<?= Inflector::camelize($type) ?> $<?= $assoc['alias'] ?>
+
+<?php endforeach ?>
+<?php endforeach; ?>
+<?php endif; ?>
  */
 class <?= $name ?>Table extends Table
 {
@@ -82,7 +91,12 @@ class <?= $name ?>Table extends Table
         $validator
 <?php $validationMethods = []; ?>
 <?php
+$firstField = true;
 foreach ($validation as $field => $rules):
+    if ($firstField !== true):
+        $validationMethods[] = "\n        \$validator";
+    endif;
+
     foreach ($rules as $ruleName => $rule):
         if ($rule['rule'] && !isset($rule['provider'])):
             $validationMethods[] = sprintf(
@@ -125,9 +139,11 @@ foreach ($validation as $field => $rules):
             endif;
         endif;
     endforeach;
+    $firstField = false;
+    $validationMethods[] = array_pop($validationMethods) . ";";
 endforeach;
 ?>
-<?= "            " . implode("\n            ", $validationMethods) . ";" ?>
+<?= "            " . implode("\n            ", $validationMethods) ?>
 
 
         return $validator;
@@ -148,6 +164,18 @@ endforeach;
         $rules->add($rules-><?= $rule['name'] ?>(['<?= $field ?>']<?= !empty($rule['extra']) ? ", '$rule[extra]'" : '' ?>));
 <?php endforeach; ?>
         return $rules;
+    }
+<?php endif; ?>
+<?php if ($connection !== 'default'): ?>
+
+    /**
+     * Returns the database connection name to use by default.
+     *
+     * @return string
+     */
+    public static function defaultConnectionName()
+    {
+        return '<?= $connection ?>';
     }
 <?php endif; ?>
 }
