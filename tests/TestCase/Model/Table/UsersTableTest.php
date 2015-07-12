@@ -73,7 +73,7 @@ class UsersTableTest extends TestCase
     }
 
     /**
-     * Test validationDefault method
+     * Test basic case when all fields are specified. 
      *
      * @return void
      */
@@ -92,25 +92,101 @@ class UsersTableTest extends TestCase
                        'A new record is in DB'); 
         
         //And the data inserted is ok
-        $data = $goodData;        
-        $this->assertArraySubset($data, 
-                          $this->Users->find('all')
+        $data = $goodData;
+        //unset password as it will be hashed
+        unset($data['password']);
+        $dbUser = $this->Users->find('all')
                                       ->where(['Users.username =' => $goodData['username']])
-                                      ->toArray()[0]->toArray(),
-                           'The inserted data corresponds to what we expect');         
+                                      ->toArray()[0]->toArray();
+        $this->assertArraySubset($data, 
+                                $dbUser,
+                           'The inserted data corresponds to what we expect');
+        $this->assertNotEquals($dbUser['password'], $goodData['password'], 'Password has been hashed');
+        
     }
 
+    public function testEmailNotRequired()
+    {
+        $goodData = $this->goodData;
+        unset($goodData['email']);
+        $user = $this->Users->newEntity();        
+        $user = $this->Users->patchEntity($user, $goodData);
+        $this->assertNotFalse($this->Users->save($user),
+                                'Email is not required');        
+    }
+    
+    public function testErrorsUsername()
+    {        
+        $badData = $this->goodData;        
+        $user = $this->Users->newEntity();
+                
+        $badData['username'] = '';
+        $user = $this->Users->patchEntity($user, $badData);       
+        $this->assertFalse($this->Users->save($user), 'Empty username implies non saving');
+        
+        unset($badData['username']);
+        $user = $this->Users->patchEntity($user, $badData);       
+        $this->assertFalse($this->Users->save($user), 'No username implies non saving');
+        
+        $badData = $this->goodData;
+        $badData['username'] = 'a';
+        $user = $this->Users->patchEntity($user, $badData);       
+        $this->assertFalse($this->Users->save($user), 'Short username implies non saving');
+        
+        $badData = $this->goodData;
+        $badData['username'] = str_repeat('a', 21);
+        $user = $this->Users->patchEntity($user, $badData);       
+        $this->assertFalse($this->Users->save($user), 'Long username implies non saving');
+        
+        $badData = $this->goodData;
+        $badData['username'] = 'user1';
+        $user = $this->Users->patchEntity($user, $badData);       
+        $this->assertFalse($this->Users->save($user), 'Username must be unique');
+    }
     /**
-     * Test errors are catched
+     * Test errors on mail are catched
      */
     public function testErrorsMail()
     {
         $goodData = $this->goodData;
         $badData = $goodData;
         $badData['email'] = 'whalter';
+                
         $user = $this->Users->newEntity();
         $user = $this->Users->patchEntity($user, $badData);       
         $this->assertFalse($this->Users->save($user), 'Bad email implies non saving');
+        
+        $badData['email'] = 'user1@ghostylink.org';
+        $user = $this->Users->patchEntity($user, $badData);       
+        $this->assertFalse($this->Users->save($user), 'Email must be unique');        
+    }
+    
+    /**
+     * Test errors on password
+     */
+    public function testErrorsPassword()
+    {
+        $badData = $this->goodData;        
+        $user = $this->Users->newEntity();
+        
+        $badData['password'] = '';
+        $user = $this->Users->patchEntity($user, $badData);
+        $this->assertFalse($this->Users->save($user), 'Empty password implies non saving');
+        
+        $badData = $this->goodData;
+        unset($badData['password']);        
+        $user = $this->Users->patchEntity($user, $badData);
+        $this->assertFalse($this->Users->save($user), 'No password implies non saving');
+        
+        $badData = $this->goodData;
+        $badData['password'] = 'abc';
+        $user = $this->Users->patchEntity($user, $badData);
+        $this->assertFalse($this->Users->save($user), 'Too small password implies non saving');
+        
+        $badData = $this->goodData;
+        $badData['password'] = str_repeat('a', 21);
+        $user = $this->Users->patchEntity($user, $badData);
+        $this->assertFalse($this->Users->save($user), 'Too lonog password implies non saving');
     }
     /**
      * Test buildRules method
