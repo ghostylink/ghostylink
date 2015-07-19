@@ -10,4 +10,5 @@
     </fieldset>
 <?= $this->Form->button(__('Sign in')); ?>
 <?= $this->Form->end() ?>
+<?= $this->Flash->render();?>
 </div>

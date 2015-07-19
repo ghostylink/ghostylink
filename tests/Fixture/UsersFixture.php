@@ -42,7 +42,8 @@ class UsersFixture extends TestFixture
         [
             'id' => 1,
             'username' => 'user1',
-            'password' => 'user1user1',
+            // password : user1user1
+            'password' => '$2y$10$ka4Cze0TozAg.wFj9wGz6eGC3/7.X228CQwYIwMATz.Mgh7wyyr8u',
             'email' => 'user1@ghostylink.org'
         ],
     ];
