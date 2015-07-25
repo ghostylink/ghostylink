@@ -36,10 +36,40 @@
           <?= $this->Html->link('Ghostylink', "/", array('class' => 'navbar-brand'));?>
           <h1 class="navbar-text hidden-xs">Keep control on data you share !</h1>
         </div>
-        <div class="collapse navbar-collapse">            
+        <div class="collapse navbar-collapse">
+            <?php
+            $username = $this->request->session()->read('Auth.User.username');
+            if ($username) {                                
+                ?>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" 
+                           data-toggle="dropdown" role="button" aria-haspopup="true" 
+                           aria-expanded="false"><?= 'Welcome ' . $username ?> 
+                           <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">My links</a></li>
+                            <li><a href="#">My account</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li>                                
+                                <?= $this->Html->link('Log out', ['controller' => 'Users',
+                                                                   'action' => 'logout']
+                                                      );?>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <?php
+            }
+            else {
+                
+                echo $this->element("Users/login"); 
+                
+            }
+            ?>            
         </div><!--/.nav-collapse -->
       </div>
-        
+      
     </nav>
 
     <div id="main-content" class="content-wrapper container">

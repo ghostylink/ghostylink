@@ -108,11 +108,28 @@ class UsersTableTest extends TestCase
     public function testEmailNotRequired()
     {
         $goodData = $this->goodData;
-        unset($goodData['email']);
+        unset($goodData['email']);                
         $user = $this->Users->newEntity();        
         $user = $this->Users->patchEntity($user, $goodData);
         $this->assertNotFalse($this->Users->save($user),
-                                'Email is not required');        
+                                'Email is not required');                
+        $goodData = $this->goodData;
+        $goodData['username'] = 'AnOtherUsername';
+        $goodData['email'] = '';        
+        $user = $this->Users->newEntity();        
+        $user = $this->Users->patchEntity($user, $goodData);
+        
+        $this->assertNotFalse($this->Users->save($user),
+                                'Email can be left empty');
+        
+        $goodData = $this->goodData;
+        $goodData['username'] = 'AnOtherUsername2';
+        $goodData['email'] = '';        
+        $user = $this->Users->newEntity();        
+        $user = $this->Users->patchEntity($user, $goodData);
+        
+        $this->assertNotFalse($this->Users->save($user),
+                                'Null Email is not affected by unicity constraint');
     }
     
     public function testErrorsUsername()
@@ -187,14 +204,5 @@ class UsersTableTest extends TestCase
         $badData['password'] = str_repeat('a', 21);
         $user = $this->Users->patchEntity($user, $badData);
         $this->assertFalse($this->Users->save($user), 'Too lonog password implies non saving');
-    }
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
-    {
-        //$this->markTestIncomplete('Not implemented yet.');
-    }
+    }        
 }

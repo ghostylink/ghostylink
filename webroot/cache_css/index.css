@@ -49,7 +49,7 @@ section.link-components h2 {
 section.link-components  .panel-body{    
     padding: 0.4em;
 }
-fieldset {
+form[action="/add"] fieldset {
     margin-bottom:1em;
 }   
 /******************************************************************************/

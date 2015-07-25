@@ -11,3 +11,11 @@ and open the template in the editor.
 * {
     
 }
+
+form #add-user {
+    margin-bottom: 1em;
+}
+
+form #add-user legend {
+    font-size: 30px;
+}

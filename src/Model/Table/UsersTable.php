@@ -27,6 +27,7 @@ class UsersTable extends Table
         $this->displayField('email');
         $this->displayField('password');
         $this->displayField('username');
+        $this->addBehavior('User');
         $this->primaryKey('id');
     }
 
@@ -69,10 +70,17 @@ class UsersTable extends Table
                         'message' => 'Password need to be at most 20 characters long'
                     ]]);
 
-        $validator
-            ->add('email', 'valid', ['rule' => 'email'])            
-            ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
-
+        $validator            
+            ->add('email', 'valid', ['rule' => 'email',
+                'on' => function ($context) {                            
+                            return ! empty($context['data']['email']);
+                        }])
+            ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table',
+                'on' => function ($context) {                            
+                            return ! empty($context['data']['email']);
+                        }])
+            ->allowEmpty('email');
+                     
         return $validator;
     }
 
@@ -88,5 +96,5 @@ class UsersTable extends Table
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
         return $rules;
-    }
+    }       
 }

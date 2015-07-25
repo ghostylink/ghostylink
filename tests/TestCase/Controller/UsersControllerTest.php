@@ -6,6 +6,8 @@ use Cake\TestSuite\IntegrationTestCase;
 
 /**
  * App\Controller\UsersController Test Case
+ * @group Unit 
+ * @group Controller
  */
 class UsersControllerTest extends IntegrationTestCase
 {

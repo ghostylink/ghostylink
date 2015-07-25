@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
-
+use Cake\Event\Event;
 /**
  * Links Controller
  *
@@ -11,6 +11,20 @@ use Cake\Network\Exception\NotFoundException;
  */
 class LinksController extends AppController
 {
+    
+    /**
+     * BeforeFilter method.
+     * 
+     * Specify actions authorized before authentification for Links controller.
+     * 
+     * @param \App\Controller\Event $event
+     */
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        // Permet aux utilisateurs de s'enregistrer et de se déconnecter.
+        $this->Auth->allow(['edit', 'delete']);
+    }
     /**
      * Index method
      *
