@@ -22,6 +22,15 @@ class UsersControllerTest extends IntegrationTestCase
     ];
 
     /**
+     * Data which respect the model constraints
+     * @var array 
+     */
+    private $goodData = [
+            'username' => 'Heisenberg',
+            'password' => 'I am the danger',
+            'email' => 'crystal@alabama.us'
+    ];
+    /**
      * Test index method
      *
      * @return void
@@ -48,7 +57,16 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        //Good data can be inserted
+        $data = $this->goodData;
+        $this->post('/signup', $data);        
+        $this->assertResponseSuccess();
+        
+        //Bad data generates error
+        $badData = $this->goodData;
+        $badData['username'] = 'username';
+        $this->post('/signup', $badData);
+        $this->assertResponseContains('error');
     }
 
     /**
