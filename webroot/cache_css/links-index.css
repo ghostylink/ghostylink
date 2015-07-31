@@ -1,0 +1,79 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 1 mai 2015, 12:18:43
+    Author     : kremy
+*/
+p.description {
+    text-align: left;
+    margin-top:1em;
+    font-size: 1.2em;
+}
+
+ul#link-components-available li{
+    cursor:move !important;    
+}
+ul#link-components-chosen {    
+    height:3em;    
+    font-style: italic;
+    text-align: center;
+    border-color:#0088cc;
+    border-style:dashed;
+    border-width:1px;
+    
+}
+ul#link-components-chosen span {
+    margin-top:0.8em;
+    display: block; 
+}
+ul#link-components-chosen li{
+    font-style: normal;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    font-size: 1.3em;            
+    display: inline-block;
+    margin-left: 0.5em;
+    cursor: move;
+}
+section.link-components {
+    padding: 0;
+    margin-bottom: 0.5em;
+}
+section.link-components h2 {
+    font-size: 1.2em;
+    margin-bottom: 0;
+}
+section.link-components  .panel-body{    
+    padding: 0.4em;
+}
+form[action="/add"] fieldset {
+    margin-bottom:1em;
+}   
+/******************************************************************************/
+/*********************** All link style ***************************************/
+div#left-block {
+    text-align: center;
+}
+div.link-url {
+    display: inline-block;
+}
+button.link-copy{
+    height: 3em;
+    font-size: 0.9em;
+}
+
+section.generated-link .copy-instruction {
+    margin-bottom: 0.3em !important;
+    display: inline-block;
+}
+section.generated-link {
+    text-align: center;
+    margin-top: 1em;
+}
+
+form.link-add button {
+    margin-top:2em !important;
+}

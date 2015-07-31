@@ -9,8 +9,8 @@
     
     <!-- Bootstrap and others css -->    
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->    
-    <?= $this->AssetCompress->css('libs');?>        
-    <?= $this->AssetCompress->css($this->view); ?>
+    <?= $this->AssetCompress->css('libs');?>            
+    <?= $this->AssetCompress->css(strtolower($this->name) . '-' . $this->view); ?>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -81,7 +81,7 @@
     <?= $this->AssetCompress->script('libs');?>
     
     <!-- Include all scripts of the page -->
-    <?= $this->AssetCompress->script($this->view);?>
+    <?= $this->AssetCompress->script(strtolower($this->name) . '-' . $this->view);?>
       
   </body>  
 </html>

@@ -1,25 +1,31 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $user->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-    </ul>
-</div>
-<div class="users form large-10 medium-9 columns">
+<div class="col-lg-4 col-lg-offset-4">    
     <?= $this->Form->create($user) ?>
-    <fieldset>
-        <legend><?= __('Edit User') ?></legend>
+    <fieldset id="edit-user">
+        <legend><?= __('Modify my information') ?></legend>
+        <div>
         <?php
-            echo $this->Form->input('username');
-            echo $this->Form->input('password');
-            echo $this->Form->input('email');
-        ?>
+            echo $this->Form->input('username', ['class' => 'form-control', 
+                                                 'placeholder' => "Choose a username",
+                                                 'label' => 'Username*',
+                                                 'required' => 'true']);            
+            echo $this->Form->input('email', ['class' => 'form-control', 
+                                              'placeholder' => "Your email",
+                                              'required' => 'false']);            
+        ?>            
+            <button id="change-pwd" class="btn btn-default center-block margin-sm"
+                    data-on="false"
+                    data-html="<?= htmlspecialchars($this->Form->input('password', ['class' => 'form-control', 
+                                                                                    'label' => 'Password*',
+                                                                                    'value' => '',
+                                                                                    'placeholder' => 'Choose a password',
+                                                                                    'required' => 'true'])); ?>">
+                Change my password
+            </button>            
+        </div>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <div>
+        <?= $this->Form->button(__('Modify information'), 
+                                ['class' => 'btn btn-success center-block']) ?>
+    </div>
     <?= $this->Form->end() ?>
 </div>

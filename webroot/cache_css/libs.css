@@ -27,6 +27,12 @@ h1.navbar-text {
     font-style: italic;
 }
 
+/*************************** Some basic tools classes *************************/
+.margin-sm {
+    margin:0.5em;
+}
+/******************************************************************************/
+
 /******************************* CSS3 loader **********************************/
 /*** source : http://www.css-spinners.com/css/spinner/three-quarters.css ******/
 @-moz-keyframes three-quarters-loader {

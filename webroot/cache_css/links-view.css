@@ -1,0 +1,211 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 1 mai 2015, 12:18:43
+    Author     : kremy
+*/
+@import url(http://fonts.googleapis.com/css?family=roboto:300,400);
+/******************************************************************************/
+/*********************** All link style ***************************************/
+.link-heading h2{
+    display:inline-block;
+    margin-right: 0.5em;
+    text-transform : capitalize;
+}
+.link-heading a {
+    font-size: 2em;
+    color:#fff;
+    float:right;
+    margin-top:0.2em;
+}
+.link-heading a:hover {
+    text-decoration: none;
+    color:#e13027;
+}
+.link-heading time {
+    font-style: italic;
+}
+
+aside.link-stats.panel {
+    padding:0;
+}
+/************* Link statistics ************************************************/
+
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    meter.vertical {
+        transform: rotate(-90deg);
+    }
+    div.meter-vertical-wrapper {
+        vertical-align: bottom;
+        display:inline-block; 
+    }
+    div.meter-vertical-wrapper div{   
+        margin-top:3.5em;
+    }
+    meter.vertical {    
+        /* /!\ due to the previous rotate, width become height and height become width */
+        width: 10em;
+        height:4em;
+    }
+    div.link-life-percentage.legend {
+        display: none;
+    }
+/******************** CSS for the round meter *********************************/
+
+    div.round canvas{
+        position: absolute;
+        top:0; left:0; right:0; bottom:0;
+    }
+    div.round {
+        position: relative;
+    }
+
+
+/*****************end CSS for the round meter *********************************/
+    .round meter {
+        display:none;
+        background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+        border: medium none;
+        font-size: 60px;
+        left: 50px;
+        outline: medium none;               
+        text-align: center;
+        top: 60px;
+        width: 100px;
+    }
+    div.round{
+        display: inline-block;
+        width: 200px; height: 200px;
+        vertical-align: middle;
+    }
+
+    div.round input{
+        position: absolute;
+        top:60px; left:50px;
+        font-size: 60px; text-align: center;
+        width: 80px;
+        border:none; background:none;
+        outline:none;
+    }
+    ul.countdown li span {
+        line-height: 80px;
+    }
+}
+
+/* Small devices (desktops, 992px and up) */
+@media (max-width: 991px) { 
+    .link-stats .panel-body {
+        position: relative;
+    }    
+    article.link-stats meter{
+        transform: none;
+        display: block;
+        height: 1em;
+        width: 100%;
+        margin-top:0.3em;
+    }
+    meter.link-life-percentage {
+        height: 1em !important;
+    }
+    
+    .link-stats canvas{
+        display: none;
+    }
+    
+    div.meter-vertical-wrapper div{    
+        margin-top: 0;  
+    }
+    meter.round.visible {
+       display:block;       
+    }
+    ul.countdown li span{
+        line-height: inherit;
+    }
+}
+
+section#link-information.unloaded {
+    text-align: center;
+    padding-top: 3em;
+}
+
+section#link-information.unloaded img {
+    border: dashed 1px #08C;
+    padding: 1em;
+}
+section#link-information.unloaded > div.row {
+    margin-bottom: 0.5em;
+}
+
+section#link-information.unloaded p span.highlight{
+    font-weight: bold;
+}
+
+.link-content p {
+    font-size: 1.2em;
+}
+/*
+div.meter-vertical-wrapper {
+    //display:inline-block;  
+    vertical-align: bottom;
+}
+div.meter-vertical-wrapper {
+    text-align: center;
+}
+div.meter-vertical-wrapper div{        
+    font-size: 11pt;
+    font-family: "Calibri";
+    font-style: italic;    
+}*/
+
+/***************** time counter *********************************************/
+
+#link-death-time {
+    margin-bottom: 0;
+    margin-top:1em;
+}
+
+ul.countdown {
+  list-style: none;  
+  padding: 0;
+  display: block;
+  text-align: center;
+  margin:0
+}
+
+ul.countdown li { display: inline-block; border-width: 0!important;margin-left:0 !important;}
+
+ul.countdown li span {
+  font-size: 1.5em;
+  font-weight: 300;  
+  padding: 0 20px;
+  border-top: 1px solid #C0392B;
+  border-bottom: 1px solid #C0392B;
+  margin-left: -4px;
+}
+
+ul.countdown li span.minutes {
+    margin-left:-10px;
+}
+
+ul.countdown li span.seconds {
+    margin-left:-20px;
+}
+
+ul.countdown li p {
+  color: #a7abb1;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.days {
+  background-color: #C0392B;
+  padding: 0 10px;
+  color: #fff;
+}
+
+.last { border-right: 1px solid #C0392B; }

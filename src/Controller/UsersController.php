@@ -68,6 +68,7 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
+        $id = $this->Auth->user('id');
         $user = $this->Users->get($id, [
             'contain' => []
         ]);

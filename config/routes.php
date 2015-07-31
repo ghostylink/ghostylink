@@ -60,6 +60,7 @@ Router::scope('/', function ($routes) {
     $routes->connect('login', ['controller' => 'Users', 'action' => 'login']);
     $routes->connect('logout', ['controller' => 'Users', 'action' => 'logout']);
     $routes->connect('me', ['controller' => 'Users', 'action' => 'index']);
+    $routes->connect('me/edit', ['controller' => 'Users', 'action' => 'edit']);
     $routes->connect(':token', 
                     ['controller' => 'Links', 'action' => 'view'],
                     ['_name' => 'link-view','token'=>'\w{32}','pass' => ['token']]);
