@@ -18,8 +18,8 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $this->set('users', $this->paginate($this->Users));
-        $this->set('_serialize', ['users']);
+        $this->set('user', $this->Auth->user());
+        $this->set('_serialize', ['user']);        
     }
 
     /**
@@ -94,14 +94,15 @@ class UsersController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $user = $this->Users->get($id);
+        $this->request->allowMethod(['post', 'delete']);        
+        $user = $this->Users->get($this->Auth->user('id'));
         if ($this->Users->delete($user)) {
             $this->Flash->success(__('The user has been deleted.'));
+            $this->Auth->logout();
         } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The user could not be deleted. Please, try again.'));            
         }
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller' => 'Links', 'action' => 'index']);
     }
     
     /**

@@ -31,6 +31,10 @@ h1.navbar-text {
 .margin-sm {
     margin:0.5em;
 }
+
+.centered-text {
+    text-align: center;
+}
 /******************************************************************************/
 
 /******************************* CSS3 loader **********************************/
@@ -89,7 +93,7 @@ h1.navbar-text {
 /***************** Start of Bootstrap overriding section **********************/
 /****************** Be carefull when changing something ***********************/
 .panel h1, .panel h2, .panel h3, .panel h4, .panel h5, .panel h6 {
-    margin-top:0;
+    margin-top:0;    
 }
 a.navbar-brand {
     float:none;
