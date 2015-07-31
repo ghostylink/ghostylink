@@ -3,6 +3,7 @@ namespace App\Test\TestCase\Controller;
 
 use App\Controller\UsersController;
 use Cake\TestSuite\IntegrationTestCase;
+use Cake\ORM\TableRegistry;
 
 /**
  * App\Controller\UsersController Test Case
@@ -76,7 +77,26 @@ class UsersControllerTest extends IntegrationTestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->_authenticateUser(0);
+        $this->get('/me/edit');
+        $this->assertResponseOk();
+        
+        $newData = ['username' => 'newusername'];
+        
+        $this->post('/me/edit', $newData);
+        $this->assertResponseCode(302);
+        
+        //TODO: check the session value has been updated
+        
+        $users = TableRegistry::get('Users');
+        $query = $users->find()->where(['username' => $newData['username']]);       
+        $this->assertEquals(1, $query->count(), 'User has been saved');
+        
+        $badData = ['username' => 'a'];
+        $this->post('/me/edit', $newData);
+                
+        $query = $users->find()->where(['username' => $badData['username']]);       
+        $this->assertEquals(0, $query->count(), 'User has not been saved');
     }
 
     /**
