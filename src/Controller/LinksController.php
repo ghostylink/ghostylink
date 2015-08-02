@@ -49,16 +49,20 @@ class LinksController extends AppController
         if (count($link) == 0) {
             throw new NotFoundException();
         }
+
         if ($this->request->is('ajax')) {
             //Check the link has not been seen by an other people
-            if (!$this->Links->increaseLife($link)) {               
+            if (!$this->Links->increaseLife($link)) {
                 throw new NotFoundException();
             }
             $this->set('link', $link);
             return $this->render('ajax/information', 'ajax');
         } else {
-            if ($link->max_views == null) {                
+            if ($link->max_views == null) {
                 $this->Links->increaseLife($link);                 
+            }
+            if (!$this->Links->checkLife($link)) {
+                throw new NotFoundException();
             }
         }
         $this->set('link', $link);        

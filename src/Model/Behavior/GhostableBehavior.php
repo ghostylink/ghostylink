@@ -64,7 +64,7 @@ class GhostableBehavior extends Behavior
      * @param Entity $entity the entity the view counter has to be incremented
      * @return Return false if the link is dead
      */
-    private function checkLife(Entity $entity)
+    public function checkLife(Entity $entity)
     {
         $config = $this->config();
         // The link is dead
