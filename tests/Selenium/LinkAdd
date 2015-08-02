@@ -19,12 +19,12 @@
 </tr>
 <tr>
 	<td>verifyElementPresent</td>
-	<td>css=input[type=text]</td>
+	<td>css=form#links-add input[type=text]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyElementPresent</td>
-	<td>css=textarea</td>
+	<td>css=form#links-add textarea</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=[type=submit]</td>
+	<td>css=form#links-add [type=submit]</td>
 	<td></td>
 </tr>
 <tr>

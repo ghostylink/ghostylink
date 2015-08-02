@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=form [type=submit]</td>
+	<td>css=form#links-add [type=submit]</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,7 +108,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=form [type=submit]</td>
+	<td>css=form#links-add [type=submit]</td>
 	<td></td>
 </tr>
 <!--Checks the components is removed when we click on it-->

@@ -6,8 +6,7 @@
 var request;
 
 function initAjaxSubmission() {
-    $("form[action=/add]").on("submit", function (event) {
-
+    $("form#links-add").on("submit", function (event) {        
         // Abort any pending request
         if (request) {
             request.abort();
@@ -41,7 +40,7 @@ function initAjaxSubmission() {
             
             if($responseHTML.find('form').size() === 0) {
                 //No error have been found 
-                $('form[action=/add] div.alert.alert-danger').remove();
+                $('form[action="/add"] div.alert.alert-danger').remove();
                 $('section.generated-link').remove();
                 $('#main-content').append($responseHTML);
                 initCopyButton();
@@ -100,7 +99,8 @@ function initCopyButton() {
     });
 }
 $(function () {
-    initAjaxSubmission();   
+    initAjaxSubmission(); 
+    console.log($("form#links-add"));
 });
 
 

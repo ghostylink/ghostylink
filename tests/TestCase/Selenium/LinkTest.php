@@ -64,15 +64,15 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   }
   
   public function testAdd() {   
-       // Check that basic element are present
+        // Check that basic element are present
     $this->open("/");
     try {
-        $this->assertTrue($this->isElementPresent("css=input[type=text]"));
+        $this->assertTrue($this->isElementPresent("css=form#links-add input[type=text]"));
     } catch (PHPUnit_Framework_AssertionFailedError $e) {
         array_push($this->verificationErrors, $e->toString());
     }
     try {
-        $this->assertTrue($this->isElementPresent("css=textarea"));
+        $this->assertTrue($this->isElementPresent("css=form#links-add textarea"));
     } catch (PHPUnit_Framework_AssertionFailedError $e) {
         array_push($this->verificationErrors, $e->toString());
     }
@@ -86,7 +86,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->type("css=textarea[name=content]", "My super title");
     $this->click("css=ul#link-components-available li#[data-related-field=max_views]");
     $this->type("css=input[name=max_views]", "42");
-    $this->click("css=[type=submit]");
+    $this->click("css=form#links-add [type=submit]");
     for ($second = 0; ; $second++) {
         if ($second >= 60) $this->fail("timeout");
         try {
@@ -103,7 +103,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
   }
   
   public function testAddComponentsWithSubmit() {
-        // ###################################
+ // ###################################
     // Check  the component iteraction is still here when errors are retrieved
     // ###################################
     // When the error is not on a component field
@@ -111,7 +111,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->type("css=input[name=title]", "Myawesome title");
     $this->click("css=ul#link-components-available li[data-related-field=max_views]");
     $this->type("css=input[name=max_views]", "2");
-    $this->click("css=form [type=submit]");
+    $this->click("css=form#links-add [type=submit]");
     for ($second = 0; ; $second++) {
         if ($second >= 60) $this->fail("timeout");
         try {
@@ -124,7 +124,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->assertTrue($this->isElementPresent("css=input[name=max_views]"));
     $this->type("css=input[name=title]", "");
     $this->type("css=textarea[name=content]", "Myawesome contenet");
-    $this->click("css=form [type=submit]");
+    $this->click("css=form#links-add [type=submit]");
     for ($second = 0; ; $second++) {
         if ($second >= 60) $this->fail("timeout");
         try {
@@ -140,7 +140,7 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase
     $this->type("css=input[name=title]", "Myawesome title");
     $this->type("css=textarea[name=content]", "My awesome private content");
     $this->click("css=ul#link-components-available li[data-related-field=max_views]");
-    $this->click("css=form [type=submit]");
+    $this->click("css=form#links-add [type=submit]");
     // Checks the components is removed when we click on it
     $this->click("css=ul#link-components-chosen li[data-related-field=max_views]");
     $this->assertTrue($this->isElementPresent("css=ul#link-components-available li[data-related-field=max_views]"));
