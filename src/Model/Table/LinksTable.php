@@ -99,4 +99,15 @@ class LinksTable extends Table
         $this->save($entity);
         return true;
     }
+    
+    /**
+     * check the life of the link
+     * 
+     * @param Link $entity the Link entity to increase the view on
+     * @return boolean False if the link is dead
+     */
+    public function checkLife(Link $entity)
+    {
+        return $this->behaviors()->get('Ghostable')->checkLife($entity);
+    }
 }
