@@ -21,7 +21,8 @@ class Link extends Entity
         'token' => true,
         'max_views' => true,
         'views' => true,
-        'death_time' => true
+        'death_time' => true,
+        'user_id' => true
     ];
     
     /**

@@ -19,7 +19,8 @@ class LinksControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'Links' => 'app.links'
+        'Links' => 'app.links',
+        'Users' => 'app.users'
     ];
 
     /**
@@ -132,6 +133,16 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertSession('The link could not be saved. Please, try again.',
                              'Flash.flash.message');
         $this->checkTokenGeneration();
+        
+        // Test a link is added with the currented user
+        $this->_authenticateUser(0);
+        $data = $this->goodData;
+        $data['title'] = 'Authenticate user';
+        $this->post('/add', $data);        
+        $this->assertResponseSuccess();
+        $links = TableRegistry::get('Links');
+        $result = $links->find()->where(['title' => $data['title']])->toArray()[0];        
+        $this->assertEquals(1, $result['user_id'], 'A good link is added in DB');
                 
     }
 
@@ -213,5 +224,20 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertEquals(0, $query->count());
         
         //TODO: check a flash message is set if something is wrong        
+    }
+    
+    public function _authenticateUser($fixtureIndex)
+    {
+        $userArray = $this->fixtureManager->loaded()['app.users']
+                          ->records[$fixtureIndex];
+        if(isset($userArray['password'])) {
+            unset($userArray['password']);
+        }
+        // Set session data
+        $this->session([
+            'Auth' => [
+                'User' => $userArray
+            ]
+        ]);       
     }
 }

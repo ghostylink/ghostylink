@@ -72,7 +72,9 @@ class LinksController extends AppController
     public function add()
     {
         $link = $this->Links->newEntity();
-        $this->request->allowMethod(['post', 'ajax']);
+        $this->request->allowMethod(['post', 'ajax']);        
+        
+        $this->request->data['user_id'] = $this->Auth->user('id');
         $link = $this->Links->patchEntity($link, $this->request->data);
         
         // Initialize empty token to pass the validation

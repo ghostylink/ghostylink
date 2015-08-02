@@ -33,6 +33,7 @@ class LinksTable extends Table
         $this->hasOne('Users', [
             'foreignKey' => 'user_id'
         ]);
+        $this->displayField('user_id');
     }
 
     /**
