@@ -60,6 +60,7 @@ class LinksController extends AppController {
                 $this->Links->increaseLife($link);
             }
             if (!$this->Links->checkLife($link)) {
+                $this->Links->increaseLife($link);
                 throw new NotFoundException();
             }
         }
