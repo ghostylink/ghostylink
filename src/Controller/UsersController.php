@@ -23,7 +23,8 @@ class UsersController extends AppController {
         $query = TableRegistry::get('Links')->find()
                 ->where(['user_id =' => $this->Auth->user('id')]);
 
-        $links = $this->paginate($query);
+        $links = $this->paginate($query, array('maxLimit' => 5));
+
 
         $this->set('history', $links);
         $this->set('_serialize', ['history']);
@@ -80,7 +81,7 @@ class UsersController extends AppController {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'Links', 'action' => 'history']);
             } else {
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }

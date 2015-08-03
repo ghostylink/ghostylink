@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Links Controller
@@ -137,6 +138,19 @@ class LinksController extends AppController {
             $this->Flash->error('The link could not be deleted. Please, try again.');
         }
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function history() {
+        // Using a query
+        $this->paginate = [
+            'maxLimit' => 15,
+            'limit' => 5,
+            'conditions' => [
+                'Links.user_id' => $this->Auth->user('id'),
+            ]
+        ];
+        $this->set('history', $this->paginate($this->Links));
+        $this->set('_serialize', ['bookmarks']);
     }
 
 }

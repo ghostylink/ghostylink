@@ -36,8 +36,8 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <nav id="pagination" class="center-block">
-                <ul class="pagination centered-text" role="pagination">
+            <nav id="pagination" class="centered-text">
+                <ul class="pagination" role="pagination">
                     <?= $this->Paginator->prev('< ' . __('previous')) ?>
                     <?= $this->Paginator->numbers() ?>
                     <?= $this->Paginator->next(__('next') . ' >') ?>

@@ -58,8 +58,8 @@
                                     <li role = "separator" class = "divider"></li>
                                     <li>
                                         <?=
-                                        $this->Html->link('My links', ['controller' => 'Users',
-                                            'action' => 'index']);
+                                        $this->Html->link('My links', ['controller' => 'Links',
+                                            'action' => 'history']);
                                         ?>
                                     </li>
                                     <li>
