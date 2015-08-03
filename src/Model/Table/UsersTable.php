@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use App\Model\Entity\User;
@@ -11,8 +12,7 @@ use Cake\Validation\Validator;
  * Users Model
  *
  */
-class UsersTable extends Table
-{
+class UsersTable extends Table {
 
     /**
      * Initialize method
@@ -20,8 +20,7 @@ class UsersTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         $this->table('users');
         $this->displayField('id');
         $this->displayField('email');
@@ -29,6 +28,12 @@ class UsersTable extends Table
         $this->displayField('username');
         $this->addBehavior('User');
         $this->primaryKey('id');
+        $this->hasMany('Links', [
+            'className' => 'Links',
+            'foreignKey' => 'user_id',
+            'dependent' => true
+        ]);
+        //$this->displayField('Links');
     }
 
     /**
@@ -37,17 +42,16 @@ class UsersTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
-            
+                ->add('id', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('id', 'create');
+
         $validator
-            ->requirePresence('username', 'create')
-            ->notEmpty('username')
-            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-            ->add('username', [
+                ->requirePresence('username', 'create')
+                ->notEmpty('username')
+                ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
+                ->add('username', [
                     'minLength' => [
                         'rule' => ['minLength', 4],
                         'message' => 'Username needs to be at least 4 characters long',
@@ -55,12 +59,12 @@ class UsersTable extends Table
                     'maxLength' => [
                         'rule' => ['maxLength', 20],
                         'message' => 'Username needs to be at most 20 characters long'
-                    ]]);
-            
+        ]]);
+
         $validator
-            ->requirePresence('password', 'create')
-            ->notEmpty('password')
-            ->add('password', [
+                ->requirePresence('password', 'create')
+                ->notEmpty('password')
+                ->add('password', [
                     'minLength' => [
                         'rule' => ['minLength', 4],
                         'message' => 'Password need to be at least 4 characters long',
@@ -68,19 +72,19 @@ class UsersTable extends Table
                     'maxLength' => [
                         'rule' => ['maxLength', 20],
                         'message' => 'Password need to be at most 20 characters long'
-                    ]]);
+        ]]);
 
-        $validator            
-            ->add('email', 'valid', ['rule' => 'email',
-                'on' => function ($context) {                            
-                            return ! empty($context['data']['email']);
-                        }])
-            ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table',
-                'on' => function ($context) {                            
-                            return ! empty($context['data']['email']);
-                        }])
-            ->allowEmpty('email');
-                     
+        $validator
+                ->add('email', 'valid', ['rule' => 'email',
+                    'on' => function ($context) {
+                        return !empty($context['data']['email']);
+                    }])
+                ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table',
+                    'on' => function ($context) {
+                        return !empty($context['data']['email']);
+                    }])
+                ->allowEmpty('email');
+
         return $validator;
     }
 
@@ -91,10 +95,10 @@ class UsersTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
         return $rules;
-    }       
+    }
+
 }

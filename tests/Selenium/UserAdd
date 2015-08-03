@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>testLinkView</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">testLinkView</td></tr>
+</thead><tbody>
+<!--Check that basic element are present-->
+<tr>
+	<td>open</td>
+	<td>/logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Sign up</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=a[href=&quot;/signup&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=a[href=&quot;/signup&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Create my account</td>
+	<td></td>
+</tr>
+<tr>
+	<td>submitAndWait</td>
+	<td>css=form[action=&quot;/signup&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertCssCount</td>
+	<td>css=input+div.alert-danger</td>
+	<td>2</td>
+</tr>
+<!--#A bad value in email is detected-->
+<tr>
+	<td>type</td>
+	<td>css=form[action=&quot;/signup&quot;] input[name=&quot;email&quot;]</td>
+	<td>bademail</td>
+</tr>
+<tr>
+	<td>submitAndWait</td>
+	<td>css=form[action=&quot;/signup&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertCssCount</td>
+	<td>css=input+div.alert-danger</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=form[action=&quot;/signup&quot;] input[name=&quot;email&quot;]</td>
+	<td>email@email.fr</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=form[action=&quot;/signup&quot;] input[name=&quot;username&quot;]</td>
+	<td>username</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=form[action=&quot;/signup&quot;] input[name=&quot;password&quot;]</td>
+	<td>userpwd</td>
+</tr>
+<tr>
+	<td>submitAndWait</td>
+	<td>css=form[action=&quot;/signup&quot;]</td>
+	<td></td>
+</tr>
+<!--#User has been logged in-->
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=a[href=&quot;/logout&quot;]</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
