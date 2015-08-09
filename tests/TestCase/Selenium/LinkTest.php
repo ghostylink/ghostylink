@@ -4,28 +4,7 @@
  * @group Functional
  * @group Link
  */
-class LinksTest extends PHPUnit_Extensions_SeleniumTestCase {
-
-    public $fixtureManager = null;
-    public $autoFixtures = true;
-    public $dropTables = true;
-    protected $captureScreenshotOnFailure = true;
-    protected $screenshotPath = '/var/www/html/ghostylink_failures/links';
-    protected $screenshotUrl = 'http://localhost/html/ghostylink_failures/links';
-    public $fixtures = [
-        'Links' => 'app.links'
-    ];
-
-    protected function setUp() {
-        parent::setUp();
-        parent::shareSession(true);
-        $this->fixtureManager = new Cake\TestSuite\Fixture\FixtureManager();
-        $this->fixtureManager->fixturize($this);
-        $this->fixtureManager->load($this);
-        $this->setBrowser("*firefox");
-        $this->setHost('jenkins.ghostylink.org');
-        $this->setBrowserUrl("http://localhost:8765/");
-    }
+class LinksTest extends FunctionalTest {
 
     public function testView() {
         $this->open("/a1d0c6e83f027327d8461063f4ac58a6");
@@ -190,12 +169,6 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase {
         // Checks the field + flage have removed from the form
         $this->assertFalse($this->isElementPresent("css=fieldset input[type=hidden][name=flag-max_views]=max_views]"));
         $this->assertFalse($this->isElementPresent("css=fieldset input[name=max_views]"));
-    }
-
-    protected function tearDown() {
-        parent::tearDown();
-        $this->fixtureManager->unload($this);
-        //$this->fixtureManager->shutDown();
     }
 
 }
