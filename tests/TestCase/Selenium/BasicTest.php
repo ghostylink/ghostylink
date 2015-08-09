@@ -16,7 +16,6 @@ class BasicTest extends PHPUnit_Extensions_SeleniumTestCase {
     public $fixtureManager = null;
     public $autoFixtures = true;
     public $dropTables = true;
-    public $host = "http://jenkins.ghostylink.org";
     protected $captureScreenshotOnFailure = TRUE;
     protected $screenshotPath = '/var/www/html/ghostylink_failures/basic';
     protected $screenshotUrl = 'http://localhost/html/ghostylink_failures/basic';
@@ -28,7 +27,6 @@ class BasicTest extends PHPUnit_Extensions_SeleniumTestCase {
         $this->fixtureManager->fixturize($this);
         $this->fixtureManager->load($this);
         $this->setBrowser("*firefox");
-        $this->setHost('http://jenkins.ghostylink.org');
         $this->setBrowserUrl("http://localhost:8765/");
 //    $this->loadFixtures('app.Links');
     }
