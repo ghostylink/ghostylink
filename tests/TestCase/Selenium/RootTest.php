@@ -21,7 +21,7 @@ class rootTest extends PHPUnit_Extensions_SeleniumTestCase {
         $this->fixtureManager->fixturize($this);
         $this->fixtureManager->load($this);
         $this->setBrowser("*firefox");
-        $this->setHost('http://jenkins.ghostylink.org');
+        $this->setHost('jenkins.ghostylink.org');
         $this->setBrowserUrl("http://localhost:8765/");
     }
 
