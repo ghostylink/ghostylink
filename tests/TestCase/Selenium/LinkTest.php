@@ -22,8 +22,8 @@ class LinksTest extends PHPUnit_Extensions_SeleniumTestCase {
         $this->fixtureManager = new Cake\TestSuite\Fixture\FixtureManager();
         $this->fixtureManager->fixturize($this);
         $this->fixtureManager->load($this);
-        $this->setBrowser("firefox");
-        $this->setHost('jenkins.ghostylink.org');
+        $this->setBrowser("*firefox");
+        //$this->setHost('jenkins.ghostylink.org');
         $this->setBrowserUrl("http://localhost:8765/");
     }
 
