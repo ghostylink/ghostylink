@@ -14,38 +14,6 @@ use Cake\ORM\TableRegistry;
 class UsersController extends AppController {
 
     /**
-     * Index method
-     *
-     * @return void
-     */
-    public function index() {
-        // Using a query
-        $query = TableRegistry::get('Links')->find()
-                ->where(['user_id =' => $this->Auth->user('id')]);
-
-        $links = $this->paginate($query, array('maxLimit' => 5));
-
-
-        $this->set('history', $links);
-        $this->set('_serialize', ['history']);
-    }
-
-    /**
-     * View method
-     *
-     * @param string|null $id User id.
-     * @return void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function view($id = null) {
-        $user = $this->Users->get($id, [
-            'contain' => []
-        ]);
-        $this->set('user', $user);
-        $this->set('_serialize', ['user']);
-    }
-
-    /**
      * Add method
      *
      * @return void Redirects on successful add, renders view otherwise.

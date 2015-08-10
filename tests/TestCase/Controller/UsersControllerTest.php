@@ -34,24 +34,6 @@ class UsersControllerTest extends IntegrationTestCase {
     ];
 
     /**
-     * Test index method
-     *
-     * @return void
-     */
-    public function testIndex() {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test view method
-     *
-     * @return void
-     */
-    public function testView() {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
      * Test add method
      *
      * @return void
