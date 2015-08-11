@@ -27,7 +27,20 @@
                             <td><?= $this->Number->format($l->life_percentage) ?> %</td>
                             <td title="<?= h($l->death_time) == '' ? 'None' : h($l->death_time) ?>
                                 <?= h($l->max_views) == '' ? 'M' : h($l->max_views) ?>">See details</td>
-                            <td><?=
+                            <td><?php
+                                if($l->status == true) {
+                                    ?><?=
+                                    $this->Form->postLink('', ['_name' => 'link-disable', $l->id], ['confirm' => __("Are you sure you want to disable : '") . $l->title . "' ?",
+                                        'class' => 'btn btn-xs btn-warning glyphicon glyphicon-remove-sign disable-link', 'title' => 'Disable']);
+                                    ?><?php
+                                }
+                                else {
+                                    ?><?=
+                                    $this->Form->postLink('', ['_name' => 'link-enable', $l->id], ['confirm' => __("Are you sure you want to enable : '") . $l->title . "' ?",
+                                        'class' => 'btn btn-xs btn-success glyphicon glyphicon-ok-sign enable-link', 'title' => 'Enable']);
+                                    ?><?php
+                                }
+                                ?><?=
                                 $this->Form->postLink('', ['_name' => 'link-delete', $l->id], ['confirm' => __("Are you sure you want to delete : '") . $l->title . "' ?",
                                     'class' => 'btn btn-xs btn-danger glyphicon glyphicon-trash delete-link', 'title' => 'Delete']);
                                 ?></td>

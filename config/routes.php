@@ -52,6 +52,8 @@ Router::scope('/', function ($routes) {
     $routes->connect('add', ['controller' => 'Links', 'action' => 'add']);
     $routes->connect('edit/:id', ['controller' => 'Links', 'action' => 'edit'], ['_name' => 'link-edit', 'id' => '\d+', 'pass' => ['id']]);
     $routes->connect('delete/:id', ['controller' => 'Links', 'action' => 'delete'], ['_name' => 'link-delete', 'pass' => ['id']]);
+    $routes->connect('disable/:id', ['controller' => 'Links', 'action' => 'disable'], ['_name' => 'link-disable', 'pass' => ['id']]);
+    $routes->connect('enable/:id', ['controller' => 'Links', 'action' => 'enable'], ['_name' => 'link-enable', 'pass' => ['id']]);
     $routes->connect('signup', ['controller' => 'Users', 'action' => 'add']);
     $routes->connect('login', ['controller' => 'Users', 'action' => 'login']);
     $routes->connect('logout', ['controller' => 'Users', 'action' => 'logout']);
