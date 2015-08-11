@@ -226,6 +226,58 @@ class LinksControllerTest extends IntegrationTestCase
         //TODO: check a flash message is set if something is wrong        
     }
     
+    /**
+     * Test disable method
+     *
+     * @return void
+     */
+    public function testDisable()
+    {
+        $this->_authenticateUser(0);
+        // Get link from first fixture
+        $links = TableRegistry::get('Links');        
+        $data = $links->get(1);
+        
+        // Disable this one
+        $this->post('/disable/1');        
+        $this->assertResponseSuccess();
+
+        // Check if the data has been modified in database
+        $result = $links->find()->where(['title' => $data['title']])->toArray()[0];
+        $this->assertEquals(false, $result->status);
+    }
+    
+        /**
+     * Test enable method
+     *
+     * @return void
+     */
+    public function testEnable()
+    {
+        $this->_authenticateUser(0);
+
+        // Get link from first fixture
+        $links = TableRegistry::get('Links');        
+        $data = $links->get(1);
+        
+        // Disable this one if needed
+        if ($data->status == true) {
+            $this->post('/disable/1');        
+            $this->assertResponseSuccess();
+
+            // Check if the data has been modified in database
+            $result = $links->find()->where(['id' => $data['id']])->toArray()[0];
+            $this->assertEquals(false, $result->status);
+        }
+        // Enable this one
+        $this->post('/enable/1');        
+        $this->assertResponseSuccess();
+
+        // Check if the data has been modified in database
+        $result = $links->find()->where(['id' => $data['id']])->toArray()[0];
+        $this->assertEquals(true, $result->status);
+    }
+    
     public function _authenticateUser($fixtureIndex)
     {
         $userArray = $this->fixtureManager->loaded()['app.users']

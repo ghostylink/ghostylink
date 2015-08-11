@@ -27,6 +27,7 @@ class LinksFixture extends TestFixture
         'views' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'death_time' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'user_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'status' => ['type' => 'boolean', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => true, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         '_indexes' => [
             'user_id' => ['type' => 'index', 'columns' => ['user_id'], 'length' => []],
         ],
@@ -57,7 +58,8 @@ class LinksFixture extends TestFixture
             'token' => 'a1d0c6e83f027327d8461063f4ac58a6',
             'max_views' => 1,
             'views' => 0,
-            'death_time' => null
+            'death_time' => null,
+            'user_id' => 0
         ],
         [
             'id' => 2,
