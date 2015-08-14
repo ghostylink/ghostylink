@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
@@ -18,7 +17,8 @@ class UsersController extends AppController {
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
@@ -40,7 +40,8 @@ class UsersController extends AppController {
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
         $id = $this->Auth->user('id');
         $user = $this->Users->get($id, [
             'contain' => []
@@ -65,7 +66,8 @@ class UsersController extends AppController {
      * @return void Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($this->Auth->user('id'));
         if ($this->Users->delete($user)) {
@@ -82,7 +84,8 @@ class UsersController extends AppController {
      *
      * @return void Redirects to Users view action.
      */
-    public function login() {
+    public function login()
+    {
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
@@ -97,7 +100,8 @@ class UsersController extends AppController {
      *
      * @return void Redirects to home page.
      */
-    public function logout() {
+    public function logout()
+    {
         return $this->redirect($this->Auth->logout());
     }
 
@@ -108,7 +112,8 @@ class UsersController extends AppController {
      *
      * @param \App\Controller\Event $event
      */
-    public function beforeFilter(Event $event) {
+    public function beforeFilter(Event $event)
+    {
         parent::beforeFilter($event);
         // Permet aux utilisateurs de s'enregistrer et de se déconnecter.
         $this->Auth->allow(['add', 'logout']);

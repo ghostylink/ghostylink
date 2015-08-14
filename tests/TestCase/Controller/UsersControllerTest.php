@@ -77,6 +77,7 @@ class UsersControllerTest extends IntegrationTestCase {
 
         $query = $users->find()->where(['username' => $badData['username']]);
         $this->assertEquals(0, $query->count(), 'User has not been saved');
+        $this->_logoutUser();
     }
 
     /**
@@ -117,6 +118,7 @@ class UsersControllerTest extends IntegrationTestCase {
         $this->assertResponseCode(302);
         // ... then a page is displayed
         $this->assertResponseSuccess();
+        $this->_logoutUser();
     }
 
     public function testLogout() {
@@ -125,6 +127,7 @@ class UsersControllerTest extends IntegrationTestCase {
         $this->assertSession('user1', 'Auth.User.username');
         $this->get("/logout");
         $this->assertSession('', 'Auth.User.username');
+        $this->_logoutUser();
     }
 
     public function _authenticateUser($fixtureIndex) {
@@ -139,6 +142,10 @@ class UsersControllerTest extends IntegrationTestCase {
                 'User' => $userArray
             ]
         ]);
+    }
+
+    public function _logoutUser() {
+        $this->session([]);
     }
 
 }

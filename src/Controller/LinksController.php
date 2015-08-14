@@ -78,7 +78,15 @@ class LinksController extends AppController {
         $this->request->allowMethod(['post', 'ajax']);
 
         $this->request->data['user_id'] = $this->Auth->user('id');
-        $link = $this->Links->patchEntity($link, $this->request->data);
+
+        //A specific check for logged in user
+        if($this->Auth->user('id')) {
+            $link = $this->Links->patchEntity($link, $this->request->data,
+                    ['validate' => 'logged']);
+        }
+        else {
+            $link = $this->Links->patchEntity($link, $this->request->data);
+        }
 
         // Initialize empty token to pass the validation
         $link->token = "";

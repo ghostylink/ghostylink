@@ -6,7 +6,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-
+use App\Model\Table\AuthComponent;
 /**
  * Links Model
  */
@@ -37,6 +37,15 @@ class LinksTable extends Table
     }
 
     /**
+     * A specific validator for logged in user
+     * @param Validator $validator
+     * @return Validator
+     */
+    public function validationLogged(Validator $validator) {
+        return $validator;
+    }
+
+    /**
      * Default validation rules.
      *
      * @param \Cake\Validation\Validator $validator Validator instance.
@@ -44,22 +53,8 @@ class LinksTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
-        $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create')
-            ->requirePresence('title', 'create')
-            ->notEmpty('title')
-            ->add('title', ['length' => [
-                            'rule' => ['maxLength', 100],
-                            'message' => 'Titles need to be at least 10 characters long',
-            ]])
-            ->requirePresence('content', 'create')
-            ->notEmpty('content')
-            ->requirePresence('token', 'create')
-            ->notEmpty('token')
-            ->add('max_views', 'valid', ['rule' => 'numeric'])
-            ->add('max_views', 'valid', ['rule' => ['range', 0, 1000]]);
-        $validator->notEmpty('death_time', 'At least one component is required', function ($context) {
+       $validator = $this->_buildCommonValidator($validator);
+       $validator->notEmpty('death_time', 'At least one component is required', function ($context) {
             if (!$context['newRecord']) {
                 return false;
             }
@@ -81,7 +76,26 @@ class LinksTable extends Table
         });
         return $validator;
     }
-    
+
+    function _buildCommonValidator(Validator $validator)
+    {
+         $validator
+            ->add('id', 'valid', ['rule' => 'numeric'])
+            ->allowEmpty('id', 'create')
+            ->requirePresence('title', 'create')
+            ->notEmpty('title')
+            ->add('title', ['length' => [
+                            'rule' => ['maxLength', 100],
+                            'message' => 'Titles need to be at least 10 characters long',
+            ]])
+            ->requirePresence('content', 'create')
+            ->notEmpty('content')
+            ->requirePresence('token', 'create')
+            ->notEmpty('token')
+            ->add('max_views', 'valid', ['rule' => 'numeric'])
+            ->add('max_views', 'valid', ['rule' => ['range', 0, 1000]]);
+        return $validator;
+    }
     /**
      * increase the life of the link
      *
@@ -93,16 +107,16 @@ class LinksTable extends Table
         $ghost = $this->behaviors()->get('Ghostable');
         if (!$ghost->increaseLife($entity)) {
             $this->delete($entity);
-            $this->save($entity);            
+            $this->save($entity);
             return false;
         }
         $this->save($entity);
         return true;
     }
-    
+
     /**
      * check the life of the link
-     * 
+     *
      * @param Link $entity the Link entity to increase the view on
      * @return boolean False if the link is dead
      */
