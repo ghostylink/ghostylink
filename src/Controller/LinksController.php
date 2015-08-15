@@ -134,7 +134,7 @@ class LinksController extends AppController {
      * Delete method
      *
      * @param string|null $id Link id.
-     * @return void Redirects to index.
+     * @return void Redirects to history.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function delete($id = null) {
@@ -145,9 +145,51 @@ class LinksController extends AppController {
         } else {
             $this->Flash->error('The link could not be deleted. Please, try again.');
         }
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'history']);
     }
-
+    
+    /**
+     * Disable method
+     *
+     * @param string|null $id Link id.
+     * @return void Redirects to history.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
+    public function disable($id = null) {
+        $this->request->allowMethod(['post', 'delete']);
+        $link = $this->Links->get($id);
+        if ($this->Links->disable($link)) {
+            $this->Flash->success('The link has been disabled.');
+        } else {
+            $this->Flash->error('The link could not be disabled. Please, try again.');
+        }
+        return $this->redirect(['action' => 'history']);
+    }
+    
+    /**
+     * Enable method
+     *
+     * @param string|null $id Link id.
+     * @return void Redirects to history.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
+    public function enable($id = null) {
+        $this->request->allowMethod(['post', 'delete']);
+        $link = $this->Links->get($id);
+        if ($this->Links->enable($link)) {
+            $this->Flash->success('The link has been enabled.');
+        } else {
+            $this->Flash->error('The link could not be enabled. Please, try again.');
+        }
+        return $this->redirect(['action' => 'history']);
+    }
+    
+    /**
+     * History method
+     *
+     * @param void.
+     * @return Renders list of links.
+     */
     public function history() {
         // Using a query
         $this->paginate = [

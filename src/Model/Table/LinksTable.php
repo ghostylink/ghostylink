@@ -124,4 +124,37 @@ class LinksTable extends Table
     {
         return $this->behaviors()->get('Ghostable')->checkLife($entity);
     }
+    
+    /**
+     * change the link's status to disabled
+     * 
+     * @param Link $entity the Link entity to change status
+     * @return boolean False if the link does not exist
+     */
+    public function disable(Link $entity)
+    {
+        if($entity->get('status') != 1) {
+            return false;
+        }
+        $entity->set('status', 0);
+        $this->save($entity);
+        return true;
+    }
+    
+    /**
+     * change the link's status to enabled
+     * 
+     * @param Link $entity the Link entity to change status
+     * @return boolean False if the link does not exist
+     */
+    public function enable(Link $entity)
+    {
+        if($entity->get('status') != 0) {
+            return false;
+        }
+        $entity->set('status', 1);
+        $this->save($entity);
+        return true;
+    }
+    
 }
