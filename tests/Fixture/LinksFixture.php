@@ -27,7 +27,7 @@ class LinksFixture extends TestFixture
         'views' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'death_time' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'user_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'status' => ['type' => 'boolean', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => true, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'status' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => 1, 'comment' => '', 'precision' => null],
         '_indexes' => [
             'user_id' => ['type' => 'index', 'columns' => ['user_id'], 'length' => []],
         ],
@@ -43,7 +43,7 @@ class LinksFixture extends TestFixture
     ];
     // @codingStandardsIgnoreEnd
 
-     /**
+ /**
      * Records
      *
      * @var array
@@ -59,7 +59,8 @@ class LinksFixture extends TestFixture
             'max_views' => 1,
             'views' => 0,
             'death_time' => null,
-            'user_id' => 1
+            'user_id' => 1,
+            'status' => 1
         ],
         [
             'id' => 2,
@@ -71,7 +72,8 @@ class LinksFixture extends TestFixture
             'max_views' => 42,
             'views' => 21,
             'death_time' => null,
-            'user_id' => 0
+            'user_id' => 0,
+            'status' => 1
         ],
         [
             'id' => 3,
@@ -82,7 +84,8 @@ class LinksFixture extends TestFixture
             'token' => '63f4ac58a6a1d0c6e83f027327d84610',
             'max_views' => 42,
             'views' => 43,
-            'death_time' => null
+            'death_time' => null,
+            'status' => 1
         ],
         [
             'id' => 4,
@@ -93,7 +96,8 @@ class LinksFixture extends TestFixture
             'token' => '6c6e83f027327d846103f4ac58a6a1d0',
             'max_views' => null,
             'views' => 43,
-            'death_time' => '1955-11-10 6:38:00'
+            'death_time' => '1955-11-10 6:38:00',
+            'status' => 1
         ],
         [
             'id' => 5,
@@ -104,7 +108,8 @@ class LinksFixture extends TestFixture
             'token' => '631d0c6e83f027327d84610f4ac58a6a',
             'max_views' => 5,
             'views' => 1,
-            'death_time' => null
+            'death_time' => null,
+            'status' => 1
         ],
         [
             'id' => 6,
@@ -115,7 +120,8 @@ class LinksFixture extends TestFixture
             'token' => '6c6e83f27d846103f4ac58a6a1d00273',
             'max_views' => 5,
             'views' => 2,
-            'death_time' => '1955-11-10 6:38:00'
+            'death_time' => '1955-11-10 6:38:00',
+            'status' => 1
         ],
         [
             'id' => 7,
@@ -126,7 +132,32 @@ class LinksFixture extends TestFixture
             'token' => 'f27d846103f4ac6c6e8358a6a1d00273',
             'max_views' => null,
             'views' => 2,
-            'death_time' => '2155-11-10 6:38:00'
+            'death_time' => '2155-11-10 6:38:00',
+            'status' => 1
+        ],
+        [
+            'id' => 8,
+            'title' => 'Disabled link',
+            'content' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => 'f27d846104f4cc6c6a835ea6a1d00273',
+            'max_views' => null,
+            'views' => null,
+            'death_time' => null,
+            'status' => 0
+        ],
+        [
+            'id' => 9,
+            'title' => 'Enabled link',
+            'content' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => 'g27c846103f4cc6c6a835ea6a1d00273',
+            'max_views' => null,
+            'views' => null,
+            'death_time' => null,
+            'status' => 1
         ]
     ];
 }

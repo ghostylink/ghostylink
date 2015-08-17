@@ -46,7 +46,7 @@ class LinksController extends AppController {
      */
     public function view($token = null) {
         $link = $this->Links->findByToken($token)->first();
-        if (count($link) == 0) {
+        if (count($link) == 0 || !$this->Links->isEnabled($link)) {
             throw new NotFoundException();
         }
         if ($this->request->is('ajax')) {

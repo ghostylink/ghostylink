@@ -53,6 +53,7 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testView()
     {
+        //sleep(30);
         $this->get('/1');
         $this->assertResponseError('Links is not accessbile by its id');
         // First fixture's titles
@@ -72,6 +73,26 @@ class LinksControllerTest extends IntegrationTestCase
         $this->get('/6063f4ac58a6a1d7383f02d10c6e2874');
         $this->get('/6063f4ac58a6a1d7383f02d10c6e2874');
         $this->assertResponseError('Dead link throw an error');
+    }
+    
+    /**
+     * Test that when the user try to view a disabled link a 403 error is raised
+     * 
+     * @return void
+     */
+    public function testViewDisabledLink() {
+        $this->get('/f27d846104f4cc6c6a835ea6a1d00273');
+        $this->assertResponseCode(404);
+    }
+    
+    /**
+     * Test that the user is able to view a enabled link
+     * 
+     * @return void
+     */
+    public function testViewEnabledLink() {
+        $this->get('/g27c846103f4cc6c6a835ea6a1d00273');
+        $this->assertResponseCode(200);
     }
 
     /**
