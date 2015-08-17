@@ -27,7 +27,7 @@ class LinksFixture extends TestFixture
         'views' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'death_time' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'user_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'status' => ['type' => 'boolean', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => true, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'status' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => 1, 'comment' => '', 'precision' => null],
         '_indexes' => [
             'user_id' => ['type' => 'index', 'columns' => ['user_id'], 'length' => []],
         ],
@@ -43,7 +43,7 @@ class LinksFixture extends TestFixture
     ];
     // @codingStandardsIgnoreEnd
 
-     /**
+ /**
      * Records
      *
      * @var array
@@ -59,7 +59,8 @@ class LinksFixture extends TestFixture
             'max_views' => 1,
             'views' => 0,
             'death_time' => null,
-            'user_id' => 0
+            'user_id' => 0,
+            'status' => 1
         ],
         [
             'id' => 2,

@@ -157,4 +157,15 @@ class LinksTable extends Table
         return true;
     }
     
+    /**
+     * check if the link is disabled or not
+     * 
+     * @param Link $entity the Link entity to change status
+     * @return boolean False if the link is disabled
+     */
+    public function isEnabled(Link $entity)
+    {
+        return $entity->get('status');
+    }
+    
 }
