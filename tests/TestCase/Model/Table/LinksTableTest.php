@@ -31,7 +31,7 @@ class LinksTableTest extends TestCase
             'title' => 'I am not in danger ...',
             'content' => 'I am the danger !',
             'token' => 'Say my name',
-            'max_views' => 8 // big default value to avoid unexpected behaviors
+            'max_views' => 8,
     ];
 
     /**
@@ -246,5 +246,31 @@ class LinksTableTest extends TestCase
                                 ->where(['Links.title =' => $goodData['title']])
                                 ->toArray();
         $this->assertEmpty($linkDB, 'Link has been deleted');
+    }
+    
+    /**
+     * Check if we cannot disable a link already disabled
+     * 
+     * @return void
+     */
+    public function testDisableLink() {
+        $disabledLink = $this->Links->find('all')
+                              ->where(['title' => 'Disabled link'])
+                              ->toArray()[0];
+        $result = $this->Links->disable($disabledLink);
+        $this->assertEquals(false, $result);
+    }
+    
+    /**
+     * Check if we cannot enable a link already enabled
+     * 
+     * @return void
+     */
+    public function testEnableLink() {
+        $enabledLink = $this->Links->find('all')
+                              ->where(['title' => 'Enabled link'])
+                              ->toArray()[0];
+        $result = $this->Links->enable($enabledLink);
+        $this->assertEquals(false, $result);
     }
 }

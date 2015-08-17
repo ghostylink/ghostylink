@@ -126,6 +126,30 @@ class LinksFixture extends TestFixture
             'max_views' => null,
             'views' => 2,
             'death_time' => '2155-11-10 6:38:00'
+        ],
+        [
+            'id' => 8,
+            'title' => 'Disabled link',
+            'content' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => 'f27d846104f4cc6c6a835ea6a1d00273',
+            'max_views' => null,
+            'views' => null,
+            'death_time' => null,
+            'status' => false
+        ],
+        [
+            'id' => 9,
+            'title' => 'Enabled link',
+            'content' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => 'g27c846103f4cc6c6a835ea6a1d00273',
+            'max_views' => null,
+            'views' => null,
+            'death_time' => null,
+            'status' => true
         ]
     ];
 }
