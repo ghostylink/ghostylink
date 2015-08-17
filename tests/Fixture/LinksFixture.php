@@ -71,7 +71,8 @@ class LinksFixture extends TestFixture
             'token' => 'f027327d8461063f4ac58a6a1d0c6e83',
             'max_views' => 42,
             'views' => 21,
-            'death_time' => null
+            'death_time' => null,
+            'status' => 1
         ],
         [
             'id' => 3,
@@ -82,7 +83,8 @@ class LinksFixture extends TestFixture
             'token' => '63f4ac58a6a1d0c6e83f027327d84610',
             'max_views' => 42,
             'views' => 43,
-            'death_time' => null
+            'death_time' => null,
+            'status' => 1
         ],
         [
             'id' => 4,
@@ -93,7 +95,8 @@ class LinksFixture extends TestFixture
             'token' => '6c6e83f027327d846103f4ac58a6a1d0',
             'max_views' => null,
             'views' => 43,
-            'death_time' => '1955-11-10 6:38:00'
+            'death_time' => '1955-11-10 6:38:00',
+            'status' => 1
         ],
         [
             'id' => 5,
@@ -104,7 +107,8 @@ class LinksFixture extends TestFixture
             'token' => '631d0c6e83f027327d84610f4ac58a6a',
             'max_views' => 5,
             'views' => 1,
-            'death_time' => null
+            'death_time' => null,
+            'status' => 1
         ],
         [
             'id' => 6,
@@ -115,7 +119,8 @@ class LinksFixture extends TestFixture
             'token' => '6c6e83f27d846103f4ac58a6a1d00273',
             'max_views' => 5,
             'views' => 2,
-            'death_time' => '1955-11-10 6:38:00'
+            'death_time' => '1955-11-10 6:38:00',
+            'status' => 1
         ],        
         [
             'id' => 7,
@@ -126,7 +131,8 @@ class LinksFixture extends TestFixture
             'token' => 'f27d846103f4ac6c6e8358a6a1d00273',
             'max_views' => null,
             'views' => 2,
-            'death_time' => '2155-11-10 6:38:00'
+            'death_time' => '2155-11-10 6:38:00',
+            'status' => 1
         ],
         [
             'id' => 8,
@@ -138,7 +144,7 @@ class LinksFixture extends TestFixture
             'max_views' => null,
             'views' => null,
             'death_time' => null,
-            'status' => false
+            'status' => 0
         ],
         [
             'id' => 9,
@@ -150,7 +156,7 @@ class LinksFixture extends TestFixture
             'max_views' => null,
             'views' => null,
             'death_time' => null,
-            'status' => true
+            'status' => 1
         ]
     ];
 }
