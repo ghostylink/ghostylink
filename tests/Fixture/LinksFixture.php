@@ -59,7 +59,7 @@ class LinksFixture extends TestFixture
             'max_views' => 1,
             'views' => 0,
             'death_time' => null,
-            'user_id' => 0
+            'user_id' => 1
         ],
         [
             'id' => 2,
@@ -70,7 +70,8 @@ class LinksFixture extends TestFixture
             'token' => 'f027327d8461063f4ac58a6a1d0c6e83',
             'max_views' => 42,
             'views' => 21,
-            'death_time' => null
+            'death_time' => null,
+            'user_id' => 0
         ],
         [
             'id' => 3,
@@ -115,7 +116,7 @@ class LinksFixture extends TestFixture
             'max_views' => 5,
             'views' => 2,
             'death_time' => '1955-11-10 6:38:00'
-        ],        
+        ],
         [
             'id' => 7,
             'title' => 'Unlimited link',

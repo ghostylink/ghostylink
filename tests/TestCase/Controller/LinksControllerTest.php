@@ -90,6 +90,13 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertEquals($linkBefore->views + 1, $linksAfter->views);
     }
 
+    public function testViewOnADisabledLink()
+    {
+        $links = TableRegistry::get('Links');
+        $linkBefore = $links->findByToken('a1d0c6e83f027327d8461063f4ac58a6')->first();
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $this->get('/a1d0c6e83f027327d8461063f4ac58a6');
+    }
     public function testDeleteByTime() {
           // Fixate time. Look in the fixture 4 with title 'No max_views'
         $now = new Time('1935-11-07 18:38:00');
@@ -199,6 +206,11 @@ class LinksControllerTest extends IntegrationTestCase
         ];
         // Get link from first fixture
         $this->post('/edit/1', $data);
+        // User cannot delete a link he has no right on
+        $this->assertResponseError();
+
+        $this->_authenticateUser(0);
+        $this->post('/edit/1', $data);
         $this->assertResponseSuccess();
 
         // Check if the data has been modified in database
@@ -214,7 +226,7 @@ class LinksControllerTest extends IntegrationTestCase
                              'Flash.flash.message');
 
         //Test to get method
-        $this->get('/edit/2');
+        $this->get('/edit/1');
         $this->assertResponseCode(200);
         $this->assertResponseContains('Edit');
     }
@@ -226,6 +238,16 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
+        // User cannot delete a link he has no right on
+        $this->post('/delete/1');
+        $this->assertResponseError();
+
+        $this->_authenticateUser(0);
+
+        //link 2 does not belong to user in fixture 0
+        $this->post('/delete/2');
+        $this->assertResponseError();
+
         // Get link from first fixture
         $links = TableRegistry::get('Links');
         $data = $links->get(1);
@@ -239,6 +261,9 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertEquals(0, $query->count());
 
         //TODO: check a flash message is set if something is wrong
+
+
+
     }
 
     /**
@@ -248,12 +273,16 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testDisable()
     {
-        $this->_authenticateUser(0);
+
         // Get link from first fixture
         $links = TableRegistry::get('Links');
         $data = $links->get(1);
 
-        // Disable this one
+        // unlogged user cannot do it
+        $this->post('/disable/1');
+
+        //logged user can disable link
+        $this->_authenticateUser(0);
         $this->post('/disable/1');
         $this->assertResponseSuccess();
 
@@ -292,7 +321,7 @@ class LinksControllerTest extends IntegrationTestCase
         $result = $links->find()->where(['id' => $data['id']])->toArray()[0];
         $this->assertEquals(true, $result->status);
     }
-    
+
     public function _authenticateUser($fixtureIndex)
     {
         $userArray = $this->fixtureManager->loaded()['app.users']

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Network\Exception\NotFoundException;
+use Cake\Network\Exception\UnauthorizedException;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
@@ -48,7 +49,6 @@ class LinksController extends AppController {
         if (count($link) == 0) {
             throw new NotFoundException();
         }
-
         if ($this->request->is('ajax')) {
             //Check the link has not been seen by an other people
             if (!$this->Links->increaseLife($link)) {
@@ -116,6 +116,10 @@ class LinksController extends AppController {
             'contain' => []
         ]);
 
+        if ($link->user_id === null || $link->user_id !== $this->Auth->user('id')) {
+            throw new UnauthorizedException();
+        }
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $link = $this->Links->patchEntity($link, $this->request->data);
             if ($this->Links->save($link)) {
@@ -140,6 +144,10 @@ class LinksController extends AppController {
     public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $link = $this->Links->get($id);
+
+        if ($link->user_id === null || $link->user_id !== $this->Auth->user('id')) {
+            throw new UnauthorizedException();
+        }
         if ($this->Links->delete($link)) {
             $this->Flash->success('The link has been deleted.');
         } else {
@@ -147,7 +155,7 @@ class LinksController extends AppController {
         }
         return $this->redirect(['action' => 'history']);
     }
-    
+
     /**
      * Disable method
      *
@@ -155,9 +163,15 @@ class LinksController extends AppController {
      * @return void Redirects to history.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function disable($id = null) {
+    public function disable($id = null)
+    {
         $this->request->allowMethod(['post', 'delete']);
         $link = $this->Links->get($id);
+
+        if ($link->user_id === null || $link->user_id !== $this->Auth->user('id')) {
+            throw new UnauthorizedException();
+        }
+
         if ($this->Links->disable($link)) {
             $this->Flash->success('The link has been disabled.');
         } else {
@@ -165,7 +179,7 @@ class LinksController extends AppController {
         }
         return $this->redirect(['action' => 'history']);
     }
-    
+
     /**
      * Enable method
      *
@@ -173,9 +187,15 @@ class LinksController extends AppController {
      * @return void Redirects to history.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function enable($id = null) {
+    public function enable($id = null)
+    {
         $this->request->allowMethod(['post', 'delete']);
         $link = $this->Links->get($id);
+
+        if ($link->user_id === null || $link->user_id !== $this->Auth->user('id')) {
+            throw new UnauthorizedException();
+        }
+
         if ($this->Links->enable($link)) {
             $this->Flash->success('The link has been enabled.');
         } else {
@@ -183,14 +203,15 @@ class LinksController extends AppController {
         }
         return $this->redirect(['action' => 'history']);
     }
-    
+
     /**
      * History method
      *
      * @param void.
      * @return Renders list of links.
      */
-    public function history() {
+    public function history()
+    {
         // Using a query
         $this->paginate = [
             'maxLimit' => 15,
