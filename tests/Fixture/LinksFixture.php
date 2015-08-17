@@ -122,7 +122,7 @@ class LinksFixture extends TestFixture
             'views' => 2,
             'death_time' => '1955-11-10 6:38:00',
             'status' => 1
-        ],
+        ],        
         [
             'id' => 7,
             'title' => 'Unlimited link',
