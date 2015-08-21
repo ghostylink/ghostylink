@@ -66,7 +66,7 @@ class UsersControllerTest extends IntegrationTestCase {
         $this->post('/me/edit', $newData);
         $this->assertResponseCode(302);
 
-        //TODO: check the session value has been updated
+        $this->assertSession('newusername', 'Auth.User.username');
 
         $users = TableRegistry::get('Users');
         $query = $users->find()->where(['username' => $newData['username']]);

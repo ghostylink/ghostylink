@@ -7,7 +7,7 @@
                     <tr>
                         <th><?= $this->Paginator->sort('id') ?></th>
                         <th><?= $this->Paginator->sort('title') ?></th>
-                        <th><?= $this->Paginator->sort('Date') ?></th>
+                        <th><?= $this->Paginator->sort('created') ?></th>
                         <th><?= $this->Paginator->sort('content') ?></th>
                         <th class="actions"><?= __('Token') ?></th>
                         <th class="actions"><?= __('Life') ?></th>
@@ -29,19 +29,15 @@
                                 <?= h($l->max_views) == '' ? 'M' : h($l->max_views) ?>">See details</td>
                             <td><?php
                                 if($l->status == true) {
-                                    ?><?=
-                                    $this->Form->postLink('', ['_name' => 'link-disable', $l->id], ['confirm' => __("Are you sure you want to disable : '") . $l->title . "' ?",
+                                    echo $this->Form->postLink('', ['_name' => 'link-disable', $l->id], ['confirm' => __("Are you sure you want to disable : '") . $l->title . "' ?",
                                         'class' => 'btn btn-xs btn-warning glyphicon glyphicon-remove-sign disable-link', 'title' => 'Disable']);
-                                    ?><?php
                                 }
                                 else {
-                                    ?><?=
+                                    echo
                                     $this->Form->postLink('', ['_name' => 'link-enable', $l->id], ['confirm' => __("Are you sure you want to enable : '") . $l->title . "' ?",
                                         'class' => 'btn btn-xs btn-success glyphicon glyphicon-ok-sign enable-link', 'title' => 'Enable']);
-                                    ?><?php
                                 }
-                                ?><?=
-                                $this->Form->postLink('', ['_name' => 'link-delete', $l->id], ['confirm' => __("Are you sure you want to delete : '") . $l->title . "' ?",
+                                echo $this->Form->postLink('', ['_name' => 'link-delete', $l->id], ['confirm' => __("Are you sure you want to delete : '") . $l->title . "' ?",
                                     'class' => 'btn btn-xs btn-danger glyphicon glyphicon-trash delete-link', 'title' => 'Delete']);
                                 ?></td>
                         </tr>
