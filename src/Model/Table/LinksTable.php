@@ -42,7 +42,10 @@ class LinksTable extends Table
      * @return Validator
      */
     public function validationLogged(Validator $validator) {
-        return $validator;
+        $val = $this->_buildCommonValidator($validator);
+        $validator->allowEmpty('max_views');
+        $validator->allowEmpty('death_time');
+        return $val;
     }
 
     /**
@@ -124,10 +127,10 @@ class LinksTable extends Table
     {
         return $this->behaviors()->get('Ghostable')->checkLife($entity);
     }
-    
+
     /**
      * change the link's status to disabled
-     * 
+     *
      * @param Link $entity the Link entity to change status
      * @return boolean False if the link does not exist
      */
@@ -140,10 +143,10 @@ class LinksTable extends Table
         $this->save($entity);
         return true;
     }
-    
+
     /**
      * change the link's status to enabled
-     * 
+     *
      * @param Link $entity the Link entity to change status
      * @return boolean False if the link does not exist
      */
@@ -156,10 +159,10 @@ class LinksTable extends Table
         $this->save($entity);
         return true;
     }
-    
+
     /**
      * check if the link is disabled or not
-     * 
+     *
      * @param Link $entity the Link entity to change status
      * @return boolean False if the link is disabled
      */
@@ -167,5 +170,5 @@ class LinksTable extends Table
     {
         return $entity->get('status');
     }
-    
+
 }

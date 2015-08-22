@@ -48,7 +48,10 @@ function moveLinkComponents($component, $targetArea){
         //Add the html corresponding to the field
         var $newField = $($component.attr("data-field-html"));        
         $fieldset.append($newField);
-        
+        var $toEvaluate = $component.attr("data-field-js-function");
+        if ($toEvaluate) {
+            eval($toEvaluate + '()');
+        }
         //Add a hidden field to detect the chosen components
         var nameNewField = $newField.find('input').attr("name"); 
         $fieldset.append('<input type="hidden" name="flag-' + nameNewField + '"/>');
@@ -84,7 +87,7 @@ function moveLinkComponents($component, $targetArea){
 
 function componentsChosenClick($li, $dropArea) {    
     //Retrieve the component from the saving area
-    var dataName = 'link-component-' + $li.attr("data-related-field");
+    var dataName = 'link-component-' + $li.attr("data-related-field");    
     var $component = $('section.link-components').data(dataName);
     
     //Retrieve the name of the field
@@ -93,8 +96,7 @@ function componentsChosenClick($li, $dropArea) {
     var classWrapper = $fieldWrapper.attr("class").replace(/\s/g, ".");
     
     //Elements in the fieldset to remove                            
-    var $toRemove = $('input[name=' + fieldName + ']').parents('.' + classWrapper);
-    $('in')
+    var $toRemove = $('input[name=' + fieldName + ']').parents('.' + classWrapper);    
     //Mark the component as available
     $('ul#link-components-available').append($component);
         
@@ -108,6 +110,9 @@ function componentsChosenClick($li, $dropArea) {
     if ($dropArea.children('li').size() === 0) {        
         $dropArea.html('<span class="legend">Drop some components here</span>');
     }
+}
+function deathTimeInit() {
+    $('#id_death_time').buttonset();
 }
 
 initLinkComponents($('ul#link-components-available li'));
