@@ -177,7 +177,7 @@ class LinksController extends AppController {
         } else {
             $this->Flash->error('The link could not be disabled. Please, try again.');
         }
-        return $this->redirect(['action' => 'history']);
+        return $this->redirect($this->referer());
     }
 
     /**
@@ -201,7 +201,7 @@ class LinksController extends AppController {
         } else {
             $this->Flash->error('The link could not be enabled. Please, try again.');
         }
-        return $this->redirect(['action' => 'history']);
+        return $this->redirect($this->referer());
     }
 
     /**

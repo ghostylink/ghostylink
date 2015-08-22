@@ -29,7 +29,7 @@ this.tablist=this._getList().addClass("ui-tabs-nav ui-helper-reset ui-helper-cle
  * and open the template in the editor.
  */
 $(function(){   
-    init_utc_time();
+    init_utc_time();    
 })(jQuery);
 
 function init_utc_time() {
