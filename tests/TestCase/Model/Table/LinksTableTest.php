@@ -142,10 +142,13 @@ class LinksTableTest extends TestCase
         $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
                             'Save: Field max_views is required');
         $badData = $this->goodData;
+        $badData['title'] = 'titleTestMaxViewsErrors0';
         $badData['max_views'] = 0;
+        $entity = $this->Links->newEntity($badData);
         $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
                             'Save: Field max_views is > 0');
-
+        $this->assertArrayHasKey('max_views', $entity->errors());
+        
         $badData['max_views'] = -1;
         $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
                             'Save: Field max_views cannot be negative');
@@ -247,10 +250,10 @@ class LinksTableTest extends TestCase
                                 ->toArray();
         $this->assertEmpty($linkDB, 'Link has been deleted');
     }
-    
+
     /**
      * Check if we cannot disable a link already disabled
-     * 
+     *
      * @return void
      */
     public function testDisableLink() {
@@ -260,10 +263,10 @@ class LinksTableTest extends TestCase
         $result = $this->Links->disable($disabledLink);
         $this->assertEquals(false, $result);
     }
-    
+
     /**
      * Check if we cannot enable a link already enabled
-     * 
+     *
      * @return void
      */
     public function testEnableLink() {

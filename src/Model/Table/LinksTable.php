@@ -62,7 +62,8 @@ class LinksTable extends Table
                 return false;
             }
             if (array_key_exists('max_views', $context['data'])) {
-                return ($context['data']['max_views'] == '');
+                return !isset($context['data']['max_views'])
+                                        || $context['data']['max_views'] == '';
             } else {
                 return false;
             }
@@ -72,7 +73,8 @@ class LinksTable extends Table
                 return false;
             }
             if (array_key_exists('death_time', $context['data'])) {
-                return ($context['data']['death_time'] == '');
+                return !isset($context['data']['death_time'])
+                                        || $context['data']['death_time'] == '';
             } else {
                 return false;
             }
@@ -96,7 +98,7 @@ class LinksTable extends Table
             ->requirePresence('token', 'create')
             ->notEmpty('token')
             ->add('max_views', 'valid', ['rule' => 'numeric'])
-            ->add('max_views', 'valid', ['rule' => ['range', 0, 1000]]);
+            ->add('max_views', 'valid', ['rule' => ['range', 1, 1000]]);
         return $validator;
     }
     /**

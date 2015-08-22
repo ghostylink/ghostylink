@@ -12,7 +12,7 @@ class GhostableBehavior extends Behavior
         'max_views' => 'max_views',
         'life_percentage' => 'life_percentage'
     ];
-    
+
     /**
      * Increase the view counter
      * @param Entity $entity the entity the view counter has to be incremented
@@ -30,7 +30,7 @@ class GhostableBehavior extends Behavior
         }
         return true;
     }
-    
+
     /**
      * Event triggered before data is converted to an entity
      * @param Event $event the event which is triggered
@@ -58,7 +58,7 @@ class GhostableBehavior extends Behavior
             $data['death_time'] = '';
         }
     }
-    
+
     /**
      * Check the life percentage of the link
      * @param Entity $entity the entity the view counter has to be incremented
@@ -66,9 +66,8 @@ class GhostableBehavior extends Behavior
      */
     public function checkLife(Entity $entity)
     {
-        $config = $this->config();
         // The link is dead
-        if ($entity->life_percentage >= 100) {            
+        if ($entity->life_percentage >= 100) {
             return false;
         }
         return true;
