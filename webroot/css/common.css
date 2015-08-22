@@ -80,6 +80,27 @@ h1.navbar-text {
   width: 32px;
   height: 32px;
 }
+/****************** Flash messages style here *********************************/
+.flash-message {    
+    box-shadow: 1px 1px 5px #000000;    
+    left: 0;
+    padding-bottom: 0.3em;
+    padding-top: 0.3em;
+    position: fixed;
+    text-align: center;
+    font-weight: bold;
+    top: 50px;
+    width: 100%;
+    z-index: 9999;
+}
+.flash-message a {
+    float: right;
+    color:gray;
+}
+.flash-message a:hover {    
+    text-decoration: none;
+}
+/****************** End of flash messages style *******************************/
 
 /***************** Start of Bootstrap overriding section **********************/
 /****************** Be carefull when changing something ***********************/

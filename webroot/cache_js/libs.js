@@ -30,6 +30,7 @@ this.tablist=this._getList().addClass("ui-tabs-nav ui-helper-reset ui-helper-cle
  */
 $(function(){   
     init_utc_time();    
+    init_flash_message();
 })(jQuery);
 
 function init_utc_time() {
@@ -42,4 +43,18 @@ function init_utc_time() {
         var str_date = gmt_date.substr(0, index -1);        
         $time.text(str_date);
     });
+}
+
+function init_flash_message() {
+    var $flash = $('.flash-message');
+    $flash.find('a').on('click', function() {
+        var $this = $(this);
+        $this.parent().remove();
+    });
+    $flash.hide().slideDown(600).delay(5000).slideUp({
+            	duration:600,
+            	complete:function(){
+            				$flash.remove();
+            			}
+            });                
 }

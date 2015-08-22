@@ -91,6 +91,7 @@
         </nav>
 
         <div id="main-content" class="content-wrapper container">
+            <?= $this->Flash->render() ?>
             <?php echo $this->fetch("content"); ?>
         </div>
 
