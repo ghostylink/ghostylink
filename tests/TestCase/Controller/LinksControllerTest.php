@@ -158,8 +158,6 @@ class LinksControllerTest extends IntegrationTestCase
         $badData = $data;
         $badData['content'] = '';
         $this->post('/add', $badData);
-        $this->assertSession('The link could not be saved. Please, try again.',
-                             'Flash.flash.message');
         $this->checkTokenGeneration();
 
         // Test a link is added with the currented user
@@ -266,7 +264,7 @@ class LinksControllerTest extends IntegrationTestCase
         $this->post('/delete/1');
         $this->assertResponseError();
 
-        
+
         $this->_authenticateUser(0);
         //link 2 does not belong to user in fixture 0
         $this->post('/delete/2');
