@@ -14,8 +14,8 @@
         <ul id="link-components-available">
             <li data-related-field="death_time" class="glyphicon glyphicon-time label label-primary ui-widget-header"
                 data-field-js-function = "deathTimeInit"
-                data-field-html="<div id=&quot;id_death_time&quot; class=&quot;input&quot;><?php
-                                    $options = array(['text' => '1 day', 'value' => 1],
+                data-field-html="<div id=&quot;id_death_time&quot; class=&quot;input&quot;><label>Time before deletion:</label><br/><?php
+                                    $options = array(['text' => '1 day', 'value' => 1, 'checked' => 'checked'],
                                                      ['text' => '1 week', 'value' => 7],
                                                      ['text' => '1 month', 'value' => 30]);
                                     $attributes = ['nestedInput' => false];

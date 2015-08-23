@@ -74,20 +74,20 @@ class LinksControllerTest extends IntegrationTestCase
         $this->get('/6063f4ac58a6a1d7383f02d10c6e2874');
         $this->assertResponseError('Dead link throw an error');
     }
-    
+
     /**
      * Test that when the user try to view a disabled link a 403 error is raised
-     * 
+     *
      * @return void
      */
     public function testViewDisabledLink() {
         $this->get('/f27d846104f4cc6c6a835ea6a1d00273');
         $this->assertResponseCode(404);
     }
-    
+
     /**
      * Test that the user is able to view a enabled link
-     * 
+     *
      * @return void
      */
     public function testViewEnabledLink() {
@@ -341,6 +341,14 @@ class LinksControllerTest extends IntegrationTestCase
         // Check if the data has been modified in database
         $result = $links->find()->where(['id' => $data['id']])->toArray()[0];
         $this->assertEquals(true, $result->status);
+    }
+
+    public function testHistory()
+    {
+        $this->_authenticateUser(0);
+        $this->get('/me');
+        $this->assertResponseContains('My created links');
+        $this->session([]);
     }
 
     public function _authenticateUser($fixtureIndex)
