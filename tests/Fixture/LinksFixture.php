@@ -158,6 +158,84 @@ class LinksFixture extends TestFixture
             'views' => null,
             'death_time' => null,
             'status' => 1
+        ],
+        [
+            'id' => 10,
+            'title' => 'User 1 id 10',
+            'content' => 'content of id 10',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => '46103f4cc6g27c8c6a835ea6a1d00273',
+            'max_views' => null,
+            'views' => null,
+            'death_time' => null,
+            'status' => 1,
+            'user_id' => 1
+        ],
+        [
+            'id' => 11,
+            'title' => 'User 1 id 11',
+            'content' => 'content of id 11',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => '46103f4cc6ag27c8c6835ea6a1d00273',
+            'max_views' => null,
+            'views' => null,
+            'death_time' => null,
+            'status' => 1,
+            'user_id' => 1
+        ],
+        [
+            'id' => 12,
+            'title' => 'User 1 id 12',
+            'content' => 'content of id 12',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => '46103f4cc66a835g27c8cea6a1d00273',
+            'max_views' => 20,
+            'views' => 6,
+            'death_time' => null,
+            'status' => 1,
+            'user_id' => 1
+        ],
+        [
+            'id' => 13,
+            'title' => 'User 1 id 13',
+            'content' => 'content of id 13',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => '464cc6g27103fc8c6a835ea6a1d00273',
+            'max_views' => 10,
+            'views' => 5,
+            'death_time' => null,
+            'status' => 1,
+            'user_id' => 1
+        ],
+        [
+            'id' => 14,
+            'title' => 'User 1 id 14',
+            'content' => 'content of id 14',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => '464cc6g8c6a835ea6a127103fcd00273',
+            'max_views' => 10,
+            'views' => 5,
+            'death_time' => null,
+            'status' => 1,
+            'user_id' => 1
+        ],
+        [
+            'id' => 15,
+            'title' => 'User 1 id 15',
+            'content' => 'content of id 15',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => '464ccc6a835ea6g27103fc86a1d00273',
+            'max_views' => 10,
+            'views' => 5,
+            'death_time' => null,
+            'status' => 1,
+            'user_id' => 1
         ]
     ];
 }

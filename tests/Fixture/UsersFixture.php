@@ -46,5 +46,12 @@ class UsersFixture extends TestFixture
             'password' => '$2y$10$ka4Cze0TozAg.wFj9wGz6eGC3/7.X228CQwYIwMATz.Mgh7wyyr8u',
             'email' => 'user1@ghostylink.org'
         ],
+         [
+            'id' => 2,
+            'username' => 'userwithnolink',
+            // password : user1user1
+            'password' => '$2y$10$/7VU0iPe7EZhzpONsG94yejEFvlpjIjYCMq1mc7uAeYUGV8TgNW1y',
+            'email' => 'nolinkuser@ghostylink.org'
+        ]
     ];
 }
