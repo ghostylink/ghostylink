@@ -49,6 +49,7 @@ class LinksController extends AppController {
         if (count($link) == 0 || !$this->Links->isEnabled($link)) {
             throw new NotFoundException();
         }
+        $this->set('user_id', $this->Auth->user('id'));
         if ($this->request->is('ajax')) {
             //Check the link has not been seen by an other people
             if (!$this->Links->increaseLife($link)) {
