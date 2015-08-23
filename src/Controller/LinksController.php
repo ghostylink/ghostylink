@@ -94,13 +94,11 @@ class LinksController extends AppController
         // Initialize empty token to pass the validation
         $link->token = "";
         if ($this->Links->save($link)) {
-            $this->Flash->success('The link has been saved.');
             //Redirect to the link view page
             $this->set('url', $link->token);
             return $this->render('ajax/url', 'ajax');
         } else {
             $this->layout = 'ajax';
-            $this->Flash->error('The link could not be saved. Please, try again.');
             $this->set(compact('link'));
             $this->set('_serialize', ['link']);
             return $this->render('add', 'ajax');
