@@ -261,10 +261,13 @@ class LinksControllerTest extends IntegrationTestCase
     {
         // User cannot delete a link he has no right on
         $this->post('/delete/1');
+        $this->assertRedirect("/login");
+        $this->_authenticateUser(1);
+        $this->post('/delete/1');
         $this->assertResponseError();
 
+        
         $this->_authenticateUser(0);
-
         //link 2 does not belong to user in fixture 0
         $this->post('/delete/2');
         $this->assertResponseError();
@@ -282,9 +285,6 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertEquals(0, $query->count());
 
         //TODO: check a flash message is set if something is wrong
-
-
-
     }
 
     /**
@@ -294,6 +294,10 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testDisable()
     {
+        $this->_authenticateUser(1);
+        $this->post('/disable/1');
+        // User cannot disable a link he has no right on
+        $this->assertResponseError();
 
         // Get link from first fixture
         $links = TableRegistry::get('Links');
@@ -319,6 +323,10 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testEnable()
     {
+        $this->_authenticateUser(1);
+        $this->post('/enable/1');
+        // User cannot disable a link he has no right on
+        $this->assertResponseError();
         $this->_authenticateUser(0);
 
         // Get link from first fixture

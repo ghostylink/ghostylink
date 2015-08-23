@@ -39,6 +39,7 @@ class FunctionalTest extends PHPUnit_Extensions_SeleniumTestCase {
 
     protected function tearDown() {
         parent::tearDown();
+        $this->open('/logout');
         $this->fixtureManager->unload($this);
     }
 

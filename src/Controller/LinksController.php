@@ -24,7 +24,7 @@ class LinksController extends AppController {
      */
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        $this->Auth->allow(['edit', 'delete']);
+        $this->Auth->allow(['edit']);
     }
 
     /**
@@ -166,7 +166,7 @@ class LinksController extends AppController {
      */
     public function disable($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->request->allowMethod(['post']);
         $link = $this->Links->get($id);
 
         if ($link->user_id === null || $link->user_id !== $this->Auth->user('id')) {
@@ -190,7 +190,7 @@ class LinksController extends AppController {
      */
     public function enable($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->request->allowMethod(['post']);
         $link = $this->Links->get($id);
 
         if ($link->user_id === null || $link->user_id !== $this->Auth->user('id')) {
