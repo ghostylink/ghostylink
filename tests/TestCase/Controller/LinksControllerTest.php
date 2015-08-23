@@ -34,6 +34,16 @@ class LinksControllerTest extends IntegrationTestCase
             'max_views' => 1
     ];
 
+    private $csrf  =[null];
+
+    public function setUp() {
+        $token = 'my-csrf-token';
+        $this->cookie('csrfToken', $token);
+        $this->goodData['_csrfToken'] = $token;
+        $this->csrf ['_csrfToken'] = $token;
+        parent::setUp();
+    }
+
     /**
      * Test index method
      *
@@ -224,12 +234,12 @@ class LinksControllerTest extends IntegrationTestCase
             'content' => 'This is not Walter Hartwell « Walt » White.'
         ];
         // Get link from first fixture
-        $this->post('/edit/1', $data);
+        $this->post('/edit/1', array_merge($data, $this->csrf));
         // User cannot delete a link he has no right on
         $this->assertResponseError();
 
         $this->_authenticateUser(0);
-        $this->post('/edit/1', $data);
+        $this->post('/edit/1', array_merge($data, $this->csrf));
         $this->assertResponseSuccess();
 
         // Check if the data has been modified in database
@@ -239,7 +249,7 @@ class LinksControllerTest extends IntegrationTestCase
 
         $badData = $data;
         $badData['title'] = str_repeat( '42', 100);
-        $this->post('/edit/1', $badData);
+        $this->post('/edit/1', array_merge($badData, $this->csrf));
        //Test a flash message is set if something is wrong:
         $this->assertSession('The link could not be saved. Please, try again.',
                              'Flash.flash.message');
@@ -258,16 +268,16 @@ class LinksControllerTest extends IntegrationTestCase
     public function testDelete()
     {
         // User cannot delete a link he has no right on
-        $this->post('/delete/1');
+        $this->post('/delete/1', $this->csrf);
         $this->assertRedirect("/login");
         $this->_authenticateUser(1);
-        $this->post('/delete/1');
+        $this->post('/delete/1', $this->csrf);
         $this->assertResponseError();
 
 
         $this->_authenticateUser(0);
         //link 2 does not belong to user in fixture 0
-        $this->post('/delete/2');
+        $this->post('/delete/2', $this->csrf);
         $this->assertResponseError();
 
         // Get link from first fixture
@@ -275,7 +285,7 @@ class LinksControllerTest extends IntegrationTestCase
         $data = $links->get(1);
 
         // Delete this one
-        $this->post('/delete/1');
+        $this->post('/delete/1', $this->csrf);
         $this->assertResponseSuccess();
 
         // Check if the data has been modified in database
@@ -293,7 +303,7 @@ class LinksControllerTest extends IntegrationTestCase
     public function testDisable()
     {
         $this->_authenticateUser(1);
-        $this->post('/disable/1');
+        $this->post('/disable/1', $this->csrf);
         // User cannot disable a link he has no right on
         $this->assertResponseError();
 
@@ -302,11 +312,11 @@ class LinksControllerTest extends IntegrationTestCase
         $data = $links->get(1);
 
         // unlogged user cannot do it
-        $this->post('/disable/1');
+        $this->post('/disable/1', $this->csrf);
 
         //logged user can disable link
         $this->_authenticateUser(0);
-        $this->post('/disable/1');
+        $this->post('/disable/1', $this->csrf);
         $this->assertResponseSuccess();
 
         // Check if the data has been modified in database
@@ -322,7 +332,7 @@ class LinksControllerTest extends IntegrationTestCase
     public function testEnable()
     {
         $this->_authenticateUser(1);
-        $this->post('/enable/1');
+        $this->post('/enable/1',  $this->csrf);
         // User cannot disable a link he has no right on
         $this->assertResponseError();
         $this->_authenticateUser(0);
@@ -333,7 +343,7 @@ class LinksControllerTest extends IntegrationTestCase
 
         // Disable this one if needed
         if ($data->status == true) {
-            $this->post('/disable/1');
+            $this->post('/disable/1',  $this->csrf);
             $this->assertResponseSuccess();
 
             // Check if the data has been modified in database
@@ -341,7 +351,7 @@ class LinksControllerTest extends IntegrationTestCase
             $this->assertEquals(false, $result->status);
         }
         // Enable this one
-        $this->post('/enable/1');
+        $this->post('/enable/1',  $this->csrf);
         $this->assertResponseSuccess();
 
         // Check if the data has been modified in database

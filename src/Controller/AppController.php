@@ -52,6 +52,7 @@ class AppController extends Controller
                 'action' => 'index'
             ]
         ]);
+        $this->loadComponent('Csrf');
     }
 
     /**

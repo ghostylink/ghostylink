@@ -13,6 +13,8 @@ use Cake\ORM\TableRegistry;
  */
 class UsersControllerTest extends IntegrationTestCase {
 
+    private $csrf  =[null];
+
     /**
      * Fixtures
      *
@@ -32,6 +34,14 @@ class UsersControllerTest extends IntegrationTestCase {
         'password' => 'I am the danger',
         'email' => 'crystal@alabama.us'
     ];
+
+    public function setUp() {
+        $token = 'my-csrf-token';
+        $this->cookie('csrfToken', $token);
+        $this->goodData['_csrfToken'] = $token;
+        $this->csrf ['_csrfToken'] = $token;
+        parent::setUp();
+    }
 
     /**
      * Test add method
@@ -63,7 +73,7 @@ class UsersControllerTest extends IntegrationTestCase {
 
         $newData = ['username' => 'newusername'];
 
-        $this->post('/me/edit', $newData);
+        $this->post('/me/edit', array_merge($newData, $this->csrf));
         $this->assertResponseCode(302);
 
         $this->assertSession('newusername', 'Auth.User.username');
@@ -73,7 +83,7 @@ class UsersControllerTest extends IntegrationTestCase {
         $this->assertEquals(1, $query->count(), 'User has been saved');
 
         $badData = ['username' => 'a'];
-        $this->post('/me/edit', $newData);
+        $this->post('/me/edit', array_merge($newData, $this->csrf));
 
         $query = $users->find()->where(['username' => $badData['username']]);
         $this->assertEquals(0, $query->count(), 'User has not been saved');
@@ -86,7 +96,7 @@ class UsersControllerTest extends IntegrationTestCase {
      * @return void
      */
     public function testDelete() {
-        $this->post('/me/delete');
+        $this->post('/me/delete', $this->csrf);
         //Impossible to delete account without having been loged in
         $this->assertResponseCode(302);
         $this->_authenticateUser(0);
@@ -94,7 +104,7 @@ class UsersControllerTest extends IntegrationTestCase {
         $users = TableRegistry::get('Users');
         $query = $users->find('all');
         $nbResult = $query->count();
-        $this->post('/me/delete');
+        $this->post('/me/delete', $this->csrf);
         $this->assertResponseCode(302);
         $users = TableRegistry::get('Users');
         $query = $users->find('all');
@@ -111,9 +121,9 @@ class UsersControllerTest extends IntegrationTestCase {
         ];
         $badData = $goodData;
         $badData['password'] = 'surelyABadPassword';
-        $this->post('/login', $badData);
+        $this->post('/login', array_merge($badData, $this->csrf));
         $this->assertResponseContains('Username or password not valid');
-        $this->post('/login', $goodData);
+        $this->post('/login', array_merge($goodData, $this->csrf));
         //A redirection ...
         $this->assertResponseCode(302);
         // ... then a page is displayed
