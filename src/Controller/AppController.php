@@ -27,11 +27,10 @@ use Cake\Event\Event;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller {
+class AppController extends Controller
+{
 
-    public $helpers = array(
-        'AssetCompress.AssetCompress'
-    );
+    public $helpers = [ 'AssetCompress.AssetCompress'];
 
     /**
      * Initialization hook method.
@@ -40,7 +39,8 @@ class AppController extends Controller {
      *
      * @return void
      */
-    public function initialize() {
+    public function initialize()
+    {
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
             'loginRedirect' => [
@@ -59,7 +59,7 @@ class AppController extends Controller {
      *
      * Specify actions authorized before authentification.
      *
-     * @param \App\Controller\Event $event
+     * @param \App\Controller\Event $event event the filter is associated to
      */
     public function beforeFilter(Event $event) {
         $this->Auth->allow(['index', 'view', 'add']);

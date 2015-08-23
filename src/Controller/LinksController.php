@@ -3,26 +3,27 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Network\Exception\UnauthorizedException;
-use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
 
 /**
  * Links Controller
  *
  * @property \App\Model\Table\LinksTable $Links
  */
-class LinksController extends AppController {
+class LinksController extends AppController
+{
 
     /**
      * BeforeFilter method.
      *
      * Specify actions authorized before authentification for Links controller.
      *
-     * @param \App\Controller\Event $event
+     * @param \App\Controller\Event $event event the filter is associated to
      */
-    public function beforeFilter(Event $event) {
+    public function beforeFilter(Event $event)
+    {
         parent::beforeFilter($event);
         $this->Auth->allow(['edit']);
     }
@@ -32,7 +33,8 @@ class LinksController extends AppController {
      *
      * @return void
      */
-    public function index() {
+    public function index()
+    {
         $this->set('links', $this->paginate($this->Links));
         $this->set('_serialize', ['links']);
     }
@@ -44,7 +46,8 @@ class LinksController extends AppController {
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($token = null) {
+    public function view($token = null)
+    {
         $link = $this->Links->findByToken($token)->first();
         if (count($link) == 0 || !$this->Links->isEnabled($link)) {
             throw new NotFoundException();
@@ -74,18 +77,17 @@ class LinksController extends AppController {
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
         $link = $this->Links->newEntity();
         $this->request->allowMethod(['post', 'ajax']);
 
         $this->request->data['user_id'] = $this->Auth->user('id');
 
         //A specific check for logged in user
-        if($this->Auth->user('id')) {
-            $link = $this->Links->patchEntity($link, $this->request->data,
-                    ['validate' => 'logged']);
-        }
-        else {
+        if ($this->Auth->user('id')) {
+            $link = $this->Links->patchEntity($link, $this->request->data, ['validate' => 'logged']);
+        } else {
             $link = $this->Links->patchEntity($link, $this->request->data);
         }
 
@@ -112,7 +114,8 @@ class LinksController extends AppController {
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
         $link = $this->Links->get($id, [
             'contain' => []
         ]);
@@ -142,7 +145,8 @@ class LinksController extends AppController {
      * @return void Redirects to history.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
         $this->request->allowMethod(['post', 'delete']);
         $link = $this->Links->get($id);
 
@@ -208,7 +212,6 @@ class LinksController extends AppController {
     /**
      * History method
      *
-     * @param void.
      * @return Renders list of links.
      */
     public function history()
@@ -224,5 +227,4 @@ class LinksController extends AppController {
         $this->set('history', $this->paginate($this->Links));
         $this->set('_serialize', ['bookmarks']);
     }
-
 }
