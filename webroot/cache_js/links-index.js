@@ -52,7 +52,8 @@ function initAjaxSubmission() {
                     $(this).on('click', function() {
                         componentsChosenClick($(this),$('ul#link-components-chosen'));
                     });
-                });                
+                    $('#id_death_time').buttonset();
+                });             
             }
             
         });

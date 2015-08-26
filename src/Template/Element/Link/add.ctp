@@ -56,12 +56,15 @@
             echo  $this->Form->error('max_views');
         }
         if(isset($_POST['flag-death_time'])) {
-            //TODO: generate radio button here
-            echo $this->Form->input('death_time', ['type' => 'number',
-                                              'id' => 'inputContent',
-                                              'class' => 'form-control',
-                                              'placeholder' => "Enter your links life expectancy (number of days)",
-                                              'required' => 'false']);
+            $options = array(['text' => '1 day', 'value' => 1, 'checked' => 'checked'],
+                                         ['text' => '1 week', 'value' => 7],
+                                         ['text' => '1 month', 'value' => 30]);
+            $attributes = ['nestedInput' => false];
+            ?>
+            <div id="id_death_time"  class="input"><label>Time before deletion:</label><br/><?php
+            $this->Form->radio('death_time', $options, $attributes);
+            echo $this->Form->radio('death_time', $options, $attributes);
+            ?></div><?php
         }
 
         ?>
