@@ -1,0 +1,43 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 3 août 2015, 16:20:51
+    Author     : Ghostylink team
+*/
+table tr.disable {
+    background-color:#efefef;
+    font-style:italic;
+}
+
+td.life {
+    text-align: right;
+}
+td.life span {
+    margin-left:0.3em;
+    color: #000;
+    font-style: normal;
+    float:right;
+    cursor:help;
+}
+table tr.disable td {
+    color:inherit;
+}
+.life-danger {
+    color:red;
+    font-weight: bold;
+}
+.life-ok {
+    color:green;
+}
+.life-warning {
+    color:orange;
+}
+td.actions {
+    text-align: right;
+}
+td.actions a {
+    margin-right: 0.3em;
+}

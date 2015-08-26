@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Routes configuration
  *
@@ -17,7 +18,6 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
 use Cake\Core\Plugin;
 use Cake\Routing\Router;
 
@@ -42,7 +42,7 @@ use Cake\Routing\Router;
 Router::defaultRouteClass('Route');
 
 Router::scope('/', function ($routes) {
-    /***
+    /*     * *
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
@@ -50,15 +50,17 @@ Router::scope('/', function ($routes) {
     $routes->connect('/', ['controller' => 'Links', 'action' => 'index']);
     $routes->connect('index', ['controller' => 'Links', 'action' => 'index']);
     $routes->connect('add', ['controller' => 'Links', 'action' => 'add']);
-    $routes->connect('edit/:id', 
-                    ['controller' => 'Links', 'action' => 'edit'],
-                    ['_name' => 'link-edit', 'id' => '\d+', 'pass'=> ['id']]);
-    $routes->connect('delete/:id',
-                    ['controller' => 'Links', 'action' => 'delete'],
-                    ['_name' => 'link-delete','pass' => ['id']]);
-    $routes->connect(':token', 
-                    ['controller' => 'Links', 'action' => 'view'],
-                    ['_name' => 'link-view','token'=>'\w{32}','pass' => ['token']]);
+    $routes->connect('edit/:id', ['controller' => 'Links', 'action' => 'edit'], ['_name' => 'link-edit', 'id' => '\d+', 'pass' => ['id']]);
+    $routes->connect('delete/:id', ['controller' => 'Links', 'action' => 'delete'], ['_name' => 'link-delete', 'pass' => ['id']]);
+    $routes->connect('disable/:id', ['controller' => 'Links', 'action' => 'disable'], ['_name' => 'link-disable', 'pass' => ['id']]);
+    $routes->connect('enable/:id', ['controller' => 'Links', 'action' => 'enable'], ['_name' => 'link-enable', 'pass' => ['id']]);
+    $routes->connect('signup', ['controller' => 'Users', 'action' => 'add']);
+    $routes->connect('login', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('logout', ['controller' => 'Users', 'action' => 'logout']);
+    $routes->connect('me', ['controller' => 'Links', 'action' => 'history'], ['_name' => 'history']);
+    $routes->connect('me/edit', ['controller' => 'Users', 'action' => 'edit']);
+    $routes->connect('me/delete', ['controller' => 'Users', 'action' => 'delete'], ['_name' => 'user-delete']);
+    $routes->connect(':token', ['controller' => 'Links', 'action' => 'view'], ['_name' => 'link-view', 'token' => '\w{32}', 'pass' => ['token']]);
     //die(Router::url(['_name' => 'link-view']));
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
@@ -83,7 +85,7 @@ Router::scope('/', function ($routes) {
      */
     // All actions of controllers are accessible
     // Better to disable it for security reasons
-     //$routes->fallbacks('InflectedRoute');
+    //$routes->fallbacks('InflectedRoute');
 });
 
 /**

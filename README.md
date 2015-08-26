@@ -12,8 +12,7 @@ User can create temporary link by specifying a time limit to his content or
 a maximum view limit. One one of these limit is reached the link will be 
 automaticaly deleted.
 
-
-[ghostylink screenshot](http://doc.ghostylink.org/ghostylink-overview.png)
+[![Ghostylink screenshot](http://doc.ghostylink.org/ghostylink-overview.png)](http://doc.ghostylink.org/ghostylink-overview.png)
 ## Web site
 
 The current version of the ghostylink project can be found at 

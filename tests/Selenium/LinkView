@@ -49,23 +49,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>chooseCancelOnNextConfirmation</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
+	<td>assertElementNotPresent</td>
 	<td>css=a.delete-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=a.delete-link</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete :&nbsp;&nbsp;'Lorem ipsum dolor sit amet' ?</td>
 	<td></td>
 </tr>
 <!--Check links statistics are displayed-->

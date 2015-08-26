@@ -2,7 +2,7 @@
     <article class="link-stats panel panel-default">
         <h2 class="panel-heading">Link statistics</h2>
         <div class="panel-body">
-            <?= $this->element("Link/life_percentage", array("link" => $link)); ?>            
+            <?= $this->element("Link/life_percentage", array("link" => $link)); ?>
             <?php
             if ($link->max_views != null) {
                 echo $this->element("Link/remaining_views", array("link" => $link));
@@ -20,9 +20,11 @@
             <h2><?= h($link->title) ?></h2>
             Created on <time class="utc" data-utc-time="<?= $this->Time->format($link->created, 'MM/dd/YYYY hh:mm:ss a ') ?>UTC">
                 <?= _($link->created) ?></time>
-            <?=                    
-            $this->Form->postLink('', ['_name' => 'link-delete', $link->id], ['confirm' => __("Are you sure you want to delete : '") . $link->title . "' ?",
-                'class' => 'glyphicon glyphicon-trash delete-link'])
+            <?php
+            if ($link->user_id && $user_id == $link->user_id) {
+                echo $this->Form->postLink('', ['_name' => 'link-delete', $link->id], ['confirm' => __("Are you sure you want to delete : '") . $link->title . "' ?",
+                    'class' => 'glyphicon glyphicon-trash delete-link']);
+            }
             ?> </li>
         </section>
         <section class="link-content panel-body">

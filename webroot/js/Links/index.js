@@ -6,8 +6,7 @@
 var request;
 
 function initAjaxSubmission() {
-    $("form").on("submit", function (event) {
-
+    $("form#links-add").on("submit", function (event) {        
         // Abort any pending request
         if (request) {
             request.abort();
@@ -41,7 +40,7 @@ function initAjaxSubmission() {
             
             if($responseHTML.find('form').size() === 0) {
                 //No error have been found 
-                $('form div.alert.alert-danger').remove();
+                $('form[action="/add"] div.alert.alert-danger').remove();
                 $('section.generated-link').remove();
                 $('#main-content').append($responseHTML);
                 initCopyButton();
@@ -53,7 +52,8 @@ function initAjaxSubmission() {
                     $(this).on('click', function() {
                         componentsChosenClick($(this),$('ul#link-components-chosen'));
                     });
-                });                
+                    $('#id_death_time').buttonset();
+                });             
             }
             
         });
@@ -100,7 +100,8 @@ function initCopyButton() {
     });
 }
 $(function () {
-    initAjaxSubmission();   
+    initAjaxSubmission(); 
+    console.log($("form#links-add"));
 });
 
 

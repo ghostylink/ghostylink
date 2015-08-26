@@ -27,6 +27,16 @@ h1.navbar-text {
     font-style: italic;
 }
 
+/*************************** Some basic tools classes *************************/
+.margin-sm {
+    margin:0.5em;
+}
+
+.centered-text {
+    text-align: center;
+}
+/******************************************************************************/
+
 /******************************* CSS3 loader **********************************/
 /*** source : http://www.css-spinners.com/css/spinner/three-quarters.css ******/
 @-moz-keyframes three-quarters-loader {
@@ -79,11 +89,32 @@ h1.navbar-text {
   width: 32px;
   height: 32px;
 }
+/****************** Flash messages style here *********************************/
+.flash-message {    
+    box-shadow: 1px 1px 5px #000000;    
+    left: 0;
+    padding-bottom: 0.3em;
+    padding-top: 0.3em;
+    position: fixed;
+    text-align: center;
+    font-weight: bold;
+    top: 50px;
+    width: 100%;
+    z-index: 9999;
+}
+.flash-message a {
+    float: right;
+    color:gray;
+}
+.flash-message a:hover {    
+    text-decoration: none;
+}
+/****************** End of flash messages style *******************************/
 
 /***************** Start of Bootstrap overriding section **********************/
 /****************** Be carefull when changing something ***********************/
 .panel h1, .panel h2, .panel h3, .panel h4, .panel h5, .panel h6 {
-    margin-top:0;
+    margin-top:0;    
 }
 a.navbar-brand {
     float:none;

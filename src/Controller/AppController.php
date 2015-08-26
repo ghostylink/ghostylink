@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -12,9 +13,11 @@
  * @since     0.2.9
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Event\Event;
 
 /**
  * Application Controller
@@ -27,11 +30,9 @@ use Cake\Controller\Controller;
 class AppController extends Controller
 {
 
-    public $helpers = array(
-        'AssetCompress.AssetCompress'
-    );
-    
-   /**
+    public $helpers = [ 'AssetCompress.AssetCompress'];
+
+    /**
      * Initialization hook method.
      *
      * Use this method to add common initialization code like loading components.
@@ -41,5 +42,27 @@ class AppController extends Controller
     public function initialize()
     {
         $this->loadComponent('Flash');
+        $this->loadComponent('Auth', [
+            'loginRedirect' => [
+                'controller' => 'Links',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [
+                'controller' => 'Links',
+                'action' => 'index'
+            ]
+        ]);
+        $this->loadComponent('Csrf');
+    }
+
+    /**
+     * BeforeFilter method.
+     *
+     * Specify actions authorized before authentification.
+     *
+     * @param \App\Controller\Event $event event the filter is associated to
+     */
+    public function beforeFilter(Event $event) {
+        $this->Auth->allow(['index', 'view', 'add']);
     }
 }
