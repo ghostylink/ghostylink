@@ -23,6 +23,7 @@
         <label>Your components</label>
         <ul id="link-components-chosen" class="col-lg-12">
             <?php
+                // TODO: refactor that part
                 if(isset($_POST['flag-max_views'])) {
                     $htmlComponent = '<li class="glyphicon glyphicon-eye-open ' .
                                                 'label label-primary" ' .
@@ -39,32 +40,28 @@
                     echo $htmlComponent;
                     echo $this->Form->hidden("flag-death_time");
                 }
-                if(!isset($_POST['flag-max_views']) && !isset($_POST['flag-death_time'])) {
+                if(isset($_POST['flag-google_captcha'])) {
+                    $htmlComponent = '<li class="glyphicon  glyphicon-recaptcha ' .
+                                                'label label-primary" ' .
+                                                'data-related-field="google_captcha">'
+                                .   ' -</li>';
+                    echo $htmlComponent;
+                    echo $this->Form->hidden("flag-google_captcha");
+                }
+                if(!isset($_POST['flag-max_views']) && !isset($_POST['flag-death_time']) && !isset($_POST['flag-google_captcha'])) {
                     echo '<span class="legend">Drop some components here</span>';
                 }
             ?>
         </ul>
         <?php
         if(isset($_POST['flag-max_views'])) {
-            echo $this->Form->input('max_views', ['type' => 'number',
-                                              'id' => 'inputContent',
-                                              'class' => 'form-control',
-                                              'placeholder' => "Enter your links life expectancy (number of views)",
-                                              'required' => 'false']);
+            echo $this->element('Link/Components/max_views');
         }
         else if ($this->Form->isFieldError('max_views')){
             echo  $this->Form->error('max_views');
         }
         if(isset($_POST['flag-death_time'])) {
-            $options = array(['text' => '1 day', 'value' => 1, 'checked' => 'checked'],
-                                         ['text' => '1 week', 'value' => 7],
-                                         ['text' => '1 month', 'value' => 30]);
-            $attributes = ['nestedInput' => false];
-            ?>
-            <div id="id_death_time"  class="input"><label>Time before deletion:</label><br/><?php
-            $this->Form->radio('death_time', $options, $attributes);
-            echo $this->Form->radio('death_time', $options, $attributes);
-            ?></div><?php
+            echo $this->element("Link/Components/death_time");
         }
 
         ?>

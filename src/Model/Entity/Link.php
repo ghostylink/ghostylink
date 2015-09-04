@@ -23,7 +23,8 @@ class Link extends Entity {
         'views' => true,
         'death_time' => true,
         'user_id' => true,
-        'status' => true
+        'status' => true,
+        'google_captcha' => true
     ];
 
     /**

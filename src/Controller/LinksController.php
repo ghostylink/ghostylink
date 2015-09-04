@@ -56,8 +56,12 @@ class LinksController extends AppController
         if ($this->request->is('ajax')) {
             //Check the link has not been seen by an other people
             if (!$this->Links->increaseLife($link)) {
-                throw new NotFoundException();
+                  throw new NotFoundException();
             }
+            if (key_exists('g-recaptcha-response', $this->request->data)) {
+                  return $this->_check_robot($link);
+            }
+
             $this->set('link', $link);
             return $this->render('ajax/information', 'ajax');
         } else {
@@ -70,6 +74,22 @@ class LinksController extends AppController
             }
         }
         $this->set('link', $link);
+    }
+
+    public function _check_robot($link) {
+        $secret = '6LdmCQwTAAAAAPqT9OWI2gHcUOHVrOFoy7WCagFS';
+        if ($link->google_captcha) {
+            $recaptcha = new \ReCaptcha\ReCaptcha($secret);
+            $resp = $recaptcha->verify($this->request->data['g-recaptcha-response'], $this->request->clientIp());
+            if ($resp->isSuccess()) {
+                $this->set('link', $link);
+                return $this->render('ajax/information', 'ajax');
+            } else {
+                $errors = $resp->getErrorCodes();
+                debug($errors);
+                throw new NotAuthorizedException();
+            }
+        }
     }
 
     /**

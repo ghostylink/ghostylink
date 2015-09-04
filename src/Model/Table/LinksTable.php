@@ -34,6 +34,7 @@ class LinksTable extends Table
             'foreignKey' => 'user_id'
         ]);
         $this->displayField('user_id');
+        $this->displayField('google_captcha');
     }
 
     /**
