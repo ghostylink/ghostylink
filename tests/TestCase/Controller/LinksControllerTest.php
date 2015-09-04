@@ -121,6 +121,18 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertEquals($linkBefore->views + 1, $linksAfter->views);
     }
 
+    public function testViewLockedByCaptcha() {
+        $this->get('/427103fc86a164ccc6a835ea6gd00273');
+        $this->assertResponseContains('id="load-link-captcha"');
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $data = $this->goodData;
+        $data['g-recaptcha-response'] = "This is a bad response";
+        $this->post('/427103fc86a164ccc6a835ea6gd00273',$data);
+        //unset( $_SERVER['HTTP_X_REQUESTED_WITH']);
+        $this->assertResponseError();
+    }
+
+
     public function testViewOnADisabledLink()
     {
         $links = TableRegistry::get('Links');

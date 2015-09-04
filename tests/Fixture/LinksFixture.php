@@ -28,6 +28,7 @@ class LinksFixture extends TestFixture
         'death_time' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'user_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'status' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => 1, 'comment' => '', 'precision' => null],
+        'google_captcha' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => 0, 'comment' => '', 'precision' => null],
         '_indexes' => [
             'user_id' => ['type' => 'index', 'columns' => ['user_id'], 'length' => []],
         ],
@@ -236,6 +237,20 @@ class LinksFixture extends TestFixture
             'death_time' => null,
             'status' => 1,
             'user_id' => 1
+        ],
+          [
+            'id' => 16,
+            'title' => 'Google captcha',
+            'content' => 'content of id 15',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => '427103fc86a164ccc6a835ea6gd00273',
+            'max_views' => null,
+            'views' => 5,
+            'death_time' => null,
+            'status' => 1,
+            'user_id' => 1,
+            'google_captcha' => 1
         ]
     ];
 }

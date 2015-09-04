@@ -86,8 +86,7 @@ class LinksController extends AppController
                 return $this->render('ajax/information', 'ajax');
             } else {
                 $errors = $resp->getErrorCodes();
-                debug($errors);
-                throw new NotAuthorizedException();
+                throw new UnauthorizedException();
             }
         }
     }
