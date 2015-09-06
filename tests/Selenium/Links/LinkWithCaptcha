@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8765/" />
+<title>LinkWithCaptcha</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">LinkWithCaptcha</td></tr>
+</thead><tbody>
+<!--### Check a link can be created with the captcha component-->
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=ul#link-components-available li[data-related-field=&quot;google_captcha&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=ul#link-components-chosen li[data-related-field=&quot;google_captcha&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=input[name=&quot;title&quot;]</td>
+	<td>this is a title</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=textarea[name=&quot;content&quot;]</td>
+	<td>this is a content</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=form[action=&quot;/add&quot;] button[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=div.alert-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=ul#link-components-available li[data-related-field=&quot;death_time&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=input[name=&quot;death_time&quot;]</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=form[action=&quot;/add&quot;] button[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=section.generated-link</td>
+	<td></td>
+</tr>
+<!--### Check a google captcha is displayed on the link view-->
+<tr>
+	<td>open</td>
+	<td>/427103fc86a164ccc6a835ea6gd00273</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Google captcha</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=button#load-link-captcha</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=div.alert-danger</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

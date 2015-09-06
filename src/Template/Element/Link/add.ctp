@@ -63,7 +63,9 @@
         if(isset($_POST['flag-death_time'])) {
             echo $this->element("Link/Components/death_time");
         }
-
+        if(isset($_POST['flag-google_captcha'])) {
+            echo $this->element("Link/Components/google_captcha");
+        }
         ?>
     </fieldset>
     <?= $this->Form->button(__('Create the link'), ['type' => 'submit',
