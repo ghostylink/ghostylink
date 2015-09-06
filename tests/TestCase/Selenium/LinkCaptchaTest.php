@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * @group Link
+ * @group Functional
+ */
 class LinkCaptchaTest extends FunctionalTest
 {
 
