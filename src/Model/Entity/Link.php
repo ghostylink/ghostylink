@@ -45,9 +45,8 @@ class Link extends Entity {
     protected function _getLifePercentage() {
         $percentageViews = 0;
         $percentageTime = 0;
-        // FIXME this computation generate  warning on unit tests
-        if ($this->_properties['max_views'] != null) {
-            $percentageViews = (100.0 * $this->_properties['views']) / $this->_properties['max_views'];
+        if (isset($this->_properties['max_views'])) {
+            $percentageViews = (100.0 * $this->views) / $this->_properties['max_views'];
         }
         if ($this->_properties['death_time'] != null) {
             $currentTime = new Time();

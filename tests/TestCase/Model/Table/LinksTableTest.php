@@ -221,9 +221,9 @@ class LinksTableTest extends TestCase
         $insertedData = $this->Links->find('all')
                                 ->where(['Links.title =' => $goodData['title']])
                                 ->toArray()[0];
-        // FIXME Pass those tests
+        // FIXME Pass this test
         //$this->assertNotNull($insertedData->views,'views is not null');
-        //$this->assertEquals(0,$insertedData->views,'views counter is set to 0');
+        $this->assertEquals(0, $insertedData->views,'views counter is set to 0');
     }
 
     public function testIncreaseViews() {
