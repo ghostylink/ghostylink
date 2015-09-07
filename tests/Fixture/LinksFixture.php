@@ -251,6 +251,34 @@ class LinksFixture extends TestFixture
             'status' => 1,
             'user_id' => 1,
             'google_captcha' => 1
+        ],
+         [
+            'id' => 17,
+            'title' => '90% life',
+            'content' => 'content of id 17',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => 'a835ea6gd0027427103fc86a164ccc63',
+            'max_views' => 1000,
+            'views' => 900,
+            'death_time' => null,
+            'status' => 1,
+            'user_id' => 1,
+            'google_captcha' => 1
+        ],
+         [
+            'id' => 18,
+            'title' => '90% life',
+            'content' => 'content of id 18',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => 'a86gd00235ea7427103fc86a164ccc63',
+            'max_views' => null,
+            'views' => 0,
+            'death_time' => '1955-11-07 6:38:00',
+            'status' => 1,
+            'user_id' => 1,
+            'google_captcha' => 1
         ]
     ];
 }

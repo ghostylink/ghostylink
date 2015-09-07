@@ -174,4 +174,26 @@ class LinksTable extends Table
         return $entity->get('status');
     }
 
+    /**
+     *  Custom finder to retrieve all link which have their life between two specified values.
+     * @param Query $query
+     * @param array $options
+     */
+    function findRangeLife(Query $query, array $options)
+    {
+        if (!isset($options['min_life']) || !isset($options['max_life'])) {
+            throw new \BadFunctionCallException();
+        }
+        
+        $query->param['min_life'] = $options['min_life'];
+        $query->param['max_life'] = $options['max_life'];
+
+        return $query->find('all')->where(function ($exp, $q) {
+            $filter = 'GREATEST(IFNULL(LEAST(100, Links.views * 100.0 / Links.max_views),0),
+                                                IFNULL(LEAST(100,(datediff(CURRENT_TIMESTAMP, Links.created) * 100.0 ) ' .
+                                                                                    '/ datediff(Links.death_time, Links.created)),0)) ';
+            return $exp->between($filter, $q->param['min_life'], $q->param['max_life']) ;
+        });
+    }
+
 }
