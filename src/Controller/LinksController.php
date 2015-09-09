@@ -233,10 +233,22 @@ class LinksController extends AppController
      */
     public function history()
     {
+        $min_life = !isset($this->request->query['min_life']) ? 0 : $this->request->query['min_life'];
+        $max_life = !isset($this->request->query['max_life']) ? 100 : $this->request->query['max_life'];
+        $status = !isset($this->request->query['status']) ? null : $this->request->query['status'];
+        $title = !isset($this->request->query['title']) ? null : $this->request->query['title'];
+
         // Using a query
         $this->paginate = [
             'maxLimit' => 15,
             'limit' => 5,
+            'finder' => [
+                'history' => ['min_life' => $min_life,
+                                     'max_life' => $max_life,
+                                     'status' => $status,
+                                     'title' => $title,
+                                     'user_id' => $this->Auth->user('id')]
+            ],
             'conditions' => [
                 'Links.user_id' => $this->Auth->user('id'),
             ]

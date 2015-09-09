@@ -1,11 +1,10 @@
 <?php
 /**
- * @group Functional
  * @group Link
+ * @group Functional
  */
 class LinkHistoryTest extends FunctionalTest
 {
-
   public function testMyTestCase()
   {
     $this->open("/logout");
@@ -37,6 +36,15 @@ class LinkHistoryTest extends FunctionalTest
     $this->waitForPageToLoad("30000");
     $this->assertTrue($this->isTextPresent("User 1 id 10"));
     $this->assertTrue($this->isTextPresent("2 of 2"));
+    // ### Check filters
+    $this->type("css=[name=\"title\"]", "User 1 id 10");
+    $this->submit("css=form");
+    $this->waitForPageToLoad("30000");
+    $this->type("css=[name=\"title\"]", "");
+    $this->type("css=[name=\"status\"]", "0");
+    $this->submit("css=form");
+    $this->waitForPageToLoad("30000");
+    $this->assertEquals("0", $this->getCssCount("css=.life-ok"));
   }
 }
 ?>

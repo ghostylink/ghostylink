@@ -289,8 +289,9 @@ class LinksTableTest extends TestCase
         $MIN_LIFE = 90;
         $MAX_LIFE = 96;
 
-        $array = $this->Links->find('rangeLife', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE])->toArray();
-        $this->assertEquals(count($array), 1, 'Exactly 1 links is retrieved by views');
+        $array = $this->Links->find('rangeLife', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE])
+                                            ->toArray();
+        $this->assertEquals(count($array), 2, 'Exactly 1 links is retrieved by views');
         foreach ($array as $value) {
             $this->assertGreaterThanOrEqual($MIN_LIFE, $value->life_percentage);
             $this->assertLessThanOrEqual($MAX_LIFE, $value->life_percentage);
@@ -315,5 +316,34 @@ class LinksTableTest extends TestCase
         $array = $this->Links->find('rangeLife', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE])
                                             ->where(['title' => 'Title finder range life by death_time'])->toArray();
         $this->assertEquals(0,  count($array), '0 links is retrieved by death_time');
+    }
+
+    public function testFinderHistory() {
+        // Check that the retrieved links have their life_percentage between the specified values
+        $MIN_LIFE = 90;
+        $MAX_LIFE = 96;
+
+        $array = $this->Links->find('history', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE, 'user_id' => 1])
+                                            ->toArray();
+        $this->assertEquals(count($array), 1, 'Exactly 1 links is retrieved by views');
+
+        $array = $this->Links->find('history', ['title' => 'I do not exist',
+                                                                      'min_life' => $MIN_LIFE ,
+                                                                      'max_life' => $MAX_LIFE, 'user_id' => 1])
+                                            ->toArray();
+        $this->assertEquals(count($array), 0, 'Test filter on title');
+
+        $array = $this->Links->find('history', ['status' => 1,
+                                                                      'min_life' => $MIN_LIFE ,
+                                                                      'max_life' => $MAX_LIFE, 'user_id' => 1])
+                                            ->toArray();
+        $this->assertEquals(count($array), 1, 'Test filter on status');
+    }
+
+    public function testFinderHistoryError() {
+        $MIN_LIFE = 90;
+        $MAX_LIFE = 96;
+        $this->setExpectedException('BadFunctionCallException');
+        $array = $this->Links->find('history', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE]);
     }
 }

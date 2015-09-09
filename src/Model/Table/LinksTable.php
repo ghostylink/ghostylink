@@ -184,7 +184,7 @@ class LinksTable extends Table
         if (!isset($options['min_life']) || !isset($options['max_life'])) {
             throw new \BadFunctionCallException();
         }
-        
+
         $query->param['min_life'] = $options['min_life'];
         $query->param['max_life'] = $options['max_life'];
 
@@ -196,4 +196,36 @@ class LinksTable extends Table
         });
     }
 
+    /**
+     *  Find all link in the history matching filters
+     * @param Query $query
+     * @param array $options required key : min_life, the minimal life of links to retrieve
+     *                                                                 max_life the maximal life of links to retrieve
+     *                                                                 user_id the id of the user the link belongs to
+     *                                                                 status [1|0] keep only links with the corresponding status
+     *                                                                 title a pattern corresponding to the title
+     * @return Query the built query
+     * @throws \BadFunctionCallException
+     */
+    function findHistory(Query $query, array $options)
+    {
+        if (!isset($options['user_id'])) {
+            throw new \BadFunctionCallException();
+        }
+        $query = $this->findRangeLife($query, $options)->where(['Links.user_id' => $options['user_id']]);
+
+        //Filter on status
+        if (isset($options['status']) && $options['status'] != '*') {
+            $query->andWhere(['Links.status' => $options['status']]);
+        }
+
+        //Filter on title
+        if (isset($options['title'])) {
+            $query->param['title'] = $options['title'];
+            $query->andWhere(function ($exp, $q) {
+                return $exp->like('Links.title', '%' . $q->param['title'] . '%');
+            });
+        }
+        return $query;
+    }
 }

@@ -241,7 +241,7 @@ class LinksFixture extends TestFixture
           [
             'id' => 16,
             'title' => 'Google captcha',
-            'content' => 'content of id 15',
+            'content' => 'content of id 16',
             'created' => '1955-11-06 6:38:00',
             'modified' => '1955-11-07 6:38:00',
             'token' => '427103fc86a164ccc6a835ea6gd00273',
@@ -273,12 +273,12 @@ class LinksFixture extends TestFixture
             'created' => '1955-11-06 6:38:00',
             'modified' => '1955-11-07 6:38:00',
             'token' => 'a86gd00235ea7427103fc86a164ccc63',
-            'max_views' => null,
-            'views' => 0,
-            'death_time' => '1955-11-07 6:38:00',
+            'max_views' => 10,
+            'views' => 9,
+            'death_time' =>null,
             'status' => 1,
-            'user_id' => 1,
+            'user_id' => 3,
             'google_captcha' => 1
-        ]
+        ],
     ];
 }
