@@ -14,7 +14,8 @@
                                               'id' => 'inputTitle',
                                               'class' => 'form-control link-add',
                                               'placeholder' => "Enter a title",
-                                              'required' => 'false']);
+                                              'required' => 'false',
+                                              'autofocus' => 'true']);
             echo $this->Form->input('content', ['type' => 'textarea',
                                               'id' => 'inputContent',
                                               'class' => 'form-control',
@@ -23,32 +24,25 @@
         <label>Your components</label>
         <ul id="link-components-chosen" class="col-lg-12">
             <?php
-                // TODO: refactor that part
-                if(isset($_POST['flag-max_views'])) {
-                    $htmlComponent = '<li class="glyphicon glyphicon-eye-open ' .
-                                                'label label-primary" ' .
-                                                'data-related-field="max_views">'
-                                .   ' </li>';
-                    echo $htmlComponent;
-                    echo $this->Form->hidden("flag-max_views");
+                $components = ['max_views' => 'eye-open',
+                                          'death_time' => 'time',
+                                          'google_captcha' => 'recaptcha',
+                                          'death_date' => 'calendar'];
+                $content = ['max_views' => '',
+                                          'death_time' => '',
+                                          'google_captcha' => '_',
+                                          'death_date' => '']; // artificial content to have same height on google_captcha
+                $componentsEmpty = true;
+                foreach ($components as $field => $cssClass) {
+                    if (isset($_POST['flag-' . $field])) {
+                        $htmlComponent =  '<li class="glyphicon glyphicon-' . $cssClass . ' label label-primary" ' .
+                                                           'data-related-field="' . $field . '">' . $content[$field] . '</li>';
+                        echo $htmlComponent;
+                        echo $this->Form->hidden("flag-$field");
+                        $componentsEmpty = false;
+                    }
                 }
-                if(isset($_POST['flag-death_time'])) {
-                    $htmlComponent = '<li class="glyphicon glyphicon-time ' .
-                                                'label label-primary" ' .
-                                                'data-related-field="death_time">'
-                                .   ' </li>';
-                    echo $htmlComponent;
-                    echo $this->Form->hidden("flag-death_time");
-                }
-                if(isset($_POST['flag-google_captcha'])) {
-                    $htmlComponent = '<li class="glyphicon  glyphicon-recaptcha ' .
-                                                'label label-primary" ' .
-                                                'data-related-field="google_captcha">'
-                                .   ' -</li>';
-                    echo $htmlComponent;
-                    echo $this->Form->hidden("flag-google_captcha");
-                }
-                if(!isset($_POST['flag-max_views']) && !isset($_POST['flag-death_time']) && !isset($_POST['flag-google_captcha'])) {
+                if ($componentsEmpty) {
                     echo '<span class="legend">Drop some components here</span>';
                 }
             ?>
@@ -65,6 +59,9 @@
         }
         if(isset($_POST['flag-google_captcha'])) {
             echo $this->element("Link/Components/google_captcha");
+        }
+         if(isset($_POST['flag-death_date'])) {
+            echo $this->element("Link/Components/death_date");
         }
         ?>
     </fieldset>

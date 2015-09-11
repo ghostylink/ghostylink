@@ -121,6 +121,9 @@ function deathTimeInit() {
     $('#id_death_time').buttonset();
 }
 
+function deathDateInit() {
+    $('#death_date').datetimepicker();
+}
 initLinkComponents($('ul#link-components-available li'));
 
 

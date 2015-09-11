@@ -53,9 +53,12 @@ class Link extends Entity {
             $created = new Time($this->_properties['created']);
             $death = new Time($this->_properties['death_time']);
             $elapseTime = $currentTime->diffInSeconds($created);
-            $totalTime = $death->diffInSeconds($created);
-            if ($totalTime != 0) {
+            $totalTime = $created->diffInSeconds($death, false);
+            if ($totalTime >= 0) {
                 $percentageTime = (100 * $elapseTime) / $totalTime;
+            }
+            else {
+                $percentageTime = 100;
             }
         }
         return min(100, max($percentageViews, $percentageTime));

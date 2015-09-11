@@ -19,6 +19,9 @@
             <li data-related-field="google_captcha" class="glyphicon  glyphicon-recaptcha label label-primary ui-widget-header"
                   data-content="-"
                   data-field-html="<?= htmlspecialchars($this->element("Link/Components/google_captcha"))  ?>"> Google captcha</li>
+            <li data-related-field="death_date" class="glyphicon  glyphicon-calendar label label-primary ui-widget-header"
+                data-field-js-function = "deathDateInit"
+                  data-field-html="<?= htmlspecialchars($this->element("Link/Components/death_date"))  ?>"> Date limit</li>
         </ul>
     </div>
 </section>
