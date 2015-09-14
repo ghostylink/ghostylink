@@ -45,20 +45,16 @@ class GhostableBehavior extends Behavior
             if ($parsedDate) {
                 $offset = isset($data['timezone-offset']) ? floor($data['timezone-offset']) : 0;
                 $parsedDate->addMinutes($offset); // also Ok if offset is < 0
-                $parsedDate->format('Y-M-d H:i');
                 $data['death_time'] =$parsedDate;
             }
         }
         // Compute the death_time according to now and nb days in parameter
         else if (array_key_exists('death_time', $data)) {
             if ($data['death_time']) {
-                // TODO: use Cake Date time object here;
-                $deathTime = new \DateTime();
-                $deathTime->format('Y-m-d H:i:s');
-                // FIXME: what happens if death_time is not an integer ?
-                $data['death_time'] = $deathTime->add(new \DateInterval('P' . $data['death_time'] . 'D'));
+                 $deathTime = new Time();
+                 $data['death_time'] = $deathTime->addDays($data['death_time']);
             } else { // Create an empty death_time in order to check in validator
-                $data['death_time'] = '';
+                 $data['death_time'] = '';
             }
         }
         // Create an empty max_views in order to check in validator
