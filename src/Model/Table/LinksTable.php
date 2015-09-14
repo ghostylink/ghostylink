@@ -1,17 +1,18 @@
 <?php
+
 namespace App\Model\Table;
 
 use App\Model\Entity\Link;
 use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\Validation\Validator;
-use App\Model\Table\AuthComponent;
+use Cake\Validation\Validator; 
+
 /**
  * Links Model
  */
 class LinksTable extends Table
 {
+
     /**
      * Initialize method
      *
@@ -42,7 +43,8 @@ class LinksTable extends Table
      * @param Validator $validator
      * @return Validator
      */
-    public function validationLogged(Validator $validator) {
+    public function validationLogged(Validator $validator)
+    {
         $val = $this->_buildCommonValidator($validator);
         $validator->allowEmpty('max_views');
         $validator->allowEmpty('death_time');
@@ -57,14 +59,13 @@ class LinksTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
-       $validator = $this->_buildCommonValidator($validator);
-       $validator->notEmpty('death_time', 'At least one component is required', function ($context) {
+        $validator = $this->_buildCommonValidator($validator);
+        $validator->notEmpty('death_time', 'At least one component is required', function ($context) {
             if (!$context['newRecord']) {
                 return false;
             }
             if (array_key_exists('max_views', $context['data'])) {
-                return !isset($context['data']['max_views'])
-                                        || $context['data']['max_views'] == '';
+                return !isset($context['data']['max_views']) || $context['data']['max_views'] == '';
             } else {
                 return false;
             }
@@ -74,8 +75,7 @@ class LinksTable extends Table
                 return false;
             }
             if (array_key_exists('death_time', $context['data'])) {
-                return !isset($context['data']['death_time'])
-                                        || $context['data']['death_time'] == '';
+                return !isset($context['data']['death_time']) || $context['data']['death_time'] == '';
             } else {
                 return false;
             }
@@ -85,23 +85,24 @@ class LinksTable extends Table
 
     function _buildCommonValidator(Validator $validator)
     {
-         $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create')
-            ->requirePresence('title', 'create')
-            ->notEmpty('title')
-            ->add('title', ['length' => [
-                            'rule' => ['maxLength', 100],
-                            'message' => 'Titles need to be at least 10 characters long',
+        $validator
+                ->add('id', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('id', 'create')
+                ->requirePresence('title', 'create')
+                ->notEmpty('title')
+                ->add('title', ['length' => [
+                        'rule' => ['maxLength', 100],
+                        'message' => 'Titles need to be at least 10 characters long',
             ]])
-            ->requirePresence('content', 'create')
-            ->notEmpty('content')
-            ->requirePresence('token', 'create')
-            ->notEmpty('token')
-            ->add('max_views', 'valid', ['rule' => 'numeric'])
-            ->add('max_views', 'valid', ['rule' => ['range', 1, 1000]]);
+                ->requirePresence('content', 'create')
+                ->notEmpty('content')
+                ->requirePresence('token', 'create')
+                ->notEmpty('token')
+                ->add('max_views', 'valid', ['rule' => 'numeric'])
+                ->add('max_views', 'valid', ['rule' => ['range', 1, 1000]]);
         return $validator;
     }
+
     /**
      * increase the life of the link
      *
@@ -139,7 +140,7 @@ class LinksTable extends Table
      */
     public function disable(Link $entity)
     {
-        if($entity->get('status') != 1) {
+        if ($entity->get('status') != 1) {
             return false;
         }
         $entity->set('status', 0);
@@ -155,7 +156,7 @@ class LinksTable extends Table
      */
     public function enable(Link $entity)
     {
-        if($entity->get('status') != 0) {
+        if ($entity->get('status') != 0) {
             return false;
         }
         $entity->set('status', 1);
@@ -177,7 +178,8 @@ class LinksTable extends Table
     /**
      *  Custom finder to retrieve all link which have their life between two specified values.
      * @param Query $query
-     * @param array $options
+     * @param array $options required key : min_life, the minimal life of links to retrieve
+     *                                                                 max_life the maximal life of links to retrieve
      */
     function findRangeLife(Query $query, array $options)
     {
@@ -189,11 +191,11 @@ class LinksTable extends Table
         $query->param['max_life'] = $options['max_life'];
 
         return $query->find('all')->where(function ($exp, $q) {
-            $filter = 'GREATEST(IFNULL(LEAST(100, Links.views * 100.0 / Links.max_views),0),
+                    $filter = 'GREATEST(IFNULL(LEAST(100, Links.views * 100.0 / Links.max_views),0),
                                                 IFNULL(LEAST(100,(datediff(CURRENT_TIMESTAMP, Links.created) * 100.0 ) ' .
-                                                                                    '/ datediff(Links.death_time, Links.created)),0)) ';
-            return $exp->between($filter, $q->param['min_life'], $q->param['max_life']) ;
-        });
+                            '/ datediff(Links.death_time, Links.created)),0)) ';
+                    return $exp->between($filter, $q->param['min_life'], $q->param['max_life']);
+                });
     }
 
     /**
