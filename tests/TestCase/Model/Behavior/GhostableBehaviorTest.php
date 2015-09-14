@@ -43,10 +43,10 @@ class GhostableBehaviorTest extends TestCase
 
     //The table to test the behavior on
     CONST TARGET_TABLE = 'Links';
-    
+
     /**
      * The save function should not return false using this data
-     * @var array 
+     * @var array
      */
     private  $goodData = [
             'title' => 'I am not in danger ...',
@@ -54,7 +54,7 @@ class GhostableBehaviorTest extends TestCase
             'token' => 'Say my name',
             'max_views' => 8 // big default value to avoid unexpected behaviors
     ];
-    
+
     /**
      * setUp method
      *
@@ -62,8 +62,8 @@ class GhostableBehaviorTest extends TestCase
      */
     public function setUp()
     {
-        parent::setUp();       
-        $config = TableRegistry::exists(GhostableBehaviorTest::TARGET_TABLE) ? [] 
+        parent::setUp();
+        $config = TableRegistry::exists(GhostableBehaviorTest::TARGET_TABLE) ? []
                                 : ['className' => 'App\Model\Table\\' . GhostableBehaviorTest::TARGET_TABLE . 'Table'];
         $this->TargetTable = TableRegistry::get(GhostableBehaviorTest::TARGET_TABLE, $config);
     }
@@ -79,7 +79,7 @@ class GhostableBehaviorTest extends TestCase
 
         parent::tearDown();
     }
-  
+
     /**
      * Test the view attribute is increased
      * @return void
@@ -93,29 +93,29 @@ class GhostableBehaviorTest extends TestCase
         $viewsBefore = $this->TargetTable->find('all')
                            ->where(['title =' => $goodData['title']])
                            ->toArray()[0]->views;
-        
+
         //Apply the behavior function;
-        $behavior = $this->TargetTable->behaviors()->get('Ghostable');                        
+        $behavior = $this->TargetTable->behaviors()->get('Ghostable');
         $behavior->increaseLife($entity);
-        
+
         //Save the increased entity
         $this->TargetTable->save($entity);
-        
+
         //Check we have effectively increased the field
         $viewsAfter = $this->TargetTable->find('all')
                            ->where(['title =' => $goodData['title']])
                            ->toArray()[0]->views;
         $this->assertEquals($viewsBefore + 1, $viewsAfter);
-        
-        $this->assertTrue($behavior->increaseLife($entity), 'True when ghost is alive (1/2)');        
+
+        $this->assertTrue($behavior->increaseLife($entity), 'True when ghost is alive (1/2)');
         $this->TargetTable->save($entity);
-        
+
         $this->assertTrue($behavior->increaseLife($entity), 'True when ghost is alive (2/2)');
         $this->TargetTable->save($entity);
-                
+
         $this->assertFalse($behavior->increaseLife($entity), 'False when ghost is dead');
     }
-    
+
     /**
      * Test the checkNbViews of the ghostable component
      */
@@ -125,40 +125,60 @@ class GhostableBehaviorTest extends TestCase
         $goodData['max_views'] = 3;
         $entity = $this->TargetTable->newEntity($goodData);
         $this->TargetTable->save($entity);
-                
+
         //Apply the behavior function;
-        $behavior = $this->TargetTable->behaviors()->get('Ghostable');                        
+        $behavior = $this->TargetTable->behaviors()->get('Ghostable');
         $behavior->increaseLife($entity);
         $this->TargetTable->save($entity);
-        
+
         //as checkNbViews is private, we must call invokeMetho defined above
         $this->assertTrue($this->invokeMethod($behavior, 'checkLife', array($entity)));
-        $behavior->increaseLife($entity);        
-        $behavior->increaseLife($entity);        
+        $behavior->increaseLife($entity);
+        $behavior->increaseLife($entity);
         $behavior->increaseLife($entity);
         $this->TargetTable->save($entity);
-        
+
         //The max_views has been reached
         $this->assertFalse($this->invokeMethod($behavior, 'checkLife', array($entity)));
-        
+
     }
-    
+
     function testBeforeMarshal() {
         $goodData = $this->goodData;
         $goodData['title'] = 'titletestBeforeMarshal';
-        $goodData['death_time'] = 3;        
-        
+        $goodData['death_time'] = 3;
+
         Time::setTestNow();
-       
+
         $now = Time::now();
         Time::setTestNow($now);
-        
+
         $entity = $this->TargetTable->newEntity($goodData);
         $this->TargetTable->save($entity);
         $death_time = $this->TargetTable->findByTitle($goodData['title'])->toArray()[0]->death_time;
-        $this->assertNotNull($death_time, 'Death time is not null');        
+        $this->assertNotNull($death_time, 'Death time is not null');
         $this->assertEquals($now->diffInDays($death_time), 3, 'The link expires in 3 days');
-        $this->assertEquals($now->diffInMinutes($death_time), 3 * 24 * 60, 
+        $this->assertEquals($now->diffInMinutes($death_time), 3 * 24 * 60,
                             'The links exprires in exactly 3 days');
+    }
+
+    function testBeforeMarshalOnDeathDate() {
+        $goodData = $this->goodData;
+        $now = Time::now();
+        $date  = $now->addDays(10)->addHours(5)->second(0);
+        $goodData['title'] = 'titletestBMOnDeathDate';
+        $goodData['death_date'] = $date->format("Y/m/d H:i");
+        $entity = $this->TargetTable->newEntity($goodData);
+        $this->assertNotFalse($this->TargetTable->save($entity));
+        $death_time = $this->TargetTable->findByTitle($goodData['title'])->toArray()[0]->death_time;
+        $this->assertEquals($date, $death_time);
+
+        $goodData['death_date'] = str_replace('/', 42, $date->format("Y/m/d H:m"));
+        $goodData['title'] = 'titletestBMOnDeathDateError';
+        $entity = $this->TargetTable->newEntity($goodData);
+
+        $this->assertNotFalse($this->TargetTable->save($entity));
+        $death_time = $this->TargetTable->findByTitle($goodData['title'])->toArray()[0]->death_time;
+        $this->assertNull($death_time, 'death_time is not set if date_date is not in the good format');
     }
 }

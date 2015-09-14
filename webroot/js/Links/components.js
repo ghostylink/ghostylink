@@ -52,8 +52,9 @@ function moveLinkComponents($component, $targetArea){
         if ($toEvaluate) {
             eval($toEvaluate + '()');
         }
+        
         //Add a hidden field to detect the chosen components
-        var nameNewField = $newField.find('input').attr("name"); 
+        var nameNewField = $newField.find('input').attr("name");         
         $fieldset.append('<input type="hidden" name="flag-' + nameNewField + '"/>');
         
         //No component was here, remove the legend
@@ -65,11 +66,14 @@ function moveLinkComponents($component, $targetArea){
         $targetArea.append($component.remove().removeAttr("style"));
         var legend = $component.text();
         
-        //Save the original component for an evenutal future delete                                           
-        $('section.link-components').data('link-component-' + nameNewField, $component.clone());        
-        
+        //Save the original component for an evenutal future delete        
+        $('section.link-components').data('link-component-' + nameNewField, $component.clone());         
         //Remove the available component specific class and the text
-        $component.text('').removeClass('ui-widget-header').attr("title", legend);
+        var text = '';
+         if ($component.attr("data-content")) {
+            text = $component.attr("data-content");
+        }
+        $component.text(text).removeClass('ui-widget-header').attr("title", legend);
         
 
         /* When the chosen component will be clicked, remove it and the corresponding
@@ -87,16 +91,18 @@ function moveLinkComponents($component, $targetArea){
 
 function componentsChosenClick($li, $dropArea) {    
     //Retrieve the component from the saving area
-    var dataName = 'link-component-' + $li.attr("data-related-field");    
-    var $component = $('section.link-components').data(dataName);
-    
+    var dataName = 'link-component-' + $li.attr("data-related-field");     
+    var $component = $('section.link-components').data(dataName);    
     //Retrieve the name of the field
     var $fieldWrapper = $($component.attr("data-field-html"));    
     var fieldName = $li.attr("data-related-field");
     var classWrapper = $fieldWrapper.attr("class").replace(/\s/g, ".");
     
     //Elements in the fieldset to remove                            
-    var $toRemove = $('input[name=' + fieldName + ']').parents('.' + classWrapper);    
+    var $toRemove = $('input[name=' + fieldName + ']').parents('.' + classWrapper);
+    if ($toRemove.size() === 0) {
+        $toRemove = $('input[name=' + fieldName + ']');
+    }
     //Mark the component as available
     $('ul#link-components-available').append($component);
         
@@ -115,6 +121,9 @@ function deathTimeInit() {
     $('#id_death_time').buttonset();
 }
 
+function deathDateInit() {
+    $('#death_date').datetimepicker();
+}
 initLinkComponents($('ul#link-components-available li'));
 
 

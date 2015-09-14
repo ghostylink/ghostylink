@@ -41,3 +41,38 @@ td.actions {
 td.actions a {
     margin-right: 0.3em;
 }
+#slider-range {
+    background: -webkit-linear-gradient(left, green , yellow, red); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, green,yellow, red); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, green,yellow, red); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, green , yellow, red); /* Standard syntax */  
+}
+
+#min_life, #max_life {
+    border:0;
+    width: 2em;
+    text-align: right;
+}
+
+[for="status-enabled"] span{
+    color:green;
+}
+
+[for="status-disabled"] span {
+    color:red;
+}
+
+section.panel, section#filters form {
+    padding: 0;
+}
+
+div#div-buttons {
+    text-align: center;
+}
+div#div-buttons button {
+    margin-bottom:0.1em;
+    margin-top:0.1em;
+}
+.ui-buttonset {
+    margin-right:0;
+}

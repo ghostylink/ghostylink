@@ -127,7 +127,9 @@ aside.link-stats.panel {
         line-height: inherit;
     }
 }
-
+section#link-information form div {
+    margin:auto;
+}
 section#link-information.unloaded {
     text-align: center;
     padding-top: 3em;

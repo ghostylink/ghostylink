@@ -16,7 +16,7 @@ function initAjaxSubmission() {
 
         // Let's select and cache all the fields
         var $inputs = $form.find("input, select, button, textarea");
-
+        $form.append('<input type="hidden" name="timezone-offset" value="' + new Date().getTimezoneOffset() + '"/>');
         // Serialize the data in the form
         var serializedData = $form.serialize();
         console.log(serializedData);
@@ -53,6 +53,7 @@ function initAjaxSubmission() {
                         componentsChosenClick($(this),$('ul#link-components-chosen'));
                     });
                     $('#id_death_time').buttonset();
+                    $('#death_date').datetimepicker();
                 });             
             }
             
@@ -99,6 +100,7 @@ function initCopyButton() {
         $('section.generated-link').prepend(span);
     });
 }
+
 $(function () {
     initAjaxSubmission(); 
     console.log($("form#links-add"));

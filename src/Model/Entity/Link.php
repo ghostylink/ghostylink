@@ -23,7 +23,8 @@ class Link extends Entity {
         'views' => true,
         'death_time' => true,
         'user_id' => true,
-        'status' => true
+        'status' => true,
+        'google_captcha' => true
     ];
 
     /**
@@ -44,18 +45,20 @@ class Link extends Entity {
     protected function _getLifePercentage() {
         $percentageViews = 0;
         $percentageTime = 0;
-        // FIXME this computation generate  warning on unit tests
-        if ($this->_properties['max_views'] != null) {
-            $percentageViews = (100.0 * $this->_properties['views']) / $this->_properties['max_views'];
+        if (isset($this->_properties['max_views'])) {
+            $percentageViews = (100.0 * $this->views) / $this->_properties['max_views'];
         }
         if ($this->_properties['death_time'] != null) {
             $currentTime = new Time();
             $created = new Time($this->_properties['created']);
             $death = new Time($this->_properties['death_time']);
             $elapseTime = $currentTime->diffInSeconds($created);
-            $totalTime = $death->diffInSeconds($created);
-            if ($totalTime != 0) {
+            $totalTime = $created->diffInSeconds($death, false);
+            if ($totalTime >= 0) {
                 $percentageTime = (100 * $elapseTime) / $totalTime;
+            }
+            else {
+                $percentageTime = 100;
             }
         }
         return min(100, max($percentageViews, $percentageTime));

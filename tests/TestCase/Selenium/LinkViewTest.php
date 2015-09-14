@@ -13,7 +13,7 @@ class LinkViewTest extends FunctionalTest
     // It has a max_views, check the information is not yet present
     $this->assertFalse($this->isTextPresent("Lorem ipsum dolor sit amet"));
     $this->assertFalse($this->isTextPresent("Lorem ipsum dolor sit amet, aliquet feugiat."));
-    $this->click("css=button#load-link");
+    $this->click("css=button#load-link-max_views");
     for ($second = 0; ; $second++) {
         if ($second >= 60) $this->fail("timeout");
         try {

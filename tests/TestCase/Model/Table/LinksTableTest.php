@@ -4,6 +4,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Table\LinksTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use Cake\I18n\Time;
 
 /**
  * App\Model\Table\LinksTable Test Case
@@ -148,7 +149,7 @@ class LinksTableTest extends TestCase
         $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
                             'Save: Field max_views is > 0');
         $this->assertArrayHasKey('max_views', $entity->errors());
-        
+
         $badData['max_views'] = -1;
         $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
                             'Save: Field max_views cannot be negative');
@@ -220,9 +221,9 @@ class LinksTableTest extends TestCase
         $insertedData = $this->Links->find('all')
                                 ->where(['Links.title =' => $goodData['title']])
                                 ->toArray()[0];
-        // FIXME Pass those tests
+        // FIXME Pass this test
         //$this->assertNotNull($insertedData->views,'views is not null');
-        //$this->assertEquals(0,$insertedData->views,'views counter is set to 0');
+        $this->assertEquals(0, $insertedData->views,'views counter is set to 0');
     }
 
     public function testIncreaseViews() {
@@ -275,5 +276,74 @@ class LinksTableTest extends TestCase
                               ->toArray()[0];
         $result = $this->Links->enable($enabledLink);
         $this->assertEquals(false, $result);
+    }
+
+    public function testFinderRangeLifeErrors() {
+        // Test min_life and max_life are required
+        $this->setExpectedException('BadFunctionCallException');
+        $this->Links->find('rangeLife');
+    }
+
+    public function testFinderRangeLife() {
+        // Check that the retrieved links have their life_percentage between the specified values
+        $MIN_LIFE = 90;
+        $MAX_LIFE = 96;
+
+        $array = $this->Links->find('rangeLife', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE])
+                                            ->toArray();
+        $this->assertEquals(count($array), 2, 'Exactly 1 links is retrieved by views');
+        foreach ($array as $value) {
+            $this->assertGreaterThanOrEqual($MIN_LIFE, $value->life_percentage);
+            $this->assertLessThanOrEqual($MAX_LIFE, $value->life_percentage);
+        }
+
+        // Test with death_time
+        $MIN_LIFE = 0;
+        $MAX_LIFE = 20;
+        $link = $this->Links->newEntity();
+        $goodData = $this->goodData;
+        $goodData['title'] = 'Title finder range life by death_time';
+        $link = $this->Links->patchEntity($link, $goodData);
+        //As setting current date will not impact mysql server, we need to insert manualy a new link
+        $link->death_time = $now = (new Time())->addHour();
+        $this->Links->save($link);
+        $array = $this->Links->find('rangeLife', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE])
+                                            ->where(['title' => 'Title finder range life by death_time'])->toArray();
+        $this->assertEquals(1, count($array), 'Exactly 1 links is retrieved by death_time');
+        $this->assertEquals($array[0]->title, 'Title finder range life by death_time', 'The retrieved link is the on expected');
+
+        $MIN_LIFE = 5;
+        $array = $this->Links->find('rangeLife', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE])
+                                            ->where(['title' => 'Title finder range life by death_time'])->toArray();
+        $this->assertEquals(0,  count($array), '0 links is retrieved by death_time');
+    }
+
+    public function testFinderHistory() {
+        // Check that the retrieved links have their life_percentage between the specified values
+        $MIN_LIFE = 90;
+        $MAX_LIFE = 96;
+
+        $array = $this->Links->find('history', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE, 'user_id' => 1])
+                                            ->toArray();
+        $this->assertEquals(count($array), 1, 'Exactly 1 links is retrieved by views');
+
+        $array = $this->Links->find('history', ['title' => 'I do not exist',
+                                                                      'min_life' => $MIN_LIFE ,
+                                                                      'max_life' => $MAX_LIFE, 'user_id' => 1])
+                                            ->toArray();
+        $this->assertEquals(count($array), 0, 'Test filter on title');
+
+        $array = $this->Links->find('history', ['status' => 1,
+                                                                      'min_life' => $MIN_LIFE ,
+                                                                      'max_life' => $MAX_LIFE, 'user_id' => 1])
+                                            ->toArray();
+        $this->assertEquals(count($array), 1, 'Test filter on status');
+    }
+
+    public function testFinderHistoryError() {
+        $MIN_LIFE = 90;
+        $MAX_LIFE = 96;
+        $this->setExpectedException('BadFunctionCallException');
+        $array = $this->Links->find('history', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE]);
     }
 }
