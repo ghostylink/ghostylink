@@ -133,10 +133,7 @@ class LinksController extends AppController
      */
     public function edit($id = null)
     {
-        $link = $this->Links->get($id, [
-            'contain' => []
-        ]);
-
+        $link = $this->Links->get($id);
         if ($link->user_id === null || $link->user_id !== $this->Auth->user('id')) {
             throw new UnauthorizedException();
         }
