@@ -18,14 +18,15 @@
     <article class="panel panel-primary">
         <section class="link-heading panel panel-heading">
             <h2><?= h($link->title) ?></h2>
-            Created on <time class="utc" data-utc-time="<?= $this->Time->format($link->created, 'MM/dd/YYYY hh:mm:ss a ') ?>UTC">
+            Created on <time datetime="<?= $this->Time->format($link->created, 'YYYY-MM-dd hh:mm:ss') ?>"
+                                          class="utc" data-utc-time="<?= $this->Time->format($link->created, 'MM/dd/YYYY hh:mm:ss a ') ?>UTC">
                 <?= _($link->created) ?></time>
             <?php
             if ($link->user_id && $user_id == $link->user_id) {
                 echo $this->Form->postLink('', ['_name' => 'link-delete', $link->id], ['confirm' => __("Are you sure you want to delete : '") . $link->title . "' ?",
                     'class' => 'glyphicon glyphicon-trash delete-link']);
             }
-            ?> </li>
+            ?>
         </section>
         <section class="link-content panel-body">
 <?= $this->Text->autoParagraph(h($link->content)); ?>

@@ -16,18 +16,18 @@ p.description {
 ul#link-components-available li{
     cursor:move !important;    
 }
-ul#link-components-chosen {    
+ul#link-components-chosen{    
     height:3em;    
-    font-style: italic;
+    
     text-align: center;
     border-color:#0088cc;
     border-style:dashed;
     border-width:1px;
     
 }
-ul#link-components-chosen span {
-    margin-top:0.8em;
-    display: block; 
+ul#link-components-chosen li.legend {    
+    font-style: italic;
+    font-size: 1.1em;
 }
 ul#link-components-chosen li{
     font-style: normal;

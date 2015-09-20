@@ -7,8 +7,8 @@
         echo $this->Form->create($link);
     }
     ?>
-    <legend>Create your ghost</legend>
     <fieldset>
+        <legend>Create your ghost</legend>
         <?php
             echo $this->Form->input('title', ['type' => 'text',
                                               'id' => 'inputTitle',
@@ -43,7 +43,7 @@
                     }
                 }
                 if ($componentsEmpty) {
-                    echo '<span class="legend">Drop some components here</span>';
+                    echo '<li class="legend">Drop some components here</li>';
                 }
             ?>
         </ul>

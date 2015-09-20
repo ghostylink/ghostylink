@@ -58,8 +58,8 @@ function moveLinkComponents($component, $targetArea){
         $fieldset.append('<input type="hidden" name="flag-' + nameNewField + '"/>');
         
         //No component was here, remove the legend
-        if($targetArea.children('li').size() === 0){
-            $targetArea.find('span.legend').remove();
+        if($targetArea.children('li').not('.legend').size() === 0){
+            $targetArea.find('li.legend').remove();
         }
         
         //Jquery ui put inline style (principaly positions) we do not want.
@@ -114,7 +114,7 @@ function componentsChosenClick($li, $dropArea) {
     
     //Restore legend if it was the last element
     if ($dropArea.children('li').size() === 0) {        
-        $dropArea.html('<span class="legend">Drop some components here</span>');
+        $dropArea.html('<li class="legend">Drop some components here</li>');
     }
 }
 function deathTimeInit() {
