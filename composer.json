@@ -23,7 +23,8 @@
         "phpunit/phpunit-selenium": ">=1.2",
         "cakephp/cakephp-codesniffer":"2.*",
         "fabpot/php-cs-fixer":"*",
-        "kevintweber/phpunit-markup-validators": "dev-master"
+        "kevintweber/phpunit-markup-validators": "dev-master",
+        "sebastian/phpcpd": "*"
     },
     "suggest": {
         "phpunit/phpunit": "Allows automated tests to be run without system-wide install.",

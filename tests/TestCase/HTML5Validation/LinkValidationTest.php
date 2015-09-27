@@ -5,8 +5,7 @@ use Kevintweber\PhpunitMarkupValidators\Assert\AssertHTML5;
 use Cake\I18n\Time;
 
 /**
- * @group HTML5Validation
- * @group Functional
+ * @group Quality
  */
 class LinkValidationTest extends IntegrationTestCase
 {
