@@ -23,7 +23,7 @@ function initAjaxSubmission() {
         var secretKey ;
         var ciphertext;
         if (noEncryptedContent !== "") {
-            secretKey = CryptoJS.lib.WordArray.random(32).toString(CryptoJS.enc.Base64);        
+            secretKey = CryptoJS.lib.WordArray.random(16).toString(CryptoJS.enc.Base64);        
             ciphertext = CryptoJS.AES.encrypt(noEncryptedContent, secretKey.toString());        
             $('[name="content"]').val(ciphertext.toString());        
         }
@@ -45,8 +45,7 @@ function initAjaxSubmission() {
         request.done(function (response, textStatus, jqXHR) {
             // Log a message to the console            
             var $responseHTML = $(response);
-            //Restore non encrypted message
-            $form.find('[name="content"]').val(noEncryptedContent);
+            //Restore non encrypted message            
             if($responseHTML.find('form').size() === 0) {
                 //No error have been found 
                 $('form[action="/add"] div.alert.alert-danger').remove();
@@ -66,6 +65,7 @@ function initAjaxSubmission() {
                     $('#death_date').datetimepicker();
                 });             
             }
+            $form.find('[name="content"]').val(noEncryptedContent);
             
         });
 
