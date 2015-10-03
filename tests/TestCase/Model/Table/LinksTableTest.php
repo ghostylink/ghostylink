@@ -32,6 +32,7 @@ class LinksTableTest extends TestCase
             'title' => 'I am not in danger ...',
             'content' => 'I am the danger !',
             'token' => 'Say my name',
+            'private_token' => 'You’re an insane, degenerate piece of filth, and you deserve to die.',
             'max_views' => 8,
     ];
 
@@ -45,6 +46,7 @@ class LinksTableTest extends TestCase
         parent::setUp();
         $config = TableRegistry::exists('Links') ? [] : ['className' => 'App\Model\Table\LinksTable'];
         $this->Links = TableRegistry::get('Links', $config);
+        $this->goodData['private_token'] = uniqid();
     }
 
     /**
@@ -225,7 +227,9 @@ class LinksTableTest extends TestCase
 
         //And the data inserted is ok
         $data = $goodData;
+        // Tokens are randomly generated, cannot be checked in this way
         unset($data['token']);
+        unset($data['private_token']);
         $this->assertArraySubset($data,
                           $this->Links->find('all')
                                       ->where(['Links.title =' => $goodData['title']])

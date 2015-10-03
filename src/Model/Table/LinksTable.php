@@ -5,7 +5,7 @@ namespace App\Model\Table;
 use App\Model\Entity\Link;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
-use Cake\Validation\Validator; 
+use Cake\Validation\Validator;
 
 /**
  * Links Model
@@ -97,7 +97,9 @@ class LinksTable extends Table
                 ->requirePresence('content', 'create')
                 ->notEmpty('content')
                 ->requirePresence('token', 'create')
+                ->requirePresence('private_token', 'create')
                 ->notEmpty('token')
+                ->notEmpty('private_token')
                 ->add('max_views', 'valid', ['rule' => 'numeric'])
                 ->add('max_views', 'valid', ['rule' => ['range', 1, 1000]]);
         return $validator;

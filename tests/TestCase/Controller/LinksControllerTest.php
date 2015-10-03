@@ -31,7 +31,8 @@ class LinksControllerTest extends IntegrationTestCase
             'title' => 'Heisenberg',
             'content' => 'Walter Hartwell « Walt » White.',
             'token' => 'Say my name',
-            'max_views' => 1
+            'max_views' => 1,
+            'private_token' => 'Stay out of my territory'
     ];
 
     private $csrf  =[null];
@@ -41,6 +42,7 @@ class LinksControllerTest extends IntegrationTestCase
         $this->cookie('csrfToken', $token);
         $this->goodData['_csrfToken'] = $token;
         $this->csrf ['_csrfToken'] = $token;
+        $this->goodData['private_token'] = uniqid();
         parent::setUp();
     }
 
