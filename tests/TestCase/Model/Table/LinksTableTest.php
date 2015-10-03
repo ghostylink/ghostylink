@@ -78,6 +78,7 @@ class LinksTableTest extends TestCase
         $this->assertEquals(1, $this->Links->hasField('views'));
         $this->assertEquals(1, $this->Links->hasField('max_views'),
                             'max_views field is present');
+        $this->assertEquals(1, $this->Links->hasField('private_token'));
     }
 
     /**
@@ -122,6 +123,30 @@ class LinksTableTest extends TestCase
         $goodData['title'] = 'titleTestTokenErrors';
 
         //Check tokens are unique
+        $this->Links->save($this->Links->newEntity($goodData));
+        $this->Links->save($this->Links->newEntity($goodData));
+        $result = $this->Links->find("all")
+                              ->where(['Links.title =' => $goodData['title']])
+                              ->toArray();
+        $this->assertNotEquals($result[0]->token, $result[1]->token,
+                                'Two similar links do not have same tokn');
+    }
+
+    /**
+     * Test errors on private token
+     */
+    public function testPrivateTokenErrors() {
+        $badData = $this->goodData;
+        unset($badData['private_token']);
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData)), 'Private token is required');
+
+        $badData['private_token'] = '';
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
+                    'Private token is not empty');
+
+         //Check private tokens are unique
+        $goodData = $this->goodData;
+        $goodData['title'] = 'titleTestPrivateTokenErrors';
         $this->Links->save($this->Links->newEntity($goodData));
         $this->Links->save($this->Links->newEntity($goodData));
         $result = $this->Links->find("all")

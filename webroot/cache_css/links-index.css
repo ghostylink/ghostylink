@@ -52,6 +52,9 @@ section.link-components  .panel-body{
 form[action="/add"] fieldset {
     margin-bottom:1em;
 }   
+.containt {
+    width:100%;
+}
 /******************************************************************************/
 /*********************** All link style ***************************************/
 div#left-block {
