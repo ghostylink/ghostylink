@@ -94,7 +94,6 @@ function initCopyButton() {
     $('button.link-copy').on("click", function () {
         var doc = document;
         var text = doc.getElementById('link-url');        
-        if (document.execCommand('copy', false, $('#link-url').text())) { return; }
         if (doc.body.createTextRange) { // ms
             var range = doc.body.createTextRange();            
             range.moveToElementText(text);
