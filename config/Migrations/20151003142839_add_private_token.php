@@ -16,10 +16,11 @@ class AddPrivateToken extends AbstractMigration
         $table->addColumn('private_token', 'string', [
             'default' => '',
             'null' => false,
-            'limit' => 50,
+            'limit' => 255,
         ]);
         $table->update();
-        $this->execute("update links set private_token = md5(token)");
+        // FIXME : uggly update procedure. MD5 is deterministic. need a random salt
+        $this->execute("update links set private_token = md5(UUID()) where private_token = ''");
         $table->addIndex('private_token', array('unique' => true));
         $table->update();
     }

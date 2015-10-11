@@ -21,17 +21,18 @@ class LinksController extends AppController
      * Specify actions authorized before authentification for Links controller.
      *
      * @param \App\Controller\Event $event event the filter is associated to
+     * @return void
      */
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['edit']);
+        $this->Auth->allow(['delete', 'edit']);
     }
 
     /**
      * Index method
      *
-     * @return void
+     * @return
      */
     public function index()
     {
@@ -43,7 +44,7 @@ class LinksController extends AppController
      * View method
      *
      * @param string|null $token Link token.
-     * @return void
+     * @return
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function view($token = null)
@@ -76,6 +77,12 @@ class LinksController extends AppController
         $this->set('link', $link);
     }
 
+    /**
+     * Check (if needed) if link is accessed by a real human
+     * @param Entity $link the link to check
+     * @return type
+     * @throws UnauthorizedException if captcha checking failed
+     */
     public function _check_robot($link) {
         $secret = '6LdmCQwTAAAAAPqT9OWI2gHcUOHVrOFoy7WCagFS';
         if ($link->google_captcha) {
@@ -110,14 +117,16 @@ class LinksController extends AppController
             $link = $this->Links->patchEntity($link, $this->request->data);
         }
 
-        // Initialize empty token to pass the validation
+        // FIXME: why we have to use this ?
         $link->token = "";
+        $link->private_token = "";
         if ($this->Links->save($link)) {
             //Redirect to the link view page
             $this->set('url', $link->token);
+            $this->set('private_token', $link->private_token);
             return $this->render('ajax/url', 'ajax');
         } else {
-            $this->layout = 'ajax';
+            $this->viewBuilder()->layout('ajax');
             $this->set(compact('link'));
             $this->set('_serialize', ['link']);
             return $this->render('add', 'ajax');
@@ -161,18 +170,25 @@ class LinksController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $link = $this->Links->get($id);
-
-        if ($link->user_id === null || $link->user_id !== $this->Auth->user('id')) {
+        $this->request->allowMethod(['get', 'post', 'delete']);
+        $link = $this->Links->findByPrivateToken($id)->first();
+ 
+        // Allow deletetion for everyone if the link is anonymous,
+        // Force to be link's owner for non anonymous link
+        if (!$link || $link->user_id !== $this->Auth->user('id')) {
             throw new UnauthorizedException();
         }
+
         if ($this->Links->delete($link)) {
-            $this->Flash->success('The link has been deleted.');
+            $this->Flash->success('The link \'' . $link->title . '\' has been deleted.');
         } else {
             $this->Flash->error('The link could not be deleted. Please, try again.');
         }
-        return $this->redirect(['action' => 'history']);
+        if ($this->Auth->user('id')) {
+            return $this->redirect(['action' => 'history']);
+        }
+        return $this->redirect(['action' => 'index']);
+
     }
 
     /**
@@ -203,7 +219,7 @@ class LinksController extends AppController
      * Enable method
      *
      * @param string|null $id Link id.
-     * @return void Redirects to history.
+     * @return Redirection previous page redirection.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function enable($id = null)

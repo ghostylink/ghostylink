@@ -50,7 +50,7 @@ function initAjaxSubmission() {
                 //No error have been found 
                 $('form[action="/add"] div.alert.alert-danger').remove();
                 $('section.generated-link').remove();
-                $responseHTML.find('.link-url').append("#" + secretKey);
+                $responseHTML.find('.link-url').first().append("#" + secretKey);
                 $('#main-content').append($responseHTML);
                 initCopyButton();
             }
@@ -105,9 +105,9 @@ function initCopyButton() {
             selection.removeAllRanges();
             selection.addRange(range);
         }
-        var span = $('<span class="copy-instruction label label-default">Press Ctrl-C to copy link</span>');
+        var span = $('<div class="copy-instruction"><span class="label label-default">Press Ctrl-C to copy link</span></div>');
         $('section.generated-link').find('span.copy-instruction').remove();
-        $('section.generated-link').prepend(span);
+        $('section.generated-link .link-wrapper').first().append(span);
     });
 }
 

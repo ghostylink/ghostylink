@@ -23,7 +23,8 @@
                 <?= _($link->created) ?></time>
             <?php
             if ($link->user_id && $user_id == $link->user_id) {
-                echo $this->Form->postLink('', ['_name' => 'link-delete', $link->id], ['confirm' => __("Are you sure you want to delete : '") . $link->title . "' ?",
+                echo $this->Form->postLink('', ['_name' => 'link-delete', $link->private_token],
+                        ['confirm' => __("Are you sure you want to delete : '") . $link->title . "' ?",
                     'class' => 'glyphicon glyphicon-trash delete-link']);
             }
             ?>

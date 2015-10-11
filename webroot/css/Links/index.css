@@ -62,6 +62,8 @@ div#left-block {
 }
 div.link-url {
     display: inline-block;
+    margin-bottom: 0;
+    font-size: 0.9em;
 }
 button.link-copy{
     height: 3em;
@@ -70,15 +72,18 @@ button.link-copy{
 
 section.generated-link .copy-instruction {
     margin-bottom: 0.3em !important;
-    display: inline-block;
-}
-section.generated-link {
     text-align: center;
+}
+section.generated-link {    
     margin-top: 1em;
 }
 
 form.link-add button {
     margin-top:2em !important;
+}
+
+.link-wrapper span{
+    padding-top: 0.5em;
 }
 /****************************************************************************************************/
 .glyphicon-recaptcha {

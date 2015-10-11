@@ -13,8 +13,9 @@ class TokenableBehavior extends Behavior
         'title' => 'title',
         'date' => 'created',
         'token' => 'token',
+        'private_token' => 'private_token'
     ];
-    
+
     /**
      * Tokenize an entity on his title and date concatenation
      * @param Entity $entity the entity to generate token on
@@ -26,8 +27,10 @@ class TokenableBehavior extends Behavior
         $title = $entity->get($config['title']);
         $date = $entity->get($config['date']);
         $entity->set($config['token'], md5(uniqid($title . $date, true)));
+        $private_token = base64_encode(sha1(uniqid($title . $date, true)));
+        $entity->set($config['private_token'], $private_token);
     }
-    
+
     /**
      * Behaviour before the entity saving
      * @param Event $event the event which is triggered

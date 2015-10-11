@@ -282,13 +282,24 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public function testDelete()
     {
-        // User cannot delete a link he has no right on
-        $this->post('/delete/1', $this->csrf);
-        $this->assertRedirect("/login");
-        $this->_authenticateUser(1);
-        $this->post('/delete/1', $this->csrf);
-        $this->assertResponseError();
+        // Non loged in user can delete a link using the private token
+        // Get link from first fixture
+        $links = TableRegistry::get('Links');
+        $data = $links->get(2);
+        $this->get('/delete/hYmU0Y2I0YmM0YmMTQwYjRkMTlmNWY4ZWQ5OTVmMmVJiZDE1Y2NkZg==', $this->csrf);
 
+        $this->assertResponseSuccess();
+        // Check deletion
+        $query = $links->find()->where(['private_token' => $data['private_token']]);
+        $this->assertEquals(0, $query->count());
+
+
+        // User cannot delete a link he has no right on
+        $this->post('/delete/MTQwYjRkMTlmNWY4ZWQ5OTVmMmVhYmU0Y2I0YmM0YmJiZDE1Y2NkZg==', $this->csrf);
+        $this->assertResponseError();
+        $this->_authenticateUser(1);
+        $this->post('/delete/MTQwYjRkMTlmNWY4ZWQ5OTVmMmVhYmU0Y2I0YmM0YmJiZDE1Y2NkZg==', $this->csrf);
+        $this->assertResponseError();
 
         $this->_authenticateUser(0);
         //link 2 does not belong to user in fixture 0
@@ -300,7 +311,7 @@ class LinksControllerTest extends IntegrationTestCase
         $data = $links->get(1);
 
         // Delete this one
-        $this->post('/delete/1', $this->csrf);
+        $this->post('/delete/MTQwYjRkMTlmNWY4ZWQ5OTVmMmVhYmU0Y2I0YmM0YmJiZDE1Y2NkZg==', $this->csrf);
         $this->assertResponseSuccess();
 
         // Check if the data has been modified in database
