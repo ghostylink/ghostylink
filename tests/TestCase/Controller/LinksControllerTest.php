@@ -124,6 +124,10 @@ class LinksControllerTest extends IntegrationTestCase
     }
 
     public function testViewLockedByCaptcha() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $this->get('/427103fc86a164ccc6a835ea6gd00273');
+        $this->assertResponseError();
+        
         $this->get('/427103fc86a164ccc6a835ea6gd00273');
         $this->assertResponseContains('id="load-link-captcha"');
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';

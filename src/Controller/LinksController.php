@@ -59,10 +59,9 @@ class LinksController extends AppController
             if (!$this->Links->increaseLife($link)) {
                   throw new NotFoundException();
             }
-            if (key_exists('g-recaptcha-response', $this->request->data)) {
-                  return $this->_check_robot($link);
+            if ($link->google_captcha) {
+                $this->_check_robot($link);
             }
-
             $this->set('link', $link);
             return $this->render('ajax/information', 'ajax');
         } else {
@@ -85,16 +84,17 @@ class LinksController extends AppController
      */
     public function _check_robot($link) {
         $secret = '6LdmCQwTAAAAAPqT9OWI2gHcUOHVrOFoy7WCagFS';
-        if ($link->google_captcha) {
-            $recaptcha = new \ReCaptcha\ReCaptcha($secret);
-            $resp = $recaptcha->verify($this->request->data['g-recaptcha-response'], $this->request->clientIp());
-            if ($resp->isSuccess()) {
-                $this->set('link', $link);
-                return $this->render('ajax/information', 'ajax');
-            } else {
-                $errors = $resp->getErrorCodes();
-                throw new UnauthorizedException();
-            }
+        if (! key_exists('g-recaptcha-response', $this->request->data)) {
+              throw new UnauthorizedException();
+        }
+        $recaptcha = new \ReCaptcha\ReCaptcha($secret);
+        $resp = $recaptcha->verify($this->request->data['g-recaptcha-response'], $this->request->clientIp());
+        if ($resp->isSuccess()) {
+            $this->set('link', $link);
+            return $this->render('ajax/information', 'ajax');
+        } else {
+            $errors = $resp->getErrorCodes();
+            throw new UnauthorizedException();
         }
     }
 
