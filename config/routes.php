@@ -61,6 +61,7 @@ Router::scope('/', function ($routes) {
     $routes->connect('me/edit', ['controller' => 'Users', 'action' => 'edit']);
     $routes->connect('me/delete', ['controller' => 'Users', 'action' => 'delete'], ['_name' => 'user-delete']);
     $routes->connect(':token', ['controller' => 'Links', 'action' => 'view'], ['_name' => 'link-view', 'token' => '\w{32}', 'pass' => ['token']]);
+    $routes->connect('sendMail', ['controller' => 'Users', 'action' => 'sendMail']);
     //die(Router::url(['_name' => 'link-view']));
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

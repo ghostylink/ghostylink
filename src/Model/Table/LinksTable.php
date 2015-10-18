@@ -193,6 +193,7 @@ class LinksTable extends Table
         $query->param['max_life'] = $options['max_life'];
 
         return $query->find('all')->where(function ($exp, $q) {
+                    // MySQL specific code here
                     $filter = 'GREATEST(IFNULL(LEAST(100, Links.views * 100.0 / Links.max_views),0),
                                                 IFNULL(LEAST(100,(datediff(CURRENT_TIMESTAMP, Links.created) * 100.0 ) ' .
                             '/ datediff(Links.death_time, Links.created)),0)) ';

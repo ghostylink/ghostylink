@@ -172,7 +172,7 @@ class LinksController extends AppController
     {
         $this->request->allowMethod(['get', 'post', 'delete']);
         $link = $this->Links->findByPrivateToken($id)->first();
- 
+
         // Allow deletetion for everyone if the link is anonymous,
         // Force to be link's owner for non anonymous link
         if (!$link || $link->user_id !== $this->Auth->user('id')) {

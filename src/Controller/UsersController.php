@@ -4,14 +4,16 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Mailer\MailerAwareTrait;
 
 /**
  * Users Controller
  *
  * @property \App\Model\Table\UsersTable $Users
  */
-class UsersController extends AppController {
-
+class UsersController extends AppController
+{
+    use MailerAwareTrait;
     /**
      * Add method
      *
@@ -120,4 +122,15 @@ class UsersController extends AppController {
         $this->Auth->allow(['add', 'logout']);
     }
 
-}
+    public function sendMail()
+    {
+         $usersToAlert = $this->Users->find('needMailAlert')->all();
+            foreach ($usersToAlert as $user) {
+                $this->getMailer('Link')->send('notification',['user' => $user,
+                                                                                      "links" => $user->getLinksAlmostGhostified()]);
+         }
+            //debug($user->getLinksAlmostGhostified());
+
+        }
+
+        }

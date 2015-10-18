@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\ORM\Query;
 use Cake\Validation\Validator;
 
 /**
@@ -33,7 +34,7 @@ class UsersTable extends Table
             'foreignKey' => 'user_id',
             'dependent' => true
         ]);
-        //$this->displayField('Links');
+        //$this->displayField('links');
     }
 
     /**
@@ -89,6 +90,22 @@ class UsersTable extends Table
         return $validator;
     }
 
+    /**
+     * Find all users who need a mail alert
+     * @param \Cake\ORM\Query query
+     * @param options
+     */
+    public function findNeedMailAlert(Query $query, array $options)
+    {
+        return $query->find('all')->matching('Links', function($q) {
+            return $q->find('rangeLife', ["min_life" => 66, "max_life" => 100]);
+        })
+        ->where(function ($exp, $q) {
+            return $exp->isNotNull('email');
+        })
+        ->group('Users.id')
+        ->having(['count(*) >' > 0]);;
+    }
     /**
      * Returns a rules checker object that will be used for validating
      * application integrity.
