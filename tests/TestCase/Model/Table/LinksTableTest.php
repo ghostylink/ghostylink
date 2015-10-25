@@ -320,7 +320,7 @@ class LinksTableTest extends TestCase
 
         $array = $this->Links->find('rangeLife', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE])
                                             ->toArray();
-        $this->assertEquals(count($array), 2, 'Exactly 1 links is retrieved by views');
+        $this->assertEquals(count($array), 3, 'Exactly 1 links is retrieved by views');
         foreach ($array as $value) {
             $this->assertGreaterThanOrEqual($MIN_LIFE, $value->life_percentage);
             $this->assertLessThanOrEqual($MAX_LIFE, $value->life_percentage);
@@ -374,5 +374,10 @@ class LinksTableTest extends TestCase
         $MAX_LIFE = 96;
         $this->setExpectedException('BadFunctionCallException');
         $array = $this->Links->find('history', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE]);
+    }
+
+    public function testFinderNeedMailAlert() {        ;
+        $array = $this->Links->find('needMailAlert');
+        $this->assertEquals(count($array), 1, 'Test filter on mail alert');
     }
 }

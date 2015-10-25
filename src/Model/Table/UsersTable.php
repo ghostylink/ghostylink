@@ -98,13 +98,13 @@ class UsersTable extends Table
     public function findNeedMailAlert(Query $query, array $options)
     {
         return $query->find('all')->matching('Links', function($q) {
-            return $q->find('rangeLife', ["min_life" => 66, "max_life" => 100]);
+            return $q->find('needMailAlert');
         })
         ->where(function ($exp, $q) {
             return $exp->isNotNull('email');
         })
         ->group('Users.id')
-        ->having(['count(*) >' > 0]);;
+        ->having(['count(*) >' > 0]);
     }
     /**
      * Returns a rules checker object that will be used for validating

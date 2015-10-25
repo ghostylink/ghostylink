@@ -36,6 +36,7 @@ class LinksFixture extends TestFixture
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'token' => ['type' => 'unique', 'columns' => ['token'], 'length' => []],
+            'private_token' => ['type' => 'unique', 'columns' => ['token'], 'length' => []],
             'links_ibfk_1' => ['type' => 'foreign', 'columns' => ['user_id'], 'references' => ['users', 'id'], 'update' => 'noAction', 'delete' => 'cascade', 'length' => []],
         ],
         '_options' => [
@@ -300,5 +301,35 @@ class LinksFixture extends TestFixture
             'user_id' => 3,
             'google_captcha' => 1
         ],
+        [
+            'id' => 19,
+            'title' => '80% life',
+            'content' => 'content of id 19',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => 'a86gd0023fc86a2710164ccc63',
+            'private_token' => 'kMTY4ZhJiWwYjRVmWE1Y2NI0mYZYQ5O0Ymk0mDUmMTQVglmNMZT2Y==',
+            'max_views' => 10,
+            'views' => 8,
+            'death_time' =>null,
+            'status' => 1,
+            'user_id' => 3,
+            'google_captcha' => 1
+        ],
+         [
+            'id' => 20,
+            'title' => '90% life',
+            'content' => 'content of id 20',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => 'a03fc86a164ccc6386gd00235ea74271',
+            'private_token' => 'kMT0Ymk0mDUY4ZhYQ5OmMTQVJiWwYjRVmWE1Y2NI0mYZglmNMZT2Y==',
+            'max_views' => 10,
+            'views' => 9,
+            'death_time' =>null,
+            'status' => 1,
+            'user_id' => 4,
+            'google_captcha' => 0
+        ]
     ];
 }

@@ -235,4 +235,19 @@ class LinksTable extends Table
         return $query;
     }
 
+    /**
+     *  Find all links needing a mail alert
+     * @param Query $query
+     * @param array $options
+     */
+    function findNeedMailAlert(Query $query, array $options)
+    {
+        $query->param['min_life'] = 66;
+        $query->find('rangeLife', ['min_life' => 66, 'max_life' => 100])
+                ->matching('AlertParameters', function($q) {
+                    return $q->where(['sending_status' => 0, 'type' => 'email']);
+        });
+        return $query;
+    }
+
 }
