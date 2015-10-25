@@ -208,9 +208,6 @@ class UsersTableTest extends TestCase
         $this->assertFalse($this->Users->save($user), 'Too lonog password implies non saving');
     }
 
-    /**
-     * @group Develop
-     */
     public function testFindNeedMailAlert()
     {
         $users = $this->Users->find('needMailAlert')->all();
