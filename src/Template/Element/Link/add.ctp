@@ -27,11 +27,13 @@
                 $components = ['max_views' => 'eye-open',
                                           'death_time' => 'time',
                                           'google_captcha' => 'recaptcha',
-                                          'death_date' => 'calendar'];
+                                          'death_date' => 'calendar',
+                                          'ghostification_alert' => 'bell'];
                 $content = ['max_views' => '',
-                                          'death_time' => '',
-                                          'google_captcha' => '_',
-                                          'death_date' => '']; // artificial content to have same height on google_captcha
+                                    'death_time' => '',
+                                    'google_captcha' => '_',
+                                    'death_date' => '',
+                                    'ghostification_alert' => '']; // artificial content to have same height on google_captcha
                 $componentsEmpty = true;
                 foreach ($components as $field => $cssClass) {
                     if (isset($_POST['flag-' . $field])) {
@@ -62,6 +64,9 @@
         }
          if(isset($_POST['flag-death_date'])) {
             echo $this->element("Link/Components/death_date");
+        }
+        if(isset($_POST['flag-ghostification_alert'])) {
+            echo $this->element("Link/Components/ghostification_alert");
         }
         ?>
     </fieldset>

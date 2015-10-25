@@ -22,6 +22,14 @@
             <li data-related-field="death_date" class="glyphicon  glyphicon-calendar label label-primary ui-widget-header"
                 data-field-js-function = "deathDateInit"
                   data-field-html="<?= htmlspecialchars($this->element("Link/Components/death_date"))  ?>"> Date limit</li>
+            <?php
+                if ($this->request->session()->read('Auth.User.username')) {
+                    ?>
+                    <li data-related-field="ghostification_alert" class="glyphicon  glyphicon-bell label label-primary ui-widget-header"
+                  data-field-html="<?= htmlspecialchars($this->element("Link/Components/ghostification_alert"))  ?>"> Ghostification alert</li>
+                    <?php
+                }
+                ?>
         </ul>
     </div>
 </section>

@@ -22,6 +22,7 @@ class LinksTable extends Table
     public function initialize(array $config)
     {
         $this->table('links');
+        $this->hasOne('AlertParameters');
         $this->displayField('title');
         $this->displayField('max_views');
         $this->displayField('views');
@@ -233,4 +234,5 @@ class LinksTable extends Table
         }
         return $query;
     }
+
 }

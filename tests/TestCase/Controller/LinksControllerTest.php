@@ -20,7 +20,8 @@ class LinksControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'Links' => 'app.links',
-        'Users' => 'app.users'
+        'Users' => 'app.users',
+        'AlertParameters' => 'app.alert_parameters'
     ];
 
     /**
@@ -32,7 +33,7 @@ class LinksControllerTest extends IntegrationTestCase
             'content' => 'Walter Hartwell « Walt » White.',
             'token' => 'Say my name',
             'max_views' => 1,
-            'private_token' => 'Stay out of my territory'
+            'private_token' => 'Stay out of my territory',
     ];
 
     private $csrf  =[null];
@@ -127,7 +128,7 @@ class LinksControllerTest extends IntegrationTestCase
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $this->get('/427103fc86a164ccc6a835ea6gd00273');
         $this->assertResponseError();
-        
+
         $this->get('/427103fc86a164ccc6a835ea6gd00273');
         $this->assertResponseContains('id="load-link-captcha"');
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
@@ -215,6 +216,20 @@ class LinksControllerTest extends IntegrationTestCase
         $this->_logoutUser();
     }
 
+    public function testAddWithAlertComponent() {
+        $this->_authenticateUser(0);
+        $data = $this->goodData;
+        $data['title'] = 'Add with alert component';
+        $data['ghostification_alert'] = true;
+        $this->post('/add', $data);
+        $this->assertResponseSuccess();
+        $links = TableRegistry::get('Links');
+        $result = $links->find()->where(['title' => $data['title']])->first();
+        $paramResults = TableRegistry::get('alert_parameters')->find()->where(['link_id' => $result->id])->first();
+
+        $this->assertEquals($result->id, $paramResults->link_id, 'Alert parameters are stored');
+
+    }
     private function checkTokenGeneration() {
         $goodData = $this->goodData;
         $links = TableRegistry::get('Links');
