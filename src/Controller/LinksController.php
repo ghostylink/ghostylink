@@ -57,10 +57,10 @@ class LinksController extends AppController
         if ($this->request->is('ajax')) {
             //Check the link has not been seen by an other people
             if (!$this->Links->increaseLife($link)) {
-                  throw new NotFoundException();
+                throw new NotFoundException();
             }
             if ($link->google_captcha) {
-                $this->_check_robot($link);
+                $this->checkRobot($link);
             }
             $this->set('link', $link);
             return $this->render('ajax/information', 'ajax');
@@ -79,13 +79,14 @@ class LinksController extends AppController
     /**
      * Check (if needed) if link is accessed by a real human
      * @param Entity $link the link to check
-     * @return type
+     * @return \Cake\Network\Response the view information as ajax
      * @throws UnauthorizedException if captcha checking failed
      */
-    public function _check_robot($link) {
+    public function checkRobot($link)
+    {
         $secret = '6LdmCQwTAAAAAPqT9OWI2gHcUOHVrOFoy7WCagFS';
-        if (! key_exists('g-recaptcha-response', $this->request->data)) {
-              throw new UnauthorizedException();
+        if (!key_exists('g-recaptcha-response', $this->request->data)) {
+            throw new UnauthorizedException();
         }
         $recaptcha = new \ReCaptcha\ReCaptcha($secret);
         $resp = $recaptcha->verify($this->request->data['g-recaptcha-response'], $this->request->clientIp());
@@ -121,7 +122,7 @@ class LinksController extends AppController
         $link->token = "";
         $link->private_token = "";
         if ($this->Links->save($link)) {
-            $this->_addAlertParams($this->request->data, $link->id);
+            $this->addAlertParams($this->request->data, $link->id);
             //Redirect to the link view page
             $this->set('url', $link->token);
             $this->set('private_token', $link->private_token);
@@ -140,11 +141,11 @@ class LinksController extends AppController
      * @param int $linkId the link id
      * @return type
      */
-    private function _addAlertParams($data, $linkId)
+    private function addAlertParams($data, $linkId)
     {
-        if (array_key_exists('ghostification_alert', $data) && $data['ghostification_alert'] && $this->Auth->user("id"))
-        {
-            $data['link_id'] = $linkId;
+        $alert_component = array_key_exists('ghostification_alert', $data) && $data['ghostification_alert'];
+        if ($alert_component&& $this->Auth->user("id")) {
+            $data['AlertParameters']['link_id'] = $linkId;
             $parameters = $this->Links->AlertParameters->newEntity($data);
             if (!$this->Links->AlertParameters->save($parameters)) {
                 $this->Flash->error('Impossible to store alert component.');
@@ -208,7 +209,6 @@ class LinksController extends AppController
             return $this->redirect(['action' => 'history']);
         }
         return $this->redirect(['action' => 'index']);
-
     }
 
     /**
@@ -277,10 +277,10 @@ class LinksController extends AppController
             'limit' => 5,
             'finder' => [
                 'history' => ['min_life' => $min_life,
-                                     'max_life' => $max_life,
-                                     'status' => $status,
-                                     'title' => $title,
-                                     'user_id' => $this->Auth->user('id')]
+                    'max_life' => $max_life,
+                    'status' => $status,
+                    'title' => $title,
+                    'user_id' => $this->Auth->user('id')]
             ],
             'conditions' => [
                 'Links.user_id' => $this->Auth->user('id'),

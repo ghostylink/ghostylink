@@ -124,6 +124,19 @@ function deathTimeInit() {
 function deathDateInit() {
     $('#death_date').datetimepicker();
 }
+
+function alertComponentInit() {    
+    $('#slider-default_threshold').slider({
+        range: "max",
+        min: 0,
+        max: 100,
+        value:$('input#default_threshold').val(),
+        slide: function (event, ui) {
+            $('input#default_threshold').val(ui.value);
+        }
+    });
+    $("#slider-range-max").slider("value",$('input#default_threshold').val());    
+}
 initLinkComponents($('ul#link-components-available li'));
 
 

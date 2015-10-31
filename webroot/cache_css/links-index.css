@@ -99,6 +99,20 @@ ul#link-components-chosen .glyphicon.glyphicon-recaptcha.label {
     color: transparent;    
 }
 
+/********************************************** Alert Component style **********************************/
+#slider-default_threshold {    
+    margin-bottom: 1em;
+    background: green;
+}
+
+div#slider-default_threshold div.ui-slider-range-max {
+    background: red !important;
+    border-radius: 0;
+}
+#default_threshold {
+    border:none;
+}
+
 .xdsoft_datetimepicker {
 	box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.506);
 	background: #fff;

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Links table file
+ */
 namespace App\Model\Table;
 
 use App\Model\Entity\Link;
@@ -16,8 +18,8 @@ class LinksTable extends Table
     /**
      * Initialize method
      *
-     * @param array $config The configuration for the Table.
-     * @return void
+     *  @param array $config The configuration for the Table.
+     *  @return void
      */
     public function initialize(array $config)
     {
@@ -53,10 +55,10 @@ class LinksTable extends Table
     }
 
     /**
-     * Default validation rules.
+     *  Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     *  @param \Cake\Validation\Validator $validator Validator instance.
+     *  @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator)
     {
@@ -94,7 +96,7 @@ class LinksTable extends Table
                 ->add('title', ['length' => [
                         'rule' => ['maxLength', 100],
                         'message' => 'Titles need to be at least 10 characters long',
-            ]])
+                ]])
                 ->requirePresence('content', 'create')
                 ->notEmpty('content')
                 ->requirePresence('token', 'create')
@@ -184,7 +186,7 @@ class LinksTable extends Table
      * @param array $options required key : min_life, the minimal life of links to retrieve
      *                                                                 max_life the maximal life of links to retrieve
      */
-    function findRangeLife(Query $query, array $options)
+    public function findRangeLife(Query $query, array $options)
     {
         if (!isset($options['min_life']) || !isset($options['max_life'])) {
             throw new \BadFunctionCallException();
@@ -199,7 +201,7 @@ class LinksTable extends Table
                                                 IFNULL(LEAST(100,(datediff(CURRENT_TIMESTAMP, Links.created) * 100.0 ) ' .
                             '/ datediff(Links.death_time, Links.created)),0)) ';
                     return $exp->between($filter, $q->param['min_life'], $q->param['max_life']);
-                });
+        });
     }
 
     /**
@@ -213,7 +215,7 @@ class LinksTable extends Table
      * @return Query the built query
      * @throws \BadFunctionCallException
      */
-    function findHistory(Query $query, array $options)
+    public function findHistory(Query $query, array $options)
     {
         if (!isset($options['user_id'])) {
             throw new \BadFunctionCallException();
@@ -240,14 +242,13 @@ class LinksTable extends Table
      * @param Query $query
      * @param array $options
      */
-    function findNeedMailAlert(Query $query, array $options)
+    public function findNeedMailAlert(Query $query, array $options)
     {
         $query->param['min_life'] = 66;
         $query->find('rangeLife', ['min_life' => 66, 'max_life' => 100])
-                ->matching('AlertParameters', function($q) {
-                    return $q->where(['sending_status' => 0, 'type' => 'email']);
-        });
+                   ->matching('AlertParameters', function ($q) {
+                        return $q->where(['sending_status' => 0, 'type' => 'email']);
+                   });
         return $query;
     }
-
 }

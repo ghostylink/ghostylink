@@ -15,3 +15,20 @@ and open the template in the editor.
 form #edit-user {
     margin-bottom: 1em;
 }
+
+input[type="password"] {
+    margin-bottom: 1em;
+}
+
+#slider-default_threshold {    
+    margin-bottom: 1em;
+    background: green;
+}
+
+div#slider-default_threshold div.ui-slider-range-max {
+    background: red !important;
+    border-radius: 0;
+}
+[name="default_threshold"] {
+    border:none;
+}

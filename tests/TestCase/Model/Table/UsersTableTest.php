@@ -72,6 +72,7 @@ class UsersTableTest extends TestCase
         $this->assertEquals(1, $this->Users->hasField('username'));
         $this->assertEquals(1, $this->Users->hasField('email'));
         $this->assertEquals(1, $this->Users->hasField('password'));
+        $this->assertEquals(1, $this->Users->hasField('default_threshold'));
     }
 
     /**
@@ -208,6 +209,18 @@ class UsersTableTest extends TestCase
         $this->assertFalse($this->Users->save($user), 'Too lonog password implies non saving');
     }
 
+    public function testErrorsLifeThreshold()
+    {
+        $badData = $this->goodData;
+        $user = $this->Users->newEntity();
+        $badData['default_threshold'] = -1;
+        $user = $this->Users->patchEntity($user, $badData);
+        $this->assertFalse($this->Users->save($user), 'Negative life threshold is not allowed');
+
+        $badData['default_threshold'] = 101;
+        $user = $this->Users->patchEntity($user, $badData);
+        $this->assertFalse($this->Users->save($user), 'More than 100 life threshold not allowed');
+    }
     public function testFindNeedMailAlert()
     {
         $users = $this->Users->find('needMailAlert')->all();

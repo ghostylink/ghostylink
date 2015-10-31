@@ -20,7 +20,8 @@ class User extends Entity {
         'username' => true,
         'password' => true,
         'email' => true,
-        'links' => true
+        'links' => true,
+        'default_threshold' => true
     ];
 
     protected function _setPassword($password) {

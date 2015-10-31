@@ -8,7 +8,8 @@ use Cake\ORM\Entity;
 /**
  * Link Entity.
  */
-class Link extends Entity {
+class Link extends Entity
+{
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -64,5 +65,4 @@ class Link extends Entity {
         }
         return min(100, max($percentageViews, $percentageTime));
     }
-
 }

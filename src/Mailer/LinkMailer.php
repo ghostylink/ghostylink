@@ -3,8 +3,7 @@ namespace App\Mailer;
 
 use Cake\Mailer\Mailer;
 
-class LinkMailer extends Mailer
-{
+class LinkMailer extends Mailer {
 
     /**
      * Send notifications for nearly ghostyified links

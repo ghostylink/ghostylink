@@ -5,6 +5,7 @@ use App\Controller\LinksController;
 use Cake\TestSuite\IntegrationTestCase;
 use Cake\ORM\TableRegistry;
 use Cake\I18n\Time;
+
 /**
  * App\Controller\LinksController Test Case
  * @group Unit
@@ -221,6 +222,7 @@ class LinksControllerTest extends IntegrationTestCase
         $data = $this->goodData;
         $data['title'] = 'Add with alert component';
         $data['ghostification_alert'] = true;
+        $data['AlertParameters']['life_threshold'] = 40;
         $this->post('/add', $data);
         $this->assertResponseSuccess();
         $links = TableRegistry::get('Links');
@@ -228,6 +230,7 @@ class LinksControllerTest extends IntegrationTestCase
         $paramResults = TableRegistry::get('alert_parameters')->find()->where(['link_id' => $result->id])->first();
 
         $this->assertEquals($result->id, $paramResults->link_id, 'Alert parameters are stored');
+        $this->assertEquals($paramResults->life_threshold, 40, 'Custom life threshold defined');
 
     }
     private function checkTokenGeneration() {

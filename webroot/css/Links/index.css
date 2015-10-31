@@ -98,3 +98,17 @@ ul#link-components-chosen .glyphicon.glyphicon-recaptcha.label {
     background-size: 60% auto;
     color: transparent;    
 }
+
+/********************************************** Alert Component style **********************************/
+#slider-default_threshold {    
+    margin-bottom: 1em;
+    background: green;
+}
+
+div#slider-default_threshold div.ui-slider-range-max {
+    background: red !important;
+    border-radius: 0;
+}
+#default_threshold {
+    border:none;
+}

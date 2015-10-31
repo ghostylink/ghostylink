@@ -21,6 +21,7 @@ class UsersFixture extends TestFixture
         'username' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'password' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'email' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'default_threshold' => ['type' => 'integer', 'null' => false, 'default' => 66],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'UNIQUE_USERNAME' => ['type' => 'unique', 'columns' => ['username'], 'length' => []],
