@@ -67,7 +67,7 @@ class AlertParametersFixture extends TestFixture
             'id' => 4,
             'life_threshold' => 1,
             'type' => 'email',
-            'sending_status' => 0, // Should not be retrieved in finders
+            'sending_status' => 0,
             'link_id' => 19 // Should not be retrieved in needMailAlert, link owner does not have email address defined
         ]
     ];

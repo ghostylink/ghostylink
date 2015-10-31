@@ -4,6 +4,7 @@ namespace App\Shell;
 
 use Cake\Console\Shell;
 use Cake\Mailer\Email;
+use Cake\Mailer\MailerAwareTrait;
 
 /**
  * Class to send email from the command line interface
@@ -11,6 +12,7 @@ use Cake\Mailer\Email;
 class MailerShell extends Shell
 {
 
+    use MailerAwareTrait;
     /**
      * Initialize the shell mailer
      */
@@ -44,31 +46,27 @@ class MailerShell extends Shell
         foreach ($this->Users->find('needMailAlert')->all() as $user) {
             $updatedIds = [];
             $email = new Email('default');
-            $links = $this->Links->find('needMailAlert')->where(['user_id' => $user->id])->all();
+            $links = $this->Links->find('needMailAlert')->contain('AlertParameters')
+                                              ->where(['user_id' => $user->id])->all();
 
             foreach ($links as $link) {
                 array_push($updatedIds, $link->id);
             }
 
-            $email->from(['me@example.com' => 'My Site'])
-                    ->to($user->email)
-                    ->subject('You have links nearly ghostified')
-                    ->template('notification')
-                    ->emailFormat('html')
-                    ->viewVars(['links' => $links])
-                    ->send('My message');
+            $params = ['user' => $user,
+                                "links" => $links];
+            $this->getMailer('Link')->send('notification', $params);
 
             $alertParams->param['updatedIds'] = $updatedIds;
-            $alertParams->update()
-                    ->set(['sending_status' => true])
-                    ->where(function ($exp, $q) {
-                        return $exp->in('link_id', $q->param['updatedIds']);
-                    });
-            $alertParams->execute();
-            
+//            $alertParams->update()
+//                    ->set(['sending_status' => true])
+//                    ->where(function ($exp, $q) {
+//                        return $exp->in('link_id', $q->param['updatedIds']);
+//                    });
+//            $alertParams->execute();
+
             // TODO log email sending if success
             $this->out($user->email);
         }
     }
-
 }

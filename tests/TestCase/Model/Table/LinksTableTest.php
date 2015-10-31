@@ -21,7 +21,8 @@ class LinksTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'Links' => 'app.links'
+        'Links' => 'app.links',
+        "AlertParamters" => 'app.alert_parameters'
     ];
 
     /**
@@ -46,6 +47,8 @@ class LinksTableTest extends TestCase
         parent::setUp();
         $config = TableRegistry::exists('Links') ? [] : ['className' => 'App\Model\Table\LinksTable'];
         $this->Links = TableRegistry::get('Links', $config);
+        $config = TableRegistry::exists('Links') ? [] : ['className' => 'App\Model\Table\AlertParameterTable'];
+        $this->AlertParameters = TableRegistry::get('AlertParameters', $config);
         $this->goodData['private_token'] = uniqid();
     }
 
@@ -376,8 +379,21 @@ class LinksTableTest extends TestCase
         $array = $this->Links->find('history', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE]);
     }
 
-    public function testFinderNeedMailAlert() {        ;
-        $array = $this->Links->find('needMailAlert');
-        $this->assertEquals(count($array), 1, 'Test filter on mail alert');
+    /**
+     * @group Develop
+     */
+    public function testFinderNeedMailAlert() {
+        $array = $this->Links->find('needMailAlert')->all();
+        $this->assertEquals(2, count($array),  'Test filter on mail alert');
+
+         // Change the life threshold of one of the link to a higher value then the life_percentage;
+         $linkToChange = $array->first();
+        $alertToChange = $this->AlertParameters->find('all')->where(["link_id" => $linkToChange->id])->first();
+        $alertToChange->life_threshold = $linkToChange->life_percentage + 5;
+        $this->AlertParameters->save($alertToChange);
+         $array = $this->Links->find('needMailAlert')->contain('AlertParameters')->all();
+         $this->assertEquals(1, $array->count(),
+                                                        'Need mail alert finder take in account the alert parameter life threshold');
+
     }
 }

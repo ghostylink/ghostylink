@@ -13,7 +13,6 @@ use Cake\Mailer\MailerAwareTrait;
  */
 class UsersController extends AppController
 {
-    use MailerAwareTrait;
     /**
      * Add method
      *
@@ -121,16 +120,4 @@ class UsersController extends AppController
         // Permet aux utilisateurs de s'enregistrer et de se déconnecter.
         $this->Auth->allow(['add', 'logout']);
     }
-
-    public function sendMail()
-    {
-         $usersToAlert = $this->Users->find('needMailAlert')->all();
-            foreach ($usersToAlert as $user) {
-                $this->getMailer('Link')->send('notification',['user' => $user,
-                                                                                      "links" => $user->getLinksAlmostGhostified()]);
-         }
-            //debug($user->getLinksAlmostGhostified());
-
-        }
-
-        }
+}

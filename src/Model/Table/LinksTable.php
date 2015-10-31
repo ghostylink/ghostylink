@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Links table file
  */
@@ -15,6 +16,10 @@ use Cake\Validation\Validator;
 class LinksTable extends Table
 {
 
+    // MySQL specific code here. TODO: see if it can be build with cakePHP 3 expressions
+    private $MYSQL_LIFE_EXP = 'GREATEST(IFNULL(LEAST(100, Links.views * 100.0 / Links.max_views),0),
+                                                IFNULL(LEAST(100,(datediff(CURRENT_TIMESTAMP, Links.created) * 100.0 )
+                            / datediff(Links.death_time, Links.created)),0)) ';
     /**
      * Initialize method
      *
@@ -196,10 +201,7 @@ class LinksTable extends Table
         $query->param['max_life'] = $options['max_life'];
 
         return $query->find('all')->where(function ($exp, $q) {
-                    // MySQL specific code here
-                    $filter = 'GREATEST(IFNULL(LEAST(100, Links.views * 100.0 / Links.max_views),0),
-                                                IFNULL(LEAST(100,(datediff(CURRENT_TIMESTAMP, Links.created) * 100.0 ) ' .
-                            '/ datediff(Links.death_time, Links.created)),0)) ';
+                    $filter = $this->MYSQL_LIFE_EXP;
                     return $exp->between($filter, $q->param['min_life'], $q->param['max_life']);
         });
     }
@@ -210,7 +212,7 @@ class LinksTable extends Table
      * @param array $options required key : min_life, the minimal life of links to retrieve
      *                                                                 max_life the maximal life of links to retrieve
      *                                                                 user_id the id of the user the link belongs to
-     *                                                                 status [1|0] keep only links with the corresponding status
+     *                                                                 status [1|0] keep only links with given status
      *                                                                 title a pattern corresponding to the title
      * @return Query the built query
      * @throws \BadFunctionCallException
@@ -244,10 +246,11 @@ class LinksTable extends Table
      */
     public function findNeedMailAlert(Query $query, array $options)
     {
-        $query->param['min_life'] = 66;
-        $query->find('rangeLife', ['min_life' => 66, 'max_life' => 100])
+        $query->find('all')
                    ->matching('AlertParameters', function ($q) {
-                        return $q->where(['sending_status' => 0, 'type' => 'email']);
+                                       $filter = $this->MYSQL_LIFE_EXP;
+                                       $expr = $q->newExpr("$filter >= AlertParameters.life_threshold");
+                                       return $q->where(['sending_status' => 0, 'type' => 'email', $expr]);
                    });
         return $query;
     }

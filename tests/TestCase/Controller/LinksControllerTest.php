@@ -78,7 +78,7 @@ class LinksControllerTest extends IntegrationTestCase
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $this->get('/a1d0c6e83f027327d8461063f4ac58a6');
         $this->assertResponseContains('Lorem ipsum dolor sit amet');
-        unset( $_SERVER['HTTP_X_REQUESTED_WITH']);
+        unset($_SERVER['HTTP_X_REQUESTED_WITH']);
         //A random token throw 404
         $this->get('/6063f4ac58a6a1d7383f02d10c6e2874');
         $this->assertResponseError('A random token throw 404');
@@ -90,11 +90,12 @@ class LinksControllerTest extends IntegrationTestCase
     }
 
     /**
-     * Test that when the user try to view a disabled link a 403 error is raised
+     * Test that when the user try to view a disabled link a 404 error is raised
      *
      * @return void
      */
-    public function testViewDisabledLink() {
+    public function testViewDisabledLink()
+    {
         $this->get('/f27d846104f4cc6c6a835ea6a1d00273');
         $this->assertResponseCode(404);
     }
