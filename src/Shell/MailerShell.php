@@ -58,12 +58,12 @@ class MailerShell extends Shell
             $this->getMailer('Link')->send('notification', $params);
 
             $alertParams->param['updatedIds'] = $updatedIds;
-//            $alertParams->update()
-//                    ->set(['sending_status' => true])
-//                    ->where(function ($exp, $q) {
-//                        return $exp->in('link_id', $q->param['updatedIds']);
-//                    });
-//            $alertParams->execute();
+            $alertParams->update()
+                    ->set(['sending_status' => true])
+                    ->where(function ($exp, $q) {
+                        return $exp->in('link_id', $q->param['updatedIds']);
+                    });
+            $alertParams->execute();
 
             // TODO log email sending if success
             $this->out($user->email);
