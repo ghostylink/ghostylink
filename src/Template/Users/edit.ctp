@@ -38,8 +38,14 @@
         </div>
     </fieldset>
     <div>
-<?= $this->Form->button(__('Modify information'), ['class' => 'btn btn-success center-block'])
-?>
+
+<?= $this->Form->button(__('Modify information'), ['class' => 'btn btn-success center-block']) ?>
     </div>
 <?= $this->Form->end() ?>
+    <hr/>
+    <div class="centered-text">
+    <?= $this->Form->postLink('Delete my account', ['_name' => 'user-delete'], [
+                                        'confirm' => __("Are you sure you want to your account and ALL your link ? '"),
+                                        'class' => 'btn btn-danger', 'title' => 'Delete all my links and my accout']);?>
+    </div>
 </div>
