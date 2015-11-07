@@ -11,8 +11,7 @@ class LinkAlertComponentTest extends FunctionalTest
     $this->open("/logout");
     $this->type("css=form[action=\"/login\"] #username", "testnotifs");
     $this->type("css=form[action=\"/login\"] #password", "testnotifs");
-    $this->submit("css=form[action=\"/login\"]");
-    $this->waitForPageToLoad("30000");
+    $this->clickAndWait("css=form[action=\"/login\"] .btn-default");
     // # Adding a link which will not be seen
     $this->type("id=inputTitle", "testing mail sending");
     $this->type("id=inputContent", "private content mail sending");
