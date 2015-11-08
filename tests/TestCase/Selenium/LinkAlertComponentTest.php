@@ -8,13 +8,17 @@ class LinkAlertComponentTest extends FunctionalTest
 
   public function testMailSending()
   {
+    /*********** Clear maildev inbox *************/
+    $this->open("http://localhost:1080/#/");
+    $this->click('css=.toolbar a[ng-click="deleteAll()"]');
+    /*********** Clear maildev inbox *************/
     $this->open("/logout");
     $this->type("id=username", "testnotifs");
     $this->type("id=password", "testnotifs");
     $this->click("css=button.btn.btn-default");
     $this->waitForPageToLoad("30000");
     // # Adding a link which will not be seen
-    $this->type("id=inputTitle", "testing mail sending");
+    $this->type("id=inputTitle", "testing mail NOT sent ");
     $this->type("id=inputContent", "private content mail sending");
     $this->click("css=[data-related-field=\"max_views\"]");
     $this->click("css=[data-related-field=\"ghostification_alert\"]");
@@ -35,7 +39,7 @@ class LinkAlertComponentTest extends FunctionalTest
     $this->assertFalse($this->isTextPresent("testnotifs@gmail.com"));
     // # Adding a link which will be seen
     $this->open("/");
-    $this->type("id=inputTitle", "testing mail sending");
+    $this->type("id=inputTitle", "testing mail IS sent");
     $this->type("id=inputContent", "private content mail sending");
     $this->click("css=[data-related-field=\"max_views\"]");
     $this->click("css=[data-related-field=\"ghostification_alert\"]");
@@ -55,7 +59,7 @@ class LinkAlertComponentTest extends FunctionalTest
     for ($second = 0; ; $second++) {
         if ($second >= 60) $this->fail("timeout");
         try {
-            if ($this->isTextPresent("testing mail sending")) break;
+            if ($this->isTextPresent("testing mail IS sent")) break;
         } catch (Exception $e) {}
         sleep(1);
     }
@@ -66,20 +70,21 @@ class LinkAlertComponentTest extends FunctionalTest
     for ($second = 0; ; $second++) {
         if ($second >= 60) $this->fail("timeout");
         try {
-            if ($this->isTextPresent("testing mail sending")) break;
+            if ($this->isTextPresent("testing mail IS sent")) break;
         } catch (Exception $e) {}
         sleep(1);
     }
 
-    // # Check mail is not sending (based with maildev tool)
+    // # Check mail is sent (based with maildev tool)
     debug(exec('$(pwd)/bin/cake mailer alerts'));
+
     $this->open("http://localhost:1080/#/");
     $this->assertTrue($this->isTextPresent("testnotifs@gmail.com"));
     $this->click('css=.toolbar a[ng-click="deleteAll()"]');
 
-    // # Check mail is not sending twice (based with maildev tool)
+    // # Check mail is not sent twice (based with maildev tool)
     debug(exec('$(pwd)/bin/cake mailer alerts'));
-    $this->refresh();
+    $this->refreshAndWait();
     $this->assertFalse($this->isTextPresent("testnotifs@gmail.com"));
   }
 }

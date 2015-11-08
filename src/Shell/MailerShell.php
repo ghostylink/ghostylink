@@ -42,8 +42,10 @@ class MailerShell extends Shell
      */
     public function alerts()
     {
-        $alertParams = $this->AlertParameters->query();
-        foreach ($this->Users->find('needMailAlert')->all() as $user) {
+
+        $users = $this->Users->find('needMailAlert')->all();
+        debug($users);
+        foreach ($users as $user) {
             $updatedIds = [];
             $email = new Email('default');
             $links = $this->Links->find('needMailAlert')->contain('AlertParameters')
@@ -56,17 +58,20 @@ class MailerShell extends Shell
             $params = ['user' => $user,
                                 "links" => $links];
             $this->getMailer('Link')->send('notification', $params);
-
+            $alertParams = $this->AlertParameters->query();
             $alertParams->param['updatedIds'] = $updatedIds;
+            //$this->out($updatedIds);
+
             $alertParams->update()
                     ->set(['sending_status' => true])
                     ->where(function ($exp, $q) {
                         return $exp->in('link_id', $q->param['updatedIds']);
                     });
+            debug($alertParams);
             $alertParams->execute();
-
+            debug($user->email);
             // TODO log email sending if success
-            $this->out($user->email);
+            //$this->out($updatedIds);
         }
     }
 }

@@ -12,7 +12,8 @@ class FunctionalTest extends PHPUnit_Extensions_SeleniumTestCase {
      */
     public $fixtures = [
         'Links' => 'app.links',
-        'Users' => 'app.users'
+        'Users' => 'app.users',
+        'AlertParameters' => 'app.alert_parameters'
     ];
     public $fixtureManager = null;
     public $autoFixtures = true;
