@@ -13,6 +13,7 @@ class LinkMailer extends Mailer
      */
     public function notification($user, $links)
     {
+        $this->helpers(['EmailProcessing']);
         $this->transport('default');
         $this
             ->to($user->email)

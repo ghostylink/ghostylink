@@ -12,7 +12,8 @@
         "cakephp/plugin-installer": "*",
         "markstory/asset_compress": "dev-master",
         "google/recaptcha": "~1.1",
-        "kevintweber/phpunit-markup-validators": "dev-master"
+        "kevintweber/phpunit-markup-validators": "dev-master",
+        "tijsverkoyen/css-to-inline-styles": "^1.5@dev"
     },
     "require-dev": {
         "psy/psysh": "@stable",

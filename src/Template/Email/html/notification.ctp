@@ -1,8 +1,9 @@
-<?= $this->Html->css('libs/bootstrap/bootstrap.min.css', ['block' => false]); ?>
-<?= $this->Html->css("http://localhost:8765" . '/css/libs/bootstrap/bootstrap.min.css'); ?>
-<h1>This is a ghostification  alert from <a href="http://www.ghostylink.org">ghostylink.org</a></h1>
+<?php
+use Cake\Routing\Router;
+?>
+<h1>This is a ghostification  alert from <a href="<?=Router::fullBaseUrl()?>">ghostylink.org</a></h1>
     <div class="col-sm-4 hidden-xs" style="vertical-align: middle">
-        <img src="http://localhost:8765/img/logos/ghostylink-logo-300x250.png" alt="Ghostylink logo"/>
+        <img src="<?=Router::fullBaseUrl()?>/img/logos/ghostylink-logo-300x250.png" alt="Ghostylink logo"/>
     </div>
     <div class="col-sm-6 col-xs-12 alert alert-warning ">
         <?php
@@ -37,6 +38,6 @@
 </table>
 <div class="alert alert-info">
     <span style="font-weight: bold">Note:</span> View counters may have increased since the mail has been sent.
-    Go to <a style="text-decoration: underline;" href="http://www.ghostylink.org/me">your profile</a>
+    Go to <a style="text-decoration: underline;" href="<?=Router::fullBaseUrl() . Router:: url(['controller' => "Links", "action" => "history"])?>">your profile</a>
     to see the current counter.
 </div>
