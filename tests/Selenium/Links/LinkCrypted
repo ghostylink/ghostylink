@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8765/" />
+<title>LinkCrypted</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">LinkCrypted</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputTitle</td>
+	<td>un titre</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputContent</td>
+	<td>un </td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputTitle</td>
+	<td>a title</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputContent</td>
+	<td>a private and cryped content</td>
+</tr>
+<!--# Check the non crypted value is displayed on errors-->
+<tr>
+	<td>click</td>
+	<td>css=form[action=&quot;/add&quot;] button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=form .alert-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>css=[name=&quot;content&quot;]</td>
+	<td>a private and cryped content</td>
+</tr>
+<!--# Check the message is crypted-->
+<tr>
+	<td>click</td>
+	<td>css=[data-related-field=&quot;death_time&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputContent</td>
+	<td>a private and crypted content</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=form[action=&quot;/add&quot;] button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=section.generated-link #link-url</td>
+	<td></td>
+</tr>
+<tr>
+	<td>runScript</td>
+	<td>location.replace($('#link-url').text())</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=section.link-content</td>
+	<td>a private and crypted content</td>
+</tr>
+<!--# Check the message cannot be decrypted if key is not in url-->
+<tr>
+	<td>runScript</td>
+	<td>loc = window.location.href;location.replace(loc.substring(0, loc.indexOf('#')))</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>a private and crypted content</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

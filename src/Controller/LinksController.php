@@ -21,17 +21,18 @@ class LinksController extends AppController
      * Specify actions authorized before authentification for Links controller.
      *
      * @param \App\Controller\Event $event event the filter is associated to
+     * @return void
      */
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['edit']);
+        $this->Auth->allow(['delete', 'edit']);
     }
 
     /**
      * Index method
      *
-     * @return void
+     * @return
      */
     public function index()
     {
@@ -43,7 +44,7 @@ class LinksController extends AppController
      * View method
      *
      * @param string|null $token Link token.
-     * @return void
+     * @return
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function view($token = null)
@@ -56,10 +57,10 @@ class LinksController extends AppController
         if ($this->request->is('ajax')) {
             //Check the link has not been seen by an other people
             if (!$this->Links->increaseLife($link)) {
-                  throw new NotFoundException();
+                throw new NotFoundException();
             }
             if ($link->google_captcha) {
-                $this->_check_robot($link);
+                $this->checkRobot($link);
             }
             $this->set('link', $link);
             return $this->render('ajax/information', 'ajax');
@@ -75,10 +76,17 @@ class LinksController extends AppController
         $this->set('link', $link);
     }
 
-    public function _check_robot($link) {
+    /**
+     * Check (if needed) if link is accessed by a real human
+     * @param Entity $link the link to check
+     * @return \Cake\Network\Response the view information as ajax
+     * @throws UnauthorizedException if captcha checking failed
+     */
+    public function checkRobot($link)
+    {
         $secret = '6LdmCQwTAAAAAPqT9OWI2gHcUOHVrOFoy7WCagFS';
-        if (! key_exists('g-recaptcha-response', $this->request->data)) {
-              throw new UnauthorizedException();
+        if (!key_exists('g-recaptcha-response', $this->request->data)) {
+            throw new UnauthorizedException();
         }
         $recaptcha = new \ReCaptcha\ReCaptcha($secret);
         $resp = $recaptcha->verify($this->request->data['g-recaptcha-response'], $this->request->clientIp());
@@ -110,17 +118,39 @@ class LinksController extends AppController
             $link = $this->Links->patchEntity($link, $this->request->data);
         }
 
-        // Initialize empty token to pass the validation
+        // FIXME: why we have to use this ?
         $link->token = "";
+        $link->private_token = "";
         if ($this->Links->save($link)) {
+            $this->addAlertParams($this->request->data, $link->id);
             //Redirect to the link view page
             $this->set('url', $link->token);
+            $this->set('private_token', $link->private_token);
             return $this->render('ajax/url', 'ajax');
         } else {
-            $this->layout = 'ajax';
+            $this->viewBuilder()->layout('ajax');
             $this->set(compact('link'));
             $this->set('_serialize', ['link']);
             return $this->render('add', 'ajax');
+        }
+    }
+
+    /**
+     * Add if needed the ghostification alert parameters
+     * @param Array $data
+     * @param int $linkId the link id
+     * @return type
+     */
+    private function addAlertParams($data, $linkId)
+    {
+        $alert_component = array_key_exists('ghostification_alert', $data) && $data['ghostification_alert'];
+        if ($alert_component&& $this->Auth->user("id")) {
+            $data['AlertParameters']['link_id'] = $linkId;
+            $parameters = $this->Links->AlertParameters->newEntity($data);
+            if (!$this->Links->AlertParameters->save($parameters)) {
+                $this->Flash->error('Impossible to store alert component.');
+                return $this->redirect(['action' => 'index']);
+            }
         }
     }
 
@@ -133,10 +163,7 @@ class LinksController extends AppController
      */
     public function edit($id = null)
     {
-        $link = $this->Links->get($id, [
-            'contain' => []
-        ]);
-
+        $link = $this->Links->get($id);
         if ($link->user_id === null || $link->user_id !== $this->Auth->user('id')) {
             throw new UnauthorizedException();
         }
@@ -164,18 +191,24 @@ class LinksController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $link = $this->Links->get($id);
+        $this->request->allowMethod(['get', 'post', 'delete']);
+        $link = $this->Links->findByPrivateToken($id)->first();
 
-        if ($link->user_id === null || $link->user_id !== $this->Auth->user('id')) {
+        // Allow deletetion for everyone if the link is anonymous,
+        // Force to be link's owner for non anonymous link
+        if (!$link || $link->user_id !== $this->Auth->user('id')) {
             throw new UnauthorizedException();
         }
+
         if ($this->Links->delete($link)) {
-            $this->Flash->success('The link has been deleted.');
+            $this->Flash->success('The link \'' . $link->title . '\' has been deleted.');
         } else {
             $this->Flash->error('The link could not be deleted. Please, try again.');
         }
-        return $this->redirect(['action' => 'history']);
+        if ($this->Auth->user('id')) {
+            return $this->redirect(['action' => 'history']);
+        }
+        return $this->redirect(['action' => 'index']);
     }
 
     /**
@@ -206,7 +239,7 @@ class LinksController extends AppController
      * Enable method
      *
      * @param string|null $id Link id.
-     * @return void Redirects to history.
+     * @return Redirection previous page redirection.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function enable($id = null)
@@ -244,10 +277,10 @@ class LinksController extends AppController
             'limit' => 5,
             'finder' => [
                 'history' => ['min_life' => $min_life,
-                                     'max_life' => $max_life,
-                                     'status' => $status,
-                                     'title' => $title,
-                                     'user_id' => $this->Auth->user('id')]
+                    'max_life' => $max_life,
+                    'status' => $status,
+                    'title' => $title,
+                    'user_id' => $this->Auth->user('id')]
             ],
             'conditions' => [
                 'Links.user_id' => $this->Auth->user('id'),

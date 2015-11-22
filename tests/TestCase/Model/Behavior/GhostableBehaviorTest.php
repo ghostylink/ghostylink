@@ -52,6 +52,7 @@ class GhostableBehaviorTest extends TestCase
             'title' => 'I am not in danger ...',
             'content' => 'I am the danger !',
             'token' => 'Say my name',
+            'private_token' => 'Stay out of my territory',
             'max_views' => 8 // big default value to avoid unexpected behaviors
     ];
 
@@ -63,6 +64,7 @@ class GhostableBehaviorTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        $this->goodData['private_token'] = uniqid();
         $config = TableRegistry::exists(GhostableBehaviorTest::TARGET_TABLE) ? []
                                 : ['className' => 'App\Model\Table\\' . GhostableBehaviorTest::TARGET_TABLE . 'Table'];
         $this->TargetTable = TableRegistry::get(GhostableBehaviorTest::TARGET_TABLE, $config);

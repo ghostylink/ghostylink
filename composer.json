@@ -11,7 +11,9 @@
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "*",
         "markstory/asset_compress": "dev-master",
-        "google/recaptcha": "~1.1"
+        "google/recaptcha": "~1.1",
+        "kevintweber/phpunit-markup-validators": "dev-master",
+        "tijsverkoyen/css-to-inline-styles": "^1.5@dev"
     },
     "require-dev": {
         "psy/psysh": "@stable",
@@ -21,7 +23,9 @@
         "phpunit/php-code-coverage":"2.0.16",
         "phpunit/phpunit-selenium": ">=1.2",
         "cakephp/cakephp-codesniffer":"2.*",
-        "fabpot/php-cs-fixer":"*"
+        "fabpot/php-cs-fixer":"*",
+        "kevintweber/phpunit-markup-validators": "dev-master",
+        "sebastian/phpcpd": "*"
     },
     "suggest": {
         "phpunit/phpunit": "Allows automated tests to be run without system-wide install.",

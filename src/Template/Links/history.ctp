@@ -72,7 +72,7 @@ function reduce_column($content, $max_length = 15) {
                                     $this->Form->postLink('', ['_name' => 'link-enable', $l->id], [
                                         'class' => 'btn btn-xs btn-success glyphicon glyphicon-ok-sign enable-link', 'title' => '=> Enable']);
                                 }
-                                echo $this->Form->postLink('', ['_name' => 'link-delete', $l->id], ['confirm' => __("Are you sure you want to delete : '") . $l->title . "' ?",
+                                echo $this->Form->postLink('', ['_name' => 'link-delete', $l->private_token], ['confirm' => __("Are you sure you want to delete : '") . $l->title . "' ?",
                                     'class' => 'btn btn-xs btn-danger glyphicon glyphicon-trash delete-link', 'title' => 'Delete']);
                                 ?></td>
                         </tr>

@@ -4,14 +4,15 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Mailer\MailerAwareTrait;
 
 /**
  * Users Controller
  *
  * @property \App\Model\Table\UsersTable $Users
  */
-class UsersController extends AppController {
-
+class UsersController extends AppController
+{
     /**
      * Add method
      *
@@ -119,5 +120,4 @@ class UsersController extends AppController {
         // Permet aux utilisateurs de s'enregistrer et de se déconnecter.
         $this->Auth->allow(['add', 'logout']);
     }
-
 }

@@ -1,9 +1,14 @@
 <?php
 
+/**
+ * User table file
+ */
+
 namespace App\Model\Table;
 
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\ORM\Query;
 use Cake\Validation\Validator;
 
 /**
@@ -26,6 +31,7 @@ class UsersTable extends Table
         $this->displayField('email');
         $this->displayField('password');
         $this->displayField('username');
+        $this->displayField('default_threshold');
         $this->addBehavior('User');
         $this->primaryKey('id');
         $this->hasMany('Links', [
@@ -33,7 +39,7 @@ class UsersTable extends Table
             'foreignKey' => 'user_id',
             'dependent' => true
         ]);
-        //$this->displayField('Links');
+        //$this->displayField('links');
     }
 
     /**
@@ -44,12 +50,10 @@ class UsersTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
-        $validator
-                ->add('id', 'valid', ['rule' => 'numeric'])
+        $validator->add('id', 'valid', ['rule' => 'numeric'])
                 ->allowEmpty('id', 'create');
 
-        $validator
-                ->requirePresence('username', 'create')
+        $validator->requirePresence('username', 'create')
                 ->notEmpty('username')
                 ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
                 ->add('username', [
@@ -60,10 +64,10 @@ class UsersTable extends Table
                     'maxLength' => [
                         'rule' => ['maxLength', 20],
                         'message' => 'Username needs to be at most 20 characters long'
-        ]]);
+                    ]
+                  ]);
 
-        $validator
-                ->requirePresence('password', 'create')
+        $validator->requirePresence('password', 'create')
                 ->notEmpty('password')
                 ->add('password', [
                     'minLength' => [
@@ -73,10 +77,10 @@ class UsersTable extends Table
                     'maxLength' => [
                         'rule' => ['maxLength', 20],
                         'message' => 'Password need to be at most 20 characters long'
-        ]]);
+                    ]
+                ]);
 
-        $validator
-                ->add('email', 'valid', ['rule' => 'email',
+        $validator->add('email', 'valid', ['rule' => 'email',
                     'on' => function ($context) {
                         return !empty($context['data']['email']);
                     }])
@@ -86,7 +90,25 @@ class UsersTable extends Table
                     }])
                 ->allowEmpty('email');
 
+        $validator
+                ->add('default_threshold', 'valid', ['rule' => ['range', 1, 100]]);
         return $validator;
+    }
+
+    /**
+     * Find all users who need a mail alert
+     * @param \Cake\ORM\Query query
+     * @param options
+     */
+    public function findNeedMailAlert(Query $query, array $options)
+    {
+        return $query->find('all')->matching('Links', function ($q) {
+                            return $q->find('needMailAlert');
+        })->where(function ($exp, $q) {
+            return $exp->isNotNull('email');
+        })
+        ->group('Users.id')
+        ->having(['count(*) >' > 0]);
     }
 
     /**
@@ -102,5 +124,4 @@ class UsersTable extends Table
         $rules->add($rules->isUnique(['email']));
         return $rules;
     }
-
 }
