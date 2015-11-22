@@ -1,7 +1,7 @@
 <?php
 use Cake\Routing\Router;
 ?>
-<h1>This is a ghostification  alert from <a href="<?=Router::fullBaseUrl()?>">ghostylink.org</a></h1>
+<h1 style="color:#000">This is a ghostification  alert from <a href="<?=Router::fullBaseUrl()?>">ghostylink.org</a></h1>
     <div class="col-sm-4 hidden-xs" style="vertical-align: middle">
         <img src="<?=Router::fullBaseUrl()?>/img/logos/ghostylink-logo-300x250.png" alt="Ghostylink logo"/>
     </div>

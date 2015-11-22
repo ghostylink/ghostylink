@@ -11,7 +11,7 @@
         <a href="#" class="list-group-item list-group-item-warning">
             <h4 class="list-group-item-heading">
                 <span class="glyphicon glyphicon-warning-sign">
-                    Ghostyfication warnings (coming soon)
+                    Ghostyfication warnings
                 </span>
             </h4>
             <p class="list-group-item-text">Be warned when one of your link
