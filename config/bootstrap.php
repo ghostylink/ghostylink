@@ -199,4 +199,4 @@ Configure::write('Dispatcher.filters', array(
     'AssetDispatcher',
     'CacheDispatcher'
 ));
-Plugin::load('AssetCompress', array('bootstrap' => true));
+Plugin::load('AssetCompress', ['bootstrap' => true]);
