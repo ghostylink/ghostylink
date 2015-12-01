@@ -80,6 +80,22 @@ class UsersTable extends Table
                     ]
                 ]);
 
+        $validator->requirePresence("confirm_password", function ($context) {
+            // Confirm password required on new record but only if password is set for modifications
+            if ($context['newRecord']) {
+                return true;
+            } else {
+                $passwordDefined = isset($context['data']['password']) && $context['data']['password'] != "";
+                return $passwordDefined;
+            }
+        })
+                        ->add("confirm_password", [
+                                            "match" => [
+                                                "rule" => ["compareWith", "password"],
+                                                "message" => 'The passwords do not match!'
+                                             ]
+                        ]);
+
         $validator->add('email', 'valid', ['rule' => 'email',
                     'on' => function ($context) {
                         return !empty($context['data']['email']);

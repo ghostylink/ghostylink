@@ -32,6 +32,7 @@ class UsersTableTest extends TestCase
     private $goodData = [
             'username' => 'Walter White',
             'password' => 'dummy_password',
+            'confirm_password' => 'dummy_password',
             'email' => 'walter.white@pollos-hermanos.us'
     ];
     /**
@@ -98,6 +99,7 @@ class UsersTableTest extends TestCase
         $data = $goodData;
         //unset password as it will be hashed
         unset($data['password']);
+        unset($data['confirm_password']);
         $dbUser = $this->Users->find('all')
                                       ->where(['Users.username =' => $goodData['username']])
                                       ->toArray()[0]->toArray();
@@ -207,6 +209,66 @@ class UsersTableTest extends TestCase
         $badData['password'] = str_repeat('a', 21);
         $user = $this->Users->patchEntity($user, $badData);
         $this->assertFalse($this->Users->save($user), 'Too lonog password implies non saving');
+
+    }
+
+    /**
+     * Test password confirmation when user create its account
+     */
+    public function testPasswordConfirmCreate()
+    {
+        $badData = $this->goodData;
+        unset($badData['confirm_password']);
+        $user = $this->Users->newEntity($badData);
+        $user = $this->Users->patchEntity($user, $badData);
+        $this->assertFalse($this->Users->save($user), 'Password need a confirmation');
+
+        $user = $this->Users->newEntity();
+        $badData = $this->goodData;
+        $badData['confirm_password'] = "This is not the confirm";
+        $user = $this->Users->patchEntity($user, $badData);
+        $this->assertFalse($this->Users->save($user), 'Password and confirmation must be equal');
+
+        $user = $this->Users->newEntity();
+        $goodData = $this->goodData;
+        $goodData['password'] = "confirm";
+        $goodData['confirm_password'] = "confirm";
+        $user = $this->Users->patchEntity($user, $goodData);
+        $this->assertNotFalse($this->Users->save($user), 'Password and confirmation must be equal');
+    }
+
+    /**
+     * Test password confirmation when user modify its informations
+     */
+    public function testPasswordConfirmModify()
+    {
+        $goodData = $this->goodData;
+        // User should be able to modify its information without giving password
+        unset($goodData['password']);
+        unset($goodData["confirm_password"]);
+
+        $user = $this->Users->get(1);
+        $goodData["email"] = "fake@email.com";
+        $this->Users->patchEntity($user, $goodData);
+        $this->assertNotFalse($this->Users->save($user));
+
+        $badData =$goodData;
+        $badData['password'] = "noConfirm";
+        $user = $this->Users->patchEntity($user, $badData);
+        $this->assertFalse($this->Users->save($user), "If user redefined the password, he must confirm it");
+
+        $badData =$goodData;
+        $badData['password'] = "";
+        $this->Users->patchEntity($user, $badData);
+        $this->assertFalse($this->Users->save($user), "Password must no be empty");
+
+        // User should be able to modify its information  giving good password confirmation
+        $user = $this->Users->get(1);
+        $goodData = $this->goodData;
+        $goodData["password"] = "thisIsAPass";
+        $goodData["confirm_password"] = "thisIsAPass";
+        $this->Users->patchEntity($user, $goodData);
+        $this->assertNotFalse($this->Users->save($user), "Good confirm save the user");
     }
 
     public function testErrorsLifeThreshold()

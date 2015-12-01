@@ -11,7 +11,8 @@ use Cake\ORM\TableRegistry;
  * @group Unit
  * @group Controller
  */
-class UsersControllerTest extends IntegrationTestCase {
+class UsersControllerTest extends IntegrationTestCase
+{
 
     private $csrf  =[null];
 
@@ -32,6 +33,7 @@ class UsersControllerTest extends IntegrationTestCase {
     private $goodData = [
         'username' => 'Heisenberg',
         'password' => 'I am the danger',
+        'confirm_password' => 'I am the danger',
         'email' => 'crystal@alabama.us'
     ];
 
