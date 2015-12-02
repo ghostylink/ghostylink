@@ -12,18 +12,28 @@
                 'placeholder' => "Your email",
                 'required' => 'false']);
             ?>
-            <button id="change-pwd" class="btn btn-default center-block margin-sm"
-                    data-on="false"
-                    data-html="<?=
-                    htmlspecialchars($this->Form->input('password', ['class' => 'form-control',
+            <?php
+            $passwordHTML =  $this->Form->input('password', ['class' => 'form-control',
                                 'label' => 'Password*',
-                                'value' => '',
                                 'placeholder' => 'Choose a password',
-                                'required' => 'true']));
-                    ?>">
+                                'required' => 'true']);
+            $confirmPasswordHTML = $this->Form->input('confirm_password', ['class' => 'form-control',
+                                'label' => 'Confirmation*',
+                                'type' => "password",
+                                'placeholder' => 'Confirm it',
+                                'required' => 'true']);
+            $hasErrors = $this->Form->isFieldError("confirm_password") || $this->Form->isFieldError("password");
+            ?>
+            <button id="change-pwd" class="btn btn-default center-block margin-sm"
+                    data-on="<?php echo $hasErrors?'true':'false'?>"
+                    data-html="<?php echo htmlspecialchars($passwordHTML) . htmlspecialchars($confirmPasswordHTML)?>">
                 Change my password
             </button>
-
+            <?php
+            if ($hasErrors) {
+                  echo $passwordHTML . $confirmPasswordHTML;
+            }
+            ?>
             <label for="default_threshold">Default life percentage threshold</label>
             <div id="slider-default_threshold"></div>
             <?=

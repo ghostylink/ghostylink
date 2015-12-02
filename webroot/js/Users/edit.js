@@ -3,8 +3,8 @@ $(function () {
         var $button = $(this);
 
         if ($button.attr('data-on') === 'true') {
-            console.log($button.siblings('div.input.password'));
-            $button.siblings('div.input.password').remove();
+            console.log($button.siblings('div.input.password, div.input.confirm_password'));
+            $button.siblings('div.input.password, div.input.confirm_password').remove();
             $button.attr('data-on', 'false');
         }
         else {
