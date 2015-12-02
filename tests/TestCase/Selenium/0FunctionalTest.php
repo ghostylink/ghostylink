@@ -12,7 +12,8 @@ class FunctionalTest extends PHPUnit_Extensions_SeleniumTestCase {
      */
     public $fixtures = [
         'Links' => 'app.links',
-        'Users' => 'app.users'
+        'Users' => 'app.users',
+        'AlertParameters' => 'app.alert_parameters'
     ];
     public $fixtureManager = null;
     public $autoFixtures = true;
@@ -32,7 +33,7 @@ class FunctionalTest extends PHPUnit_Extensions_SeleniumTestCase {
         if (getenv('CIS_SERVER') == '1') {
             $this->setHost('jenkins.ghostylink.org');
             $this->screenshotPath = '/var/www/ghostylink/selenium_failures';
-            $this->screenshotUrl = 'selenium.ghostylink.org';
+            $this->screenshotUrl = 'http://selenium.ghostylink.org';
         }
         $this->setBrowserUrl("http://localhost:8765/");
     }

@@ -180,13 +180,13 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            'className' => 'Mail',
+            'className' => 'Smtp',
             // The following keys are used in SMTP transports
             'host' => 'localhost',
-            'port' => 25,
+            'port' => 1025,
             'timeout' => 30,
-            'username' => 'user',
-            'password' => 'secret',
+            'username' => null,
+            'password' => null,
             'client' => null,
             'tls' => null,
         ],

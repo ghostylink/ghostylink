@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8765/" />
+<title>LinkCrypted</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">LinkCrypted</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=form[action=&quot;/login&quot;] #username</td>
+	<td>testnotifs</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=form[action=&quot;/login&quot;] #password</td>
+	<td>testnotifs</td>
+</tr>
+<tr>
+	<td>submitAndWait</td>
+	<td>css=form[action=&quot;/login&quot;]</td>
+	<td></td>
+</tr>
+<!--# Adding a link which will not be seen-->
+<tr>
+	<td>type</td>
+	<td>id=inputTitle</td>
+	<td>testing mail sending</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputContent</td>
+	<td>private content mail sending</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=[data-related-field=&quot;max_views&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=[data-related-field=&quot;ghostification_alert&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=[name=&quot;max_views&quot;]</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=[name=&quot;AlertParameters[life_threshold]&quot;]</td>
+	<td>25</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=form[action=&quot;/add&quot;] button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=section.generated-link #link-url</td>
+	<td></td>
+</tr>
+<!--# Check mail is not sending (based with maildev tool)-->
+<tr>
+	<td>open</td>
+	<td>http://localhost:1080/#/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>testnotifs@gmail.com</td>
+	<td></td>
+</tr>
+<!--# Adding a link which will be seen-->
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputTitle</td>
+	<td>testing mail sending</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=inputContent</td>
+	<td>private content mail sending</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=[data-related-field=&quot;max_views&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=[data-related-field=&quot;ghostification_alert&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css=[name=&quot;max_views&quot;]</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=form[action=&quot;/add&quot;] button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=section.generated-link #link-url</td>
+	<td></td>
+</tr>
+<tr>
+	<td>runScript</td>
+	<td>location.replace($('#link-url').text())</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPageToLoad</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#load-link-max_views</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>testing mail sending</td>
+	<td></td>
+</tr>
+<tr>
+	<td>refreshAndWait</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#load-link-max_views</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td>testing mail sending</td>
+	<td></td>
+</tr>
+<!--# Check mail is not sending (based with maildev tool)-->
+<tr>
+	<td>open</td>
+	<td>http://localhost:1080/#/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>testnotifs@gmail.com</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

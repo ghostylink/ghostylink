@@ -19,6 +19,7 @@ class UserModifyTest extends FunctionalTest
     $this->assertTrue($this->isTextPresent("Modify my information"));
     $this->assertTrue($this->isElementPresent("css=input[name=username]"));
     $this->assertTrue($this->isElementPresent("css=input[name=email]"));
+    $this->assertTextPresent("Delete my account");
     $this->type("css=input[name=username]", "user2");
     $this->type("css=input[name=email]", "user2@domain");
     $this->submit("css=form");

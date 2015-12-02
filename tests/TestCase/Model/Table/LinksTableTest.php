@@ -21,7 +21,8 @@ class LinksTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'Links' => 'app.links'
+        'Links' => 'app.links',
+        "AlertParamters" => 'app.alert_parameters'
     ];
 
     /**
@@ -32,6 +33,7 @@ class LinksTableTest extends TestCase
             'title' => 'I am not in danger ...',
             'content' => 'I am the danger !',
             'token' => 'Say my name',
+            'private_token' => 'You’re an insane, degenerate piece of filth, and you deserve to die.',
             'max_views' => 8,
     ];
 
@@ -45,6 +47,9 @@ class LinksTableTest extends TestCase
         parent::setUp();
         $config = TableRegistry::exists('Links') ? [] : ['className' => 'App\Model\Table\LinksTable'];
         $this->Links = TableRegistry::get('Links', $config);
+        $config = TableRegistry::exists('Links') ? [] : ['className' => 'App\Model\Table\AlertParameterTable'];
+        $this->AlertParameters = TableRegistry::get('AlertParameters', $config);
+        $this->goodData['private_token'] = uniqid();
     }
 
     /**
@@ -78,6 +83,7 @@ class LinksTableTest extends TestCase
         $this->assertEquals(1, $this->Links->hasField('views'));
         $this->assertEquals(1, $this->Links->hasField('max_views'),
                             'max_views field is present');
+        $this->assertEquals(1, $this->Links->hasField('private_token'));
     }
 
     /**
@@ -122,6 +128,30 @@ class LinksTableTest extends TestCase
         $goodData['title'] = 'titleTestTokenErrors';
 
         //Check tokens are unique
+        $this->Links->save($this->Links->newEntity($goodData));
+        $this->Links->save($this->Links->newEntity($goodData));
+        $result = $this->Links->find("all")
+                              ->where(['Links.title =' => $goodData['title']])
+                              ->toArray();
+        $this->assertNotEquals($result[0]->token, $result[1]->token,
+                                'Two similar links do not have same tokn');
+    }
+
+    /**
+     * Test errors on private token
+     */
+    public function testPrivateTokenErrors() {
+        $badData = $this->goodData;
+        unset($badData['private_token']);
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData)), 'Private token is required');
+
+        $badData['private_token'] = '';
+        $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
+                    'Private token is not empty');
+
+         //Check private tokens are unique
+        $goodData = $this->goodData;
+        $goodData['title'] = 'titleTestPrivateTokenErrors';
         $this->Links->save($this->Links->newEntity($goodData));
         $this->Links->save($this->Links->newEntity($goodData));
         $result = $this->Links->find("all")
@@ -200,7 +230,9 @@ class LinksTableTest extends TestCase
 
         //And the data inserted is ok
         $data = $goodData;
+        // Tokens are randomly generated, cannot be checked in this way
         unset($data['token']);
+        unset($data['private_token']);
         $this->assertArraySubset($data,
                           $this->Links->find('all')
                                       ->where(['Links.title =' => $goodData['title']])
@@ -291,7 +323,7 @@ class LinksTableTest extends TestCase
 
         $array = $this->Links->find('rangeLife', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE])
                                             ->toArray();
-        $this->assertEquals(count($array), 2, 'Exactly 1 links is retrieved by views');
+        $this->assertEquals(count($array), 3, 'Exactly 1 links is retrieved by views');
         foreach ($array as $value) {
             $this->assertGreaterThanOrEqual($MIN_LIFE, $value->life_percentage);
             $this->assertLessThanOrEqual($MAX_LIFE, $value->life_percentage);
@@ -345,5 +377,23 @@ class LinksTableTest extends TestCase
         $MAX_LIFE = 96;
         $this->setExpectedException('BadFunctionCallException');
         $array = $this->Links->find('history', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE]);
+    }
+
+    /**
+     * @group Develop
+     */
+    public function testFinderNeedMailAlert() {
+        $array = $this->Links->find('needMailAlert')->all();
+        $this->assertEquals(2, count($array),  'Test filter on mail alert');
+
+         // Change the life threshold of one of the link to a higher value then the life_percentage;
+         $linkToChange = $array->first();
+        $alertToChange = $this->AlertParameters->find('all')->where(["link_id" => $linkToChange->id])->first();
+        $alertToChange->life_threshold = $linkToChange->life_percentage + 5;
+        $this->AlertParameters->save($alertToChange);
+         $array = $this->Links->find('needMailAlert')->contain('AlertParameters')->all();
+         $this->assertEquals(1, $array->count(),
+                                                        'Need mail alert finder take in account the alert parameter life threshold');
+
     }
 }

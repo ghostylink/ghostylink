@@ -21,6 +21,7 @@ class UsersFixture extends TestFixture
         'username' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'password' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'email' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'default_threshold' => ['type' => 'integer', 'null' => false, 'default' => 66],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'UNIQUE_USERNAME' => ['type' => 'unique', 'columns' => ['username'], 'length' => []],
@@ -59,6 +60,20 @@ class UsersFixture extends TestFixture
             // password : user1user1
             'password' => '$2y$10$/7VU0iPe7EZhzpONsG94yejEFvlpjIjYCMq1mc7uAeYUGV8TgNW1y',
             'email' => 'user3@ghostylink.org'
+        ],
+         [
+            'id' => 4,
+            'username' => 'noEmailAdresss',
+            // password : user1user1
+            'password' => '$2y$10$/7VU0iPe7EZhzpONsG94yejEFvlpjIjYCMq1mc7uAeYUGV8TgNW1y',
+            'email' => null
+        ],
+         [
+            'id' => 5,
+            'username' => 'testnotifs', // Test notifs on selenium. Do not create link with alert parameteres for him
+            // password : testnotifs
+            'password' => '$2y$10$D7RZUSz4FRFpCiDmlCHe6eQfkfQ8Y7ujjYDHkUMU5j6mNfSddPsLK',
+            'email' => 'testnotifs@gmail.com'
         ]
     ];
 }

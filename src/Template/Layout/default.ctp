@@ -36,7 +36,7 @@
                         'alt' => 'ghostylink logo'));
                     ?>
                     <?= $this->Html->link('Ghostylink', "/", array('class' => 'navbar-brand')); ?>
-                    <h1 class="navbar-text hidden-xs">Keep control on data you share !</h1>
+                    <h1 class="navbar-text hidden-xs hidden-sm hidden-md">Keep control on data you share !</h1>
                 </div>
                 <div class="collapse navbar-collapse">
                     <?php
@@ -82,7 +82,6 @@
                         </ul>
                         <?php
                     } else {
-
                         echo $this->element("Users/login");
                     }
                     ?>

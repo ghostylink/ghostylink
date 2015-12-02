@@ -16,10 +16,19 @@ function initAjaxSubmission() {
 
         // Let's select and cache all the fields
         var $inputs = $form.find("input, select, button, textarea");
-        $form.append('<input type="hidden" name="timezone-offset" value="' + new Date().getTimezoneOffset() + '"/>');
+        $form.append('<input type="hidden" name="timezone-offset" value="' + new Date().getTimezoneOffset() + '"/>');                
+        
+        // Encrypt content        
+        var noEncryptedContent = $('[name="content"]').val();
+        var secretKey ;
+        var ciphertext;
+        if (noEncryptedContent !== "") {
+            secretKey = CryptoJS.lib.WordArray.random(16).toString(CryptoJS.enc.Base64);        
+            ciphertext = CryptoJS.AES.encrypt(noEncryptedContent, secretKey.toString());        
+            $('[name="content"]').val(ciphertext.toString());        
+        }
         // Serialize the data in the form
-        var serializedData = $form.serialize();
-        console.log(serializedData);
+        var serializedData = $form.serialize();        
         // Let's disable the inputs for the duration of the Ajax request.
         // Note: we disable elements AFTER the form data has been serialized.
         // Disabled form elements will not be serialized.
@@ -34,20 +43,20 @@ function initAjaxSubmission() {
 
         // Callback handler that will be called on success
         request.done(function (response, textStatus, jqXHR) {
-            // Log a message to the console
-            console.log(response);
+            // Log a message to the console            
             var $responseHTML = $(response);
-            
+            //Restore non encrypted message            
             if($responseHTML.find('form').size() === 0) {
                 //No error have been found 
                 $('form[action="/add"] div.alert.alert-danger').remove();
                 $('section.generated-link').remove();
+                $responseHTML.find('.link-url').first().append("#" + secretKey);
                 $('#main-content').append($responseHTML);
                 initCopyButton();
             }
             else {
                 //At least one error, rebind events on components
-                $form.html($responseHTML.find('form').html());
+                $form.html($responseHTML.find('form').html());                
                 $form.find("ul#link-components-chosen li").each(function() {
                     $(this).on('click', function() {
                         componentsChosenClick($(this),$('ul#link-components-chosen'));
@@ -56,6 +65,7 @@ function initAjaxSubmission() {
                     $('#death_date').datetimepicker();
                 });             
             }
+            $form.find('[name="content"]').val(noEncryptedContent);
             
         });
 
@@ -95,9 +105,9 @@ function initCopyButton() {
             selection.removeAllRanges();
             selection.addRange(range);
         }
-        var span = $('<span class="copy-instruction label label-default">Press Ctrl-C to copy link</span>');
+        var span = $('<div class="copy-instruction"><span class="label label-default">Press Ctrl-C to copy link</span></div>');
         $('section.generated-link').find('span.copy-instruction').remove();
-        $('section.generated-link').prepend(span);
+        $('section.generated-link .link-wrapper').first().append(span);
     });
 }
 
