@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 var request;
-
 function initAjaxSubmission() {
     $("form#links-add").on("submit", function (event) {        
         // Abort any pending request
@@ -92,22 +91,17 @@ function initAjaxSubmission() {
 
 function initCopyButton() {
     $('button.link-copy').on("click", function () {
-        var doc = document;
-        var text = doc.getElementById('link-url');        
-        if (doc.body.createTextRange) { // ms
-            var range = doc.body.createTextRange();            
-            range.moveToElementText(text);
-            range.select();            
-        } else if (window.getSelection) { // moz, opera, webkit
-            var selection = window.getSelection();
-            var range = doc.createRange();
-            range.selectNodeContents(text);
-            selection.removeAllRanges();
-            selection.addRange(range);
-        }
-        var span = $('<div class="copy-instruction"><span class="label label-default">Press Ctrl-C to copy link</span></div>');
-        $('section.generated-link').find('span.copy-instruction').remove();
-        $('section.generated-link .link-wrapper').first().append(span);
+        clipboard = new Clipboard("button.link-copy");
+        clipboard.on('success', function (e) {
+            var span = $('<div class="copy-instruction"><span class="label label-default">Copied !</span></div>');
+            $('section.generated-link').find('span.copy-instruction').remove();
+            $('section.generated-link .link-wrapper').first().append(span);            
+        });
+        clipboard.on('error', function (e) {
+            var span = $('<div class="copy-instruction"><span class="label label-default">Press Ctrl+C to copy !</span></div>');
+            $('section.generated-link').find('span.copy-instruction').remove();
+            $('section.generated-link .link-wrapper').first().append(span);  
+        });
     });
 }
 

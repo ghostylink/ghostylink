@@ -25,7 +25,8 @@ class User extends Entity
         'default_threshold' => true
     ];
 
-    protected function _setPassword($password) {
+    protected function _setPassword($password)
+    {
         return (new DefaultPasswordHasher)->hash($password);
     }
 }

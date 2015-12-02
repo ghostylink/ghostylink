@@ -5,7 +5,9 @@
         </span>
     <div id="link-url" class="alert alert-success link-url" title="Share this one !">
         <?= $this->Url->build('/', true) . $url ?></div>
-        <button class="glyphicon glyphicon-copy link-copy" value="Select"> Select</button><br>
+        <button class="glyphicon glyphicon-copy link-copy"
+                        data-clipboard-target="#link-url"
+                        alt="Copy to clipboard" value="Select"> Select</button><br>
     </div>
     <div class="link-wrapper container">
         <span class="col-lg-3">
