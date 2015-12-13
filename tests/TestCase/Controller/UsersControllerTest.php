@@ -142,9 +142,42 @@ class UsersControllerTest extends IntegrationTestCase
         $this->_logoutUser();
     }
 
-    public function _authenticateUser($fixtureIndex) {
-        $userArray = $this->fixtureManager->loaded()['app.users']
-                ->records[$fixtureIndex];
+    public function testEmailValidation() {
+        $usersTable = TableRegistry::get('Users');
+        $user = $usersTable->newEntities($this->goodData);
+        $user = $usersTable->save($user);
+        $this->assertNotFalse($user, 'User to validate email is saved');
+
+        // Need a login user
+        $this->get("/validate-email/" . $user->email_validation_link);
+        $this->assertResponseCode(302);
+        $user = $usersTable->get($user->id);
+        $this->assertFalse($user->email_validated, 'Non logged user cannot validate its email');
+
+        // Need to be the good user
+        $this->_authenticateUser(0);
+        $this->get("/validate-email/" . $user->email_validation_link);
+        $this->assertResponseCode(302);
+        $user = $usersTable->get($user->id);
+        $this->assertFalse($user->email_validated, 'Bad logged user cannot validate its email');
+
+        // When good user is logged in, email can be validated
+        $this->assertResponseSuccess();
+        $user = $usersTable->get($user->id);
+        $this->assertTrue($user->email_validated, 'Good logged user can validate its email');
+    }
+    /**
+     * Authenticate a user from a fixture index or from an Entity
+     * @param mixte $user
+     */
+    public function _authenticateUser($user) {
+
+        if ($user instanceof \Cake\ORM\Entity) {
+            $userArray = $user->toArray();
+        } else {
+            $userArray = $this->fixtureManager->loaded()['app.users']
+                ->records[$user];
+        }
         if (isset($userArray['password'])) {
             unset($userArray['password']);
         }

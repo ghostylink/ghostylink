@@ -288,4 +288,30 @@ class UsersTableTest extends TestCase
         $users = $this->Users->find('needMailAlert')->all();
         $this->assertEquals(2, count($users), 'Only users with a email adress defined are retrieve');
     }
+
+    public function testEmailValidationRequired()
+    {
+        $goodData = $this->goodData;
+
+        // Field initialization
+        $user = $this->Users->newEntity($goodData);
+        $user = $this->Users->save($user);
+        $this->assertNotFalse($user, 'User can be saved');
+        $this->assertFalse($user->email_validated, 'Email is not validated when user has just been registered');
+        $validationLink = $user->email_validation_link;
+        $this->assertNotEmpty($validationLink, 'Validation link is set');
+
+        // Manually validate email
+        $user->email_validated = true;
+        $user = $this->Users->patchEntity($user, $goodData);
+        $this->Users->save($user);
+
+        // Test email modification implies reset of the validated flag and url
+        $goodData["email"] = "an-email@modified.org";
+        $user = $this->Users->patchEntity($user, $goodData);
+        $user = $this->Users->save($user);
+        $this->assertFalse($user->email_validated);
+        $this->assertNotEmpty($user->email_validation_link, "Email validation link reinitialization is not empty");
+        $this->assertNotEquals($validationLink, $user->email_validated_link, 'Link email validation is changed');
+    }
 }
