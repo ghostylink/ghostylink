@@ -4,6 +4,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Table\UsersTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use App\Mailer\UserMailer;
 
 /**
  * App\Model\Table\UsersTable Test Case
@@ -45,6 +46,8 @@ class UsersTableTest extends TestCase
         parent::setUp();
         $config = TableRegistry::exists('Users') ? [] : ['className' => 'App\Model\Table\UsersTable'];
         $this->Users = TableRegistry::get('Users', $config);
+        // Remove mailer for unit tests
+        $this->Users->eventManager()->off('Model.afterSave', UserMailer::getInstance());
     }
 
     /**
@@ -289,14 +292,19 @@ class UsersTableTest extends TestCase
         $this->assertEquals(2, count($users), 'Only users with a email adress defined are retrieve');
     }
 
+    /**
+     * @group Develop
+     */
     public function testEmailValidationRequired()
     {
         $goodData = $this->goodData;
-
         // Field initialization
         $user = $this->Users->newEntity($goodData);
         $user = $this->Users->save($user);
         $this->assertNotFalse($user, 'User can be saved');
+
+        //Retrieve user to get default values
+        $user = $this->Users->get($user->id);
         $this->assertFalse($user->email_validated, 'Email is not validated when user has just been registered');
         $validationLink = $user->email_validation_link;
         $this->assertNotEmpty($validationLink, 'Validation link is set');
@@ -306,11 +314,18 @@ class UsersTableTest extends TestCase
         $user = $this->Users->patchEntity($user, $goodData);
         $this->Users->save($user);
 
+        // Change an other field
+        $user->username = "anotherusername";
+        $user = $this->Users->patchEntity($user, $goodData);
+        $this->Users->save($user);
+        $user = $this->Users->get($user->id);
+        $this->assertTrue($user->email_validated, "Email validation is not changed if an other field is changed");
+
         // Test email modification implies reset of the validated flag and url
         $goodData["email"] = "an-email@modified.org";
         $user = $this->Users->patchEntity($user, $goodData);
         $user = $this->Users->save($user);
-        $this->assertFalse($user->email_validated);
+        $this->assertFalse($user->email_validated, 'Email validation is reset when email is changed');
         $this->assertNotEmpty($user->email_validation_link, "Email validation link reinitialization is not empty");
         $this->assertNotEquals($validationLink, $user->email_validated_link, 'Link email validation is changed');
     }

@@ -61,6 +61,10 @@ class UsersControllerTest extends IntegrationTestCase
         $badData['username'] = 'username';
         $this->post('/signup', $badData);
         $this->assertResponseContains('error');
+
+        //TODO : prevent hacking test
+        //add email_validated to true in sent data is ignored
+        // same for email_validation link
     }
 
     /**

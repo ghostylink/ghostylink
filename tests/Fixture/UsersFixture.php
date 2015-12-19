@@ -16,22 +16,7 @@ class UsersFixture extends TestFixture
      * @var array
      */
     // @codingStandardsIgnoreStart
-    public $fields = [
-        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'username' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
-        'password' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
-        'email' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
-        'default_threshold' => ['type' => 'integer', 'null' => false, 'default' => 66],
-        '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-            'UNIQUE_USERNAME' => ['type' => 'unique', 'columns' => ['username'], 'length' => []],
-            'UNIQUE_EMAIL' => ['type' => 'unique', 'columns' => ['email'], 'length' => []],
-        ],
-        '_options' => [
-            'engine' => 'InnoDB',
-            'collation' => 'utf8_general_ci'
-        ],
-    ];
+    public $import = ['table' => 'users', 'connection' => 'test_schema'];
     // @codingStandardsIgnoreEnd
 
     /**
