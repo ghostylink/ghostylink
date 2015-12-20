@@ -5,7 +5,40 @@
  */
 class UserModifyTest extends FunctionalTest
 {
+    /**
+     * @group Develop
+     */
+    public function testEmailSent()
+    {
+        /*********** Clear maildev inbox *************/
+        $this->open("http://localhost:1080/#/");
+        $this->click('css=.toolbar a[ng-click="deleteAll()"]');
 
+        /*********  Log in the user *******************/
+        $this->open("/logout");
+        $this->type("id=username", "user1");
+        $this->type("id=password", "user1user1");
+        $this->clickAndWait("css=button.btn.btn-default");
+        $this->click("link=Welcome user1");
+        $this->clickAndWait("link=My information");
+        $this->assertTrue($this->isTextPresent("Modify my information"), "Information page is displayed");
+
+        /**************************************************/
+        /**************** Checks **************************/
+        /**************************************************/
+        // Check an information which is not the email does not implies email sending
+        $this->type("css=input[name=username]", "usernamechanged");
+        $this->open("http://localhost:1080/");
+        $this->assertTextNotPresent("user1@ghostylink.org", "Email sending has been triggered");
+
+        $this->open("/me/edit");
+        $this->type("id=email", "anemailchanged@test.fr");
+        $this->submitAndWait("css=form");
+
+        $this->open("http://localhost:1080/");
+        $this->assertTextPresent("anemailchanged@test.fr", "Email sending has been triggered");
+
+    }
   public function testMyTestCase()
   {
     $this->open("/logout");

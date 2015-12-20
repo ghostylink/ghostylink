@@ -46,7 +46,7 @@ class LinksTest extends FunctionalTest {
         $this->assertTrue($this->isElementPresent("css=section.generated-link"));
         // Click on the select button
         $this->click("css=button.link-copy");
-        $this->assertTrue($this->isTextPresent("Press Ctrl-C"));
+        $this->assertTextPresent("Press Ctlr+C to copy !");
     }
 
     public function testAddComponentsWithSubmit() {

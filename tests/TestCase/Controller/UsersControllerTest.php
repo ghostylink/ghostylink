@@ -2,7 +2,7 @@
 
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\UsersController;
+use App\Mailer\UserMailer;
 use Cake\TestSuite\IntegrationTestCase;
 use Cake\ORM\TableRegistry;
 
@@ -42,6 +42,11 @@ class UsersControllerTest extends IntegrationTestCase
         $this->cookie('csrfToken', $token);
         $this->goodData['_csrfToken'] = $token;
         $this->csrf ['_csrfToken'] = $token;
+
+        $config = TableRegistry::exists('Users') ? [] : ['className' => 'App\Model\Table\UsersTable'];
+        $this->Users = TableRegistry::get('Users', $config);
+
+        $this->Users->eventManager()->off('Model.afterSave', UserMailer::getInstance());
         parent::setUp();
     }
 
@@ -62,9 +67,16 @@ class UsersControllerTest extends IntegrationTestCase
         $this->post('/signup', $badData);
         $this->assertResponseContains('error');
 
-        //TODO : prevent hacking test
-        //add email_validated to true in sent data is ignored
-        // same for email_validation link
+        // Some data must not be overwrritable
+        $hackingData = $this->goodData;
+        $hackingData["username"] = "hackingUser";
+        $hackingData["email"] = "hacking@emaill.user";
+        $hackingData["email_validated"] = true;
+        $hackingData["email_validation_link"] = "shurelyABadLink";
+        $this->post("/signup", $hackingData);
+        $user = $this->Users->findByUsername("hackingUser")->first();
+        $this->assertFalse($user->email_validated);
+        $this->assertNotEquals($user->email_validation_link, "shurelyABadLink");
     }
 
     /**
@@ -146,9 +158,12 @@ class UsersControllerTest extends IntegrationTestCase
         $this->_logoutUser();
     }
 
+    /**
+     * @group Develop
+     */
     public function testEmailValidation() {
         $usersTable = TableRegistry::get('Users');
-        $user = $usersTable->newEntities($this->goodData);
+        $user = $usersTable->newEntity($this->goodData);
         $user = $usersTable->save($user);
         $this->assertNotFalse($user, 'User to validate email is saved');
 
@@ -167,6 +182,8 @@ class UsersControllerTest extends IntegrationTestCase
 
         // When good user is logged in, email can be validated
         $this->assertResponseSuccess();
+        $this->_authenticateUser($user);
+        $this->get("/validate-email/" . $user->email_validation_link);
         $user = $usersTable->get($user->id);
         $this->assertTrue($user->email_validated, 'Good logged user can validate its email');
     }

@@ -55,13 +55,17 @@ Router::scope('/', function ($routes) {
     $routes->connect('disable/:id', ['controller' => 'Links', 'action' => 'disable'], ['_name' => 'link-disable', 'pass' => ['id']]);
     $routes->connect('enable/:id', ['controller' => 'Links', 'action' => 'enable'], ['_name' => 'link-enable', 'pass' => ['id']]);
     $routes->connect('signup', ['controller' => 'Users', 'action' => 'add']);
-    $routes->connect('login', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
     $routes->connect('logout', ['controller' => 'Users', 'action' => 'logout']);
     $routes->connect('me', ['controller' => 'Links', 'action' => 'history'], ['_name' => 'history']);
     $routes->connect('me/edit', ['controller' => 'Users', 'action' => 'edit']);
     $routes->connect('me/delete', ['controller' => 'Users', 'action' => 'delete'], ['_name' => 'user-delete']);
     $routes->connect(':token', ['controller' => 'Links', 'action' => 'view'], ['_name' => 'link-view', 'token' => '\w{32}', 'pass' => ['token']]);
-    $routes->connect('sendMail', ['controller' => 'Users', 'action' => 'sendMail']);
+    $routes->connect(
+        'validate-email/:token',
+        ['controller' => 'Users', 'action' => 'validateEmail'],
+        ['_name' => 'user-validate-email', 'token' => '.+', 'pass' => ['token']]
+    );
     //die(Router::url(['_name' => 'link-view']));
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

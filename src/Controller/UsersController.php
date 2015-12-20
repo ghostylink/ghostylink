@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Mailer\MailerAwareTrait;
+use Cake\Network\Exception\NotFoundException;
+use Cake\Network\Exception\UnauthorizedException;
 
 /**
  * Users Controller
@@ -13,6 +15,7 @@ use Cake\Mailer\MailerAwareTrait;
  */
 class UsersController extends AppController
 {
+    use MailerAwareTrait;
     /**
      * Add method
      *
@@ -98,6 +101,26 @@ class UsersController extends AppController
         }
     }
 
+    /**
+     * Validate the user's email considering the given token
+     * @param type $token
+     */
+    public function validateEmail($token)
+    {
+        $this->request->allowMethod(['get']);
+        $user = $this->Users->findByEmailValidationLink($token)->first();
+        if (!$user) {
+            throw new NotFoundException();
+        }
+        if ($user->id != $this->Auth->user("id")) {
+            $this->Flash->error(__('Your not logged in as the owner of the mail adress. Please, try again.'));
+            return $this->redirect("login");
+        }
+        $user->email_validated = true;
+        $this->Users->save($user);
+        $this->Flash->success('Your email has been successfully validated');
+        return $this->redirect(['controller' => 'Links']);
+    }
     /**
      *
      * @return void Redirects to home page.

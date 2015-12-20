@@ -292,9 +292,6 @@ class UsersTableTest extends TestCase
         $this->assertEquals(2, count($users), 'Only users with a email adress defined are retrieve');
     }
 
-    /**
-     * @group Develop
-     */
     public function testEmailValidationRequired()
     {
         $goodData = $this->goodData;

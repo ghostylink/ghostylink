@@ -36,12 +36,13 @@ class FunctionalTest extends PHPUnit_Extensions_SeleniumTestCase {
             $this->screenshotUrl = 'http://selenium.ghostylink.org';
         }
         $this->setBrowserUrl("http://localhost:8765/");
+
     }
 
     protected function tearDown() {
         parent::tearDown();
-        $this->open('/logout');
         $this->fixtureManager->unload($this);
+        $this->open('/logout');
     }
 
 }
