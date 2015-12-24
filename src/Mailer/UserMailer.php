@@ -37,7 +37,7 @@ class UserMailer extends Mailer implements EventListenerInterface
         if ($entity->email != null) {
             if ($entity->isNew()) {
                 $this->send('emailConfirmation', [$entity]);
-            } else if ($entity->dirty('email')) {
+            } elseif ($entity->dirty('email')) {
                     $this->set(['user' => $entity]);
                     $this->send('emailConfirmation', [$entity]);
                     debug("Email has changed !");
@@ -50,7 +50,7 @@ class UserMailer extends Mailer implements EventListenerInterface
      */
     public function emailConfirmation($user)
     {
-        $this->helpers(['EmailProcessing']);
+        $this->helpers(['Html', 'EmailProcessing', 'Url']);
         $this->transport('default');
         $this
             ->to($user->email)
