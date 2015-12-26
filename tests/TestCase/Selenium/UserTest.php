@@ -32,6 +32,7 @@ class UsersTest extends FunctionalTest {
         $this->waitForPageToLoad("30000");
         // #User has been logged in
         $this->assertTrue($this->isElementPresent("css=a[href=\"/logout\"]"));
+        $this->assertElementNotPresent('css=[data-related-field="ghostification_alert"]');
     }
 
 }

@@ -128,6 +128,7 @@ class UsersTable extends Table
         })->where(function ($exp, $q) {
             return $exp->isNotNull('email');
         })
+        ->andWhere(["email_validated" => true])
         ->group('Users.id')
         ->having(['count(*) >' > 0]);
     }

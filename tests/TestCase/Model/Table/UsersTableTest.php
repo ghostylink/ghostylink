@@ -290,6 +290,16 @@ class UsersTableTest extends TestCase
     {
         $users = $this->Users->find('needMailAlert')->all();
         $this->assertEquals(2, count($users), 'Only users with a email adress defined are retrieve');
+
+        // Artificialy validate emails of users
+        $user1 = $this->Users->get(1);
+        $user2 = $this->Users->get(3);
+        $user1->email_validated = false;
+        $user2->email_validated = false;
+        $this->Users->save($user1);
+        $this->Users->save($user2);
+        $users = $this->Users->find('needMailAlert')->all();
+        $this->assertEmpty($users, "Users need to have an email validated to retrieve mail alert");
     }
 
     public function testEmailValidationRequired()

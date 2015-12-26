@@ -21,6 +21,13 @@ and open the template in the editor.
     margin-bottom: 60px;
 }
 
+span.warning {
+    color: orangered;
+}
+
+span.ok {
+    color:green;
+}
 
 h1.navbar-text {
     float:right;

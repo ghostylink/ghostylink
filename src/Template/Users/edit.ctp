@@ -11,12 +11,18 @@
             echo $this->Form->input('email', ['class' => 'form-control',
                 'placeholder' => "Your email",
                 'required' => 'false']);
+            if ($user->email_validated) {
+                echo $this->Html->tag("span", " Validated", ["class" => "glyphicon glyphicon-ok ok"]);
+            } else {
+                echo $this->Html->tag("span", " Not yet validated", ["class" => "glyphicon glyphicon-remove warning"]);
+            }
             ?>
             <?php
             $passwordHTML =  $this->Form->input('password', ['class' => 'form-control',
                                 'label' => 'Password*',
                                 'placeholder' => 'Choose a password',
-                                'required' => 'true']);
+                                'required' => 'true',
+                                'value' => ""]);
             $confirmPasswordHTML = $this->Form->input('confirm_password', ['class' => 'form-control',
                                 'label' => 'Confirmation*',
                                 'type' => "password",
