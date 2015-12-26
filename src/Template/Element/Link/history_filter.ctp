@@ -1,3 +1,11 @@
+<?php
+function reduce_column($content, $max_length = 15) {
+    if (strlen($content) > $max_length) {
+        return substr($content, 0, $max_length) . "...";
+    }
+    return $content;
+}
+?>
 <section id="filters" class="col-lg-12 panel panel-default">
     <?= $this->Form->create(null, ['type' => 'get', 'action' => '', 'class' => 'panel-body']); ?>
     <div class="col-lg-4">

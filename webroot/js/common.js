@@ -15,7 +15,7 @@ function init_utc_time() {
         var date = new Date(time);
         var gmt_date =date.toString();
         var index = gmt_date.indexOf('GMT');
-        var str_date = gmt_date.substr(0, index -1);        
+        var str_date = date.toLocaleString();
         $time.text(str_date);
     });
 }

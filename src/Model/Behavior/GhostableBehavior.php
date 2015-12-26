@@ -47,12 +47,23 @@ class GhostableBehavior extends Behavior
                 $parsedDate->addMinutes($offset); // also Ok if offset is < 0
                 $data['death_time'] =$parsedDate;
             }
-        }
-        // Compute the death_time according to now and nb days in parameter
-        else if (array_key_exists('death_time', $data)) {
+        } elseif (array_key_exists('death_time', $data)) {
             if ($data['death_time']) {
-                 $deathTime = new Time();
-                 $data['death_time'] = $deathTime->addDays($data['death_time']);
+                $deathTime = new Time();
+                switch ($data['death_time']) {
+                    case 1:
+                        $data['death_time'] = $deathTime->addDay(1);
+                        break;
+                    case 7:
+                        $data['death_time'] = $deathTime->addWeek(1);
+                        break;
+                    case 30:
+                        $data['death_time'] =$deathTime->addMonth(1);
+                        break;
+                    default:
+                        $data['death_time'] = $deathTime->addDays($data['death_time']);
+                        break;
+                }
             } else { // Create an empty death_time in order to check in validator
                  $data['death_time'] = '';
             }

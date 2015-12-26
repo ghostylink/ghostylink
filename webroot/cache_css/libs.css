@@ -35,6 +35,31 @@ h1.navbar-text {
     font-style: italic;
 }
 
+ul.list-link-components {
+    padding:0;
+    margin-bottom: 0;
+}
+.component {
+    color:#FFF;
+    font-style: normal;
+    padding: 0.5em;    
+    display: inline-block;
+    margin-left: 0.5em;
+    border-radius: 5px;
+}
+
+.component.glyphicon-recaptcha {
+    background-image: url("/css/images/recaptcha.gif");
+    background-position: 2px 2px;
+    background-repeat: no-repeat;
+    background-size: 15px auto;
+    padding-left: 20px;
+}
+.component.glyphicon.glyphicon-recaptcha.label {
+    background-position: center center;
+    background-size: 60% auto;
+    color: transparent;    
+}
 /*************************** Some basic tools classes *************************/
 .margin-sm {
     margin:0.5em;

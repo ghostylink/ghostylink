@@ -222,7 +222,9 @@ class LinksTable extends Table
         if (!isset($options['user_id'])) {
             throw new \BadFunctionCallException();
         }
-        $query = $this->findRangeLife($query, $options)->where(['Links.user_id' => $options['user_id']]);
+        $query = $this->findRangeLife($query, $options)
+                                ->contain("AlertParameters")
+                                ->where(['Links.user_id' => $options['user_id']]);
 
         //Filter on status
         if (isset($options['status']) && $options['status'] != '*') {
