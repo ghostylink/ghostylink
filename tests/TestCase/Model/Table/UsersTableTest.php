@@ -77,6 +77,7 @@ class UsersTableTest extends TestCase
         $this->assertEquals(1, $this->Users->hasField('email'));
         $this->assertEquals(1, $this->Users->hasField('password'));
         $this->assertEquals(1, $this->Users->hasField('default_threshold'));
+        $this->assertEquals(1, $this->Users->hasField('subscribe_notifications'));
     }
 
     /**
@@ -104,13 +105,14 @@ class UsersTableTest extends TestCase
         unset($data['password']);
         unset($data['confirm_password']);
         $dbUser = $this->Users->find('all')
-                                      ->where(['Users.username =' => $goodData['username']])
-                                      ->toArray()[0]->toArray();
+                                      ->where(['Users.username =' => $goodData['username']])->toArray()[0];
+        $userArray = $dbUser->toArray();
         $this->assertArraySubset($data,
-                                $dbUser,
+                                $userArray,
                            'The inserted data corresponds to what we expect');
-        $this->assertNotEquals($dbUser['password'], $goodData['password'], 'Password has been hashed');
+        $this->assertNotEquals($userArray['password'], $goodData['password'], 'Password has been hashed');
 
+        $this->assertTrue($dbUser->subscribe_notifications, 'By default a registered user subscribe to notification');
     }
 
     public function testEmailNotRequired()
@@ -167,6 +169,27 @@ class UsersTableTest extends TestCase
         $badData['username'] = 'user1';
         $user = $this->Users->patchEntity($user, $badData);
         $this->assertFalse($this->Users->save($user), 'Username must be unique');
+    }
+
+    public function testChangeSubscribeNotifications()
+    {
+        $goodData = $this->goodData;
+        $user = $this->Users->newEntity($goodData);
+        $this->assertNotFalse($this->Users->save($user), 'Saving user');
+        $user->subscribe_notifications = false;
+        $this->assertNotFalse($this->Users->save($user), "Saving user after changing the subscribe_notifications field");
+        $userAfterSave = $this->Users->get($user->id);
+        $this->assertFalse($userAfterSave->subscribe_notifications, "Subscribe notifications has been changed");
+    }
+
+    public function testErrorsSubscribeNotifications()
+    {
+        $goodData = $this->goodData;
+        $goodData["subscribe_notifications"] = "blabalba";
+        $user = $this->Users->newEntity($goodData);
+        $res = $this->Users->save($user);
+        $this->assertFalse($res, "Non boolean data are not allowed for subscribe_notifications field");
+
     }
     /**
      * Test errors on mail are catched
@@ -286,20 +309,26 @@ class UsersTableTest extends TestCase
         $user = $this->Users->patchEntity($user, $badData);
         $this->assertFalse($this->Users->save($user), 'More than 100 life threshold not allowed');
     }
+
     public function testFindNeedMailAlert()
     {
         $users = $this->Users->find('needMailAlert')->all();
-        $this->assertEquals(2, count($users), 'Only users with a email adress defined are retrieve');
+        $this->assertEquals(2, count($users), 'Only users with a email adress defined are retrieved');
 
-        // Artificialy validate emails of users
+
+        // Artificialy unvalidate emails of a user
         $user1 = $this->Users->get(1);
-        $user2 = $this->Users->get(3);
         $user1->email_validated = false;
-        $user2->email_validated = false;
         $this->Users->save($user1);
+        $users = $this->Users->find('needMailAlert')->all();
+        $this->assertEquals(1, count($users), "Users need to have an email validated to retrieve mail alert");
+
+        // Test users can disable their notifications
+        $user2 = $this->Users->get(3);
+        $user2->subscribe_notifications = false;
         $this->Users->save($user2);
         $users = $this->Users->find('needMailAlert')->all();
-        $this->assertEmpty($users, "Users need to have an email validated to retrieve mail alert");
+        $this->assertEmpty($users, "Users can disable their notifications alerts");
     }
 
     public function testEmailValidationRequired()

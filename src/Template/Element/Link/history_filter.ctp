@@ -14,6 +14,7 @@ function reduce_column($content, $max_length = 15) {
             <span>
                 <?php
                     $this->Form->templates(['inputContainer' => '{{content}}']);
+                    $this->Form->templates(['nestingLabel' =>  '<label {{attrs}}>{{text}}</label>']);
                     $value = isset($_GET['min_life']) ? $_GET['min_life'] : 25;
                     echo $this->Form->input('min_life', ['id' => 'min_life', 'readonly' => 'readonly',
                                                                         'label' => false, 'value' => $value]);

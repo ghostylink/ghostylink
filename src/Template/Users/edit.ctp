@@ -16,6 +16,7 @@
             } else {
                 echo $this->Html->tag("span", " Not yet validated", ["class" => "glyphicon glyphicon-remove warning"]);
             }
+            echo $this->Form->input('subscribe_notifications');
             ?>
             <?php
             $passwordHTML =  $this->Form->input('password', ['class' => 'form-control',

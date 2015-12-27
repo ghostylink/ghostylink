@@ -22,9 +22,10 @@ class User extends Entity
         'password' => true,
         'email' => true,
         'links' => true,
-        'email_validated' => true,
         'default_threshold' => true,
-        'email_validation_link' => true
+        'subscribe_notifications' => true
+
+
     ];
 
     protected function _setPassword($password)

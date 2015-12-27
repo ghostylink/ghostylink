@@ -35,6 +35,7 @@ class UsersTable extends Table
         $this->displayField('default_threshold');
         $this->displayField('email_validated');
         $this->displayField('email_validation_link');
+        $this->displayField('subscribe_notifications');
         $this->addBehavior('User');
         $this->primaryKey('id');
         $this->hasMany('Links', [
@@ -113,6 +114,9 @@ class UsersTable extends Table
 
         $validator
                 ->add('default_threshold', 'valid', ['rule' => ['range', 1, 100]]);
+
+        $validator->add("subscribe_notifications", 'boolean', ["rule" => "boolean"]);
+
         return $validator;
     }
 
@@ -129,6 +133,7 @@ class UsersTable extends Table
             return $exp->isNotNull('email');
         })
         ->andWhere(["email_validated" => true])
+        ->andWhere(['subscribe_notifications' => true])
         ->group('Users.id')
         ->having(['count(*) >' > 0]);
     }
