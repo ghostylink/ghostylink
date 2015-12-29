@@ -289,4 +289,29 @@ class LinksController extends AppController
         $this->set('history', $this->paginate($this->Links));
         $this->set('_serialize', ['bookmarks']);
     }
+
+    /**
+     * Subscribe or unsubscribe to alert for the given link
+     * @param type $privateToken the private token to subscribe or unsubscribe to
+     */
+    public function alertSubscribe($privateToken = null)
+    {
+        $this->request->allowMethod(['post']);
+        $link = $this->Links->findByPrivateToken($privateToken)->contain('AlertParameters')->first();
+        if (!$link) {
+            throw new NotFoundException();
+        }
+        if ($link->user_id != $this->Auth->user("id")) {
+            return $this->redirect(["controller" => 'Users', "action" => "login"]);
+        }
+        $targetStatus = $this->request->data("subscribe-notifications");
+        $data = [];
+        $data["alert_parameter"] = [];
+        $data["alert_parameter"]["subscribe_notifications"] = $targetStatus == 'on' ? true : false;
+        $link = $this->Links->patchEntity($link, $data);
+        if (!$this->Links->save($link)) {
+            $this->Flash->error("Alert parameters cannot be saved. Please try again");
+        }
+        return $this->redirect(["controller" => "Links", "action" => "history"]);
+    }
 }

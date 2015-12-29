@@ -67,6 +67,7 @@ class AlertParametersTableTest extends TestCase
         $this->assertEquals(1, $this->AlertParameters->hasField('type'));
         $this->assertEquals(1, $this->AlertParameters->hasField('sending_status'));
         $this->assertEquals(1, $this->AlertParameters->hasField('link_id'));
+        $this->assertEquals(1, $this->AlertParameters->hasField('subscribe_notifications'));
     }
 
     /**
@@ -102,6 +103,14 @@ class AlertParametersTableTest extends TestCase
         $goodData['type'] = 'rss';
         $alertParameters = $this->AlertParameters->newEntity($goodData);
         $alertParameters = $this->AlertParameters->patchEntity($alertParameters, $goodData);
+        $this->assertFalse($this->AlertParameters->save($alertParameters));
+    }
+
+    public function testErrorOnSubscribeNotifications()
+    {
+        $goodData = $this->goodData;
+        $goodData["subscribe_notifications"] = "notaboolean";
+        $alertParameters = $this->AlertParameters->newEntity($goodData);
         $this->assertFalse($this->AlertParameters->save($alertParameters));
     }
     /**

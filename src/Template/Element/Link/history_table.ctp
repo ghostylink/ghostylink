@@ -54,6 +54,18 @@
                             <?= $this->element("Link/Components/list", ["link"=>$l]);?>
                         </td>
                         <td class="actions"><?php
+                            if ($l->alert_parameter) {
+                                if ($l->alert_parameter->subscribe_notifications == true) {
+                                    echo $this->Form->postLink('turn off', ['_name' => 'link-alert-subscribe', $l->private_token], [
+                                    'class' => 'btn btn-xs btn-danger glyphicon glyphicon-bell', 'title' => '=> Alert off',
+                                    'data' => ['subscribe-notifications' => "off"]]);
+                                }
+                                else {
+                                    echo $this->Form->postLink('turn on', ['_name' => 'link-alert-subscribe', $l->private_token], [
+                                    'class' => 'btn btn-xs btn-success glyphicon glyphicon-bell', 'title' => '=>Alert on',
+                                    'data' => ['subscribe-notifications' => "on"]]);
+                                }
+                            }
                             if ($l->status == true) {
                                 echo $this->Form->postLink('', ['_name' => 'link-disable', $l->id], [
                                     'class' => 'btn btn-xs btn-warning glyphicon glyphicon-ban-circle disable-link', 'title' => '=> Disable']);

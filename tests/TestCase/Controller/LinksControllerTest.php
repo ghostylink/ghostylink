@@ -46,6 +46,8 @@ class LinksControllerTest extends IntegrationTestCase
         $this->csrf ['_csrfToken'] = $token;
         $this->goodData['private_token'] = uniqid();
         parent::setUp();
+        $config = TableRegistry::exists('Links') ? [] : ['className' => 'App\Model\Table\LinksTable'];
+        $this->Links = TableRegistry::get('Links', $config);
     }
 
     /**
@@ -414,6 +416,50 @@ class LinksControllerTest extends IntegrationTestCase
         $this->get('/me');
         $this->assertResponseContains('My created links');
         $this->session([]);
+    }
+
+    /**
+     * @group Develop
+     */
+    public function testAlertSubscription()
+    {
+        $link = $this->Links->get(1);
+        // Test action require to be authenticated ...
+        $this->get("/alert-subscription/" . $link->private_token);
+        $this->assertResponseCode(302);
+
+         // and the link owner
+        $this->_authenticateUser(2);
+        $this->post("/alert-subscription/" . $link->private_token, $this->csrf);
+        $this->assertResponseCode(302);
+        $this->assertResponseSuccess();
+
+        // Test changing subscription flag to off
+        $this->_authenticateUser(0);
+        $data = $this->csrf;
+        $data['subscribe-notifications'] = 'off';
+        $this->post("/alert-subscription/" . $link->private_token, $data);
+        $this->assertResponseSuccess();
+
+        $linkModified = $this->Links->findById(1)->contain("AlertParameters")->first();
+        $this->assertFalse($linkModified->alert_parameter->subscribe_notifications, "Turning subscribe notifications to off");
+
+        // Test changing subscription flag to on
+        $data['subscribe-notifications'] = 'on';
+        $this->post("/alert-subscription/" . $link->private_token, $data);
+        $this->assertResponseSuccess();
+
+        $linkModified = $this->Links->findById(1)->contain("AlertParameters")->first();
+        $this->assertTrue($linkModified->alert_parameter->subscribe_notifications, "Turning subscribe notifications to on");
+
+        // Test get method not allowed
+        $this->get("/alert-subscription/" . $link->private_token);
+        $this->assertResponseError();
+
+        // not able to change alert subscription if there is no alert component
+        $noAlertParameterLink = $this->Links->get(2);
+        $this->post("/alert-subscription" . $noAlertParameterLink->private_token, $data);
+        $this->assertResponseCode(404);
     }
 
     public function _authenticateUser($fixtureIndex)

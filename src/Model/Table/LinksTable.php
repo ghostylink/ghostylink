@@ -252,7 +252,12 @@ class LinksTable extends Table
                    ->matching('AlertParameters', function ($q) {
                                        $filter = $this->MYSQL_LIFE_EXP;
                                        $expr = $q->newExpr("$filter >= AlertParameters.life_threshold");
-                                       return $q->where(['sending_status' => 0, 'type' => 'email', $expr]);
+                                       return $q->where(
+                                           ['sending_status' => 0,
+                                            'type' => 'email',
+                                            'AlertParameters.subscribe_notifications' => 1,
+                                            $expr]
+                                       );
                    });
         return $query;
     }

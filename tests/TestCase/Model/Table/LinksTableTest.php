@@ -395,5 +395,13 @@ class LinksTableTest extends TestCase
          $this->assertEquals(1, $array->count(),
                                                         'Need mail alert finder take in account the alert parameter life threshold');
 
+         // Disable notifications for the remaining link
+         $linkToChange = $array->first();
+         $alert = $linkToChange->alert_parameter;
+         $alert->subscribe_notifications = false;
+         $this->AlertParameters->save($alert);
+
+         $array = $this->Links->find('needMailAlert')->contain('AlertParameters')->all();
+         $this->assertEmpty($array, "Finder only retrieved link which have subscribe_notifications set to true");
     }
 }

@@ -133,7 +133,7 @@ class UsersTable extends Table
             return $exp->isNotNull('email');
         })
         ->andWhere(["email_validated" => true])
-        ->andWhere(['subscribe_notifications' => true])
+        ->andWhere(['Users.subscribe_notifications' => true])
         ->group('Users.id')
         ->having(['count(*) >' > 0]);
     }
