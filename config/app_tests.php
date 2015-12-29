@@ -264,7 +264,7 @@ return [
             'quoteIdentifiers' => false,
             //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
         ],
-        
+
         /**
          * The connection test template. Use to retrieve the schema
          */

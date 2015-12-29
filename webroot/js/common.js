@@ -5,7 +5,7 @@
  */
 $(function(){   
     init_utc_time();    
-    init_flash_message();
+    init_flash_message();    
 })(jQuery);
 
 function init_utc_time() {
