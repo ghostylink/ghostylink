@@ -20,6 +20,7 @@
  */
 use Cake\Core\Plugin;
 use Cake\Routing\Router;
+use Cake\Core\Configure;
 
 /**
  * The default class to use for all routes
@@ -94,6 +95,14 @@ Router::scope('/', function ($routes) {
     //$routes->fallbacks('InflectedRoute');
 });
 
+if (Configure::read('debug')) {
+    Router::scope('/cache_js', function ($routes) {
+        $routes->fallbacks('InflectedRoute');
+    });
+    Router::scope('/cache_css', function ($routes) {
+        $routes->fallbacks('InflectedRoute');
+    });
+}
 /**
  * Load all plugin routes.  See the Plugin documentation on
  * how to customize the loading of plugin routes.

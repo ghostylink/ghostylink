@@ -10,10 +10,10 @@
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "*",
-        "markstory/asset_compress": "dev-master",
         "google/recaptcha": "~1.1",
         "kevintweber/phpunit-markup-validators": "dev-master",
-        "tijsverkoyen/css-to-inline-styles": "^1.5@dev"
+        "tijsverkoyen/css-to-inline-styles": "^1.5@dev",
+        "markstory/asset_compress": "^3.0"
     },
     "require-dev": {
         "psy/psysh": "@stable",
