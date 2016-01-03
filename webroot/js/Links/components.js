@@ -31,6 +31,7 @@ function initLinkComponents($JqueryLi) {
         drop: function(event, ui) {
             var $target = $(this);                        
             var $component = ui.draggable;
+            console.log($component, ui.draggable);
             moveLinkComponents($component, $target);        
         }
     });
@@ -46,6 +47,7 @@ function moveLinkComponents($component, $targetArea){
         //Retrieve the closer fieldset
         var $fieldset = $targetArea.parent('fieldset').eq(0);        
         //Add the html corresponding to the field
+        console.log($component);
         var $newField = $($component.attr("data-field-html"));        
         $fieldset.append($newField);
         var $toEvaluate = $component.attr("data-field-js-function");
@@ -62,12 +64,14 @@ function moveLinkComponents($component, $targetArea){
             $targetArea.find('li.legend').remove();
         }
         
-        //Jquery ui put inline style (principaly positions) we do not want.
-        $targetArea.append($component.remove().removeAttr("style"));
-        var legend = $component.text();
-        
         //Save the original component for an evenutal future delete        
         $('section.link-components').data('link-component-' + nameNewField, $component.clone());         
+        
+        //Jquery ui put inline style (principaly positions) we do not want.
+        $targetArea.append($component.remove().removeAttr("style").addClass($component.children().first().attr('class')));
+        var legend = $component.text();
+        
+        
         //Remove the available component specific class and the text
         var text = '';
          if ($component.attr("data-content")) {

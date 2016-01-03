@@ -26,6 +26,41 @@ h1.navbar-text {
     font-style: italic;
 }
 
+/********************************** Component styles **************************/
+.component-badge {
+    margin-right: 0.3em;
+    display:inline-block;
+}
+* .component-badge:last-child {
+    margin-right: 0;
+}
+.component-badge span{
+    padding:0.25em;
+    border-color: #6F6F6F;
+    border-style:solid;
+    border-width:1px;
+    float:left;
+}
+.component-badge span.component-description {
+    line-height: 1 !important;
+    border-right-color: transparent;
+    background-color: #fcfbf7;
+    font-family: inherit;
+    font-weight: 500;
+}
+.component-badge span:first-child{    
+    color:#fff;
+    background-color: #6F6F6F;
+    border-radius: 5px 0 0 5px;
+}
+.component-badge span:last-child{
+    color:#38e;
+    left:-1px;
+    background-color: #fcfbf7;
+    border-left-color: transparent;
+    border-radius: 0 5px 5px 0;
+}
+
 ul.list-link-components {
     padding:0;
     margin-bottom: 0;
@@ -39,18 +74,23 @@ ul.list-link-components {
     border-radius: 5px;
 }
 
-.component.glyphicon-recaptcha {
+.glyphicon-recaptcha {
     background-image: url("/css/images/recaptcha.gif");
     background-position: 2px 2px;
     background-repeat: no-repeat;
     background-size: 15px auto;
     padding-left: 20px;
 }
-.component.glyphicon.glyphicon-recaptcha.label {
+.glyphicon-recaptcha {
     background-position: center center;
     background-size: 60% auto;
     color: transparent;    
 }
+.glyphicon-recaptcha:after {
+    content:"--";
+    color: transparent;
+}
+/****************************************************************************/
 /*************************** Some basic tools classes *************************/
 .margin-sm {
     margin:0.5em;

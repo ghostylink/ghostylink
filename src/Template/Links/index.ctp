@@ -11,27 +11,39 @@
     <h2 class="panel panel-heading ">Choose component to add to your link</h2>
     <div class="panel-body">
         <ul id="link-components-available">
-            <li data-related-field="death_time" class="glyphicon glyphicon-time label label-primary ui-widget-header"
-                data-field-js-function = "deathTimeInit"
-                data-field-html="<?= htmlspecialchars($this->element("Link/Components/death_time")) ?>"> Time limit</li>
-            <li data-related-field="max_views" class="glyphicon glyphicon-eye-open label label-primary ui-widget-header"
-                data-field-html="<?= htmlspecialchars($this->element("Link/Components/max_views"))  ?>"> Views limit</li>
-            <li data-related-field="google_captcha" class="glyphicon  glyphicon-recaptcha label label-primary ui-widget-header"
-                  data-content="-"
-                  data-field-html="<?= htmlspecialchars($this->element("Link/Components/google_captcha"))  ?>"> Google captcha</li>
-            <li data-related-field="death_date" class="glyphicon  glyphicon-calendar label label-primary ui-widget-header"
-                data-field-js-function = "deathDateInit"
-                  data-field-html="<?= htmlspecialchars($this->element("Link/Components/death_date"))  ?>"> Date limit</li>
             <?php
-            $user = $this->request->session()->read('Auth.User');
-            if ($user && $user["email_validated"] === true) {
-                    ?>
-                    <li data-related-field="ghostification_alert" class="glyphicon  glyphicon-bell label label-primary ui-widget-header"
-                        data-field-js-function ="alertComponentInit"
-                  data-field-html="<?= htmlspecialchars($this->element("Link/Components/ghostification_alert"))  ?>"> Ghostification alert</li>
-                    <?php
-            }
-            ?>
+                echo $this->element(
+                    "Link/Components/badge-time",
+                    ['data' => ['data-related-field' => 'death_time',
+                                       'data-field-html' => htmlspecialchars($this->element("Link/Components/death_time")),
+                                       'data-field-js-function' => 'deathTimeInit']]
+                );
+                echo $this->element(
+                    "Link/Components/badge-date",
+                    ['data' => ['data-related-field' => 'death_date',
+                                       'data-field-js-function' => 'deathDateInit',
+                                       'data-field-html' => htmlspecialchars($this->element("Link/Components/death_date"))]]
+                );
+                echo $this->element(
+                    "Link/Components/badge-recaptcha",
+                    ['data' => ['data-related-field' => 'google_captcha',
+                                       'data-field-html' => htmlspecialchars($this->element("Link/Components/google_captcha"))]]
+                );
+                echo $this->element(
+                    "Link/Components/badge-views",
+                    ['data' => ['data-related-field' => 'max_views',
+                                       'data-field-html' => htmlspecialchars($this->element("Link/Components/max_views"))]]
+                );
+                $user = $this->request->session()->read('Auth.User');
+                if ($user && $user["email_validated"] === true) {
+                    echo $this->element(
+                        "Link/Components/badge-alert",
+                        ['data' => ['data-related-field' => 'ghostification_alert',
+                                           'data-field-js-function' => 'alertComponentInit',
+                                           'data-field-html' => htmlspecialchars($this->element("Link/Components/ghostification_alert"))]]
+                    );
+                }
+                ?>
         </ul>
     </div>
 </section>
