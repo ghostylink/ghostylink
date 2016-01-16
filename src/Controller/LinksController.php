@@ -275,6 +275,9 @@ class LinksController extends AppController
         $this->paginate = [
             'maxLimit' => 15,
             'limit' => 5,
+            'sortWhitelist' => [
+               'title', 'created'
+            ],
             'finder' => [
                 'history' => ['min_life' => $min_life,
                     'max_life' => $max_life,
@@ -287,6 +290,7 @@ class LinksController extends AppController
             ]
         ];
         $this->set('history', $this->paginate($this->Links));
+        $this->set('user', $this->Auth->user());
         $this->set('_serialize', ['bookmarks']);
     }
 

@@ -6,7 +6,7 @@ function reduce_column($content, $max_length = 15) {
     return $content;
 }
 ?>
-<section id="filters" class="col-lg-12 panel panel-default">
+<section id="filters" class="col-lg-12 panel panel-default" data-life-threshold="<?= $user['default_threshold'] ?>">
     <?= $this->Form->create(null, ['type' => 'get', 'action' => '', 'class' => 'panel-body']); ?>
     <div class="col-lg-4">
         <p>

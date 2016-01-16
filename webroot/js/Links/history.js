@@ -7,7 +7,7 @@ function update_range_color(min_life, max_life) {
     var $min_life = $('#min_life');
     var $max_life = $('#max_life');
     var color = 'orange';
-    if (min_life<= 100 / 3.0) {
+    if (min_life <= 100 / 3.0) {
         color = 'green';
     }
     else if (min_life >= 2 * 100 / 3.0) {
@@ -28,20 +28,20 @@ $(function () {
         range: true,
         min: 0,
         max: 100,
-        values:[$('input[name=min_life]').val(),  $('input[name=max_life]').val()],
+        values: [$('input[name=min_life]').val(), $('input[name=max_life]').val()],
         slide: function (event, ui) {
             update_range_color(ui.values[0], ui.values[1]);
         }
     });
-    $( "#radio" ).buttonset().find('.ui-button-text').addClass('glyphicon')
-    $( "#radio" ).buttonset().find('[for !=status-any] .ui-button-text').addClass('glyphicon-flag');
-    
+    $("#radio").buttonset().find('.ui-button-text').addClass('glyphicon')
+    $("#radio").buttonset().find('[for !=status-any] .ui-button-text').addClass('glyphicon-flag');
+
     update_range_color($("#slider-range").slider("values", 0), $("#slider-range").slider("values", 1));
-    
+
     /* Build click event on the 'almost ghostified button' */
-    $('#almost-ghostified').on('click', function() {
-        $( "#slider-range" ).slider( "option", "values", [67 , 100 ] );
+    $('#almost-ghostified').on('click', function () {
+        $("#slider-range").slider("option", "values", [$('#filters').attr("data-life-threshold"), 100]);
         $('[name="status"]').val(1);
-        update_range_color(67, 100);
+        update_range_color($('#filters').attr("data-life-threshold"), 100);
     });
 });
