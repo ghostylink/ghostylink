@@ -102,6 +102,12 @@ if (Configure::read('debug')) {
     Router::scope('/cache_css', function ($routes) {
         $routes->fallbacks('InflectedRoute');
     });
+    Router::scope('/', function ($routes) {
+        $routes->connect("/check-config", 
+                         ['controller' => 'Dev',
+                          'action' => 'checkConfig']);
+    });
+    
 }
 /**
  * Load all plugin routes.  See the Plugin documentation on
