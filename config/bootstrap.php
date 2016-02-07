@@ -68,12 +68,11 @@ try {
     die($e->getMessage() . "\n");
 }
 
-// Load an environment local configuration file.
-// You can use a file like app_local.php to provide local overrides to your
-// shared configuration.
-//Configure::load('app', 'default');
-Configure::load('app_tests', 'default');
-
+// This is a tests/bootstrap.php call
+if (LOAD_TEST_CONFIG) {
+    Configure::load('app_tests', 'default');
+}
+Configure::load('app_docker', 'default', true);
 // When debug = false the metadata cache should last
 // for a very very long time, as we don't want
 // to refresh the cache while users are doing requests.

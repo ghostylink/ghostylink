@@ -9,16 +9,25 @@ while [[ RET -ne 0 ]]; do
 	RET=$?
 done
 
-echo "=> Creating MySQL ghostylink user with ghostylink password"
-mysql -uroot -e "CREATE USER 'ghostylink'@'localhost' IDENTIFIED BY 'ghostylink'"
-mysql -uroot -e "CREATE DATABASE ghostylink_test"
-mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'ghostylink'@'localhost' WITH GRANT OPTION"
+GHOSTYLINK_INSTALL_DIR="/var/www/html/ghostylink"
+echo "=> Reading configuration from '$GHOSTYLINK_INSTALL_DIR'"
+db_name=$(php -r '$conf = require "/var/www/html/ghostylink/config/app_docker.php"; \
+                  print_r($conf["Datasources"]["default"]["database"]);')
+db_user=$(php -r '$conf = require "/var/www/html/ghostylink/config/app_docker.php"; \
+                  print_r($conf["Datasources"]["default"]["username"]);')
+db_pwd=$(php -r '$conf = require "/var/www/html/ghostylink/config/app_docker.php"; \
+                 print_r($conf["Datasources"]["default"]["password"]);')
+
+echo "=> Creating MySQL $db_user user with ghostylink $db_pwd"
+mysql -uroot -e "CREATE USER '$db_user'@'localhost' IDENTIFIED BY '$db_pwd'"
+mysql -uroot -e "CREATE DATABASE $db_name"
+mysql -uroot -e "GRANT ALL PRIVILEGES ON $db_name.* TO '$db_user'@'localhost' WITH GRANT OPTION"
 
 echo "=> Done!"
 echo "========================================================================"
 echo "You can now connect to this MySQL Server using:"
 echo ""
-echo " mysql -ughostylink -pghostylink -h<host> -P<port>"
+echo " mysql -u$db_user -p$db_pwd -h<host> -P<port>"
 echo ""
 echo "Please remember to change the above password as soon as possible!"
 echo "MySQL user 'root' has no password but only allows local connections"

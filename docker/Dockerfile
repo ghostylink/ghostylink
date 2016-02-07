@@ -3,11 +3,11 @@ FROM tutum/lamp:latest
 
 MAINTAINER Jullian Bellino <jullian.bellino@gmail.com>
 
-# Download latest version of CakePHP into /app
+# Download latest version of Ghostylink
 RUN rm -fr /var/www/html/ && git clone -b master https://github.com/beljul/ghostylink /var/www/html/
 
 # Download and install composer
-RUN apt-get -y install curl
+RUN apt-get update && apt-get -y install curl
 RUN cd /var/www/html && curl -s https://getcomposer.org/installer | php
 
 # Need intl php extension
@@ -27,7 +27,7 @@ ADD launch.sh /launch.sh
 RUN chmod 755 /launch.sh
 
 RUN chown -R www-data:www-data /var/www/html
-RUN chmod -R 777 /var/www/html/tmp/
+RUN mkdir /var/www/html/tmp/ && chmod -R 777 /var/www/html/tmp/
 RUN chmod -R 777 /var/www/html/vendor/
 RUN mkdir /var/www/html/logs
 RUN chmod -R 777 /var/www/html/logs

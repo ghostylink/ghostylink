@@ -54,7 +54,7 @@ class UserMailer extends Mailer implements EventListenerInterface
         $this->transport('default');
         $this
             ->to($user->email)
-            ->from('notifications@ghostylink.org')
+            ->from('ghostylink@localhost')
             ->emailFormat('html')
             ->subject('Ghostylink email verification')
             ->set(['user' => $user]);
