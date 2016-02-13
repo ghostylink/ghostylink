@@ -14,7 +14,9 @@
     <!-- Add any additional test suites you want to run here -->
     <testsuites>
         <testsuite name="Unit">
-            <exclude>tests/TestCase/Selenium/</exclude>                       
+            <directory>./tests/TestCase</directory>
+            <exclude>./tests/TestCase/Selenium</exclude>
+            <exclude>./tests/TestCase/HTML5Validation</exclude>
         </testsuite>
         <!-- Add plugin test suites here. -->
     </testsuites>
