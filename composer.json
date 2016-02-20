@@ -24,6 +24,7 @@
 	"squizlabs/php_codesniffer": "*",
         "kevintweber/phpunit-markup-validators": "dev-master",
         "sebastian/phpcpd": "*",
+        "pdepend/pdepend" : "@stable",
 	"phpmd/phpmd": "@stable"
     },
     "suggest": {
