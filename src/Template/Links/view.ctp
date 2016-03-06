@@ -1,11 +1,13 @@
 <?php
+use Cake\Core\Configure;
+
 if ($link->google_captcha) {?>
 <section id="link-information" class="row unloaded">
             <?php
             echo $this->Form->create(null, ['id' => 'form-captcha']);
             ?>
             <div class="centered-text">
-                <div class="g-recaptcha" data-sitekey="6LdmCQwTAAAAAEX9CazNNpFQyb7YjWob8QTqMtB2"></div>
+                <div class="g-recaptcha" data-sitekey="<?= Configure::read('reCaptchaKeys.public')?>"></div>
                 <button id="load-link-captcha" class="btn btn-primary btn-lg">
                     View link information
                 </button>

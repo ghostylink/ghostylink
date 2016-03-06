@@ -47,7 +47,36 @@ return [
      * Google recaptcha keys
      */
     'reCaptchaKeys' => [
-        'private' => null,
-        'public' => null
+        'private' => '6LdmCQwTAAAAAPqT9OWI2gHcUOHVrOFoy7WCagFS',
+        'public' => '6LdmCQwTAAAAAEX9CazNNpFQyb7YjWob8QTqMtB2'
+    ],
+    
+    /**
+     * Security and encryption configuration
+     *
+     * - salt - A random string used in security hashing methods.
+     *   The salt value is also used as the encryption key.
+     *   You should treat it as extremely sensitive data.
+     * !!!! Make sure to define it only once !!!!
+     */
+    'Security' => [
+        'salt' => '56a5e2b007bdb03111cc49315b8439321fe30421cb86f9d7f4b90a7015f39d86',
+    ],
+    
+    /**
+     * Docker specific configuration
+     */
+    'Docker' => [
+        'crons' => [
+            /* Periodicity of alert sending. Do not put two often to avoid
+             * spamming your users */
+            'ghostification' => [
+                'mail' => '0 0 * * *'
+            ],
+            /**
+             * Avoid 100% link life in the database.
+             */
+            'life_checker' => '* * * * *',
+        ]
     ]
 ];

@@ -8,9 +8,11 @@ if [[ ! -d $VOLUME_HOME/mysql ]]; then
 	echo "=> Installing MySQL ..."
 	mysql_install_db > /dev/null 2>&1
 	echo "=> Done!"
-	/create_user_database.sh
+	/var/www/html/docker/create_user_database.sh
 else
 	echo "=> Using an existing volume of MySQL"
 fi
+
+/var/www/html/docker/init_crons.sh
 
 exec supervisord -n

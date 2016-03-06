@@ -9,13 +9,13 @@ while [[ RET -ne 0 ]]; do
 	RET=$?
 done
 
-GHOSTYLINK_INSTALL_DIR="/var/www/html/ghostylink"
+GHOSTYLINK_INSTALL_DIR="/var/www/html"
 echo "=> Reading configuration from '$GHOSTYLINK_INSTALL_DIR'"
-db_name=$(php -r '$conf = require "/var/www/html/ghostylink/config/app_docker.php"; \
+db_name=$(php -r '$conf = require "/var/www/html/config/prod/app_prod.php"; \
                   print_r($conf["Datasources"]["default"]["database"]);')
-db_user=$(php -r '$conf = require "/var/www/html/ghostylink/config/app_docker.php"; \
+db_user=$(php -r '$conf = require "/var/www/html/config/prod/app_prod.php"; \
                   print_r($conf["Datasources"]["default"]["username"]);')
-db_pwd=$(php -r '$conf = require "/var/www/html/ghostylink/config/app_docker.php"; \
+db_pwd=$(php -r '$conf = require "/var/www/html/config/prod/app_prod.php"; \
                  print_r($conf["Datasources"]["default"]["password"]);')
 
 echo "=> Creating MySQL $db_user user with ghostylink $db_pwd"
@@ -33,6 +33,6 @@ echo "Please remember to change the above password as soon as possible!"
 echo "MySQL user 'root' has no password but only allows local connections"
 echo "========================================================================"
 
-/var/www/html/bin/cake migrations migrate
+$GHOSTYLINK_INSTALL_DIR/bin/cake migrations migrate
 
 mysqladmin -uroot shutdown

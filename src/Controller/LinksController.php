@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Network\Exception\UnauthorizedException;
@@ -84,12 +85,16 @@ class LinksController extends AppController
      */
     public function checkRobot($link)
     {
-        $secret = '6LdmCQwTAAAAAPqT9OWI2gHcUOHVrOFoy7WCagFS';
+        $secret = Configure::read('reCaptchaKeys.private');
         if (!key_exists('g-recaptcha-response', $this->request->data)) {
             throw new UnauthorizedException();
         }
         $recaptcha = new \ReCaptcha\ReCaptcha($secret);
-        $resp = $recaptcha->verify($this->request->data['g-recaptcha-response'], $this->request->clientIp());
+        $resp = $recaptcha->verify(
+            $this->request->data['g-recaptcha-response'],
+            $this->request->clientIp()
+        );
+
         if ($resp->isSuccess()) {
             $this->set('link', $link);
             return $this->render('ajax/information', 'ajax');

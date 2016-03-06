@@ -3,34 +3,30 @@ FROM tutum/lamp:latest
 
 MAINTAINER Jullian Bellino <jullian.bellino@gmail.com>
 
-# Download latest version of Ghostylink
-RUN rm -fr /var/www/html/ && git clone -b master https://github.com/beljul/ghostylink /var/www/html/
+# Aditional necessary extensions
+RUN apt-get update && apt-get -y install curl php5-intl
 
-# Download and install composer
-RUN apt-get update && apt-get -y install curl
-RUN cd /var/www/html && curl -s https://getcomposer.org/installer | php
-
-# Need intl php extension
-RUN apt-get install -y php5-intl
-RUN apt-get install -y php5-curl
+# Restart apache
 RUN service apache2 restart
 
-# Update dependencies using composer
-RUN cd /var/www/html && php composer.phar update
+## Download and install composer
+RUN cd / && curl -s https://getcomposer.org/installer | php
 
-# Add database setup script
-ADD create_user_database.sh /create_user_database.sh
-RUN chmod 755 /create_user_database.sh
+## Copy sources
+RUN rm -fr /var/www/html/
+COPY ./ /var/www/html/
 
-# Launch application 
-ADD launch.sh /launch.sh
-RUN chmod 755 /launch.sh
+## Initializing production configuration
+RUN cd  /var/www/html && \
+        php /composer.phar update --no-dev && \
+        sed -ie 's#\s*\/\/\(\s*.*PRODUCTION.*\)#\1#g' config/bootstrap.php && \
+        ./bin/cake asset_compress.asset_compress build
 
-RUN chown -R www-data:www-data /var/www/html
-RUN mkdir /var/www/html/tmp/ && chmod -R 777 /var/www/html/tmp/
-RUN chmod -R 777 /var/www/html/vendor/
-RUN mkdir /var/www/html/logs
-RUN chmod -R 777 /var/www/html/logs
+# Setting rights and create tmp and log files if needed
+RUN mkdir -p /var/www/html/tmp/ \
+    && mkdir -p /var/www/html/logs \
+    && chown -R www-data:www-data /var/www/html/ \    
+    && chmod -R 775 /var/www/html/
 
 EXPOSE 80
-CMD ["/launch.sh"]
+CMD ["/var/www/html/docker/launch.sh"]
