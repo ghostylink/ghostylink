@@ -1,7 +1,4 @@
 #!/bin/bash
-echo "#####################################"
-echo "#### Crons jobs initialization ######"
-echo "#####################################"
 echo "=> Reading configuration from '/var/www/html/config/'"
 mail_alert_frequency=$(php -r '$conf = require "/var/www/html/config/prod/app_prod.php"; \
                                 print_r($conf["Docker"]["crons"]["ghostification"]["mail"]);')

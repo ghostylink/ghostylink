@@ -1,0 +1,112 @@
+#!/bin/bash
+if [[ $SCRIPT_DEV ]]; then
+    set -x
+fi
+
+## function to upgrade database schema
+## @param $1 ghostylink install directory
+## @return void
+function db_upgrade {
+    local installDir=$1    
+    $installDir/bin/cake migrations migrate
+}
+
+## function to downgrade the database schema to the current last migration
+## @param $1 ghostylink install directory
+## @return void
+function db_downgrade {
+    local installDir=$1
+
+    local savedPwd=$(pwd)
+    local migrationsDir="$installDir/config/Migrations"
+    local targetMigration=$(ls -1 -v $migrationsDir| grep -Po '^\d+'|tail -n 1)    
+    printf "\t=> Checkout last known version to retrieve migrations\n"
+    tmpDir=$(mktemp -d)
+    cd $tmpDir    
+    git clone git@github.com:ghostylink/ghostylink.git && cd ghostylink
+    tmpDir="$tmpDir/ghostylink"
+    mkdir -p $tmpDir/tmp $tmpDir/logs && chmod 777 $tmpDir/tmp && chmod $tmpDir/logs
+    
+    printf "\t => Installing dependencies and configuring\n"
+    php $installDir/composer.phar install --no-interaction --no-dev
+    cp $installDir/config/prod/app_prod.php $tmpDir/config/app_prod.php
+    sed -ie 's#\s*\/\/\(\s*.*PRODUCTION.*\)#\1#g' $tmpDir/config/bootstrap.php
+
+    printf "\t => Rollback database using prod configuration found in $installDir\n"    
+    $tmpDir/bin/cake migrations rollback -t $targetMigration
+
+    cd $savedPwd
+}
+
+## function to check if db exist 
+## @return true if the db exist, false otherwise
+function db_volume_exist { 
+    VOLUME_HOME="/var/lib/mysql"
+    if [[ ! -d $VOLUME_HOME/mysql ]]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+## function to create the ghostylink database
+## @param $1 ghostylink install directory
+## @return void
+function db_create {
+    local installDir=$1
+   
+    printf "\t=> Reading configuration from '$installDir'"
+    local db_name=$(db_get_conf_for "$installDir" "database")
+    local db_user=$(db_get_conf_for "$installDir" "username")
+    local db_pwd=$(db_get_conf_for "$installDir" "password")
+
+    printf "\t=> Creating MySQL $db_user user with password $db_pwd"
+    mysql -uroot -e "CREATE USER '$db_user'@'localhost' IDENTIFIED BY '$db_pwd'"
+    printf "\t=> Creating MySQL database $db_name"
+    mysql -uroot -e "CREATE DATABASE $db_name"
+    mysql -uroot -e "GRANT ALL PRIVILEGES ON $db_name.* TO '$db_user'@'localhost' WITH GRANT OPTION"
+
+    echo "=> Done!"
+    echo "========================================================================"
+    echo "You can now connect to this MySQL Server using:"
+    echo ""
+    echo " mysql -u$db_user -p$db_pwd -h<host> -P<port>"
+    echo ""
+    echo "Please remember to change the above password as soon as possible!"
+    echo "MySQL user 'root' has no password but only allows local connections"
+    echo "========================================================================"
+}
+
+## Function that check if version A is before version B
+## @param $1 version A
+## @param $2 version B
+## @return < 0 if A < B, > 0 if A > B, 0 if A == B
+function db_version_cmp {
+    if [[ "$1" < "$2" ]]; then
+        return -1
+    elif [[ "$1" > "$2" ]]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+## Function to retrieve configuration value
+## @param $1 ghostylink install directory
+## @param $2 key to retrieve
+## @return string value for the key in the conf file
+function db_get_conf_for {
+    local installDir=$1
+    local key=$2
+    local phpStatement="\$conf = require '$installDir/config/prod/app_prod.php'; \
+                         print_r(\$conf['Datasources']['default']['$key']);"    
+    local val=$(php -r "$phpStatement")
+    echo "$val"
+}
+
+val=$(db_version_cmp "20151219075255" "20151227131515")
+echo $([[ $? != -1 ]])
+val=$(db_version_cmp "20151227131515" "20151219075255")
+echo $?
+val=$(db_version_cmp "20151219075255" "20151219075255")
+echo $?
