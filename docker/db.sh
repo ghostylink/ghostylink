@@ -80,15 +80,43 @@ function db_create {
 ## Function that check if version A is before version B
 ## @param $1 version A
 ## @param $2 version B
-## @return < 0 if A < B, > 0 if A > B, 0 if A == B
+## @return 1 if A < B, 2 if A > B, 0 if A == B
 function db_version_cmp {
     if [[ "$1" < "$2" ]]; then
-        return -1
-    elif [[ "$1" > "$2" ]]; then
         return 1
+    elif [[ "$1" > "$2" ]]; then
+        return 2
     else
         return 0
     fi
+}
+
+## Check if a version is before an other
+## @param $1 version supposed to be before
+## @param $2 version supposed to be after
+## @return true if $1 is before $2. False otherwise
+function db_version_is_before {    
+    $(db_version_cmp "$1" "$2")
+    ret=$?    
+    if [[ $ret -eq 1 ]]; then        
+        return 0
+    else
+        return 1
+    fi    
+}
+
+## Check if a version is after an other
+## @param $1 version supposed to be after
+## @param $2 version supposed to be before
+## @return true if $1 is after $2. False otherwise
+function db_version_is_after {
+    $(db_version_cmp "$1" "$2")
+    ret=$?    
+    if [[ $ret -eq 2 ]]; then        
+        return 0
+    else
+        return 1
+    fi    
 }
 
 ## Function to retrieve configuration value
@@ -104,9 +132,9 @@ function db_get_conf_for {
     echo "$val"
 }
 
-val=$(db_version_cmp "20151219075255" "20151227131515")
-echo $([[ $? != -1 ]])
-val=$(db_version_cmp "20151227131515" "20151219075255")
-echo $?
-val=$(db_version_cmp "20151219075255" "20151219075255")
-echo $?
+#val=$(db_version_cmp "20151219075255" "20151227131515")
+#echo $?
+#val=$(db_version_cmp "20151227131515" "20151219075255")
+#echo $?
+#val=$(db_version_cmp "20151219075255" "20151219075255")
+#echo $?
