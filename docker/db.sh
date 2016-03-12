@@ -41,7 +41,7 @@ function db_downgrade {
 ## function to check if db exist 
 ## @return true if the db exist, false otherwise
 function db_volume_exist { 
-    VOLUME_HOME="/var/lib/mysql"
+    local VOLUME_HOME="/var/lib/mysql"
     if [[ ! -d $VOLUME_HOME/mysql ]]; then
         return 1
     else
@@ -97,7 +97,7 @@ function db_version_cmp {
 ## @return true if $1 is before $2. False otherwise
 function db_version_is_before {    
     $(db_version_cmp "$1" "$2")
-    ret=$?    
+    local ret=$?    
     if [[ $ret -eq 1 ]]; then        
         return 0
     else
@@ -111,12 +111,38 @@ function db_version_is_before {
 ## @return true if $1 is after $2. False otherwise
 function db_version_is_after {
     $(db_version_cmp "$1" "$2")
-    ret=$?    
+    local ret=$?    
     if [[ $ret -eq 2 ]]; then        
         return 0
     else
         return 1
     fi    
+}
+
+## Function to get current version of the migrations (in the database)
+## @param $1 ghostylink install directory
+## @return print to stdout the installed version 
+function db_get_version {
+    local installDir=$1
+    local db_name=$(db_get_conf_for "$installDir" "database")
+    local db_user=$(db_get_conf_for "$installDir" "username")
+    local db_pwd=$(db_get_conf_for "$installDir" "password")
+    
+    # Do not print line header. Run in Batch mode
+    version=$(mysql -u$db_user -p$db_pwd -N -B -e "use $db_name; \
+                                      SELECT version \
+                                      FROM phinxlog \
+                                      ORDER BY version DESC LIMIT 1")
+    echo $version
+}
+
+## Function to retrieve the current expected version in the container
+## @param $1 ghostyink install directory
+## @return print to stdout the expected migration version
+function db_get_expected_version {
+    local installDir=$1
+    version=$(ls -1 -r -v $migrationsDir| grep -Po '^\d+'|head -n 1)
+    echo $version
 }
 
 ## Function to retrieve configuration value
@@ -131,10 +157,3 @@ function db_get_conf_for {
     local val=$(php -r "$phpStatement")
     echo "$val"
 }
-
-#val=$(db_version_cmp "20151219075255" "20151227131515")
-#echo $?
-#val=$(db_version_cmp "20151227131515" "20151219075255")
-#echo $?
-#val=$(db_version_cmp "20151219075255" "20151219075255")
-#echo $?
