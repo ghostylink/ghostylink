@@ -32,8 +32,17 @@ if [[ ! db_volume_exist ]]; then
     db_upgrade "$ghostylinkDir"
 else
     echo -e "\t=> Using an existing volume of MySQL"
-    #TODO: Detect if the schema is "too" recent, and downgrade it if needed, (user warning ?)
-    #Upgrade it if need
+    expectedVersion=$(db_get_expected_version "$ghostylinkDir")
+    currentVersion=$(db_get_version "$ghostylinkDir")
+    
+    if db_version_is_before "$currentVersion" "$expectedVersion"; then
+        echo -e "\t\t=> Upgrading from migration $currentVersion to $expectedVersion"
+        db_upgrade "$ghostylinkDir"
+    elif db_version_is_after "$expectedVersion" "$currentVersion"; then
+        # TODO : ask confirmation before downgrading
+        echo -e "\t\t=> Downgrading from migration $currentVersion to $expectedVersion"
+        db_downgrade "$ghostylinkDir"
+    fi
 fi
 
 mysqladmin -uroot shutdown

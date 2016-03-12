@@ -3,7 +3,7 @@ if [[ $SCRIPT_DEV ]]; then
     set -x
 fi
 
-## function to upgrade database schema
+## Upgrade the database schema
 ## @param $1 ghostylink install directory
 ## @return void
 function db_upgrade {
@@ -11,7 +11,7 @@ function db_upgrade {
     $installDir/bin/cake migrations migrate
 }
 
-## function to downgrade the database schema to the current last migration
+## Downgrade the database schema to the current last migration
 ## @param $1 ghostylink install directory
 ## @return void
 function db_downgrade {
@@ -38,7 +38,7 @@ function db_downgrade {
     cd $savedPwd
 }
 
-## function to check if db exist 
+## Check if db exist 
 ## @return true if the db exist, false otherwise
 function db_volume_exist { 
     local VOLUME_HOME="/var/lib/mysql"
@@ -49,7 +49,7 @@ function db_volume_exist {
     fi
 }
 
-## function to create the ghostylink database
+## Create the ghostylink database
 ## @param $1 ghostylink install directory
 ## @return void
 function db_create {
@@ -77,7 +77,7 @@ function db_create {
     echo "========================================================================"
 }
 
-## Function that check if version A is before version B
+## Check if version A is before version B
 ## @param $1 version A
 ## @param $2 version B
 ## @return 1 if A < B, 2 if A > B, 0 if A == B
@@ -119,7 +119,7 @@ function db_version_is_after {
     fi    
 }
 
-## Function to get current version of the migrations (in the database)
+## Get current version of the migrations (in the database)
 ## @param $1 ghostylink install directory
 ## @return print to stdout the installed version 
 function db_get_version {
@@ -136,19 +136,19 @@ function db_get_version {
     echo $version
 }
 
-## Function to retrieve the current expected version in the container
+## Retrieve the current expected version in the container
 ## @param $1 ghostyink install directory
 ## @return print to stdout the expected migration version
 function db_get_expected_version {
     local installDir=$1
-    version=$(ls -1 -r -v $migrationsDir| grep -Po '^\d+'|head -n 1)
+    version=$(ls -1 -r -v $migrationsDir| grep -Po '^\d+'| head -n 1)
     echo $version
 }
 
-## Function to retrieve configuration value
+## Retrieve a configuration value
 ## @param $1 ghostylink install directory
 ## @param $2 key to retrieve
-## @return string value for the key in the conf file
+## @return print to stdout the value for the key in the conf file
 function db_get_conf_for {
     local installDir=$1
     local key=$2
