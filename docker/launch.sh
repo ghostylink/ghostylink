@@ -13,24 +13,17 @@ ghostylinkDir="/var/www/html/"
 echo  "######################################################################"
 echo  "##############     Ghostylink database initialization    #############"
 echo  "######################################################################"
-/usr/bin/mysqld_safe > /dev/null 2>&1 &
-RET=1
-echo -e "\t=> Waiting for confirmation of MySQL service startup\n"
-while [[ RET -ne 0 ]]; do
-    printf '.'
-    sleep 5
-    mysql -uroot -e "status" > /dev/null 2>&1
-    RET=$?
-done
 
-if [[ ! db_volume_exist ]]; then
-    echo -e "\t=> An empty or uninitialized MySQL volume is detected in $VOLUME_HOME"
-    echo -e "\t=> Installing MySQL ..."
+if ! db_volume_exist; then
+    echo -e "\t=> An empty or uninitialized MySQL volume is detected in $VOLUME_HOME\n"
+    echo -e "\t=> Installing MySQL ...\n"
     mysql_install_db > /dev/null 2>&1
-    echo -e "\t=> Done!"
+    echo -e "\t=> Done!\n"    
+    db_wait_until_ready
     db_create  "$ghostylinkDir"
     db_upgrade "$ghostylinkDir"
 else
+    db_wait_until_ready
     echo -e "\t=> Using an existing volume of MySQL"
     expectedVersion=$(db_get_expected_version "$ghostylinkDir")
     currentVersion=$(db_get_version "$ghostylinkDir")
@@ -38,7 +31,7 @@ else
     if db_version_is_before "$currentVersion" "$expectedVersion"; then
         echo -e "\t\t=> Upgrading from migration $currentVersion to $expectedVersion"
         db_upgrade "$ghostylinkDir"
-    elif db_version_is_after "$expectedVersion" "$currentVersion"; then
+    elif db_version_is_after "$currentVersion" "$expectedVersion"; then
         # TODO : ask confirmation before downgrading
         echo -e "\t\t=> Downgrading from migration $currentVersion to $expectedVersion"
         db_downgrade "$ghostylinkDir"

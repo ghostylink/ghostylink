@@ -3,6 +3,19 @@ if [[ $SCRIPT_DEV ]]; then
     set -x
 fi
 
+## Wait until mysql database is ready
+function db_wait_until_ready {
+    /usr/bin/mysqld_safe > /dev/null 2>&1 &
+    RET=1
+    echo -e "\t=> Waiting for confirmation of MySQL service startup\n"
+    while [[ RET -ne 0 ]]; do
+        printf '.'
+        sleep 5
+        mysql -uroot -e "status" > /dev/null 2>&1
+        RET=$?
+    done
+}
+
 ## Upgrade the database schema
 ## @param $1 ghostylink install directory
 ## @return void
@@ -23,7 +36,7 @@ function db_downgrade {
     printf "\t=> Checkout last known version to retrieve migrations\n"
     tmpDir=$(mktemp -d)
     cd $tmpDir    
-    git clone git@github.com:ghostylink/ghostylink.git && cd ghostylink
+    git clone "https://github.com/ghostylink/ghostylink.git" && cd ghostylink
     tmpDir="$tmpDir/ghostylink"
     mkdir -p $tmpDir/tmp $tmpDir/logs && chmod 777 $tmpDir/tmp && chmod $tmpDir/logs
     
@@ -128,11 +141,9 @@ function db_get_version {
     local db_user=$(db_get_conf_for "$installDir" "username")
     local db_pwd=$(db_get_conf_for "$installDir" "password")
     
+    local sql="SELECT version FROM phinxlog ORDER BY version DESC LIMIT 1"
     # Do not print line header. Run in Batch mode
-    version=$(mysql -u$db_user -p$db_pwd -N -B -e "use $db_name; \
-                                      SELECT version \
-                                      FROM phinxlog \
-                                      ORDER BY version DESC LIMIT 1")
+    version=$(mysql -u$db_user -p$db_pwd -D$db_name -N -B -e "$sql")
     echo $version
 }
 
@@ -141,6 +152,7 @@ function db_get_version {
 ## @return print to stdout the expected migration version
 function db_get_expected_version {
     local installDir=$1
+    migrationsDir="$installDir/config/Migrations"
     version=$(ls -1 -r -v $migrationsDir| grep -Po '^\d+'| head -n 1)
     echo $version
 }
