@@ -3,7 +3,7 @@
 /**
  * @group Functional
  */
-class FunctionalTest extends PHPUnit_Extensions_SeleniumTestCase {
+class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
 
     /**
      * Fixtures
