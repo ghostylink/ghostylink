@@ -4,7 +4,14 @@ return [
      * Production mode
      */
     'debug' => false,
-
+    /**
+     * Full url base for link in mails. For docker images port is dinamicaly
+     * retrieve. Replace by the actual value to increase performance or
+     * if you do not use docker
+     */
+    'App' => [
+        'fullBaseUrl' => '__FULL_URL'
+    ],
     /**
      * Setting email connection
      */
@@ -12,11 +19,11 @@ return [
         'default' => [
             'className' => 'Smtp',
             // The following keys are used in SMTP transports
-            'host' => 'localhost.localdomain',
+            'host' => '__EMAIL_HOST',
             'port' => 25,
             'timeout' => 5,
-            'username' => 'notifications@localhost.localdomain',
-            'password' => 'password',
+            'username' => '__EMAIL_USERNAME',
+            'password' => '__EMAIL_PASSWORD',
             'client' => null,
             'tls' => null,
         ],
@@ -32,9 +39,9 @@ return [
             'persistent' => false,
             'host' => 'localhost',
             //'port' => 'nonstandard_port_number',
-            'username' => 'ghostylink',
-            'password' => 'ghostylink',
-            'database' => 'ghostylink',
+            'username' => '__DB_USERNAME',
+            'password' => '__DB_PASSWORD',
+            'database' => '__DB_DATABASE',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'cacheMetadata' => true,
@@ -47,8 +54,8 @@ return [
      * Google recaptcha keys
      */
     'reCaptchaKeys' => [
-        'private' => '6LdmCQwTAAAAAPqT9OWI2gHcUOHVrOFoy7WCagFS',
-        'public' => '6LdmCQwTAAAAAEX9CazNNpFQyb7YjWob8QTqMtB2'
+        'private' => '__CAPTCHA_PRIVATE',
+        'public' => '__CAPTCHA_PUBLIC'
     ],
     
     /**
@@ -60,7 +67,7 @@ return [
      * !!!! Make sure to define it only once !!!!
      */
     'Security' => [
-        'salt' => '56a5e2b007bdb03111cc49315b8439321fe30421cb86f9d7f4b90a7015f39d86',
+        'salt' => '__SECURITY_SALT',
     ],
     
     /**

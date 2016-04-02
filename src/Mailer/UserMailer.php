@@ -1,6 +1,7 @@
 <?php
 namespace App\Mailer;
 
+use Cake\Core\Configure;
 use Cake\Event\EventListenerInterface;
 use Cake\Mailer\Mailer;
 use Cake\Event\Event;
@@ -50,13 +51,16 @@ class UserMailer extends Mailer implements EventListenerInterface
      */
     public function emailConfirmation($user)
     {
+        $installedUrl = Configure::read("App.fullBaseUrl");
+        $posPort = strpos($installedUrl, ":");
+        $ghostylinkHost = substr($installedUrl, 0, $posPort);
         $this->helpers(['Html', 'EmailProcessing', 'Url']);
         $this->transport('default');
         $this
             ->to($user->email)
-            ->from('ghostylink@localhost')
+            ->from("ghostylink@$ghostylinkHost")
             ->emailFormat('html')
-            ->subject('Ghostylink email verification')
+            ->subject('Ghostylink - Email verification')
             ->set(['user' => $user]);
     }
 }

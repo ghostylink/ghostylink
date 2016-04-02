@@ -4,4 +4,3 @@ return [
     'error' => '<div class="alert alert-danger">{{content}}</div>',
     'radioWrapper' => '{{input}}{{label}}'
 ];
-

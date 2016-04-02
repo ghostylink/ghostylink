@@ -79,6 +79,8 @@ if (isset($LOAD_TEST_CONFIG) && $LOAD_TEST_CONFIG) {
 if (!Configure::read('debug')) {
     Configure::write('Cache._cake_model_.duration', '+1 years');
     Configure::write('Cache._cake_core_.duration', '+1 years');
+} else {
+    Configure::load("app_dev", "default", true);
 }
 
 /**
@@ -181,7 +183,7 @@ Request::addDetector('tablet', function ($request) {
 
 Plugin::load('Migrations');
 
-// Only try to load DebugKit in development mode
+// Only try to load DebugKit in development mode. Load development configuration
 // Debug Kit should not be installed on a production system
 if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);

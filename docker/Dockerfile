@@ -1,7 +1,7 @@
 # Dockerfile based on lamp container
 FROM tutum/lamp:latest
 
-MAINTAINER Jullian Bellino <jullian.bellino@gmail.com>
+MAINTAINER Kevin REMY <kevanescence@hotmail.fr>
 
 # Aditional necessary extensions
 RUN apt-get update && apt-get -y install curl php5-intl

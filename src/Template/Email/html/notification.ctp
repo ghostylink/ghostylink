@@ -22,22 +22,22 @@ use Cake\Routing\Router;
         <th>Death date</th>
     </thead>
 <tbody>
-    <?php
-    foreach ($links as $l) {
-        ?>
-        <tr>
-            <td><?= $l->title ?></td>
-            <td><?= $l->life_percentage ?>% (alert at <?= $l->alert_parameter->life_threshold;?> %)</td>
-            <td> <?= $l->max_views == null ? '-' : $l->views . '/' . $l->max_views?></td>
-            <td> <?= $l->death_time == null ? '-' : $l->death_time ?></td>
-        </tr>
-        <?php
-    }
+<?php
+foreach ($links as $l) {
     ?>
+    <tr>
+        <td><?= $l->title ?></td>
+        <td><?= $l->life_percentage ?>% (alert at <?= $l->alert_parameter->life_threshold;?> %)</td>
+        <td> <?= $l->max_views == null ? '-' : $l->views . '/' . $l->max_views?></td>
+        <td> <?= $l->death_time == null ? '-' : $l->death_time ?></td>
+    </tr>
+    <?php
+}
+?>
 </tbody>
 </table>
 <div class="alert alert-info">
     <span style="font-weight: bold">Note:</span> View counters may have increased since the mail has been sent.
-    Go to <a style="text-decoration: underline;" href="<?=Router::fullBaseUrl() . Router:: url(['controller' => "Links", "action" => "history"])?>">your profile</a>
+    Go to <a style="text-decoration: underline;" href="<?= Router::url(['controller' => "Links", "action" => "history", "_full" => true])?>">your profile</a>
     to see the current counter.
 </div>
