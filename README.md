@@ -1,5 +1,6 @@
 # Ghostylink project
-[![Build Status](http://jenkins.ghostylink.org/job/ghostylink_deploy/badge/icon)](http://jenkins.ghostylink.org/job/ghostylink_deploy/)
+[![Build Status](http://jenkins.ghostylink.org/job/ghostylink_unit/badge/icon)](http://jenkins.ghostylink.org/job/ghostylink_unit/)
+[![Dependency Status](https://www.versioneye.com/user/projects/5707de60fcd19a005185511c/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5707de60fcd19a005185511c)
 [![License](https://poser.pugx.org/cakephp/app/license.svg)](https://packagist.org/packages/cakephp/app)
 
 This page describe the ghostylink project.
