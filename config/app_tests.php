@@ -15,7 +15,21 @@ $testSource = [
 //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
 ];
 return [
-    
+    /**
+     * Setting email catcher with maildev tool for testing purpose
+     */
+    'EmailTransport' => [
+        'default' => [
+            'className' => 'Smtp',
+            // The following keys are used in SMTP transports
+            'host' => 'localhost',
+            'port' => 1025,
+            'timeout' => 30,
+            'username' => null,
+            'password' => null,
+            'tls' => null
+        ],
+    ],
     'Datasources' => [
         /*
          * Set default connection for server used during selenium tests

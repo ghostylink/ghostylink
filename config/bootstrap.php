@@ -82,8 +82,8 @@ if (!Configure::read('debug')) {
 
 // This is a tests/bootstrap.php call or a continous integrations server
 // Override configuration
-if (isset($LOAD_TEST_CONFIG) && $LOAD_TEST_CONFIG || getenv("CI_SERVER") == "1") {
-    Configure::load('app_tests', 'default');
+if (isset($LOAD_TEST_CONFIG) && $LOAD_TEST_CONFIG || getenv("CI_SERVER") == "1") {    
+    Configure::load('app_tests', 'default', true);    
 }
 
 /**
