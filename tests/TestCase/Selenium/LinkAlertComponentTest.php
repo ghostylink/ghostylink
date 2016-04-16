@@ -10,17 +10,8 @@ class LinkAlertComponentTest extends FunctionalTest
     {
         /*********** Clear maildev inbox *************/        
         $this->emailChecker->clearInBox();
-
-        /*********** Clear maildev inbox *************/
-        $this->url("/logout");
         
-        $this->domChecker->fillElements([
-            "id=username" => "testnotifs",
-            "id=password" => "testnotifs"
-        ]);
-
-        $this->domChecker->clickOnElementMatching("css=button.btn.btn-default");
-        $this->waitForPageToLoad(30000);
+        $this->userHelper->login("testnotifs", "testnotifs");
         
         // # Adding a link which will not be seen
         $this->domChecker->fillElements([
@@ -92,7 +83,7 @@ class LinkAlertComponentTest extends FunctionalTest
         exec('env CI_SERVER=1 $(pwd)/bin/cake mailer alerts');
         $this->url("http://localhost:1080/#/");
         $this->domChecker->assertTextPresent("testnotifs@gmail.com");
-        $this->domChecker->clickOnElementMatching('css=.toolbar a[ng-click="deleteAll()"]');
+        $this->emailChecker->clearInBox();
 
         // # Check mail is not sent twice (based with maildev tool)
         exec('env CI_SERVER=1 $(pwd)/bin/cake mailer alerts');

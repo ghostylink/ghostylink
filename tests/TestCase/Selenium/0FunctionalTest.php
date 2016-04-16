@@ -5,6 +5,8 @@
 
 require_once 'Utils/EmailChecker.php';
 require_once 'Utils/DOMChecker.php';
+require_once 'Utils/UserHelper.php';
+require_once 'Utils/LinkHelper.php';
 
 class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
 
@@ -34,6 +36,18 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
      */
     protected $domChecker;
     
+    /**
+     *
+     * @var UserHelper
+     */
+    protected $userHelper;
+    
+    /**
+     *
+     * @var LinkHelper
+     */
+    protected $linkHelper;
+
     protected $captureScreenshotOnFailure = TRUE;
     protected $screenshotPath = '/var/www/html/ghostylink_failures/';
     protected $screenshotUrl = 'http://localhost/ghostylink_failures/';
@@ -46,8 +60,10 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
         $this->fixtureManager->load($this);
 
         $this->emailChecker = new EmailChecker($this);
-        
         $this->domChecker = new DOMChecker($this);
+        
+        $this->userHelper = new UserHelper($this);
+        $this->linkHelper = new LinkHelper($this);
 
         $this->setBrowser("firefox");
 
@@ -60,7 +76,7 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
         
     }
 
-    protected function waitForPageToLoad($timeout)
+    public function waitForPageToLoad($timeout)
     {
         $this->timeouts()->implicitWait($timeout);
     }
@@ -71,6 +87,7 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
         //$this->fixtureManager->unload($this);
         $this->url('/logout');
     }
+    
     
     public function getDomChecker()
     {

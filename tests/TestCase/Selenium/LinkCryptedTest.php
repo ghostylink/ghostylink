@@ -5,43 +5,29 @@
  */
 class LinkCryptedTest extends FunctionalTest {
 
-  public function testCryptedLink()
-  {
-    $this->open("/");
-    $this->type("id=inputTitle", "un titre");
-    $this->type("id=inputContent", "un");
-    $this->type("id=inputTitle", "a title");
-    $this->type("id=inputContent", "a private and cryped content");
-    // # Check the non crypted value is displayed on errors
-    $this->click("css=form[action=\"/add\"] button");
-    for ($second = 0; ; $second++) {
-        if ($second >= 60) $this->fail("timeout");
-        try {
-            if ($this->isElementPresent("css=form .alert-danger")) break;
-        } catch (Exception $e) {}
-        sleep(1);
-    }
+    public function testCryptedLink()
+    {
+        $content = "a private and crypted content";
+        $this->linkHelper->create("a public title", $content, [], false, false);
+        
+        $this->domChecker->waitUntilElementPresent("css=form .alert-danger");
+        $this->domChecker->assertElementHasValue('css=[name="content"]', $content);
 
-    $this->assertEquals("a private and cryped content", $this->getValue("css=[name=\"content\"]"));
-    // # Check the message is crypted
-    $this->click("css=[data-related-field=\"death_time\"]");
-    $this->type("id=inputContent", "a private and crypted content");
-    $this->click("css=form[action=\"/add\"] button");
-    for ($second = 0; ; $second++) {
-        if ($second >= 60) $this->fail("timeout");
-        try {
-            if ($this->isElementPresent("css=section.generated-link #link-url")) break;
-        } catch (Exception $e) {}
+        list($publicUrl) = $this->linkHelper->create(
+            "a public title",
+            $content,
+            ["death_time" => ['7']]
+        );
+        $this->url($publicUrl);
+        $this->waitForPageToLoad(10000);
         sleep(1);
+        $this->assertEquals($content, $this->domChecker->getTextOf("css=section.link-content"));
+        
+        // Check the message cannot be decrypted if key is not in url
+        list ($urlNoKey) = explode('#', $publicUrl);
+        $this->url($urlNoKey);
+        $this->waitForPageToLoad(10000);
+        sleep(1);
+        $this->domChecker->assertTextNotPresent($content, "Checking unable to decrypt without key");
     }
-
-    $this->runScript("location.replace($('#link-url').text())");
-    $this->waitForPageToLoad("10000");
-    $this->assertEquals("a private and crypted content", $this->getText("css=section.link-content"));
-    // # Check the message cannot be decrypted if key is not in url
-    $this->runScript("loc = window.location.href;location.replace(loc.substring(0, loc.indexOf('#')))");
-    $this->waitForPageToLoad("10000");
-    $this->assertFalse($this->isTextPresent("a private and crypted content"));
-  }
 }
-?>

@@ -5,8 +5,7 @@
  */
 class BasicTest extends FunctionalTest {
     public function testMyTestCase()
-    {
-        debug($this);
+    {        
         $this->url("/");
         $this->domChecker->assertTextPresent('Ghostylink');
         

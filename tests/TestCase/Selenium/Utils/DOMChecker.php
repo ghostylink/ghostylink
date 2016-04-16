@@ -174,4 +174,26 @@ class DOMChecker {
         $source = $this->selTest->source();
         return strpos($source, $text) !== false;
     }
+    
+    public function assertElementHasValue($local, $expected)
+    {
+        $element = $this->findElementMatching($local);
+        $this->selTest->assertEquals(
+            $element->attribute("value"),
+            $expected,
+            "Assert element " . $local . " as value '" . $expected . "'"
+        );
+        
+    }
+    
+    /**
+     * Retrieve the text of the given element
+     * @param string $local the localization
+     * @return string text of the matching element
+     */
+    public function getTextOf($local)
+    {
+        $elem = $this->findElementMatching($local);
+        return $elem->text();
+    }
 }
