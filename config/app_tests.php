@@ -60,5 +60,13 @@ return [
             'quoteIdentifiers' => false,
         //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
         ]
-    ]
+    ],
+    /**
+     * Google recaptcha keys
+     */
+    'reCaptchaKeys' => [
+        'private' => 'private-key',
+        'public' => 'public-key'
+    ],
+    
 ];
