@@ -4,9 +4,9 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Status</th>
-            <th><?= $this->Paginator->sort('title') ?></th>
-            <th><?= $this->Paginator->sort('created') ?></th>
+            <th>Status</th>            
+            <th><?= $this->Paginator->sort('Links.title', 'Title') ?></th>
+            <th><?= $this->Paginator->sort('Links.created', 'Created') ?></th>
             <th><?= __('Life') ?></th>
             <th><?= __('Components') ?></th>
             <th class="actions"><?= __('Actions') ?></th>

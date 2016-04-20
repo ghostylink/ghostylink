@@ -19,7 +19,6 @@ class LinkHistoryTest extends FunctionalTest
     public function testNavigation()
     {
         $this->userHelper->login("user1", "user1user1");
-        sleep(120);
         $this->domChecker->clickOnElementMatching("link=Welcome user1");
         $this->domChecker->clickOnElementMatching("link=My links");
         $this->waitForPageToLoad();
@@ -33,7 +32,6 @@ class LinkHistoryTest extends FunctionalTest
         // Page 2
         $this->domChecker->clickOnElementMatching("link=2");
         $this->waitForPageToLoad();
-        sleep(10);
         $this->domChecker->assertTextPresent("User 1 id 10");
         $this->domChecker->assertTextPresent("2 of 2");
         

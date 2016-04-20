@@ -281,7 +281,7 @@ class LinksController extends AppController
             'maxLimit' => 15,
             'limit' => 5,
             'sortWhitelist' => [
-               'title', 'created'
+               'Links.title', 'Links.created'
             ],
             'finder' => [
                 'history' => ['min_life' => $min_life,
