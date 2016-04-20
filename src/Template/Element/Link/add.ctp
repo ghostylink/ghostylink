@@ -1,7 +1,7 @@
 <div class="links form col-lg-10 col-md-9">
     <?php
     if (!isset($link)){
-        echo $this->Form->create('Link', ['action' => 'add', 'id' => 'links-add']);
+        echo $this->Form->create('Link', ['id' => 'links-add']);
     }
     else {
         echo $this->Form->create($link);
