@@ -76,7 +76,7 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
         
     }
 
-    public function waitForPageToLoad($timeout = 10000)
+    public function waitForPageToLoad($timeout)
     {
         $this->timeouts()->implicitWait($timeout);
     }
