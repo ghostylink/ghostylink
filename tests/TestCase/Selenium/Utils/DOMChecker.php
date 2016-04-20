@@ -53,6 +53,8 @@ class DOMChecker {
             $found = $this->selTest->byCssSelector($selectorPart[1]);
         } elseif ($selectorPart[0] == "id") {
             $found = $this->selTest->byId($selectorPart[1]);
+        } elseif ($selectorPart[0] == "link") {
+            $found = $this->selTest->byLinkText($selectorPart[1]);
         } else {
             $this->selTest->assertFalse("Selection by $selectorPart[0] not yet implemented");
         }
@@ -136,6 +138,21 @@ class DOMChecker {
             count($found),
             "At least one element matching $local is found"
         );
+    }
+    
+    /**
+     * Assert no element is present matching the selector is in the page.
+     * @param string $local localisation string. Start css=expr or id=expr
+     * @see DOMChecker::findElementMatching($local) for the selection methods
+     */
+    public function assertElementNotPresent($local)
+    {
+        try {
+            $this->findElementMatching($local);
+            $this->selTest->fail("An element matching $local as been found");
+        } catch (WebDriverException $ex) {
+            ;
+        }
     }
     
     /**
