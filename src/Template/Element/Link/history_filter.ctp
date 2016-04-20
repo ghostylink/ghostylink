@@ -58,7 +58,7 @@ function reduce_column($content, $max_length = 15) {
         ?>
     </div><!-- /input-group -->
     <div id="div-buttons" class="col-lg-2">
-        <button class="btn-default btn" >Apply filters</button>
+        <button id="apply-filters" class="btn-default btn" >Apply filters</button>
         <button id="almost-ghostified" class="btn-warning btn" >Almost ghostified</button>
     </div>
     <?= $this->Form->end() ?>

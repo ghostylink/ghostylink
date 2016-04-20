@@ -35,43 +35,16 @@ class LinkHistoryTest extends FunctionalTest
         $this->domChecker->assertTextPresent("User 1 id 10");
         $this->domChecker->assertTextPresent("2 of 2");
         
-        // Filters
-        $local = "css=[name=\"title\"]";
+        //  Filters (would require  a separate test)
+        $this->execute(['script' => '$("#slider-range").slider("values", 0, 0); $("#min_life").val(0);',
+                        'args'=> []]);
+        $local = 'css=[name="title"]';
         $this->domChecker->typeOnElementMatching($local, "User 1 id 10");
-//        
-//    $this->submit("css=form");
-//    $this->waitForPageToLoad("30000");
-//    $this->type("css=[name=\"title\"]", "");
-//    $this->type("css=[name=\"status\"]", "0");
-//    $this->submit("css=form");
-//    $this->waitForPageToLoad("30000");
-//    $this->assertEquals("0", $this->getCssCount("css=.life-ok"));
+        
+        $applyButton = $this->domChecker->findElementMatching("id=apply-filters");
+        $applyButton->click();
+        $this->waitForPageToLoad();
+        $found = $this->domChecker->findElementMatching("css=table tbody tr td");
+        $this->assertEquals(1, count($found), 'One link matching the filter');
     }
-    
-//    $this->click("link=Welcome user1");
-//    $this->click("link=My links");
-//    $this->waitForPageToLoad("30000");
-//    $this->assertTrue($this->isElementPresent("css=tr td"));
-//    $this->assertTrue($this->isTextPresent("User 1 id 10"));
-//    $this->click("link=Title");
-//    $this->waitForPageToLoad("30000");
-//    $this->click("link=Title");
-//    $this->waitForPageToLoad("30000");
-//    // ### id 10 is on page 2
-//    $this->assertFalse($this->isTextPresent("User 1 id 10"));
-//    $this->click("link=2");
-//    $this->waitForPageToLoad("30000");
-//    $this->assertTrue($this->isTextPresent("User 1 id 10"));
-//    $this->assertTrue($this->isTextPresent("2 of 2"));
-//    // ### Check filters
-//    $this->type("css=[name=\"title\"]", "User 1 id 10");
-//    $this->submit("css=form");
-//    $this->waitForPageToLoad("30000");
-//    $this->type("css=[name=\"title\"]", "");
-//    $this->type("css=[name=\"status\"]", "0");
-//    $this->submit("css=form");
-//    $this->waitForPageToLoad("30000");
-//    $this->assertEquals("0", $this->getCssCount("css=.life-ok"));
-//  }
 }
-?>
