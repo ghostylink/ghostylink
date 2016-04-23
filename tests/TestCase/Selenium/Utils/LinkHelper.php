@@ -78,7 +78,7 @@ class LinkHelper {
      */
     public function addDeathTime($nbOfDays)
     {
-        $selector = 'css=[data-related-field="death_time"]';
+        $selector = 'css=li[data-related-field="death_time"]';
         $this->selTest->getDomChecker()->clickOnElementMatching($selector);
         $selector = 'css=label[for="death-time-' . $nbOfDays . '"] span';
         $this->selTest->getDomChecker()->clickOnElementMatching($selector);

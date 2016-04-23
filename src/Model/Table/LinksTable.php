@@ -68,7 +68,7 @@ class LinksTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator = $this->_buildCommonValidator($validator);
-        $validator->notEmpty('death_time', 'At least one component is required', function ($context) {
+        $validator->notEmpty('death_time', 'At least one limit component is required', function ($context) {
             if (!$context['newRecord']) {
                 return false;
             }
@@ -78,7 +78,7 @@ class LinksTable extends Table
                 return false;
             }
         });
-        $validator->notEmpty('max_views', 'At least one component is required', function ($context) {
+        $validator->notEmpty('max_views', 'At least one limit component is required', function ($context) {
             if (!$context['newRecord']) {
                 return false;
             }

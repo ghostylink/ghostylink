@@ -48,6 +48,7 @@ function initAjaxSubmission() {
             if($responseHTML.find('form').size() === 0) {
                 //No error have been found 
                 $('form[action="/add"] div.alert.alert-danger').remove();
+                $('.alert.alert-danger').remove();
                 $('section.generated-link').remove();
                 $responseHTML.find('.link-url').first().append("#" + secretKey);
                 $('#main-content').append($responseHTML);

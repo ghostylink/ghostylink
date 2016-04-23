@@ -113,15 +113,24 @@ class DOMChecker {
      * Click on the element matching the given selector
      * @param string $local the localizator
      * @param boolean $waitElementPresent true if need to wait element to be present
+     * @param boolean $scrollToElement scroll to the element's position
      * @throws WebDriverException if not found
      * @see DOMChecker::findElementMatching() for the selection methods
      */
-    public function clickOnElementMatching($local, $waitElementPresent = true)
+    public function clickOnElementMatching($local, $waitElementPresent = true, $scrollToElement = true)
     {
         if ($waitElementPresent) {
             $this->waitUntilElementPresent($local);
         }
+        
         $found = $this->findElementMatching($local);
+        
+        if ($scrollToElement) {
+            $position = $found->location();
+            $this->selTest->execute(array('script' => "window.scrollTo(0," . $position['x'] . ")",
+                                          'args' => array()));
+        }
+
         $found->click();
     }
     
@@ -143,13 +152,14 @@ class DOMChecker {
     /**
      * Assert no element is present matching the selector is in the page.
      * @param string $local localisation string. Start css=expr or id=expr
+     * @param string $text a prefix message
      * @see DOMChecker::findElementMatching($local) for the selection methods
      */
-    public function assertElementNotPresent($local)
+    public function assertElementNotPresent($local, $text = "Assert failed:")
     {
         try {
             $this->findElementMatching($local);
-            $this->selTest->fail("An element matching $local as been found");
+            $this->selTest->fail("$text an element matching $local has been found");
         } catch (WebDriverException $ex) {
             ;
         }
