@@ -47,9 +47,42 @@ class UserRegisterTest extends FunctionalTest {
         
     }
     
-    public function testSignupFail()
+    public function testSignupFailServer()
     {
+        $this->url("/signup");
+        $this->domChecker->removeHTML5Validation('form[action="/signup"]');
+        $submitButton = 'css=form[action="/signup"] button[type="submit"]';
+        $errors = "css=form .alert.alert-danger";
+        $this->domChecker->fillElements([
+           'css=form[action="/signup"] input[name="email"]' => "badEmail"
+        ]);
+        $this->domChecker->clickOnElementMatching($submitButton);
+        $this->waitForPageToLoad();
+        $this->domChecker->removeHTML5Validation('form[action="/signup"]');
+        $this->domChecker->assertElementsCount($errors, 4);
         
+        $this->domChecker->fillElements([
+           'css=form[action="/signup"] input[name="email"]' => "blabal@bllba.fr",
+           'css=form[action="/signup"] input[name="username"]' => "username"
+        ]);
+        $this->domChecker->clickOnElementMatching($submitButton);
+        $this->waitForPageToLoad();
+        $this->domChecker->removeHTML5Validation('form[action="/signup"]');
+        $this->domChecker->assertElementsCount($errors, 2);
+        $this->domChecker->fillElements([
+           'css=form[action="/signup"] input[name="password"]' => 'password'
+        ]);
+        $this->domChecker->clickOnElementMatching($submitButton);
+        $this->domChecker->removeHTML5Validation('form[action="/signup"]');
+
+        $this->waitForPageToLoad();
+        $this->domChecker->assertElementsCount($errors, 1);
+        $this->domChecker->fillElements([
+           'css=form[action="/signup"] input[name="confirm_password"]' => 'password'
+            
+        ]);
+        $this->domChecker->clickOnElementMatching($submitButton);
+        $this->domChecker->assertElementsCount($errors, 0);
     }
     /*public function testSignup() {
         // Check that basic element are present

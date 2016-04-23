@@ -51,13 +51,14 @@ class DOMChecker {
         $selectorPart = explode("=", $local, 2);
         if ($selectorPart[0] == "css") {
             $found = $this->selTest->byCssSelector($selectorPart[1]);
+            debug(count($found));
         } elseif ($selectorPart[0] == "id") {
             $found = $this->selTest->byId($selectorPart[1]);
         } elseif ($selectorPart[0] == "link") {
             $found = $this->selTest->byLinkText($selectorPart[1]);
         } else {
             $this->selTest->assertFalse("Selection by $selectorPart[0] not yet implemented");
-        }
+        }        
         return $found;
     }
     
@@ -132,6 +133,22 @@ class DOMChecker {
         }
 
         $found->click();
+    }
+    
+    /**
+     * Assert the number of found element
+     * @param string $local localisation string. Start css=expr or id=expr
+     * @param integer $expectedCount the expected number of matching element
+     * @see DOMChecker::findElementMatching($local) for the selection methods
+     */
+    public function assertElementsCount($selector, $expectedCount)
+    {
+        $selectorPart = explode("=", $selector, 2)[1];
+        $found = $this->selTest
+                      ->elements($this->selTest
+                                     ->using('css selector') // TODO dynamic strategy
+                                     ->value($selectorPart));
+        $this->selTest->assertEquals($expectedCount, count($found));
     }
     
     /**
@@ -222,5 +239,19 @@ class DOMChecker {
     {
         $elem = $this->findElementMatching($local);
         return $elem->text();
+    }
+    
+    /**
+     * Remove all HTML 5 validation set to be sure server also have the checks
+     * @parma string $cssFormSelector the form to remove HTML5 checking for
+     */
+    public function removeHTML5Validation($cssFormSelector)
+    {
+        $jsScript = "var inputs = $('" . $cssFormSelector . "');".
+                    "inputs.find('input,textarea').removeAttr('required');" .
+                    'inputs.find(\'input[type="email"]\').attr("type", "text");';
+        $this->selTest->execute(
+            ['script' => $jsScript, 'args' => []]
+        );
     }
 }
