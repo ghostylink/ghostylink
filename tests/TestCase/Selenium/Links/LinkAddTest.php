@@ -10,6 +10,8 @@
  * Description of LinkAddTest
  *
  * @author kremy
+ * @group Link
+ * @group Functional
  */
 class LinkAddTest extends FunctionalTest {
 

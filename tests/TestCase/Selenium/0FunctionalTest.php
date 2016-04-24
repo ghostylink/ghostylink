@@ -54,7 +54,8 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
 
     protected function setUp() {
         parent::setUp();
-        parent::shareSession(true);        
+        parent::shareSession(true);
+        $this->shareSession(true);
         $this->fixtureManager = new Cake\TestSuite\Fixture\FixtureManager();
         $this->fixtureManager->fixturize($this);
         $this->fixtureManager->load($this);

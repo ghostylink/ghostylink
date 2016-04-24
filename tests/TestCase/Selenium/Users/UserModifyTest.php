@@ -5,69 +5,72 @@
  */
 class UserModifyTest extends FunctionalTest
 {
-    /**
-     * @group Develop
-     */
-    public function testEmailSent()
+    public function testAccess()
     {
-        /*********** Clear maildev inbox *************/
-        $this->open("http://localhost:1080/#/");
-        $this->click('css=.toolbar a[ng-click="deleteAll()"]');
-
-        /*********  Log in the user *******************/
-        $this->open("/logout");
-        $this->type("id=username", "user1");
-        $this->type("id=password", "user1user1");
-        $this->clickAndWait("css=button.btn.btn-default");
-        $this->click("link=Welcome user1");
-        $this->clickAndWait("link=My information");
-        $this->assertTrue($this->isTextPresent("Modify my information"), "Information page is displayed");
-
-        /**************************************************/
-        /**************** Checks **************************/
-        /**************************************************/
-        // Check an information which is not the email does not implies email sending
-        $this->type("css=input[name=username]", "usernamechanged");
-        $this->open("http://localhost:1080/");
-        $this->assertTextNotPresent("user1@ghostylink.org", "Email sending has been triggered");
-
-        $this->open("/me/edit");
-        $this->type("id=email", "anemailchanged@test.fr");
-        $this->submitAndWait("css=form");
-
-        $this->open("http://localhost:1080/");
-        $this->assertTextPresent("anemailchanged@test.fr", "Email sending has been triggered");
-
+        $this->userHelper->login("user1", "user1user1");
+        $this->domChecker->clickOnElementMatching("link=Welcome user1");
+        $this->domChecker->clickOnElementMatching("link=My information");
+        $this->waitForPageToLoad();
+        $this->domChecker->assertElementPresent('css=form[action="/me/edit"]');
     }
-  public function testMyTestCase()
-  {
-    $this->open("/logout");
-    $this->type("id=username", "user1");
-    $this->type("id=password", "user1user1");
-    $this->click("css=button.btn.btn-default");
-    $this->waitForPageToLoad("30000");
-    $this->click("link=Welcome user1");
-    $this->click("link=My information");
-    $this->waitForPageToLoad("30000");
-    $this->assertTrue($this->isTextPresent("Modify my information"));
-    $this->assertTrue($this->isElementPresent("css=input[name=username]"));
-    $this->assertTrue($this->isElementPresent("css=input[name=email]"));
-    $this->assertTextPresent("Delete my account");
-    $this->type("css=input[name=username]", "user2");
-    $this->type("css=input[name=email]", "user2@domain");
-    $this->submit("css=form");
-    $this->waitForPageToLoad("30000");
-    $this->assertTrue($this->isElementPresent("css=form .error"));
-    $this->type("css=input[name=email]", "user2@domain.fr");
-    $this->submit("css=form");
-    $this->waitForPageToLoad("30000");
-    $this->assertEquals("Welcome user2", $this->getText("css=nav li.dropdown a"));
-    $this->click("link=Welcome user2");
-    $this->click("link=My information");
-    $this->waitForPageToLoad("30000");
-    $this->type("css=input[name=username]", "user1");
-    $this->submit("css=form");
-    $this->waitForPageToLoad("30000");
-  }
+    public function testModifyEmail()
+    {
+        $this->emailChecker->clearInBox();
+        $this->userHelper->login("user1", "user1user1");
+        
+        $this->url("/me/edit");
+        
+        $this->domChecker->fillElements([
+           'css=[name="email"]' => 'email.changed@confirm.fr'
+        ]);
+        
+        $this->domChecker->clickOnElementMatching('css=form[action="/me/edit"] button[type="submit"]');
+        $this->waitForPageToLoad();
+        $this->emailChecker->assertMailReceived(
+            'email.changed@confirm.fr',
+            'Ghostylink - Email verification'
+        );
+        
+        $this->url("/me/edit");
+        $this->domChecker->assertTextPresent("Not yet validated");
+    }
+    
+    public function testModifyNotEmail()
+    {
+        $this->emailChecker->clearInBox();
+        $this->userHelper->login("user1", "user1user1");
+        
+        $this->url("/me/edit");
+        
+        $this->domChecker->fillElements([
+           'css=[name="username"]' => 'usernameNew'
+        ]);
+        
+        $this->domChecker->clickOnElementMatching('css=form[action="/me/edit"] button[type="submit"]');
+        $this->waitForPageToLoad();
+        $this->emailChecker->assertMailNotReceived(
+            'email.changed@confirm.fr',
+            'Ghostylink - Email verification'
+        );
+        
+        $this->url("/me/edit");
+        $this->domChecker->assertTextPresent("Validated");
+    }
+    
+    public function testModifyFail()
+    {
+        $this->userHelper->login("user1", "user1user1");
+        $this->url("/me/edit");
+        $this->domChecker->clickOnElementMatching("css=form button#change-pwd");
+        $this->domChecker->removeHTML5Validation('form[action="/me/edit"]');
+        $this->domChecker->fillElements([
+           'css=[name="username"]' => '42',
+           'css=[name="email"]' => 'badEmail',
+           'css=[name="password"]' => 'pwd',
+        ]);
+        $this->domChecker->clickOnElementMatching('css=form[action="/me/edit"] button[type="submit"]');
+        $this->waitForPageToLoad();
+        $this->domChecker->assertElementsCount("css=form .alert.alert-danger", 4);
+        
+    }
 }
-?>

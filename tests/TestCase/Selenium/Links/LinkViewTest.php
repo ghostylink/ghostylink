@@ -10,6 +10,8 @@
  * Description of LinkViewTest
  *
  * @author kremy
+ * @group Link
+ * @group Functional
  */
 class LinkViewTest extends FunctionalTest {
 

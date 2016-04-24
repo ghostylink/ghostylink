@@ -20,13 +20,17 @@ class DOMChecker {
      * Simulate keyboard typping the given value on the element matching
      * the given selector
      * @param string $local the localizator
-     * @param string $newValue the value to type in field
+     * @param string $value the value to type in field
+     * @param boolean $clear true if we must clear the field before typing new value
      * @see DOMChecker::findElementMatching($local) for the selection method
      */
-    public function typeOnElementMatching($local, $newValue)
+    public function typeOnElementMatching($local, $value, $clear = true)
     {
         $found = $this->findElementMatching($local);
-        $found->value($newValue);
+        if ($clear) {
+            $found->clear();
+        }
+        $found->value($value);
     }
     
     /**
@@ -51,14 +55,13 @@ class DOMChecker {
         $selectorPart = explode("=", $local, 2);
         if ($selectorPart[0] == "css") {
             $found = $this->selTest->byCssSelector($selectorPart[1]);
-            debug(count($found));
         } elseif ($selectorPart[0] == "id") {
             $found = $this->selTest->byId($selectorPart[1]);
         } elseif ($selectorPart[0] == "link") {
             $found = $this->selTest->byLinkText($selectorPart[1]);
         } else {
             $this->selTest->assertFalse("Selection by $selectorPart[0] not yet implemented");
-        }        
+        }
         return $found;
     }
     

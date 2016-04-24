@@ -10,6 +10,8 @@
  * Description of UserRegisterTest
  *
  * @author kremy
+ * @group User
+ * @group Functional
  */
 class UserRegisterTest extends FunctionalTest {
     
