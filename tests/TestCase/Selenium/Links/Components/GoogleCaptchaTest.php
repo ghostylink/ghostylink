@@ -32,7 +32,8 @@ class LinkCaptchaTest extends FunctionalTest
 
         $this->url($publicURL);
         $this->waitForPageToLoad(10000);
-        
+        // Make sure google captcha script is loaded
+        sleep(1);
         // ### Check a google captcha is displayed on the link view
         $this->domChecker->assertTextNotPresent("Google captcha");
         $this->domChecker->clickOnElementMatching("css=button#load-link-captcha");

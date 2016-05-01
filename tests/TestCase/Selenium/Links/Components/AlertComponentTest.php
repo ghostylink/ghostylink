@@ -21,13 +21,18 @@ class LinkAlertComponentTest extends FunctionalTest
 
         $this->domChecker->clickOnElementMatching('css=[data-related-field="max_views"]');
         $this->domChecker->clickOnElementMatching("css=[data-related-field=\"ghostification_alert\"]");
-                
+        
+        $this->domChecker->removeHTML5Attribute(
+            "[name=\"AlertParameters[life_threshold]\"]",
+            "readonly"
+        );
+
         $this->domChecker->fillElements([
             "css=[name=\"max_views\"]" =>  "3",
             "css=[name=\"AlertParameters[life_threshold]\"]" =>  "25"
         ]);
         
-        $this->domChecker->clickOnElementMatching("css=form[action=\"/add\"] button");
+        $this->domChecker->clickOnElementMatching("css=form[action=\"/\"] button");
         
         $this->domChecker->waitUntilElementPresent("css=section.generated-link #link-url");
 
@@ -48,7 +53,7 @@ class LinkAlertComponentTest extends FunctionalTest
         
         $this->domChecker->fillElements(['css=[name="max_views"]' => "3" ]);
 
-        $this->domChecker->clickOnElementMatching("css=form[action=\"/add\"] button");
+        $this->domChecker->clickOnElementMatching("css=form[action=\"/\"] button");
         
         $this->domChecker->waitUntilElementPresent("css=section.generated-link #link-url");
         

@@ -50,7 +50,7 @@ Router::scope('/', function ($routes) {
      */
     $routes->connect('/', ['controller' => 'Links', 'action' => 'index']);
     $routes->connect('index', ['controller' => 'Links', 'action' => 'index']);
-    $routes->connect('add', ['controller' => 'Links', 'action' => 'add']);
+    $routes->connect('add', ['controller' => 'Links', 'action' => 'add'], ['_name' => 'link-add']);
     $routes->connect('edit/:id', ['controller' => 'Links', 'action' => 'edit'], ['_name' => 'link-edit', 'id' => '\d+', 'pass' => ['id']]);
     $routes->connect('delete/:id', ['controller' => 'Links', 'action' => 'delete'], ['_name' => 'link-delete', 'pass' => ['id']]);
     $routes->connect("alert-subscription/:token", ['controller' => 'Links', 'action' => 'alertSubscribe'], ['_name' => 'link-alert-subscribe', 'pass' =>["token"]]);

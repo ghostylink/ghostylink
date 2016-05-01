@@ -27,7 +27,6 @@ class LinkViewTest extends FunctionalTest {
         $this->domChecker->assertElementPresent("css=.link-stats");
         $lpElem = $this->domChecker->findElementMatching("css=.link-remaining-views");
         
-        debug($lpElem->text());
         $this->assertRegExp("/^\d+ views left/", $lpElem->text());
     }
 }

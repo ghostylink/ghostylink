@@ -119,7 +119,7 @@ class LinkHelper {
      */
     public function submit($expectedCreation = true, $fullURL = false)
     {
-        $addButton = 'css=form[action="/add"] button';
+        $addButton = 'css=form[action="/"] button';
         $this->selTest->getDomChecker()->clickOnElementMatching($addButton);
 
         if ($expectedCreation) {

@@ -158,9 +158,6 @@ class UsersControllerTest extends IntegrationTestCase
         $this->_logoutUser();
     }
 
-    /**
-     * @group Develop
-     */
     public function testEmailValidation() {
         $usersTable = TableRegistry::get('Users');
         $user = $usersTable->newEntity($this->goodData);

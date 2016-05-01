@@ -47,27 +47,22 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
      * @var LinkHelper
      */
     protected $linkHelper;
-
     protected $captureScreenshotOnFailure = TRUE;
     protected $screenshotPath = '/var/www/html/ghostylink_failures/';
     protected $screenshotUrl = 'http://localhost/ghostylink_failures/';
 
-    protected function setUp() {
-        parent::setUp();
-        parent::shareSession(true);
-        $this->shareSession(true);
+    public function setUp() {        
+        //parent::setUp();     
+        //$this->shareSession(true);        
         $this->fixtureManager = new Cake\TestSuite\Fixture\FixtureManager();
         $this->fixtureManager->fixturize($this);
         $this->fixtureManager->load($this);
 
         $this->emailChecker = new EmailChecker($this);
-        $this->domChecker = new DOMChecker($this);
-        
+        $this->domChecker = new DOMChecker($this);        
         $this->userHelper = new UserHelper($this);
-        $this->linkHelper = new LinkHelper($this);
-
-        $this->setBrowser("firefox");
-
+        $this->linkHelper = new LinkHelper($this);        
+        $this->setBrowser("firefox");        
         if (getenv('CIS_SERVER') == '1') {
             $this->setHost('jenkins.ghostylink.org');
             $this->screenshotPath = '/var/www/ghostylink/selenium_failures';
@@ -84,7 +79,7 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
 
     protected function tearDown()
     {
-        parent::tearDown();
+        //parent::tearDown();
         //$this->fixtureManager->unload($this);
         $this->url('/logout');
     }

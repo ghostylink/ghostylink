@@ -418,9 +418,6 @@ class LinksControllerTest extends IntegrationTestCase
         $this->session([]);
     }
 
-    /**
-     * @group Develop
-     */
     public function testAlertSubscription()
     {
         $link = $this->Links->get(1);

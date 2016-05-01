@@ -379,9 +379,6 @@ class LinksTableTest extends TestCase
         $array = $this->Links->find('history', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE]);
     }
 
-    /**
-     * @group Develop
-     */
     public function testFinderNeedMailAlert() {
         $array = $this->Links->find('needMailAlert')->all();
         $this->assertEquals(2, count($array),  'Test filter on mail alert');

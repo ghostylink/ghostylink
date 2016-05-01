@@ -71,7 +71,7 @@ class DOMChecker {
      * @param <int> $timeout maximum time to wait
      * @see DOMChecker::findElementMatching($local) for the selection methods
      */
-    public function waitUntilElementPresent($local, $timeout = 10)
+    public function waitUntilElementPresent($local, $timeout = 3)
     {
         $second = 0;
         while ($second < $timeout && !$this->isElementPresent($local)) {
@@ -102,7 +102,7 @@ class DOMChecker {
      * @param <string> $text text to look fo
      * @param <int> $timeout maximal waiting time
      */
-    public function waitUntilTextPresent($text, $timeout = 10)
+    public function waitUntilTextPresent($text, $timeout = 3)
     {
         $second = 0;
         while ($second < $timeout && !$this->isTextPresent($text)) {
@@ -126,15 +126,13 @@ class DOMChecker {
         if ($waitElementPresent) {
             $this->waitUntilElementPresent($local);
         }
-        
         $found = $this->findElementMatching($local);
         
         if ($scrollToElement) {
             $position = $found->location();
-            $this->selTest->execute(array('script' => "window.scrollTo(0," . $position['x'] . ")",
+            $this->selTest->execute(array('script' => "window.scrollTo(0," . $position['y'] . " - 60 )",
                                           'args' => array()));
         }
-
         $found->click();
     }
     
@@ -253,6 +251,15 @@ class DOMChecker {
         $jsScript = "var inputs = $('" . $cssFormSelector . "');".
                     "inputs.find('input,textarea').removeAttr('required');" .
                     'inputs.find(\'input[type="email"]\').attr("type", "text");';
+        $this->selTest->execute(
+            ['script' => $jsScript, 'args' => []]
+        );
+    }
+    
+    public function removeHTML5Attribute($cssLocal, $attributeName)
+    {
+        $jsScript = "var elems = $('" . $cssLocal . "');".
+            "elems.removeAttr('$attributeName');" ;
         $this->selTest->execute(
             ['script' => $jsScript, 'args' => []]
         );

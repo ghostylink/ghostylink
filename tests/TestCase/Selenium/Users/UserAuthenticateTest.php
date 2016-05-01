@@ -2,7 +2,8 @@
 
 /**
  * @group Functional
- * @group User
+ * @group User 
+ * @group Develop
  */
 class UsersAuthenticateTest extends FunctionalTest {
 
