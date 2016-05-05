@@ -62,14 +62,10 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
         $this->domChecker = new DOMChecker($this);        
         $this->userHelper = new UserHelper($this);
         $this->linkHelper = new LinkHelper($this);        
-        $this->setBrowser("firefox");        
-        if (getenv('CIS_SERVER') == '1') {
-            $this->setHost('jenkins.ghostylink.org');
-            $this->screenshotPath = '/var/www/ghostylink/selenium_failures';
-            $this->screenshotUrl = 'http://selenium.ghostylink.org';
-        }
+        $this->setBrowser("firefox");
         $this->setBrowserUrl("http://localhost:8765/");
-        
+        $this->prepareSession();
+        $this->url('/logout');
     }
 
     public function waitForPageToLoad($timeout = 10000)
@@ -77,11 +73,11 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
         $this->timeouts()->implicitWait($timeout);
     }
 
-    protected function tearDown()
-    {
+    protected function tearDownClass()
+    {        
         //parent::tearDown();
         //$this->fixtureManager->unload($this);
-        $this->url('/logout');
+        
     }
     
     
