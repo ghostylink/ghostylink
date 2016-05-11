@@ -1,5 +1,5 @@
-job('job1') {
-node {
+step{
+  node {
   stage 'Checkout'
   git url: 'https://github.com/ghostylink/ghostylink.git'
   sh "wget http://jenkins.ghostylink.org/job/ghostylink_unit/ws/tests_result/junit.xml"
@@ -11,7 +11,7 @@ node {
   step([$class: 'JUnitResultArchiver', testResults: '**/junit.xml'])
 }
 }
-job('job2') {
+step {
 node {
   stage 'Checkout'
   git url: 'https://github.com/ghostylink/ghostylink.git'
