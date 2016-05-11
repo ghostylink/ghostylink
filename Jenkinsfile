@@ -11,7 +11,6 @@ node {
   commit_id = readFile('.git/commit-id')
   sh "echo $commit_id"
   print commit_id
-  commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: 'dffdsfs']
   step([$class: 'JUnitResultArchiver', testResults: '**/junit.xml'])
   step([$class: 'GitHubCommitStatusSetter',commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: commit_id], contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'yolo'], statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', message: 'ok for the win', state: 'SUCCESS']]]])
   
