@@ -6,6 +6,7 @@ node {
   sh "touch junit.xml"
   
   stage 'Tests'
+  step([$class: 'JUnitResultArchiver', testResults: '**/junit.xml'])
   step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'Jenkins'], statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', message: 'ok for the win', state: 'SUCCESS']]]])
 }
 
