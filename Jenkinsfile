@@ -12,7 +12,7 @@ node {
   sh "echo $commit_id"
   print commit_id
   step([$class: 'JUnitResultArchiver', testResults: '**/junit.xml'])
-  step([$class: 'TasksPublisher', canComputeNew: false,  canRunOnFailed: true, defaultEncoding: '', excludePattern: '', failedTotalAll: '40', failedTotalHigh: '10', failedTotalLow: '40', failedTotalNormal: '20', healthy: '5', high: 'FIXME, FIX ME', ignoreCase: true, low: '', normal: 'TODO, TO DO', pattern: '**/*', unHealthy: '50', unstableTotalAll: '2', unstableTotalHigh: '5', unstableTotalLow: '20', unstableTotalNormal: '10'])
+  step([$class: 'TasksPublisher', canComputeNew: false,  canRunOnFailed: true, defaultEncoding: '', excludePattern: '', failedTotalAll: '40', failedTotalHigh: '10', failedTotalLow: '40', failedTotalNormal: '40', healthy: '5', high: 'FIXME, FIX ME', ignoreCase: true, low: '', normal: 'TODO, TO DO', pattern: '**/*', unHealthy: '50', unstableTotalAll: '2', unstableTotalHigh: '5', unstableTotalLow: '20', unstableTotalNormal: '10'])
   step([$class: 'GitHubCommitStatusSetter',commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: commit_id], contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'yolo'], statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', message: 'ok for the win', state: 'SUCCESS']]]])
   
 }
