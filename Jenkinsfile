@@ -4,3 +4,4 @@ node {
   stage 'Tests'
   step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
 }
+
