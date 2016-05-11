@@ -2,6 +2,7 @@ node {
   stage 'Checkout'
   git url: 'https://github.com/ghostylink/ghostylink.git'
   stage 'Tests'
-  step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar', fingerprint: true])
-  step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+  sh "wget http://jenkins.ghostylink.org/job/ghostylink_unit/ws/tests_result/junit.xml"
+  step([$class: 'JUnitResultArchiver', testResults: 'junit.xml'])
+  step([$class: 'JUnitResultArchiver', testResults: 'junit.xml'])
 }
