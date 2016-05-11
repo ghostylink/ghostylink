@@ -8,5 +8,5 @@ node {
   
   stage 'Tests'
   step([$class: 'JUnitResultArchiver', testResults: '**/junit.xml'])
-  step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'test'], statusResultSource: [$class: 'ConditionalStatusResultSource', results: []]])
+  step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'test custom']])
 }
