@@ -9,6 +9,7 @@ node {
   stage 'Tests'
   step([$class: 'JUnitResultArchiver', testResults: '**/junit.xml'])
   step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'yolo'], statusResultSource: [$class: 'ConditionalStatusResultSource', results: [[$class: 'AnyBuildResult', message: 'ok for the win', state: 'SUCCESS']]]])
+  
 }
 
 
