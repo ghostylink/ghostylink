@@ -1,5 +1,4 @@
-step{
-  node {
+node {
   stage 'Checkout'
   git url: 'https://github.com/ghostylink/ghostylink.git'
   sh "wget http://jenkins.ghostylink.org/job/ghostylink_unit/ws/tests_result/junit.xml"
