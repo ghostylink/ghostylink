@@ -1,3 +1,4 @@
+job('job1') {
 node {
   stage 'Checkout'
   git url: 'https://github.com/ghostylink/ghostylink.git'
@@ -9,6 +10,8 @@ node {
   stage 'Tests'
   step([$class: 'JUnitResultArchiver', testResults: '**/junit.xml'])
 }
+}
+job('job2') {
 node {
   stage 'Checkout'
   git url: 'https://github.com/ghostylink/ghostylink.git'
@@ -19,4 +22,4 @@ node {
   
   stage 'Tests'
   step([$class: 'JUnitResultArchiver', testResults: '**/junit.xml'])
-}
+}}
