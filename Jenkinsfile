@@ -1,7 +1,7 @@
 node {
 
   stage 'Checkout'
-  checkout scm
+  git checkout
   sh "wget http://jenkins.ghostylink.org/job/ghostylink_unit/ws/tests_result/junit.xml"
   sh "pwd"
   sh "touch junit.xml"
