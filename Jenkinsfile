@@ -1,7 +1,7 @@
 node {
 
   stage 'Checkout'
-  git checkout
+  checkout scm
   sh "wget http://jenkins.ghostylink.org/job/ghostylink_unit/ws/tests_result/junit.xml"
   sh "pwd"
   sh "touch junit.xml"
@@ -16,8 +16,6 @@ node {
   step([$class: 'TasksPublisher', canComputeNew: false,  canRunOnFailed: true, defaultEncoding: '', excludePattern: '', failedTotalAll: '100', failedTotalHigh: '100', failedTotalLow: '100', failedTotalNormal: '11', healthy: '50', high: 'FIXME, FIX ME', ignoreCase: true, low: '', normal: 'TODO, TO DO', pattern: '**/*', unHealthy: '100', unstableTotalAll: '100', unstableTotalHigh: '100', unstableTotalLow: '100', unstableTotalNormal: '10'])
   
   print currentBuild.result
-  
-  print currentBuild
   
   print currentBuild.displayName
 
