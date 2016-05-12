@@ -1,8 +1,7 @@
 node {
   
-  job('PROJ-unit-tests') {
   
-  }
+  load 'test.groovy'
   stage 'Checkout'
   checkout scm
   sh "wget http://jenkins.ghostylink.org/job/ghostylink_unit/ws/tests_result/junit.xml"
