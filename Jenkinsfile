@@ -13,6 +13,7 @@ node {
   sh "echo $commit_id"
   print commit_id
   print env
+  sh "git diff develop $commit_id > pull-request.diff"
   cmd = readFile('pull-request.sh')
   print cmd
   sh cmd
