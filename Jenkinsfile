@@ -18,8 +18,8 @@ node {
   
   target_commit_id = readFile('.git/target-merge-commit-id')
   target_commit_id_length = target_commit_id.length() - 2
-  commit_id = commit_id[0..target_commit_id_length]
-  
+  target_commit_id = target_commit_id[0..target_commit_id_length]
+
   sh "echo $commit_id"
   sh "echo $target_commit_id"
   sh "git diff $target_commit_id $commit_id  > pull-request.diff"
