@@ -15,8 +15,6 @@ node {
   target_commit_id = readFile('.git/target-merge-commit-id')
   sh "echo $commit_id"
   sh "echo $target_commit_id"
-  print commit_id
-  print env
   sh "git diff $commit_id $target_commit_id > pull-request.diff"
   cmd = readFile('pull-request.sh')
   print cmd
