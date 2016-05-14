@@ -12,7 +12,8 @@ node {
   commit_id = readFile('.git/commit-id')
   sh "echo $commit_id"
   print commit_id
-  sh "chmod 777 pull-request.sh && source pull-request.sh"
+  sh "chmod 777 pull-request.sh"
+  sh "source pull-request.sh"
   step([$class: 'JUnitResultArchiver', testResults: '**/junit.xml'])
   step([$class: 'TasksPublisher', canComputeNew: false,  canRunOnFailed: true, defaultEncoding: '', excludePattern: '', failedTotalAll: '100', failedTotalHigh: '100', failedTotalLow: '100', failedTotalNormal: '11', healthy: '50', high: 'FIXME, FIX ME', ignoreCase: true, low: '', normal: 'TODO, TO DO', pattern: 'build/quality/task-scanner', unHealthy: '100', unstableTotalAll: '100', unstableTotalHigh: '100', unstableTotalLow: '100', unstableTotalNormal: '10'])
   step([$class: 'AnalysisPublisher', canRunOnFailed: true, canComputeNew: false, checkStyleActivated: false, defaultEncoding: '', healthy: '', unHealthy: ''])
