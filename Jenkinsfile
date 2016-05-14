@@ -7,13 +7,17 @@ node {
   sh "touch junit.xml"
   sh "git rev-list -n 1 HEAD^2"
   sh "env"
-  stage 'Tests' 
+  stage 'Tests'
+  
   sh "git rev-list -n 1 HEAD^2 > .git/commit-id"                        
+  sh "git rev-list -n 1 HEAD^1 > .git/target-merge-commit-id"
   commit_id = readFile('.git/commit-id')
+  target_commit_id = readFile('.git/target-merge-commit-id')
   sh "echo $commit_id"
+  sh "echo $target-commit-id"
   print commit_id
   print env
-  sh "git diff develop $commit_id > pull-request.diff"
+  sh "git diff $commit_id $target_commit_id > pull-request.diff"
   cmd = readFile('pull-request.sh')
   print cmd
   sh cmd
