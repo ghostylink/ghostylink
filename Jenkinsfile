@@ -1,7 +1,7 @@
 
 node {
 
-  stage 'Checkout coding'
+  stage 'Checkout code'
   checkout scm
   sh "wget http://jenkins.ghostylink.org/job/ghostylink_unit/ws/tests_result/junit.xml"
   sh "touch junit.xml"
@@ -47,18 +47,18 @@ def step_task_scanner(commit_id, target_merge_id) {
           defaultEncoding: '',
           excludePattern: '**/Jenkinsfile',
           failedTotalAll: '5',
-          failedTotalHigh: '1',
+          failedTotalHigh: '0',
           failedTotalLow: '10',
           failedTotalNormal: '5',
           healthy: '50',
-          high: 'FIXME, FIX ME',
-          ignoreCase: true,
-          low: '',
-          normal: 'TODO, TO DO',
+          high: 'FIXME,FIX ME',
+          normal: 'TODO,TO DO',
+          low:'WHY',
+          ignoreCase: true,          
           pattern: 'build/quality/tasks-scanner/**',
           unHealthy: '100',
           unstableTotalAll: '5',
-          unstableTotalHigh: '1', 
+          unstableTotalHigh: '0', 
           unstableTotalLow: '10',
           unstableTotalNormal: '5'])
 }
@@ -68,10 +68,6 @@ def step_junit() {
 }
 
 def step_publish_github(commit_id, context, message, result) {
-  print commit_id
-  print message
-  print context
-  print result
   step([$class: 'GitHubCommitStatusSetter',
         commitShaSource: [$class: 'ManuallyEnteredShaSource',
                           sha: commit_id],
