@@ -15,7 +15,7 @@ node {
 
   stage 'Quality code'
   step_task_scanner(commit_to_merge, target_commit)  
-  step_publish_github(commit_id, "quality/task-scanner", "New tasks threshold exceded", currentBuild.result)  
+  step_publish_github(commit_to_merge, "quality/task-scanner", "New tasks threshold exceded", currentBuild.result)  
 }
 
 def commit_to_merge() {
@@ -55,7 +55,7 @@ def step_task_scanner(commit_id, target_merge_id) {
           ignoreCase: true,
           low: '',
           normal: 'TODO, TO DO',
-          pattern: 'build/quality/tasks-scanner',
+          pattern: 'build/quality/tasks-scanner/**',
           unHealthy: '100',
           unstableTotalAll: '100',
           unstableTotalHigh: '100', 
