@@ -45,11 +45,11 @@ def step_task_scanner(commit_id, target_merge_id) {
           canComputeNew: false,
           canRunOnFailed: true,
           defaultEncoding: '',
-          excludePattern: 'Jenkinsfile',
-          failedTotalAll: '100',
-          failedTotalHigh: '100',
-          failedTotalLow: '100',
-          failedTotalNormal: '11',
+          excludePattern: '**/Jenkinsfile',
+          failedTotalAll: '5',
+          failedTotalHigh: '1',
+          failedTotalLow: '10',
+          failedTotalNormal: '5',
           healthy: '50',
           high: 'FIXME, FIX ME',
           ignoreCase: true,
@@ -68,6 +68,7 @@ def step_junit() {
 }
 
 def step_publish_github(commit_id, context, message, result) {
+  print commit_id
   step([$class: 'GitHubCommitStatusSetter',
         commitShaSource: [$class: 'ManuallyEnteredShaSource',
                           sha: commit_id],
