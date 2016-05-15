@@ -55,7 +55,7 @@ def step_task_scanner(commit_id, target_merge_id) {
           normal: 'TODO,TO DO',
           low:'WHY',
           ignoreCase: true,          
-          pattern: 'build/quality/tasks-scanner/**',
+          pattern: 'build/quality/tasks-scanner/',
           unHealthy: '100',
           unstableTotalAll: '5',
           unstableTotalHigh: '0', 
