@@ -14,7 +14,7 @@ node {
   step_junit()
 
   stage 'Quality code'
-  step_task_scanner(commit_id, target_merge_id)  
+  step_task_scanner(commit_to_merge, target_commit)  
   step_publish_github(commit_id, "quality/task-scanner", "New tasks threshold exceded", currentBuild.result)  
 }
 
