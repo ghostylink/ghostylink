@@ -79,7 +79,7 @@ def step_publish_github(commit_id, context, message, result) {
                                         state: result]]
                             ]
         ])
-   return currentBuild.result != "SUCCESS"
+   return currentBuild.result == "SUCCESS"
 }
 
 
