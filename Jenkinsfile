@@ -57,10 +57,10 @@ def step_task_scanner(commit_id, target_merge_id) {
           normal: 'TODO, TO DO',
           pattern: 'build/quality/tasks-scanner/**',
           unHealthy: '100',
-          unstableTotalAll: '100',
-          unstableTotalHigh: '100', 
-          unstableTotalLow: '100',
-          unstableTotalNormal: '10'])
+          unstableTotalAll: '5',
+          unstableTotalHigh: '1', 
+          unstableTotalLow: '10',
+          unstableTotalNormal: '5'])
 }
 
 def step_junit() {
@@ -69,6 +69,9 @@ def step_junit() {
 
 def step_publish_github(commit_id, context, message, result) {
   print commit_id
+  print message
+  print context
+  print result
   step([$class: 'GitHubCommitStatusSetter',
         commitShaSource: [$class: 'ManuallyEnteredShaSource',
                           sha: commit_id],
