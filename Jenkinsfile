@@ -24,6 +24,7 @@ def commit_to_merge() {
   commit_id = readFile('.git/commit-id')
   commit_id_length = commit_id.length() - 2
   commit_id = commit_id[0..commit_id_length]
+  return commit_id
 
 }
 
@@ -33,7 +34,7 @@ def commit_target() {
   target_commit_id = readFile('.git/target-merge-commit-id')
   target_commit_id_length = target_commit_id.length() - 2
   target_commit_id = target_commit_id[0..target_commit_id_length]
-  
+  return target_commit_id
 }
 
 def step_task_scanner(commit_id, target_merge_id) {
