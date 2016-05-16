@@ -7,6 +7,7 @@ class LinkMailer extends Mailer
 {
 
     /**
+     * TODO : remove this to do
      * Send notifications for nearly ghostyified links
      * @param Entity $user The user to send notification to
      * @param Array<Entity> $links links to include in the mail
