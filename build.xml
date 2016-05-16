@@ -42,7 +42,11 @@ Call it with ./vendor/bin/phing <target>
             <arg value="--log-junit"/>
                 <arg value="${results}/junit.xml"/>            
             <arg value="--configuration"/>
-                <arg value="${basedir}/PHPUnitconfig.xml"/>                    
+                <arg value="${basedir}/PHPUnitconfig.xml"/> 
+            <arg value="--coverage-clover"/>
+                <arg value="${results}/clover.xml"/>
+            <arg value="--coverage-html"/>
+                <arg value="${results}/coverage-html"/>            
         </exec>
         <echo msg="All unit tests launched" />
 
