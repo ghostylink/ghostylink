@@ -12,7 +12,8 @@
         "cakephp/plugin-installer": "*",
         "google/recaptcha": "~1.1",
         "tijsverkoyen/css-to-inline-styles": "^1.5@dev",
-        "markstory/asset_compress": "^3.0"
+        "markstory/asset_compress": "^3.0",
+        "phing/phing": "^2.14"
     },
     "require-dev": {
         "psy/psysh": "@stable",
