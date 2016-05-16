@@ -53,6 +53,28 @@ Call it with ./vendor/bin/phing <target>
     </target>
     
     <!-- ============================================  -->
+    <!-- Target: tests-functional                      -->
+    <!-- ============================================  -->
+    <target name="tests-functional">
+        
+        <echo msg="Launching functional tests" />
+        <exec executable="${bin}/phpunit" output="${logs}/phpunit.log">
+            <arg value="--testsuite"/>
+                <arg value="Functional"/>
+            <arg value="--log-junit"/>
+                <arg value="${results}/junit-functional.xml"/>            
+            <arg value="--configuration"/>
+                <arg value="${basedir}/PHPUnitconfig.xml"/> 
+            <arg value="--coverage-clover"/>
+                <arg value="${results}/clover.xml"/>
+            <arg value="--coverage-html"/>
+                <arg value="${results}/coverage-html"/>            
+        </exec>
+        <echo msg="All functional tests launched" />
+
+    </target>
+
+    <!-- ============================================  -->
     <!-- Target: quality                               -->
     <!-- ============================================  -->
     <target name="quality">
