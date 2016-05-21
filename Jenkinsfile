@@ -58,7 +58,7 @@ def step_task_scanner(commit_id, target_merge_id) {
     else {
         directory = '**/*.php'
         failedTotalAll = '15'
-        failedTotalHigh = '2'
+        failedTotalHigh = '5'
         failedTotalLow = '10'
         failedTotalNormal = '10'
         unstableTotalAll = '10'
@@ -129,7 +129,7 @@ def step_checktyle() {
         healthy: '10',
         pattern: '**/build/results/checkstyle.xml', 
         unHealthy: '50', 
-        unstableTotalHigh: '7',
+        unstableTotalHigh: '15',
         unstableTotalLow: '17',
         unstableTotalNormal: '12'])
     if (! status_is_worst(savedRes, currentBuild.result)) {
