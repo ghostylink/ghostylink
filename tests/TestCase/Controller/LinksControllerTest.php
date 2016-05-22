@@ -128,7 +128,8 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertEquals($linkBefore->views + 1, $linksAfter->views);
     }
 
-    public function testViewLockedByCaptcha() {
+    public function testViewLockedByCaptcha()
+    {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $this->get('/427103fc86a164ccc6a835ea6gd00273');
         $this->assertResponseError();
@@ -138,7 +139,7 @@ class LinksControllerTest extends IntegrationTestCase
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $data = $this->goodData;
         $data['g-recaptcha-response'] = "This is a bad response";
-        $this->post('/427103fc86a164ccc6a835ea6gd00273',$data);
+        $this->post('/427103fc86a164ccc6a835ea6gd00273', $data);
         //unset( $_SERVER['HTTP_X_REQUESTED_WITH']);
         $this->assertResponseError();
     }
@@ -289,10 +290,6 @@ class LinksControllerTest extends IntegrationTestCase
         $badData = $data;
         $badData['title'] = str_repeat( '42', 100);
         $this->post('/edit/1', array_merge($badData, $this->csrf));
-       //Test a flash message is set if something is wrong:
-       // TODO how to test this ?
-//        $this->assertSession('The link could not be saved. Please, try again.',
-//                             'Flash.flash.message');
 
         //Test to get method
         $this->get('/edit/1');

@@ -5,6 +5,7 @@ namespace App\Shell;
 use Cake\Console\Shell;
 use Cake\Mailer\Email;
 use Cake\Mailer\MailerAwareTrait;
+use Cake\Network\Exception\SocketException;
 
 /**
  * Class to send email from the command line interface
@@ -42,9 +43,8 @@ class MailerShell extends Shell
      */
     public function alerts()
     {
-
-        $users = $this->Users->find('needMailAlert')->all();
-        debug($users);
+        
+        $users = $this->Users->find('needMailAlert')->all();        
         foreach ($users as $user) {
             $updatedIds = [];
             $email = new Email('default');
@@ -57,21 +57,22 @@ class MailerShell extends Shell
 
             $params = ['user' => $user,
                                 "links" => $links];
-            $this->getMailer('Link')->send('notification', $params);
+            
+            try {
+                $this->getMailer('Link')->send('notification', $params);
+            } catch (SocketException $ex) {
+                $this->log("Sending mail to {$user->email} failed.\n $ex");
+                return;
+            }
             $alertParams = $this->AlertParameters->query();
             $alertParams->param['updatedIds'] = $updatedIds;
-            //$this->out($updatedIds);
 
             $alertParams->update()
                     ->set(['sending_status' => true])
                     ->where(function ($exp, $q) {
                         return $exp->in('link_id', $q->param['updatedIds']);
                     });
-            debug($alertParams);
             $alertParams->execute();
-            debug($user->email);
-            // TODO log email sending if success
-            //$this->out($updatedIds);
         }
     }
 }

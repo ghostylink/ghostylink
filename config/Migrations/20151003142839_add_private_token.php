@@ -19,7 +19,6 @@ class AddPrivateToken extends AbstractMigration
             'limit' => 255,
         ]);
         $table->update();
-        // FIXME : uggly update procedure. MD5 is deterministic. need a random salt
         $this->execute("update links set private_token = md5(UUID()) where private_token = ''");
         $table->addIndex('private_token', array('unique' => true));
         $table->update();

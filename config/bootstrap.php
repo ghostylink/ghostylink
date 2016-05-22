@@ -25,7 +25,7 @@ require ROOT . DS . 'vendor' . DS . 'autoload.php';
 /**
  * Bootstrap CakePHP.
  *
- * Does the various bits of setup that CakePHP needs to do.
+ * Does the various bits of setup that CakePHP needs to perform.
  * This includes:
  *
  * - Registering the CakePHP autoloader.
@@ -82,8 +82,8 @@ if (!Configure::read('debug')) {
 
 // This is a tests/bootstrap.php call or a continous integrations server
 // Override configuration
-if (isset($LOAD_TEST_CONFIG) && $LOAD_TEST_CONFIG || getenv("CI_SERVER") == "1") {    
-    Configure::load('app_tests', 'default', true);    
+if (isset($LOAD_TEST_CONFIG) && $LOAD_TEST_CONFIG || getenv("CI_SERVER") == "1") {
+    Configure::load('app_tests', 'default', true);
 }
 
 /**
