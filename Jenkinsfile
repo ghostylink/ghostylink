@@ -22,10 +22,8 @@ node {
     changes_commit = commit_id("HEAD")    
     target_merge = null
   }
-  step_task_scanner(changes_commit, target_merge)  
-  step_publish_github(changes_commit, "Quality/task-scanner", "Checks remaining tasks", currentBuild.result)  
-  step_checktyle()
-  step_publish_github(changes_commit, "Quality/checkstyle", "Checks coding style standard", currentBuild.result)
+  step_task_scanner(changes_commit, target_merge)    
+  step_checktyle()  
   step_pmd()
   step_cpd()  
 }
@@ -117,8 +115,6 @@ def step_cpd() {
 
 }
 def step_checktyle() {
-  savedRes = currentBuild.result  
-  currentBuild.result = "SUCCESS"
   step([$class: 'CheckStylePublisher', 
         canComputeNew: false,
         canRunOnFailed: true, 
@@ -132,9 +128,6 @@ def step_checktyle() {
         unstableTotalHigh: '15',
         unstableTotalLow: '17',
         unstableTotalNormal: '12'])
-    if (! status_is_worst(savedRes, currentBuild.result)) {
-        currentBuild.result = savedRes
-    }    
 }
 
 def status_is_worst(oldStatus, newStatus) {
