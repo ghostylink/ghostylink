@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This is the build file for the ghostylink project
+Call it with ./vendor/bin/phing <target>
+
+-->
+<project name="ghostylink" default="tests-unit" basedir="." description="Build file for ghostylink/ghostylink">
+    <property name="basedir" value="." />
+    <property name="bin" value="${basedir}/vendor/bin" />
+    <property name="build" value="${basedir}/build" />
+    <property name="results" value="${build}/results" />
+    <property name="logs" value="${build}/logs" />
+    
+    <!-- ============================================  -->
+    <!-- Target: prepare                               -->
+    <!-- ============================================  -->
+    <target name="prepare" depends="clean">
+        <mkdir dir="${build}"/>
+        <mkdir dir="${logs}"/>
+        <mkdir dir="${results}"/>        
+    </target>
+    
+    <!-- ============================================  -->
+    <!-- Target: clean                                 -->
+    <!-- ============================================  -->
+    <target name="clean">
+        <echo msg="Cleaning old build" />
+        <exec executable="rm">
+            <arg value="-rf"/><arg value="${build}/*"/>
+        </exec>
+    </target>
+    
+    <!-- ============================================  -->
+    <!-- Target: tests-unit                            -->
+    <!-- ============================================  -->
+    <target name="tests-unit">
+        
+        <echo msg="Launching unit tests" />
+        <exec executable="${bin}/phpunit" output="${logs}/phpunit.log">
+            <arg value="--testsuite"/>
+                <arg value="Unit"/>
+            <arg value="--log-junit"/>
+                <arg value="${results}/junit.xml"/>            
+            <arg value="--configuration"/>
+                <arg value="${basedir}/PHPUnitconfig.xml"/> 
+            <arg value="--coverage-clover"/>
+                <arg value="${results}/clover.xml"/>
+            <arg value="--coverage-html"/>
+                <arg value="${results}/coverage-html"/>            
+        </exec>
+        <echo msg="All unit tests launched" />
+
+    </target>
+    
+    <!-- ============================================  -->
+    <!-- Target: tests-functional                      -->
+    <!-- ============================================  -->
+    <target name="tests-functional">
+        
+        <echo msg="Launching functional tests" />
+        <exec executable="${bin}/phpunit" output="${logs}/phpunit.log">
+            <arg value="--testsuite"/>
+                <arg value="Functional"/>
+            <arg value="--log-junit"/>
+                <arg value="${results}/junit-functional.xml"/>            
+            <arg value="--configuration"/>
+                <arg value="${basedir}/PHPUnitconfig.xml"/> 
+            <arg value="--coverage-clover"/>
+                <arg value="${results}/clover.xml"/>
+            <arg value="--coverage-html"/>
+                <arg value="${results}/coverage-html"/>            
+        </exec>
+        <echo msg="All functional tests launched" />
+
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: quality                               -->
+    <!-- ============================================  -->
+    <target name="quality">
+        
+        <echo msg="Launching quality tools" />
+        <echo msg="    - Checkstyle" />
+        <exec executable="${bin}/phpcs" output="${logs}/checkstyle.log">            
+            <arg value="--standard=PSR2"/>                
+            <arg value="--report=checkstyle"/>                          
+            <arg value="--report-file=${results}/checkstyle.xml"/>
+            <arg value="src"/>
+        </exec>
+        <echo msg="    - Copy-paste detector" />
+        <exec executable="${bin}/phpcpd" output="${logs}/cpd.log">            
+            <arg value="--min-tokens=35"/>                
+            <arg value="--log-pmd=${results}/phpcpd.xml"/>            
+            <arg value="src/*"/>
+        </exec>
+        <echo msg="    - Mess detector" />
+        <!-- Ugly but phpmd does not have option to output in file -->
+        <exec executable="${bin}/phpmd" output="${results}/phpmd.xml">            
+            <arg value="src"/>                
+            <arg value="xml"/>            
+            <arg value="cleancode,codesize,controversial,design,naming,unusedcode"/>
+        </exec>
+        <echo msg="    - PHP Depend" />
+        <exec executable="${bin}/pdepend" output="${logs}/jdepend.log">            
+            <arg value="--jdepend-xml=${results}/jdepend.xml"/>
+            <arg value="--jdepend-chart=${results}/jdepend.svg"/>
+            <arg value="--overview-pyramid=${results}/pyramid.svg"/>            
+        </exec>        
+        <echo msg="Quality tools launched" />
+
+    </target>
+
+</project>

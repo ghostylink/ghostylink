@@ -14,12 +14,13 @@
         "tijsverkoyen/css-to-inline-styles": "^1.5@dev",
         "markstory/asset_compress": "^3.0"
     },
-    "require-dev": {
+    "require-dev": {        
+        "phing/phing": "^2.14",
         "psy/psysh": "@stable",
         "cakephp/debug_kit": "~3.0",
         "cakephp/bake": "~1.0",
         "phpunit/phpunit": "*.*",
-        "phpunit/php-code-coverage":"2.0.16",
+        "phpunit/php-code-coverage":"*",
         "phpunit/phpunit-selenium": ">=1.2",
 	"squizlabs/php_codesniffer": "*",
         "kevintweber/phpunit-markup-validators": "dev-master",
