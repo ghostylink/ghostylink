@@ -2,8 +2,10 @@ node {
     stage 'Checkout code'
     checkout scm
     
-    container = docker.image('ghostylink/ci-tools:latest').pull().inside('-u root') {
-        stage 'Preparing environment'
+    stage 'Preparing environment'
+    container = docker.image('ghostylink/ci-tools:latest')
+    container.pull()
+    container.inside('-u root') {    
         sh '/image/launch.sh'
         stage 'Unit tests'
         sh 'ant tests-unit'
