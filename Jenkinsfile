@@ -1,31 +1,31 @@
-node {
-
-  stage 'Checkout code'
-  checkout scm
-  stage 'Installing dependencies'
-  sh "mkdir -p tmp logs"
-  sh "test -f 'composer.phar' || curl -sS https://getcomposer.org/installer| php"
-  sh "php composer.phar install"
-
-  stage 'Unit tests'
-  sh './vendor/bin/phing prepare && ./vendor/bin/phing tests-unit'
-  step_junit()
-  step_clover()
-
-  stage 'Quality'
-  sh './vendor/bin/phing quality'
-  if (is_pull_request(env.CHANGE_URL)) {    
-    target_merge = commit_id("HEAD^1")
-    changes_commit = commit_id("HEAD^2")
-  }
-  else {
-    changes_commit = commit_id("HEAD")    
-    target_merge = null
-  }
-  step_task_scanner(changes_commit, target_merge)    
-  step_checktyle()  
-  step_pmd()
-  step_cpd()  
+node {    
+    stage 'Checkout code'
+    checkout scm
+    
+    container = docker.image('ghostylink/ci-tools:latest').pull().inside('-u root') {
+        stage 'Preparing environment'
+        sh '/image/launch.sh'
+        stage 'Unit tests'
+        sh 'ant tests-unit'
+        step_junit()
+        step_clover()
+        
+        stage 'Quality'
+        sh 'ant quality'
+        if (is_pull_request(env.CHANGE_URL)) {    
+            target_merge = commit_id("HEAD^1")
+            changes_commit = commit_id("HEAD^2")
+        }
+        else {
+            changes_commit = commit_id("HEAD")    
+            target_merge = null
+        }
+        
+        step_task_scanner(changes_commit, target_merge)    
+        step_checktyle()  
+        step_pmd()
+        step_cpd() 
+    }
 }
 
 def commit_id(expr) {
