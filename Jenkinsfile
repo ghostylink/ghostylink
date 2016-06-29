@@ -5,8 +5,9 @@ node {
     stage 'Preparing environment'
     container = docker.image('ghostylink/ci-tools:latest')
     container.pull()
-    container.inside('-u root') {    
-        sh '/image/launch.sh'
+    container.inside('-u root') {            
+        sh '/image/init.sh'
+        sh 'ant prepare'
         stage 'Unit tests'
         sh 'ant tests-unit'
         step_junit()
