@@ -183,3 +183,7 @@ ul.list-link-components {
 a.navbar-brand {
     float:none;
 }
+
+.navbar-form {
+    padding:0;
+}

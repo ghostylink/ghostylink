@@ -108,7 +108,10 @@ function initCopyButton() {
 
 $(function () {
     initAjaxSubmission(); 
-    console.log($("form#links-add"));
+    $('ul#link-creation a').click(function (e) {
+        $(this).tab('show');
+        e.preventDefault();
+    });    
 });
 
 

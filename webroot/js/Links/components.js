@@ -16,7 +16,7 @@ function initLinkComponents($JqueryLi) {
         // At the end of the drag the moveLinkComponents will be called
         stop: function(event, ui) {
             var $component = ui.draggable;
-            moveLinkComponents($component,$('ul#link-components-chosen'))
+            moveLinkComponents($component,$('ul#link-components-chosen'));
         }
     });
 
@@ -30,8 +30,7 @@ function initLinkComponents($JqueryLi) {
         accept:"ul#link-components-available > li",
         drop: function(event, ui) {
             var $target = $(this);                        
-            var $component = ui.draggable;
-            console.log($component, ui.draggable);
+            var $component = ui.draggable;            
             moveLinkComponents($component, $target);        
         }
     });
@@ -45,9 +44,8 @@ function initLinkComponents($JqueryLi) {
  */
 function moveLinkComponents($component, $targetArea){
         //Retrieve the closer fieldset
-        var $fieldset = $targetArea.parent('fieldset').eq(0);        
-        //Add the html corresponding to the field
-        console.log($component);
+        var $fieldset = $targetArea.parentsUntil('fieldset').eq(0);                
+        //Add the html corresponding to the field        
         var $newField = $($component.attr("data-field-html"));        
         $fieldset.append($newField);
         var $toEvaluate = $component.attr("data-field-js-function");
@@ -74,7 +72,7 @@ function moveLinkComponents($component, $targetArea){
         
         //Remove the available component specific class and the text
         var text = '';
-         if ($component.attr("data-content")) {
+        if ($component.attr("data-content")) {
             text = $component.attr("data-content");
         }
         $component.text(text).removeClass('ui-widget-header').attr("title", legend);
@@ -108,7 +106,7 @@ function componentsChosenClick($li, $dropArea) {
         $toRemove = $('input[name=' + fieldName + ']');
     }
     //Mark the component as available
-    $('ul#link-components-available').append($component);
+    $('ul#link-components-available').append($component.removeAttr("style"));
         
     initLinkComponents($component);
     $li.remove();

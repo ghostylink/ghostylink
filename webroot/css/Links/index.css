@@ -7,6 +7,12 @@ and open the template in the editor.
     Created on : 1 mai 2015, 12:18:43
     Author     : kremy
 */
+#left-block .logo {
+    width:45%;    
+    margin-right: 5%;
+    float:left;
+}
+
 p.description {
     text-align: left;
     margin-top:1em;
@@ -15,6 +21,9 @@ p.description {
 
 ul#link-components-available li{
     cursor:move !important;    
+}
+li.component-badge {
+    z-index:2;
 }
 ul#link-components-chosen{    
     height:3em;    
