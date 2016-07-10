@@ -30,8 +30,7 @@ class UserHelper {
             "id=password" => $password
         ]);
         
-        //TODO: change for a better css selector
-        $this->selTest->getDomChecker()->clickOnElementMatching("css=button.btn.btn-default");
+        $this->selTest->getDomChecker()->clickOnElementMatching('css=[action="/login"] button.btn.btn-default');
         $this->selTest->waitForPageToLoad(30000);
     }
     

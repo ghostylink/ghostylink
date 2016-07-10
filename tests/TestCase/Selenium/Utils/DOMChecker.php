@@ -144,10 +144,16 @@ class DOMChecker {
      */
     public function assertElementsCount($selector, $expectedCount)
     {
-        $selectorPart = explode("=", $selector, 2)[1];
+        $selection = explode("=", $selector, 2);
+        $selectorPart = $selection[1];
+        if ($selection[0] == "css") {
+            $method = "css selector";
+        } else {
+            $this->selTest->assertFalse("Selection by $selection[0] not yet implemented");
+        }
         $found = $this->selTest
                       ->elements($this->selTest
-                                     ->using('css selector') // TODO dynamic strategy
+                                     ->using($method)
                                      ->value($selectorPart));
         $this->selTest->assertEquals($expectedCount, count($found));
     }
