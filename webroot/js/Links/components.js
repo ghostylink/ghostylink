@@ -48,7 +48,7 @@ function moveLinkComponents($component, $targetArea){
         //Add the html corresponding to the field        
         var $newField = $($component.attr("data-field-html"));        
         $fieldset.append($newField);
-        var $toEvaluate = $component.attr("data-field-js-function");
+        var $toEvaluate = $component.attr("data-field-js-function");        
         if ($toEvaluate) {
             eval($toEvaluate + '()');
         }
@@ -91,6 +91,31 @@ function moveLinkComponents($component, $targetArea){
         });
 }
 
+function updateSummary() {
+    $('[data-category]').find(".panel-body ul li").remove();
+    $("ul#link-components-chosen li").each(function(){        
+        var $chosenComponent = $(this);
+        var section = $chosenComponent.attr("data-type");
+        var data = $chosenComponent.data()
+        var relField = data["relatedField"];        
+        var summaryTemplate = $chosenComponent.attr("data-summary-template");
+        var $field;
+        if (relField === "death_time") {
+            $field = $("[name=" + relField + ']:checked');
+        }
+        else if(relField === "ghostification_alert") {
+            $field = $('[name="AlertParameters[life_threshold]"]');
+        }
+        else {
+            $field = $('[name=' + relField + ']');
+        }
+        var curValue = $field.val();
+        $('[data-category=' + section + ']')
+                .find(".panel-body ul")
+                .append('<li class="list-group-item">' + summaryTemplate.replace('{value}', curValue) + "</li>");
+    });
+    
+}
 function componentsChosenClick($li, $dropArea) {    
     //Retrieve the component from the saving area
     var dataName = 'link-component-' + $li.attr("data-related-field");     

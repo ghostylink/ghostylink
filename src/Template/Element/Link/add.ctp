@@ -85,7 +85,27 @@
             </div>
 
             <div role="tabpanel" class="tab-pane" id="summary">
-
+                <div class="panel panel-default" data-category="link-life">
+                    <div class="panel-heading">Link life</div>
+                    <div class="panel-body">
+                        <ul class="list-group">                                                        
+                        </ul>   
+                    </div>
+                </div>
+                <div class="panel panel-default" data-category="protection">
+                    <div class="panel-heading">Protections</div>
+                    <div class="panel-body">
+                        <ul class="list-group">                            
+                        </ul>   
+                    </div>
+                </div>
+                <div class="panel panel-default" data-category="misc">
+                    <div class="panel-heading">Misc</div>
+                    <div class="panel-body">
+                        <ul class="list-group">                            
+                        </ul>   
+                    </div>
+                </div>
             </div>           
         </div>
     </fieldset>

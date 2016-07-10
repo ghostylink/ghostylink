@@ -63,6 +63,8 @@ function initAjaxSubmission() {
                     });
                     $('#id_death_time').buttonset();
                     $('#death_date').datetimepicker();
+                    alertComponentInit();
+                    updateSummary();
                 });             
             }
             $form.find('[name="content"]').val(noEncryptedContent);
@@ -110,6 +112,7 @@ $(function () {
     initAjaxSubmission(); 
     $('ul#link-creation a').click(function (e) {
         $(this).tab('show');
+        updateSummary();
         e.preventDefault();
     });    
 });
