@@ -26,14 +26,16 @@ class Link extends Entity
         'user_id' => true,
         'status' => true,
         'google_captcha' => true,
-        'life_percentage' => true
+        'life_percentage' => true,
+        "alert_parameter" => true
     ];
 
     /**
      * Get the remaining available view of a link
      * @return type
      */
-    protected function _getRemainingViews() {
+    protected function _getRemainingViews()
+    {
         if ($this->_properties['max_views'] == null) {
             return null;
         }
@@ -44,7 +46,8 @@ class Link extends Entity
      * Get the  life percentage of a link considering maw_views or death_time
      * @return type
      */
-    protected function _getLifePercentage() {
+    protected function _getLifePercentage()
+    {
         $percentageViews = 0;
         $percentageTime = 0;
         if (isset($this->_properties['max_views'])) {
@@ -58,11 +61,28 @@ class Link extends Entity
             $totalTime = $created->diffInSeconds($death, false);
             if ($totalTime >= 0) {
                 $percentageTime = (100 * $elapseTime) / $totalTime;
-            }
-            else {
+            } else {
                 $percentageTime = 100;
             }
         }
         return min(100, max($percentageViews, $percentageTime));
+    }
+    
+    public function getComponents()
+    {
+        $componentsList = [];
+        if (isset($this->max_views) || $this->errors('max_views')) {
+            array_push($componentsList, "ViewsLimit");
+        }
+        if ($this->google_captcha || $this->errors("google_captcha")) {
+            array_push($componentsList, "GoogleCaptcha");
+        }
+        if ($this->death_time || $this->errors("death_time")) {
+            array_push($componentsList, "DeathTime");
+        }
+        if ($this->alert_parameter || $this->errors("alert_parameter.life_threshold")) {
+            array_push($componentsList, "GhostyficationAlert");
+        }
+        return $componentsList;
     }
 }

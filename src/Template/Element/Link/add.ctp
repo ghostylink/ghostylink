@@ -38,49 +38,52 @@
                 <label>Your components</label>
                 <ul id="link-components-chosen" class="col-lg-12">
                     <?php
-                    $components = ['max_views' => 'eye-open',
-                        'death_time' => 'time',
-                        'google_captcha' => 'recaptcha',
-                        'death_date' => 'calendar',
-                        'ghostification_alert' => 'bell'];
-                    $content = ['max_views' => '',
-                        'death_time' => '',
-                        'google_captcha' => '_',
-                        'death_date' => '',
-                        'ghostification_alert' => '']; // artificial content to have same height on google_captcha
-                    $componentsEmpty = true;
-                    foreach ($components as $field => $cssClass) {
-                        if (isset($_POST['flag-' . $field])) {
-                            $htmlComponent = '<li class="glyphicon glyphicon-' . $cssClass . ' label label-primary" ' .
-                                    'data-related-field="' . $field . '">' . $content[$field] . '</li>';
-                            echo $htmlComponent;
-                            echo $this->Form->hidden("flag-$field");
-                            $componentsEmpty = false;
-                        }
-                    }
-                    if ($componentsEmpty) {
-                        echo '<li class="legend">Drop some components here</li>';
-                    }
+//                    $components = ['max_views' => 'eye-open',
+//                        'death_time' => 'time',
+//                        'google_captcha' => 'recaptcha',
+//                        'death_date' => 'calendar',
+//                        'ghostification_alert' => 'bell'];
+//                    $content = ['max_views' => '',
+//                        'death_time' => '',
+//                        'google_captcha' => '_',
+//                        'death_date' => '',
+//                        'ghostification_alert' => '']; // artificial content to have same height on google_captcha
+//                    $componentsEmpty = true;
+//                    foreach ($components as $field => $cssClass) {
+//                        if (isset($_POST['flag-' . $field])) {
+//                            $htmlComponent = '<li class="glyphicon glyphicon-' . $cssClass . ' label label-primary" ' .
+//                                    'data-related-field="' . $field . '">' . $content[$field] . '</li>';
+//                            echo $htmlComponent;
+//                            echo $this->Form->hidden("flag-$field");
+//                            $componentsEmpty = false;
+//                        }
+//                    }
+//                    if ($componentsEmpty) {
+//                        echo '<li class="legend">Drop some components here</li>';
+//                    }                    
+                        $link = isset($link)?$link:null;
+                        $this->Link->displayComponents($link);
                     ?>
                 </ul>
                 <?php
-                if (isset($_POST['flag-max_views'])) {
-                    echo $this->element('Link/Components/max_views');
-                } else if ($this->Form->isFieldError('max_views')) {
-                    echo $this->Form->error('max_views');
-                }
-                if (isset($_POST['flag-death_time'])) {
-                    echo $this->element("Link/Components/death_time");
-                }
-                if (isset($_POST['flag-google_captcha'])) {
-                    echo $this->element("Link/Components/google_captcha");
-                }
-                if (isset($_POST['flag-death_date'])) {
-                    echo $this->element("Link/Components/death_date");
-                }
-                if (isset($_POST['flag-ghostification_alert'])) {
-                    echo $this->element("Link/Components/ghostification_alert");
-                }
+                $this->Link->displayFields($link);
+//                if (isset($_POST['flag-max_views'])) {
+//                    echo $this->element('Link/Components/max_views');
+//                } else if ($this->Form->isFieldError('max_views')) {
+//                    echo $this->Form->error('max_views');
+//                }
+//                if (isset($_POST['flag-death_time'])) {
+//                    echo $this->element("Link/Components/death_time");
+//                }
+//                if (isset($_POST['flag-google_captcha'])) {
+//                    echo $this->element("Link/Components/google_captcha");
+//                }
+//                if (isset($_POST['flag-death_date'])) {
+//                    echo $this->element("Link/Components/death_date");
+//                }
+//                if (isset($_POST['flag-ghostification_alert'])) {
+//                    echo $this->element("Link/Components/ghostification_alert");
+//                }
                 ?>
             </div>
 

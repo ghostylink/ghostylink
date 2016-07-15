@@ -127,7 +127,6 @@ class LinksController extends AppController
         $link->token = "";
         $link->private_token = "";
         if ($this->Links->save($link)) {
-            $this->addAlertParams($this->request->data, $link->id);
             //Redirect to the link view page
             $this->set('url', $link->token);
             $this->set('private_token', $link->private_token);
@@ -137,25 +136,6 @@ class LinksController extends AppController
             $this->set(compact('link'));
             $this->set('_serialize', ['link']);
             return $this->render('add', 'ajax');
-        }
-    }
-
-    /**
-     * Add if needed the ghostification alert parameters
-     * @param Array $data
-     * @param int $linkId the link id
-     * @return type
-     */
-    private function addAlertParams($data, $linkId)
-    {
-        $alert_component = array_key_exists('ghostification_alert', $data) && $data['ghostification_alert'];
-        if ($alert_component&& $this->Auth->user("id")) {
-            $data['AlertParameters']['link_id'] = $linkId;
-            $parameters = $this->Links->AlertParameters->newEntity($data);
-            if (!$this->Links->AlertParameters->save($parameters)) {
-                $this->Flash->error('Impossible to store alert component.');
-                return $this->redirect(['action' => 'index']);
-            }
         }
     }
 

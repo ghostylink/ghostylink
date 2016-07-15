@@ -97,14 +97,16 @@ function updateSummary() {
         var $chosenComponent = $(this);
         var section = $chosenComponent.attr("data-type");
         var data = $chosenComponent.data()
-        var relField = data["relatedField"];        
+        var relField = $chosenComponent.attr("data-related-field");
         var summaryTemplate = $chosenComponent.attr("data-summary-template");
         var $field;
+        console.log(relField);
         if (relField === "death_time") {
             $field = $("[name=" + relField + ']:checked');
         }
-        else if(relField === "ghostification_alert") {
-            $field = $('[name="AlertParameters[life_threshold]"]');
+        else if(relField === 'alert_parameter["life_threshold"]') {
+            console.log("titi");
+            $field = $('[name="alert_parameter[life_threshold]"]');
         }
         else {
             $field = $('[name=' + relField + ']');
