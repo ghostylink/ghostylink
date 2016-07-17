@@ -29,7 +29,7 @@ class TimeLimitHelper extends LinkHelper implements LinkComponentHelper
         parent::__construct($view, $this->config);
     }
 
-    public function displayField(Link $link)
+    public function field(Link $link)
     {
         $options = array(
             ['text' => '1 day', 'value' => 1, 'checked' => 'checked'],
@@ -43,7 +43,7 @@ class TimeLimitHelper extends LinkHelper implements LinkComponentHelper
             ['nestingLabel' => '<label {{attrs}}>{{text}}</label>']
         );
         $radioHTML = $this->Form->radio('death_time', $options, $attributes);
-        echo $this->Html->tag(
+        return $this->Html->tag(
             "div",
             $radioHTML,
             ['id' => 'id_death_time', 'class' => 'input']

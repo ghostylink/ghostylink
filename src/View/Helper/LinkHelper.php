@@ -71,32 +71,37 @@ class LinkHelper extends Helper
      * Display the component badge for the given link
      * @param Link $link
      * @param string $content content of the link;
+     * @return string The generated html
      */
-    public function displayBadges(Link $link = null, $content = '')
+    public function badges(Link $link = null, $content = '')
     {
+        $html = '';
         if (!$link) {
-            return;
+            return $html;
         }
         $components = $link->getComponents();
         foreach ($components as $comp) {
-            $this->{$comp}->displayComponent($link, $this->content);
+            $html .= $this->{$comp}->component($link, $this->content);
         }
+        return $html;
     }
 
     /**
      * Display all components fields necessary for the given link
      * @param Link $link the link entity
-     * @return void
+     * @return The
      */
-    public function displayAllFields(Link $link = null)
+    public function allFields(Link $link = null)
     {
+        $html = '';
         if (!$link) {
-            return;
+            return $html;
         }
         $components = $link->getComponents();
         foreach ($components as $comp) {
-            $this->{$comp}->displayField($link);
+            $html .= $this->{$comp}->field($link);
         }
+        return $html;
     }
 
     /**
@@ -104,9 +109,9 @@ class LinkHelper extends Helper
      * @param Link $link the link entity
      * @param string $content
      */
-    public function displayComponent(Link $link, $content = '')
+    public function component(Link $link, $content = '')
     {
-        echo $this->Html->tag(
+        return $this->Html->tag(
             "li",
             $content,
             ['class' => $this->icon,

@@ -28,9 +28,9 @@ class DateLimitHelper extends LinkHelper implements LinkComponentHelper
         parent::__construct($view, $this->config);
     }
 
-    public function displayField(Link $link)
+    public function field(Link $link)
     {
-        echo $this->Form->input(
+        return $this->Form->input(
             'death_date',
             [
              'type' => 'text',

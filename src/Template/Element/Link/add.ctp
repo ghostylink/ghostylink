@@ -1,5 +1,6 @@
 <div class="links form col-lg-10 col-md-9">
     <?php
+    $link = isset($link)?$link:null;
     if (!isset($link)) {
         echo $this->Form->create('Link', ['id' => 'links-add']);
     } else {
@@ -37,14 +38,9 @@
                 ?>
                 <label>Your components</label>
                 <ul id="link-components-chosen" class="col-lg-12">
-                    <?php
-                        $link = isset($link)?$link:null;
-                        $this->Link->displayBadges($link);
-                    ?>
+                    <?= $this->Link->badges($link);?>
                 </ul>
-                <?php
-                    $this->Link->displayAllFields($link);
-                ?>
+                <?= $this->Link->allFields($link);?>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="summary">

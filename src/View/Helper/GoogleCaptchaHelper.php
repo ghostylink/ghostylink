@@ -13,7 +13,6 @@ use App\Model\Entity\Link;
  */
 class GoogleCaptchaHelper extends LinkHelper implements LinkComponentHelper
 {
-    public $helpers = ["Html", "Form"];
 
     protected $config = [
         'summaryTemplate' => 'The link will protected against bots by Google ReCaptcha',
@@ -28,8 +27,8 @@ class GoogleCaptchaHelper extends LinkHelper implements LinkComponentHelper
         parent::__construct($view, $this->config);
     }
 
-    public function displayField(Link $link)
+    public function field(Link $link)
     {
-        echo $this->Form->hidden('google_captcha', ['value' => true]);
+        return $this->Form->hidden('google_captcha', ['value' => true]);
     }
 }

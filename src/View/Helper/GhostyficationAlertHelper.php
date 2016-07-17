@@ -29,7 +29,7 @@ class GhostyficationAlertHelper extends LinkHelper implements LinkComponentHelpe
         parent::__construct($view, $this->config);
     }
 
-    public function displayField(Link $link)
+    public function field(Link $link)
     {
 
         $field = $this->Form->input(
@@ -44,7 +44,7 @@ class GhostyficationAlertHelper extends LinkHelper implements LinkComponentHelpe
         );
         $label = $this->Html->tag("label", "Life percentage alert threshold", ["for" => "default_threshold"]);
         $slider = $this->Html->tag("div", '', ['id' => 'slider-default_threshold']);
-        echo $this->Html->tag("div", $label . $slider . $field);
+        return $this->Html->tag("div", $label . $slider . $field);
 
     }
 }

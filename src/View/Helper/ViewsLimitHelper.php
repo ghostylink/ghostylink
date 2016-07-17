@@ -29,9 +29,9 @@ class ViewsLimitHelper extends LinkHelper implements LinkComponentHelper
         parent::__construct($view, $this->config);
     }
 
-    public function displayField(Link $link)
+    public function field(Link $link)
     {
-        echo $this->Form->input(
+        return $this->Form->input(
             'max_views',
             ['type' => 'number',
             'id' => 'inputContent',

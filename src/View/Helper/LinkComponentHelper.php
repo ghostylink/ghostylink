@@ -9,6 +9,6 @@ use App\Model\Entity\Link;
 
 interface LinkComponentHelper
 {
-    public function displayField(Link $link);
-    public function displayComponent(Link $link);
+    public function field(Link $link);
+    public function component(Link $link);
 }
