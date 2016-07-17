@@ -8,33 +8,27 @@
 
 namespace App\View\Helper;
 
-use Cake\View\Helper;
+use Cake\View\View;
 use App\Model\Entity\Link;
 
 /**
  * CakePHP ViewsLimitHelper
  * @author kremy
  */
-class ViewsLimitHelper extends Helper
+class ViewsLimitHelper extends LinkHelper implements LinkComponentHelper
 {
-    public $helpers = ["Html", "Form"];
+    protected $config = [
+        'summaryTemplate' => 'The link will be destroyed after {value} view(s)',
+        'icon' => 'glyphicon glyphicon-eye-open',
+        'type' => 'link-life',
+        'relatedField' => 'max_views'
+    ];
 
-    public function display(Link $link)
+    public function __construct(View $view, array $config = array())
     {
-        echo $this->Html->tag(
-            "li",
-            ' ',
-            array_merge(
-                ['class' => 'glyphicon glyphicon-eye-open',
-                 'data-type' => 'link-life',
-                 'data-related-field' => 'max_views',
-                 'data-summary-template' => 'The link will be destroyed after {value} view(s)',
-                 'escape' => false],
-                []
-            )
-        );
+        parent::__construct($view, $this->config);
     }
-    
+
     public function displayField(Link $link)
     {
         echo $this->Form->input(

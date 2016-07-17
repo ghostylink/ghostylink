@@ -143,7 +143,7 @@ class LinksFixture extends TestFixture
             'private_token' => 'YmMmmMTQwYjRkMTlmNM0YY4ZhYQ5OT2I0WDE1Y2NkVmWVJiZmU0YZg==',
             'max_views' => null,
             'views' => 2,
-            'death_time' => '2155-11-10 6:38:00',
+            'death_time' => null,
             'status' => 1
         ],
         [
@@ -327,6 +327,21 @@ class LinksFixture extends TestFixture
             'max_views' => 10,
             'views' => 9,
             'death_time' =>null,
+            'status' => 1,
+            'user_id' => 4,
+            'google_captcha' => 0
+        ],
+        [
+            'id' => 21,
+            'title' => 'Have a time limit component',
+            'content' => 'content of id 20',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => 'ac8603fa164ccc6386gd00235ea74271',
+            'private_token' => 'kMT0Ymk0mDUY4ZhYYjRVmWE1Y2NIQ5OmMTQVJiWw0mYZglmNMZT2Y==',
+            'max_views' => null,
+            'views' => 9,
+            'death_time' => '1955-11-07 6:38:00',
             'status' => 1,
             'user_id' => 4,
             'google_captcha' => 0

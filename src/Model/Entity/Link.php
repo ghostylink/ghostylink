@@ -27,8 +27,29 @@ class Link extends Entity
         'status' => true,
         'google_captcha' => true,
         'life_percentage' => true,
+        'time_limit' => true,
         "alert_parameter" => true
     ];
+
+    /**
+     * Get the time limit string
+     * @return string
+     */
+    protected function _getTimeLimit()
+    {
+        if (! $this->death_time) {
+            return null;
+        }
+        $strDifference = $this->death_time->diffForHumans($this->created);
+
+        // It's a time limit component only for 1 day, 1 week and 1 month
+        $strDifference = str_replace([" after", " ago", " from now"], "", $strDifference);
+        if (in_array($strDifference, ['1 week', '1 month', '1 day'], true)) {
+            return $strDifference;
+        }
+
+        return null;
+    }
 
     /**
      * Get the remaining available view of a link
@@ -71,14 +92,16 @@ class Link extends Entity
     public function getComponents()
     {
         $componentsList = [];
-        if (isset($this->max_views) || $this->errors('max_views')) {
+        if ($this->max_views || $this->errors('max_views')) {
             array_push($componentsList, "ViewsLimit");
         }
         if ($this->google_captcha || $this->errors("google_captcha")) {
             array_push($componentsList, "GoogleCaptcha");
         }
-        if ($this->death_time || $this->errors("death_time")) {
-            array_push($componentsList, "DeathTime");
+        if ($this->time_limit) {
+            array_push($componentsList, "TimeLimit");
+        } else if ($this->death_time || $this->errors("death_time")) {
+            array_push($componentsList, "DateLimit");
         }
         if ($this->alert_parameter || $this->errors("alert_parameter.life_threshold")) {
             array_push($componentsList, "GhostyficationAlert");

@@ -6,28 +6,27 @@
 
 namespace App\View\Helper;
 
-use Cake\View\Helper;
+use Cake\View\View;
 use App\Model\Entity\Link;
 
 /**
- * CakePHP ViewsLimitHelper
+ * Helper class for the death time helper
  * @author kremy
  */
-class DeathTimeHelper extends Helper
+class TimeLimitHelper extends LinkHelper implements LinkComponentHelper
 {
     public $helpers = ["Html", "Form"];
 
-    public function display(Link $link)
+    protected $config = [
+        'summaryTemplate' => 'The link will be destroyed after {value} day(s)',
+        'icon' => 'glyphicon glyphicon-time',
+        'type' => 'link-life',
+        'relatedField' => 'death_time'
+    ];
+
+    public function __construct(View $view, array $config = array())
     {
-        echo $this->Html->tag(
-            "li",
-            '',
-            ['class' => 'glyphicon glyphicon-time',
-             'data-type' => 'link-life',
-             'data-related-field' => 'death_time',
-             'data-summary-template' => 'The link will be destroyed after {value} day(s)',
-             'escape' => false]
-        );
+        parent::__construct($view, $this->config);
     }
 
     public function displayField(Link $link)

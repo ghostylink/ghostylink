@@ -409,7 +409,6 @@ class LinksTableTest extends TestCase
         $data["alert_parameter"] = [
             'life_threshold' => 42
         ];
-        debug($data);
         $link = $this->Links->newEntity($data, [
             'associated' => ['AlertParameters']
         ]);

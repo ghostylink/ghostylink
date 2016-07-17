@@ -104,8 +104,7 @@ function updateSummary() {
         if (relField === "death_time") {
             $field = $("[name=" + relField + ']:checked');
         }
-        else if(relField === 'alert_parameter["life_threshold"]') {
-            console.log("titi");
+        else if(relField === 'alert_parameter["life_threshold"]') {            
             $field = $('[name="alert_parameter[life_threshold]"]');
         }
         else {

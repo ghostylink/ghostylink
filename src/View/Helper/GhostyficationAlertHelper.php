@@ -8,27 +8,25 @@
 
 namespace App\View\Helper;
 
-use Cake\View\Helper;
+use Cake\View\View;
 use App\Model\Entity\Link;
 
 /**
- * CakePHP GhostyficationHelper
+ * Ghostyfication alert helper implementation
  * @author kremy
  */
-class GhostyficationAlertHelper extends Helper {
-    public $helpers = ["Html", "Form"];
+class GhostyficationAlertHelper extends LinkHelper implements LinkComponentHelper
+{
+    protected $config = [
+        'summaryTemplate' => 'You will be warn at {value} % of the link life',
+        'icon' => 'glyphicon glyphicon-bell',
+        'type' => 'misc',
+        'relatedField' => 'alert_parameter["life_threshold"]'
+    ];
 
-    public function display(Link $link)
+    public function __construct(View $view, array $config = array())
     {
-        echo $this->Html->tag(
-            "li",
-            '',
-            ['class' => 'glyphicon glyphicon-bell',
-             'data-type' => 'misc',
-             'data-related-field' => htmlspecialchars('alert_parameter["life_threshold"]'),
-             'data-summary-template' => 'You will be warn by email at {value} % of the link life',
-             'escape' => false]
-        );
+        parent::__construct($view, $this->config);
     }
 
     public function displayField(Link $link)

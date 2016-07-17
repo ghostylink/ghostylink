@@ -23,7 +23,6 @@ class AlertParametersTableTest extends TestCase
     ];
 
     public $goodData = [
-        'link_id' => 2,
         'type' =>'email',
         'sending_status' => 0,
         'life_threshold' => 75
@@ -79,6 +78,7 @@ class AlertParametersTableTest extends TestCase
     {
         $goodData = $this->goodData;
         $alertParameters = $this->AlertParameters->newEntity();
+        $alertParameters->link_id = 2;
         $alertParameters = $this->AlertParameters->patchEntity($alertParameters, $goodData);
         $this->assertNotFalse($this->AlertParameters->save($alertParameters));
     }
@@ -124,7 +124,7 @@ class AlertParametersTableTest extends TestCase
         //Test the foreign key presence
         $goodData['link_id'] = 8000;
         $alertParameters = $this->AlertParameters->newEntity($goodData);
-        $alertParameters = $this->AlertParameters->newEntity($goodData);
-        $this->assertFalse($this->AlertParameters->save($alertParameters));
+        $this->expectException(\PDOException::class);
+        $this->AlertParameters->save($alertParameters);
     }
 }
