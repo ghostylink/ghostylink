@@ -19,7 +19,9 @@ class GoogleCaptchaHelper extends LinkHelper implements LinkComponentHelper
         'icon' => 'glyphicon glyphicon-recaptcha',
         'type' => 'protection',
         'relatedField' => 'google_captcha',
-        'content' => '_'
+        'content' => '_',
+        'label' => 'Google captcha',
+        'description' => 'Protect content from bot by the ReCaptcha system'
     ];
 
     public function __construct(View $view, array $config = array())
@@ -27,8 +29,13 @@ class GoogleCaptchaHelper extends LinkHelper implements LinkComponentHelper
         parent::__construct($view, $this->config);
     }
 
-    public function field(Link $link)
+    public function field(Link $link = null)
     {
-        return $this->Form->hidden('google_captcha', ['value' => true]);
+        $content = $this->Html->tag(
+            "div",
+            $this->Form->hidden('google_captcha', ['value' => true]),
+            ['class' => 'hidden']
+        );
+        return $content;
     }
 }

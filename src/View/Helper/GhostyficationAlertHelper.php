@@ -10,6 +10,7 @@ namespace App\View\Helper;
 
 use Cake\View\View;
 use App\Model\Entity\Link;
+use App\Model\Entity\User;
 
 /**
  * Ghostyfication alert helper implementation
@@ -21,7 +22,9 @@ class GhostyficationAlertHelper extends LinkHelper implements LinkComponentHelpe
         'summaryTemplate' => 'You will be warn at {value} % of the link life',
         'icon' => 'glyphicon glyphicon-bell',
         'type' => 'misc',
-        'relatedField' => 'alert_parameter["life_threshold"]'
+        'relatedField' => 'alert_parameter["life_threshold"]',
+        'label' => 'Ghostyfication alert',
+        'description' => 'Warn you at the specified life threshold'
     ];
 
     public function __construct(View $view, array $config = array())
@@ -29,9 +32,9 @@ class GhostyficationAlertHelper extends LinkHelper implements LinkComponentHelpe
         parent::__construct($view, $this->config);
     }
 
-    public function field(Link $link)
+    public function field(Link $link = null)
     {
-
+        $value = isset($link->alert_parameter->life_threshold)?$link->alert_parameter->life_threshold:"";
         $field = $this->Form->input(
             'alert_parameter.life_threshold',
             ['id' => 'default_threshold',
@@ -39,12 +42,16 @@ class GhostyficationAlertHelper extends LinkHelper implements LinkComponentHelpe
             'placeholder' => "Default link alert life threshold",
             'readonly' => true,
             'type' => 'text',
-            'value' => $link->alert_parameter->life_threshold,
+            'value' => $value,
             'required' => 'false']
         );
         $label = $this->Html->tag("label", "Life percentage alert threshold", ["for" => "default_threshold"]);
         $slider = $this->Html->tag("div", '', ['id' => 'slider-default_threshold']);
         return $this->Html->tag("div", $label . $slider . $field);
+    }
 
+    public function isAllowed($user = null)
+    {
+        return $user && $user['email_validated'] === true;
     }
 }

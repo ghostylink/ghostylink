@@ -20,7 +20,9 @@ class DateLimitHelper extends LinkHelper implements LinkComponentHelper
         'summaryTemplate' => 'The link will be destroyed at {value}',
         'icon' => 'glyphicon glyphicon-calendar',
         'type' => 'link-life',
-        'relatedField' => 'death_date'
+        'relatedField' => 'death_date',
+        'label' => 'Date limit',
+        'description' => 'Destroy content at the given date'
     ];
 
     public function __construct(View $view, array $config = array())
@@ -28,7 +30,7 @@ class DateLimitHelper extends LinkHelper implements LinkComponentHelper
         parent::__construct($view, $this->config);
     }
 
-    public function field(Link $link)
+    public function field(Link $link = null)
     {
         return $this->Form->input(
             'death_date',

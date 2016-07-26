@@ -21,6 +21,18 @@ class LinkHelper extends Helper
     public $helpers = ["Html", "Form", "ViewsLimit", 'GoogleCaptcha', 'TimeLimit', 'DateLimit', 'GhostyficationAlert'];
 
     /**
+     *
+     * @var Array
+     */
+    static private $componentHelpers = ["ViewsLimit", 'GoogleCaptcha', 'TimeLimit', 'DateLimit', 'GhostyficationAlert'];
+
+    /**
+     * Label of the helper
+     * @var string
+     */
+    private $label;
+
+    /**
      * Description of the component explaining what it does
      * @var string
      */
@@ -61,10 +73,11 @@ class LinkHelper extends Helper
         parent::__construct($view, $config);
         $this->description = isset($config["description"])?$config["description"]:null;
         $this->icon = isset($config["icon"])?$config["icon"]:null;
-        $this->category = isset($config["category"])?$config["category"]:null;
+        $this->category = isset($config["type"])?$config["type"]:null;
         $this->summaryTemplate = isset($config["summaryTemplate"])?$config["summaryTemplate"]:null;
         $this->relatedField = isset($config['relatedField'])?$config["relatedField"]:null;
         $this->content = isset($config['content'])?$config["content"]:'';
+        $this->label = isset($config['label'])?$config["label"]:'';
     }
 
     /**
@@ -105,7 +118,7 @@ class LinkHelper extends Helper
     }
 
     /**
-     * Disaplay a component of the given link
+     * Display a component of the given link
      * @param Link $link the link entity
      * @param string $content
      */
@@ -120,5 +133,52 @@ class LinkHelper extends Helper
              'data-summary-template' => $this->summaryTemplate,
              'escape' => false]
         );
+    }
+
+    public function badge($content = null)
+    {
+
+        $content =  $this->Html->tag(
+            "span",
+            '',
+            ['class' => $this->icon]
+        ) . $this->Html->tag(
+            "span",
+            (!$content) ? $this->label : $content,
+            ['class' => "glyphicon component-description"]
+        ) . $this->Html->tag(
+            "span",
+            '',
+            ['class' => "glyphicon glyphicon-info-sign",
+            'title' => $this->description]
+        );
+        preg_match('/(\w+)Helper$/', get_class($this), $match);
+        return $this->Html->tag(
+            "li",
+            $content,
+            ['class' => 'component-badge',
+             'data-type' => $this->category,
+             'data-related-field' => $this->relatedField,
+             'data-summary-template' => $this->summaryTemplate,
+             'data-field-html' => htmlspecialchars($this->field()),
+             'data-component-name' => $match[1],
+             'escape' => false]
+        );
+    }
+
+    public function components($user = null)
+    {
+        $html = '';
+        foreach ($this::$componentHelpers as $helper) {
+            if ($this->{$helper}->isAllowed($user)) {
+                $html .= $this->{$helper}->badge();
+            }
+        }
+        return $html;
+    }
+
+    public function isAllowed($user = null)
+    {
+        return true;
     }
 }

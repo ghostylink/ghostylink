@@ -10,18 +10,18 @@ use Cake\View\View;
 use App\Model\Entity\Link;
 
 /**
- * Helper class for the death time helper
+ * Helper class for the time limit helper
  * @author kremy
  */
 class TimeLimitHelper extends LinkHelper implements LinkComponentHelper
 {
-    public $helpers = ["Html", "Form"];
-
     protected $config = [
         'summaryTemplate' => 'The link will be destroyed after {value} day(s)',
         'icon' => 'glyphicon glyphicon-time',
         'type' => 'link-life',
-        'relatedField' => 'death_time'
+        'relatedField' => 'death_time',
+        'label' => 'Time limit',
+        'description' => 'Destroy content after the specified time'
     ];
 
     public function __construct(View $view, array $config = array())
@@ -29,7 +29,7 @@ class TimeLimitHelper extends LinkHelper implements LinkComponentHelper
         parent::__construct($view, $this->config);
     }
 
-    public function field(Link $link)
+    public function field(Link $link = null)
     {
         $options = array(
             ['text' => '1 day', 'value' => 1, 'checked' => 'checked'],

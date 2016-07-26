@@ -48,13 +48,17 @@ function moveLinkComponents($component, $targetArea){
         //Add the html corresponding to the field        
         var $newField = $($component.attr("data-field-html"));        
         $fieldset.append($newField);
-        var $toEvaluate = $component.attr("data-field-js-function");        
-        if ($toEvaluate) {
-            eval($toEvaluate + '()');
+        $newField.attr("data-summary-template", $component.attr("data-summary-template"));
+        var toEvaluate = $component.attr("data-component-name");    
+        try {
+            eval(toEvaluate + '()');
         }
-        
+        catch(e){
+            ;
+        }
         //Add a hidden field to detect the chosen components
-        var nameNewField = $newField.find('input').attr("name");         
+        var nameNewField = $newField.find('input').attr("name");
+        console.log(nameNewField);
         $fieldset.append('<input type="hidden" name="flag-' + nameNewField + '"/>');
         
         //No component was here, remove the legend
@@ -96,11 +100,10 @@ function updateSummary() {
     $("ul#link-components-chosen li").each(function(){        
         var $chosenComponent = $(this);
         var section = $chosenComponent.attr("data-type");
-        var data = $chosenComponent.data()
+        var data = $chosenComponent.data();
         var relField = $chosenComponent.attr("data-related-field");
-        var summaryTemplate = $chosenComponent.attr("data-summary-template");
-        var $field;
-        console.log(relField);
+        var summaryTemplate = $chosenComponent.attr("data-summary-template");        
+        var $field;        
         if (relField === "death_time") {
             $field = $("[name=" + relField + ']:checked');
         }
@@ -109,8 +112,8 @@ function updateSummary() {
         }
         else {
             $field = $('[name=' + relField + ']');
-        }
-        var curValue = $field.val();
+        }        
+        var curValue = $field.val();        
         $('[data-category=' + section + ']')
                 .find(".panel-body ul")
                 .append('<li class="list-group-item">' + summaryTemplate.replace('{value}', curValue) + "</li>");
@@ -122,7 +125,9 @@ function componentsChosenClick($li, $dropArea) {
     var dataName = 'link-component-' + $li.attr("data-related-field");     
     var $component = $('section.link-components').data(dataName);    
     //Retrieve the name of the field
-    var $fieldWrapper = $($component.attr("data-field-html"));    
+    console.log($component.attr("data-field-html"));
+    var $fieldWrapper = $($component.attr("data-field-html"));  
+    console.log($fieldWrapper);
     var fieldName = $li.attr("data-related-field");
     var classWrapper = $fieldWrapper.attr("class").replace(/\s/g, ".");
     
@@ -145,15 +150,15 @@ function componentsChosenClick($li, $dropArea) {
         $dropArea.html('<li class="legend">Drop some components here</li>');
     }
 }
-function deathTimeInit() {
+function TimeLimit() {
     $('#id_death_time').buttonset();
 }
 
-function deathDateInit() {
+function DateLimit() {
     $('#death_date').datetimepicker();
 }
 
-function alertComponentInit() {    
+function GhostyficationAlert() {    
     $('#slider-default_threshold').slider({
         range: "max",
         min: 0,

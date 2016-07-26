@@ -21,7 +21,9 @@ class ViewsLimitHelper extends LinkHelper implements LinkComponentHelper
         'summaryTemplate' => 'The link will be destroyed after {value} view(s)',
         'icon' => 'glyphicon glyphicon-eye-open',
         'type' => 'link-life',
-        'relatedField' => 'max_views'
+        'relatedField' => 'max_views',
+        'label' => 'Views limit',
+        'description' => 'Destroy content after the specified number of views'
     ];
 
     public function __construct(View $view, array $config = array())
@@ -29,7 +31,7 @@ class ViewsLimitHelper extends LinkHelper implements LinkComponentHelper
         parent::__construct($view, $this->config);
     }
 
-    public function field(Link $link)
+    public function field(Link $link = null)
     {
         return $this->Form->input(
             'max_views',
