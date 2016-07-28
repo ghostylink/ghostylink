@@ -10,6 +10,7 @@ namespace App\View\Helper;
 
 use Cake\View\View;
 use App\Model\Entity\Link;
+use App\Model\Entity\User;
 
 /**
  * CakePHP ViewsLimitHelper
@@ -31,7 +32,7 @@ class ViewsLimitHelper extends LinkHelper implements LinkComponentHelper
         parent::__construct($view, $this->config);
     }
 
-    public function field(Link $link = null)
+    public function field(Link $link = null, array $user = null)
     {
         return $this->Form->input(
             'max_views',

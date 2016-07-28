@@ -8,6 +8,7 @@ namespace App\View\Helper;
 
 use Cake\View\View;
 use App\Model\Entity\Link;
+use App\Model\Entity\User;
 
 /**
  * Helper class for the time limit helper
@@ -29,8 +30,10 @@ class TimeLimitHelper extends LinkHelper implements LinkComponentHelper
         parent::__construct($view, $this->config);
     }
 
-    public function field(Link $link = null)
+    public function field(Link $link = null, array $user = null)
     {
+        $label = $this->Html->tag("label", 'Time before deletion :') .
+                $this->Html->tag("br");
         $options = array(
             ['text' => '1 day', 'value' => 1, 'checked' => 'checked'],
             ['text' => '1 week', 'value' => 7],
@@ -45,7 +48,7 @@ class TimeLimitHelper extends LinkHelper implements LinkComponentHelper
         $radioHTML = $this->Form->radio('death_time', $options, $attributes);
         return $this->Html->tag(
             "div",
-            $radioHTML,
+            $label . $radioHTML,
             ['id' => 'id_death_time', 'class' => 'input']
         );
     }

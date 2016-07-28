@@ -6,6 +6,7 @@ namespace App\View\Helper;
 
 use Cake\View\View;
 use App\Model\Entity\Link;
+use App\Model\Entity\User;
 
 /**
  * Google captcha component helper
@@ -15,11 +16,10 @@ class GoogleCaptchaHelper extends LinkHelper implements LinkComponentHelper
 {
 
     protected $config = [
-        'summaryTemplate' => 'The link will protected against bots by Google ReCaptcha',
-        'icon' => 'glyphicon glyphicon-recaptcha',
+        'summaryTemplate' => 'The link will be protected against bots by Google ReCaptcha',
+        'icon' => 'glyphicon glyphicon-ok-circle',
         'type' => 'protection',
         'relatedField' => 'google_captcha',
-        'content' => '_',
         'label' => 'Google captcha',
         'description' => 'Protect content from bot by the ReCaptcha system'
     ];
@@ -29,7 +29,7 @@ class GoogleCaptchaHelper extends LinkHelper implements LinkComponentHelper
         parent::__construct($view, $this->config);
     }
 
-    public function field(Link $link = null)
+    public function field(Link $link = null, array $user = null)
     {
         $content = $this->Html->tag(
             "div",

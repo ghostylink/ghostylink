@@ -7,6 +7,7 @@ namespace App\View\Helper;
 
 use Cake\View\View;
 use App\Model\Entity\Link;
+use App\Model\Entity\User;
 
 /**
  * Date time helper implementation
@@ -30,7 +31,7 @@ class DateLimitHelper extends LinkHelper implements LinkComponentHelper
         parent::__construct($view, $this->config);
     }
 
-    public function field(Link $link = null)
+    public function field(Link $link = null, array $user = null)
     {
         return $this->Form->input(
             'death_date',

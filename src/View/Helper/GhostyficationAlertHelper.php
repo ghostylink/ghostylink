@@ -32,9 +32,14 @@ class GhostyficationAlertHelper extends LinkHelper implements LinkComponentHelpe
         parent::__construct($view, $this->config);
     }
 
-    public function field(Link $link = null)
+    public function field(Link $link = null, array $user = null)
     {
-        $value = isset($link->alert_parameter->life_threshold)?$link->alert_parameter->life_threshold:"";
+        if (isset($link->alert_parameter->life_threshold)) {
+            $value = $link->alert_parameter->life_threshold;
+        } else {
+            $value = $user["default_threshold"];
+        }
+
         $field = $this->Form->input(
             'alert_parameter.life_threshold',
             ['id' => 'default_threshold',
@@ -50,7 +55,7 @@ class GhostyficationAlertHelper extends LinkHelper implements LinkComponentHelpe
         return $this->Html->tag("div", $label . $slider . $field);
     }
 
-    public function isAllowed($user = null)
+    public function isAllowed(array $user = null)
     {
         return $user && $user['email_validated'] === true;
     }

@@ -9,8 +9,25 @@ use App\Model\Entity\Link;
 
 interface LinkComponentHelper
 {
-    public function field(Link $link = null);
-    public function component(Link $link);
-    public function badge($content);
-    public function isAllowed($user = null);
+    /**
+     * Return the html correspoding to the component fields
+     * @param Link $link the link in creation
+     * @param array $user logged in user
+     */
+    public function field(Link $link = null, array $user = null);
+
+    /**
+     * Display the component badge of the link
+     * @param Link $link the link in creation
+     * @param array $user the logged in user
+     * @param type $content content to write in component description.
+     */
+    public function component(Link $link, array $user = null, $content = null);
+
+    /**
+     * Determine if the component is available in the current context
+     * @param array $user the current logged user
+     * @return boolean true if it is allowed
+     */
+    public function isAllowed(array $user = null);
 }

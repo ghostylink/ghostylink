@@ -9,6 +9,7 @@
 namespace App\View\Helper;
 
 use App\Model\Entity\Link;
+use App\Model\Entity\User;
 use Cake\View\Helper;
 use Cake\View\View;
 
@@ -68,9 +69,22 @@ class LinkHelper extends Helper
      */
     private $content;
 
+    /**
+     * Name of the component
+     * @var type
+     */
+    private $componentName;
+
+    public static function dummy()
+    {
+        return new Link();
+    }
+
     public function __construct(View $view, array $config = array())
     {
         parent::__construct($view, $config);
+        $match = null;
+        preg_match('/(\w+)Helper$/', get_class($this), $match);
         $this->description = isset($config["description"])?$config["description"]:null;
         $this->icon = isset($config["icon"])?$config["icon"]:null;
         $this->category = isset($config["type"])?$config["type"]:null;
@@ -78,25 +92,7 @@ class LinkHelper extends Helper
         $this->relatedField = isset($config['relatedField'])?$config["relatedField"]:null;
         $this->content = isset($config['content'])?$config["content"]:'';
         $this->label = isset($config['label'])?$config["label"]:'';
-    }
-
-    /**
-     * Display the component badge for the given link
-     * @param Link $link
-     * @param string $content content of the link;
-     * @return string The generated html
-     */
-    public function badges(Link $link = null, $content = '')
-    {
-        $html = '';
-        if (!$link) {
-            return $html;
-        }
-        $components = $link->getComponents();
-        foreach ($components as $comp) {
-            $html .= $this->{$comp}->component($link, $this->content);
-        }
-        return $html;
+        $this->componentName = $match[1];
     }
 
     /**
@@ -104,7 +100,7 @@ class LinkHelper extends Helper
      * @param Link $link the link entity
      * @return The
      */
-    public function allFields(Link $link = null)
+    public function fields(Link $link = null, array $user = null)
     {
         $html = '';
         if (!$link) {
@@ -112,7 +108,7 @@ class LinkHelper extends Helper
         }
         $components = $link->getComponents();
         foreach ($components as $comp) {
-            $html .= $this->{$comp}->field($link);
+            $html .= $this->{$comp}->field($link, $user);
         }
         return $html;
     }
@@ -120,24 +116,11 @@ class LinkHelper extends Helper
     /**
      * Display a component of the given link
      * @param Link $link the link entity
+     * @param User $user the connected user
      * @param string $content
      */
-    public function component(Link $link, $content = '')
+    public function component(Link $link = null, array $user = null, $content = '')
     {
-        return $this->Html->tag(
-            "li",
-            $content,
-            ['class' => $this->icon,
-             'data-type' => $this->category,
-             'data-related-field' => htmlspecialchars($this->relatedField),
-             'data-summary-template' => $this->summaryTemplate,
-             'escape' => false]
-        );
-    }
-
-    public function badge($content = null)
-    {
-
         $content =  $this->Html->tag(
             "span",
             '',
@@ -166,18 +149,23 @@ class LinkHelper extends Helper
         );
     }
 
-    public function components($user = null)
+    public function components(Link $link = null, array $user = null)
     {
         $html = '';
-        foreach ($this::$componentHelpers as $helper) {
+        if ($link) {
+            $colection = $link->getComponents();
+        } else {
+            $colection = $this::$componentHelpers;
+        }
+        foreach ($colection as $helper) {
             if ($this->{$helper}->isAllowed($user)) {
-                $html .= $this->{$helper}->badge();
+                $html .= $this->{$helper}->component($link, $user);
             }
         }
         return $html;
     }
 
-    public function isAllowed($user = null)
+    public function isAllowed(array $user = null)
     {
         return true;
     }

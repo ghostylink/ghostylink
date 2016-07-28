@@ -38,9 +38,9 @@
                 ?>
                 <label>Your components</label>
                 <ul id="link-components-chosen" class="col-lg-12">
-                    <?= $this->Link->badges($link);?>
+                    <?= $this->Link->components(isset($link)?$link:$this->Link->dummy());?>
                 </ul>
-                <?= $this->Link->allFields($link);?>
+                <?= $this->Link->fields($link);?>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="summary">

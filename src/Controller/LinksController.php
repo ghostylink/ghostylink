@@ -39,6 +39,7 @@ class LinksController extends AppController
     {
         $this->set('links', $this->paginate($this->Links));
         $this->set('_serialize', ['links']);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -115,7 +116,6 @@ class LinksController extends AppController
         $this->request->allowMethod(['post', 'ajax']);
 
         $this->request->data['user_id'] = $this->Auth->user('id');
-
         //A specific check for logged in user
         if ($this->Auth->user('id')) {
             $link = $this->Links->patchEntity($link, $this->request->data, ['validate' => 'logged']);

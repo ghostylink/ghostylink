@@ -44,6 +44,7 @@ function initLinkComponents($JqueryLi) {
  */
 function moveLinkComponents($component, $targetArea){
         //Retrieve the closer fieldset
+        console.log($component);
         var $fieldset = $targetArea.parentsUntil('fieldset').eq(0);                
         //Add the html corresponding to the field        
         var $newField = $($component.attr("data-field-html"));        
@@ -57,9 +58,7 @@ function moveLinkComponents($component, $targetArea){
             ;
         }
         //Add a hidden field to detect the chosen components
-        var nameNewField = $newField.find('input').attr("name");
-        console.log(nameNewField);
-        $fieldset.append('<input type="hidden" name="flag-' + nameNewField + '"/>');
+        var nameNewField = $newField.find('input').attr("name");        
         
         //No component was here, remove the legend
         if($targetArea.children('li').not('.legend').size() === 0){
@@ -70,7 +69,7 @@ function moveLinkComponents($component, $targetArea){
         $('section.link-components').data('link-component-' + nameNewField, $component.clone());         
         
         //Jquery ui put inline style (principaly positions) we do not want.
-        $targetArea.append($component.remove().removeAttr("style").addClass($component.children().first().attr('class')));
+        $targetArea.append($component.remove().removeAttr("style"));
         var legend = $component.text();
         
         
@@ -79,7 +78,7 @@ function moveLinkComponents($component, $targetArea){
         if ($component.attr("data-content")) {
             text = $component.attr("data-content");
         }
-        $component.text(text).removeClass('ui-widget-header').attr("title", legend);
+        //$component.text(text).removeClass('ui-widget-header').attr("title", legend);
         
 
         /* When the chosen component will be clicked, remove it and the corresponding
@@ -97,7 +96,7 @@ function moveLinkComponents($component, $targetArea){
 
 function updateSummary() {
     $('[data-category]').find(".panel-body ul li").remove();
-    $("ul#link-components-chosen li").each(function(){        
+    $("ul#link-components-chosen li").not(".legend").each(function(){        
         var $chosenComponent = $(this);
         var section = $chosenComponent.attr("data-type");
         var data = $chosenComponent.data();
