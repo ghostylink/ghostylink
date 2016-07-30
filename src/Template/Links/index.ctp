@@ -10,7 +10,7 @@
     <section class="panel panel-info col-lg-6 col-md-6 col-sm-6 col-xs-12 link-components">
     <h2 class="panel panel-heading ">Available components</h2>
         <div class="panel-body">
-            <ul id="link-components-available">
+            <ul id="link-components-available">                
                 <?= $this->Link->components(null, $user); ?>
             </ul>
         </div>

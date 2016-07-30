@@ -22,7 +22,7 @@ class GhostyficationAlertHelper extends LinkHelper implements LinkComponentHelpe
         'summaryTemplate' => 'You will be warn at {value} % of the link life',
         'icon' => 'glyphicon glyphicon-bell',
         'type' => 'misc',
-        'relatedField' => 'alert_parameter["life_threshold"]',
+        'relatedField' => 'alert_parameter[life_threshold]',
         'label' => 'Ghostyfication alert',
         'description' => 'Warn you at the specified life threshold'
     ];
@@ -39,7 +39,6 @@ class GhostyficationAlertHelper extends LinkHelper implements LinkComponentHelpe
         } else {
             $value = $user["default_threshold"];
         }
-
         $field = $this->Form->input(
             'alert_parameter.life_threshold',
             ['id' => 'default_threshold',

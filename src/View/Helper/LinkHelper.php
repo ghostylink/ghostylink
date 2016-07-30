@@ -108,7 +108,11 @@ class LinkHelper extends Helper
         }
         $components = $link->getComponents();
         foreach ($components as $comp) {
-            $html .= $this->{$comp}->field($link, $user);
+            $html .= $this->Html->tag(
+                'div',
+                $this->{$comp}->field($link, $user),
+                ['class' => 'link-component-field']
+            );
         }
         return $html;
     }
@@ -141,9 +145,9 @@ class LinkHelper extends Helper
             $content,
             ['class' => 'component-badge',
              'data-type' => $this->category,
-             'data-related-field' => $this->relatedField,
+             'data-related-field' => htmlspecialchars($this->relatedField),
              'data-summary-template' => $this->summaryTemplate,
-             'data-field-html' => htmlspecialchars($this->field()),
+             'data-field-html' => htmlspecialchars($this->Html->tag("div", $this->field($link, $user), ['class' => 'link-component-field'])),
              'data-component-name' => $match[1],
              'escape' => false]
         );

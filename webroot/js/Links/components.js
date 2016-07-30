@@ -121,28 +121,21 @@ function updateSummary() {
 }
 function componentsChosenClick($li, $dropArea) {    
     //Retrieve the component from the saving area
-    var dataName = 'link-component-' + $li.attr("data-related-field");     
-    var $component = $('section.link-components').data(dataName);    
-    //Retrieve the name of the field
-    console.log($component.attr("data-field-html"));
-    var $fieldWrapper = $($component.attr("data-field-html"));  
-    console.log($fieldWrapper);
+        
+    var $component = $li;      
     var fieldName = $li.attr("data-related-field");
-    var classWrapper = $fieldWrapper.attr("class").replace(/\s/g, ".");
-    
-    //Elements in the fieldset to remove                            
-    var $toRemove = $('input[name=' + fieldName + ']').parents('.' + classWrapper);
+    var classWrapper = '.link-component-field';      
+    //Elements in the fieldset to remove                                
+    var $toRemove = $('input[name=\'' + fieldName + '\']').parents(classWrapper);
     if ($toRemove.size() === 0) {
-        $toRemove = $('input[name=' + fieldName + ']');
-    }
+        $toRemove = $('input[name=\'' + fieldName + '\']');
+    }    
     //Mark the component as available
     $('ul#link-components-available').append($component.removeAttr("style"));
         
     initLinkComponents($component);
-    $li.remove();
-    $toRemove.remove();
-    //Remove also the hidden flag
-    $('input[type=hidden][name=flag-' + fieldName + ']').remove();
+    
+    $toRemove.remove();    
     
     //Restore legend if it was the last element
     if ($dropArea.children('li').size() === 0) {        

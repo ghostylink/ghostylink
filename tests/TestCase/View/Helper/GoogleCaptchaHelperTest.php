@@ -44,6 +44,6 @@ class GoogleCaptchaHelperTest extends TestCase
     public function testComponent()
     {
         $html = $this->helper->component($this->link);
-        $this->assertRegExp("/glyphicon-circle-ok\"/", $html);
+        $this->assertRegExp("/glyphicon-ok-circle\"/", $html);
     }
 }
