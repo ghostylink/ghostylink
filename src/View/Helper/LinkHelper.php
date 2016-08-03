@@ -121,9 +121,9 @@ class LinkHelper extends Helper
      * Display a component of the given link
      * @param Link $link the link entity
      * @param User $user the connected user
-     * @param string $content
+     * @param string $valueAsContent
      */
-    public function component(Link $link = null, array $user = null, $content = '')
+    public function component(Link $link = null, array $user = null, $valueAsContent = false)
     {
         $content =  $this->Html->tag(
             "span",
@@ -131,7 +131,7 @@ class LinkHelper extends Helper
             ['class' => $this->icon]
         ) . $this->Html->tag(
             "span",
-            (!$content) ? $this->label : $content,
+            (!$valueAsContent) ? $this->label : $this->getValue($link),
             ['class' => "glyphicon component-description"]
         ) . $this->Html->tag(
             "span",
@@ -153,7 +153,7 @@ class LinkHelper extends Helper
         );
     }
 
-    public function components(Link $link = null, array $user = null)
+    public function components(Link $link = null, array $user = null, $valueAsContent = false)
     {
         $html = '';
         if ($link) {
@@ -163,7 +163,7 @@ class LinkHelper extends Helper
         }
         foreach ($colection as $helper) {
             if ($this->{$helper}->isAllowed($user)) {
-                $html .= $this->{$helper}->component($link, $user);
+                $html .= $this->{$helper}->component($link, $user, $valueAsContent);
             }
         }
         return $html;

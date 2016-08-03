@@ -43,4 +43,9 @@ class ViewsLimitHelper extends LinkHelper implements LinkComponentHelper
             'required' => 'false']
         );
     }
+
+    public function getValue(Link $link)
+    {
+        return $link->max_views . ' views';
+    }
 }

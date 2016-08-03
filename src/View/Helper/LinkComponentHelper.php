@@ -30,4 +30,11 @@ interface LinkComponentHelper
      * @return boolean true if it is allowed
      */
     public function isAllowed(array $user = null);
+
+    /**
+     * Retrieve the value of the component
+     * @param Link $link the link in creation
+     * @return string the link component value
+     */
+    public function getValue(Link $link);
 }

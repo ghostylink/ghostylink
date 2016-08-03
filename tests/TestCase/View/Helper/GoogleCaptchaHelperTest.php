@@ -46,4 +46,10 @@ class GoogleCaptchaHelperTest extends TestCase
         $html = $this->helper->component($this->link);
         $this->assertRegExp("/glyphicon-ok-circle\"/", $html);
     }
+
+    public function testGetValue()
+    {
+        $text = $this->helper->getValue($this->link);
+        $this->assertEquals("No robot", $text);
+    }
 }

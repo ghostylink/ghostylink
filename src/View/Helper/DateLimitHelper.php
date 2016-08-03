@@ -44,4 +44,9 @@ class DateLimitHelper extends LinkHelper implements LinkComponentHelper
             ]
         );
     }
+
+    public function getValue(Link $link)
+    {
+        return $link->death_time->i18nFormat();
+    }
 }

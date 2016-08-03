@@ -45,4 +45,16 @@ class TimeLimitHelperTest extends TestCase
         $html = $this->helper->component($this->link);
         $this->assertRegExp("/glyphicon-time\"/", $html);
     }
+
+    public function testGetValue()
+    {
+        $text = $this->helper->getValue($this->link);
+        $this->assertEquals('1 day', $text);
+        
+        $config = TableRegistry::exists('Links') ? [] : ['className' => 'App\Model\Table\LinksTable'];
+        $link = TableRegistry::get('Links', $config)->findById(22)->first();
+        $this->assertEquals('1 week', $this->helper->getValue($link));
+        $link = TableRegistry::get('Links', $config)->findById(23)->first();
+        $this->assertEquals('1 month', $this->helper->getValue($link));
+    }
 }

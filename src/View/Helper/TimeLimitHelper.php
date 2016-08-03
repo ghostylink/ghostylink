@@ -52,4 +52,9 @@ class TimeLimitHelper extends LinkHelper implements LinkComponentHelper
             ['id' => 'id_death_time', 'class' => 'input']
         );
     }
+
+    public function getValue(Link $link)
+    {
+        return $link->time_limit;
+    }
 }

@@ -38,4 +38,9 @@ class GoogleCaptchaHelper extends LinkHelper implements LinkComponentHelper
         );
         return $content;
     }
+
+    public function getValue(Link $link)
+    {
+        return 'No robot';
+    }
 }

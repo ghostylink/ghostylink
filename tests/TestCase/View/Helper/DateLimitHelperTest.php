@@ -47,4 +47,10 @@ class DateLimitHelperTest extends TestCase
         $html = $this->helper->component($this->link);
         $this->assertRegExp("/glyphicon-calendar\"/", $html);
     }
+
+    public function testGetValue()
+    {
+        $text = $this->helper->getValue($this->link);
+        $this->assertEquals("11/10/55, 6:38 AM", $text);
+    }
 }

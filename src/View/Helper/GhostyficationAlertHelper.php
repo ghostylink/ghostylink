@@ -58,4 +58,9 @@ class GhostyficationAlertHelper extends LinkHelper implements LinkComponentHelpe
     {
         return $user && $user['email_validated'] === true;
     }
+
+    public function getValue(Link $link)
+    {
+        return $link->alert_parameter->life_threshold . ' %';
+    }
 }

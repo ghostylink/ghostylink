@@ -51,4 +51,10 @@ class GhostyficationAlertHelperTest extends TestCase
         $html = $this->helper->component($this->link);
         $this->assertRegExp("/glyphicon-bell\"/", $html);
     }
+
+    public function testGetValue()
+    {
+        $text = $this->helper->getValue($this->link);
+        $this->assertEquals('1 %', $text);
+    }
 }

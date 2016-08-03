@@ -31,7 +31,7 @@ class ViewsLimitHelperTest extends TestCase
         $View = new View();
         $this->helper = new ViewsLimitHelper($View);
         $config = TableRegistry::exists('Links') ? [] : ['className' => 'App\Model\Table\LinksTable'];
-        $this->link = TableRegistry::get('Links', $config)->findById(21)->first();
+        $this->link = TableRegistry::get('Links', $config)->findById(20)->first();
     }
 
     public function testField()
@@ -44,5 +44,11 @@ class ViewsLimitHelperTest extends TestCase
     {
         $html = $this->helper->component($this->link);
         $this->assertRegExp("/glyphicon-eye-open\"/", $html);
+    }
+
+    public function testGetValue()
+    {
+        $text = $this->helper->getValue($this->link);
+        $this->assertEquals("10 views", $text);
     }
 }

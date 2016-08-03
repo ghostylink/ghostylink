@@ -345,6 +345,36 @@ class LinksFixture extends TestFixture
             'status' => 1,
             'user_id' => 4,
             'google_captcha' => 0
+        ],
+        [
+            'id' => 22,
+            'title' => 'Have a time limit component (week)',
+            'content' => 'content of id 20',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => 'ac8603fgd002a164ccc638635ea74271',
+            'private_token' => 'kMT0Ymk0mDUYVmWE1Y2N4ZhYYjRIQ5OmMTQVJiWw0mYZglmNMZT2Y==',
+            'max_views' => null,
+            'views' => 9,
+            'death_time' => '1955-11-13 6:38:00',
+            'status' => 1,
+            'user_id' => 4,
+            'google_captcha' => 0
+        ],
+        [
+            'id' => 23,
+            'title' => 'Have a time limit component (month)',
+            'content' => 'content of id 20',
+            'created' => '1955-11-06 6:38:00',
+            'modified' => '1955-11-07 6:38:00',
+            'token' => 'ac8603fea74gd002a164ccc638635271',
+            'private_token' => 'kMT0Ym4ZhYYjRIQ5OmMTk0mDUYVmWE1Y2NQVJiWw0mYZglmNMZT2Y==',
+            'max_views' => null,
+            'views' => 9,
+            'death_time' => '1955-12-06 6:38:00',
+            'status' => 1,
+            'user_id' => 4,
+            'google_captcha' => 0
         ]
     ];
 }
