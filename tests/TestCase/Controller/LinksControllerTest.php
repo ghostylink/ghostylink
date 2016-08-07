@@ -224,15 +224,13 @@ class LinksControllerTest extends IntegrationTestCase
     public function testAddWithAlertComponent() {
         $this->_authenticateUser(0);
         $data = $this->goodData;
-        $data['title'] = 'Add with alert component';
-        $data['ghostification_alert'] = true;
-        $data['AlertParameters']['life_threshold'] = 40;
+        $data['title'] = 'Add with alert component';        
+        $data['alert_parameter']['life_threshold'] = 40;
         $this->post('/add', $data);
         $this->assertResponseSuccess();
         $links = TableRegistry::get('Links');
         $result = $links->find()->where(['title' => $data['title']])->first();
-        $paramResults = TableRegistry::get('alert_parameters')->find()->where(['link_id' => $result->id])->first();
-
+        $paramResults = TableRegistry::get('alert_parameters')->find()->where(['link_id' => $result->id])->first();        
         $this->assertEquals($result->id, $paramResults->link_id, 'Alert parameters are stored');
         $this->assertEquals($paramResults->life_threshold, 40, 'Custom life threshold defined');
 

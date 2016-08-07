@@ -44,18 +44,21 @@ function initLinkComponents($JqueryLi) {
  */
 function moveLinkComponents($component, $targetArea){
         //Retrieve the closer fieldset
+        console.log($component);
         var $fieldset = $targetArea.parentsUntil('fieldset').eq(0);                
         //Add the html corresponding to the field        
         var $newField = $($component.attr("data-field-html"));        
         $fieldset.append($newField);
-        var $toEvaluate = $component.attr("data-field-js-function");        
-        if ($toEvaluate) {
-            eval($toEvaluate + '()');
+        $newField.attr("data-summary-template", $component.attr("data-summary-template"));
+        var toEvaluate = $component.attr("data-component-name");    
+        try {
+            eval(toEvaluate + '()');
         }
-        
+        catch(e){
+            ;
+        }
         //Add a hidden field to detect the chosen components
-        var nameNewField = $newField.find('input').attr("name");         
-        $fieldset.append('<input type="hidden" name="flag-' + nameNewField + '"/>');
+        var nameNewField = $newField.find('input').attr("name");        
         
         //No component was here, remove the legend
         if($targetArea.children('li').not('.legend').size() === 0){
@@ -66,7 +69,7 @@ function moveLinkComponents($component, $targetArea){
         $('section.link-components').data('link-component-' + nameNewField, $component.clone());         
         
         //Jquery ui put inline style (principaly positions) we do not want.
-        $targetArea.append($component.remove().removeAttr("style").addClass($component.children().first().attr('class')));
+        $targetArea.append($component.remove().removeAttr("style"));
         var legend = $component.text();
         
         
@@ -75,7 +78,7 @@ function moveLinkComponents($component, $targetArea){
         if ($component.attr("data-content")) {
             text = $component.attr("data-content");
         }
-        $component.text(text).removeClass('ui-widget-header').attr("title", legend);
+        //$component.text(text).removeClass('ui-widget-header').attr("title", legend);
         
 
         /* When the chosen component will be clicked, remove it and the corresponding
@@ -93,23 +96,23 @@ function moveLinkComponents($component, $targetArea){
 
 function updateSummary() {
     $('[data-category]').find(".panel-body ul li").remove();
-    $("ul#link-components-chosen li").each(function(){        
+    $("ul#link-components-chosen li").not(".legend").each(function(){        
         var $chosenComponent = $(this);
         var section = $chosenComponent.attr("data-type");
-        var data = $chosenComponent.data()
-        var relField = data["relatedField"];        
-        var summaryTemplate = $chosenComponent.attr("data-summary-template");
-        var $field;
+        var data = $chosenComponent.data();
+        var relField = $chosenComponent.attr("data-related-field");
+        var summaryTemplate = $chosenComponent.attr("data-summary-template");        
+        var $field;        
         if (relField === "death_time") {
             $field = $("[name=" + relField + ']:checked');
         }
-        else if(relField === "ghostification_alert") {
-            $field = $('[name="AlertParameters[life_threshold]"]');
+        else if(relField === 'alert_parameter["life_threshold"]') {            
+            $field = $('[name="alert_parameter[life_threshold]"]');
         }
         else {
             $field = $('[name=' + relField + ']');
-        }
-        var curValue = $field.val();
+        }        
+        var curValue = $field.val();        
         $('[data-category=' + section + ']')
                 .find(".panel-body ul")
                 .append('<li class="list-group-item">' + summaryTemplate.replace('{value}', curValue) + "</li>");
@@ -118,41 +121,36 @@ function updateSummary() {
 }
 function componentsChosenClick($li, $dropArea) {    
     //Retrieve the component from the saving area
-    var dataName = 'link-component-' + $li.attr("data-related-field");     
-    var $component = $('section.link-components').data(dataName);    
-    //Retrieve the name of the field
-    var $fieldWrapper = $($component.attr("data-field-html"));    
+        
+    var $component = $li;      
     var fieldName = $li.attr("data-related-field");
-    var classWrapper = $fieldWrapper.attr("class").replace(/\s/g, ".");
-    
-    //Elements in the fieldset to remove                            
-    var $toRemove = $('input[name=' + fieldName + ']').parents('.' + classWrapper);
+    var classWrapper = '.link-component-field';      
+    //Elements in the fieldset to remove                                
+    var $toRemove = $('input[name=\'' + fieldName + '\']').parents(classWrapper);
     if ($toRemove.size() === 0) {
-        $toRemove = $('input[name=' + fieldName + ']');
-    }
+        $toRemove = $('input[name=\'' + fieldName + '\']');
+    }    
     //Mark the component as available
     $('ul#link-components-available').append($component.removeAttr("style"));
         
     initLinkComponents($component);
-    $li.remove();
-    $toRemove.remove();
-    //Remove also the hidden flag
-    $('input[type=hidden][name=flag-' + fieldName + ']').remove();
+    
+    $toRemove.remove();    
     
     //Restore legend if it was the last element
     if ($dropArea.children('li').size() === 0) {        
         $dropArea.html('<li class="legend">Drop some components here</li>');
     }
 }
-function deathTimeInit() {
+function TimeLimit() {
     $('#id_death_time').buttonset();
 }
 
-function deathDateInit() {
+function DateLimit() {
     $('#death_date').datetimepicker();
 }
 
-function alertComponentInit() {    
+function GhostyficationAlert() {    
     $('#slider-default_threshold').slider({
         range: "max",
         min: 0,

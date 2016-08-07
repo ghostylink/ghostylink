@@ -101,18 +101,11 @@ form.link-add button {
 .link-wrapper span{
     padding-top: 0.5em;
 }
-/****************************************************************************************************/
-.glyphicon-recaptcha {
-    background-image: url("/css/images/recaptcha.gif");
-    background-position: 2px 2px;
-    background-repeat: no-repeat;
-    background-size: 15px auto;
-    padding-left: 20px;
+.tab-content {
+    margin-top:0.5em;
 }
-ul#link-components-chosen .glyphicon.glyphicon-recaptcha {
-    background-position: center center;
-    background-size: 60% auto;
-    color: transparent;    
+.tab-content .panel-body{
+    padding:0.5em;
 }
 
 /********************************************** Alert Component style **********************************/
@@ -127,4 +120,17 @@ div#slider-default_threshold div.ui-slider-range-max {
 }
 #default_threshold {
     border:none;
+}
+/*********************** Chosen component style override **********************/
+#link-components-chosen li span.component-description {
+  display: none;
+}
+#link-components-chosen li span.glyphicon-info-sign {
+  display: none;
+}
+#link-components-chosen li span.glyphicon {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border-color:transparent;
 }

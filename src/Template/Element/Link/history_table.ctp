@@ -51,7 +51,7 @@
                     <?= h($l->max_views) == '' ? 'M' : h($l->max_views) ?>"></span>
                 </td>
                 <td>
-                    <?= $this->element("Link/Components/list", ["link" => $l]); ?>
+                    <?= $this->Link->components($l, $user, true); ?>
                 </td>
                 <td class="actions"><?php
                     if ($l->alert_parameter) {

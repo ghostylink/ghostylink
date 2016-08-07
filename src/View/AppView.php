@@ -14,6 +14,7 @@
 namespace App\View;
 
 use Cake\View\View;
+use Tools\View\Helper\AuthUserHelper;
 
 /**
  * App View class
@@ -33,6 +34,6 @@ class AppView extends View
     {
         $this->loadHelper('Form', [
             'templates' => 'app_form',
-        ], 'Time', 'Url');
+        ], 'Time', 'Url', 'Link', 'Tools.AuthUser');
     }
 }

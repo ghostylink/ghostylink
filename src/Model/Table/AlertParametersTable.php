@@ -36,6 +36,7 @@ class AlertParametersTable extends Table
             'foreignKey' => 'link_id',
             'joinType' => 'INNER'
         ]);
+        $this->displayField('link_id');
     }
 
     /**

@@ -32,6 +32,7 @@ class LinksTable extends Table
         $this->hasOne('AlertParameters');
         $this->displayField('title');
         $this->displayField('max_views');
+        $this->displayField('alert_parameter');
         $this->displayField('views');
         $this->displayField('death_time');
         $this->primaryKey('id');
@@ -53,7 +54,7 @@ class LinksTable extends Table
      */
     public function validationLogged(Validator $validator)
     {
-        $val = $this->_buildCommonValidator($validator);
+        $val = $this->buildCommonValidator($validator);
         $validator->allowEmpty('max_views');
         $validator->allowEmpty('death_time');
         return $val;
@@ -67,31 +68,12 @@ class LinksTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
-        $validator = $this->_buildCommonValidator($validator);
-        $validator->notEmpty('death_time', 'At least one limit component is required', function ($context) {
-            if (!$context['newRecord']) {
-                return false;
-            }
-            if (array_key_exists('max_views', $context['data'])) {
-                return !isset($context['data']['max_views']) || $context['data']['max_views'] == '';
-            } else {
-                return false;
-            }
-        });
-        $validator->notEmpty('max_views', 'At least one limit component is required', function ($context) {
-            if (!$context['newRecord']) {
-                return false;
-            }
-            if (array_key_exists('death_time', $context['data'])) {
-                return !isset($context['data']['death_time']) || $context['data']['death_time'] == '';
-            } else {
-                return false;
-            }
-        });
+        $validator = $this->buildCommonValidator($validator);
+        
         return $validator;
     }
 
-    function _buildCommonValidator(Validator $validator)
+    private function buildCommonValidator(Validator $validator)
     {
         $validator
                 ->add('id', 'valid', ['rule' => 'numeric'])

@@ -61,9 +61,14 @@ function initAjaxSubmission() {
                     $(this).on('click', function() {
                         componentsChosenClick($(this),$('ul#link-components-chosen'));
                     });
-                    $('#id_death_time').buttonset();
-                    $('#death_date').datetimepicker();
-                    alertComponentInit();
+                    $('ul#link-components-chosen li').each(function() {
+                        try {
+                            eval($(this).attr("data-component-name") + '()');
+                        }
+                        catch (e) {
+                            ;
+                        }
+                    });
                     updateSummary();
                 });             
             }

@@ -110,4 +110,54 @@ class LinkEntityTest extends TestCase
         $percent = $MVAndDTLink->life_percentage;
         $this->assertEquals($percent, 75, 'The closest life remaining time is taken (death_time)');
     }
+
+    public function testGetTimeLimit()
+    {
+        $l = $this->Links->newEntity();
+        $l->title = "MyTitle";
+        $l->content = "MyContent";
+        $this->assertNull(
+            $l->time_limit,
+            "Time limit is set to null when there is no death_time"
+        );
+
+
+        $this->Links->save($l);
+        $tmp = clone $l->created;
+        $tmp->addWeeks(1);
+        $l->death_time = $tmp;
+        $this->assertEquals(
+            "1 week",
+            $l->time_limit,
+            "Retrieve '1 week' for a one week component"
+        );
+
+        
+        $tmp = clone $l->created;
+        $tmp->addMonths(2);
+        $l->death_time = $tmp;
+        $this->assertNull(
+            $l->time_limit,
+            "Time limit is set to null when there is a death_time but not representing a time limit"
+        );
+    }
+
+    public function testGetComponents()
+    {
+        $l = $this->Links->get(1);
+        $this->assertEquals(["ViewsLimit"], $l->getComponents());
+
+        $l = $this->Links->get(6);
+        $this->assertEquals(["ViewsLimit", "DateLimit"], $l->getComponents());
+        
+        $l = $this->Links->get(7);
+        $this->assertEquals([], $l->getComponents());
+
+        $l = $this->Links->get(21);
+        $this->assertEquals(["TimeLimit"], $l->getComponents());
+
+        $l = $this->Links->get(16);
+        $this->assertArraySubset(["GoogleCaptcha"], $l->getComponents());
+
+    }
 }

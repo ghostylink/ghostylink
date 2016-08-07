@@ -26,7 +26,8 @@ class AlertParameter extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
+        'life_threshold' => true,
         'id' => false,
+        'subscribe_notifications' => true
     ];
 }
