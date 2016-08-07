@@ -69,26 +69,7 @@ class LinksTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator = $this->buildCommonValidator($validator);
-        $validator->notEmpty('death_time', 'At least one limit component is required', function ($context) {
-            if (!$context['newRecord']) {
-                return false;
-            }
-            if (array_key_exists('max_views', $context['data'])) {
-                return !isset($context['data']['max_views']) || $context['data']['max_views'] == '';
-            } else {
-                return false;
-            }
-        });
-        $validator->notEmpty('max_views', 'At least one limit component is required', function ($context) {
-            if (!$context['newRecord']) {
-                return false;
-            }
-            if (array_key_exists('death_time', $context['data'])) {
-                return !isset($context['data']['death_time']) || $context['data']['death_time'] == '';
-            } else {
-                return false;
-            }
-        });
+        
         return $validator;
     }
 

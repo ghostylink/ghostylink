@@ -74,7 +74,7 @@ class Link extends Entity
         if (isset($this->_properties['max_views'])) {
             $percentageViews = (100.0 * $this->views) / $this->_properties['max_views'];
         }
-        if ($this->_properties['death_time'] != null) {
+        if ($this->death_time != null) {
             $currentTime = new Time();
             $created = new Time($this->_properties['created']);
             $death = new Time($this->_properties['death_time']);
