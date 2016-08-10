@@ -3,6 +3,8 @@ node {
     checkout scm
     
     stage 'Preparing environment'
+    sh 'curl -s https://getcomposer.org/installer | php'
+    sh 'php composer.phar update'
     container = docker.image('ghostylink/ci-tools:latest')
     container.pull()
     container.inside('-u root') {            
