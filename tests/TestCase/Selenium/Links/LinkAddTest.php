@@ -39,10 +39,6 @@ class LinkAddTest extends FunctionalTest {
            'css=textarea[name=content]' => "My super title"
         ]);
         $this->domChecker->clickOnElementMatching("css=form#links-add [type=submit]");
-        $this->domChecker->waitUntilElementPresent("css=div.alert.alert-danger");
-        $this->domChecker->assertTextPresent("At least one limit component is required");
-        $this->linkHelper->addDeathTime(7);
-        $this->domChecker->clickOnElementMatching("css=form#links-add [type=submit]");
         $this->domChecker->waitUntilElementPresent("css=#link-url");
         $this->domChecker->assertElementNotPresent("css=.alert.alert-danger", "No more error messages");
         $this->domChecker->clickOnElementMatching("css=button.link-copy");

@@ -57,12 +57,12 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
         $this->fixtureManager = new Cake\TestSuite\Fixture\FixtureManager();
         $this->fixtureManager->fixturize($this);
         $this->fixtureManager->load($this);
-
         $this->emailChecker = new EmailChecker($this);
         $this->domChecker = new DOMChecker($this);        
         $this->userHelper = new UserHelper($this);
         $this->linkHelper = new LinkHelper($this);        
         $this->setBrowser("firefox");
+        
         $this->setBrowserUrl("http://localhost:8765/");
         $this->prepareSession();
         $this->url('/logout');

@@ -12,7 +12,7 @@ class LinkCaptchaTest extends FunctionalTest
         // Add a link protected by the captcha and check ui at the creation
         // Do not expect creation
         list($publicURL) = $this->linkHelper->create(
-            "this is a title",
+            "",
             "this a content",
             ["google_captcha" => [true]],
             false

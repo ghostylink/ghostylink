@@ -3,12 +3,13 @@
  * @group Functional
  * @group Link
  */
-class LinkCryptedTest extends FunctionalTest {
+class LinkCryptedTest extends FunctionalTest
+{
 
     public function testCryptedLink()
     {
         $content = "a private and crypted content";
-        $this->linkHelper->create("a public title", $content, [], false, false);
+        $this->linkHelper->create("", $content, [], false, false);
         
         $this->domChecker->waitUntilElementPresent("css=form .alert-danger");
         $this->domChecker->assertElementHasValue('css=[name="content"]', $content);

@@ -20,16 +20,17 @@ class LinkAlertComponentTest extends FunctionalTest
         ]);
 
         $this->domChecker->clickOnElementMatching('css=[data-related-field="max_views"]');
-        $this->domChecker->clickOnElementMatching("css=[data-related-field=\"ghostification_alert\"]");
+        $this->domChecker->clickOnElementMatching("css=[data-related-field=\"alert_parameter\[life_threshold\]\"]");
         
         $this->domChecker->removeHTML5Attribute(
             "[name=\"AlertParameters[life_threshold]\"]",
             "readonly"
         );
-
+        $alert_parameter_value = "[name=\"alert_parameter[life_threshold]\"]";
+        $this->domChecker->removeHTML5Attribute($alert_parameter_value, "readonly");
         $this->domChecker->fillElements([
             "css=[name=\"max_views\"]" =>  "3",
-            "css=[name=\"AlertParameters[life_threshold]\"]" =>  "25"
+            "css=" . $alert_parameter_value =>  "25"
         ]);
         
         $this->domChecker->clickOnElementMatching("css=form[action=\"/\"] button");
@@ -49,7 +50,7 @@ class LinkAlertComponentTest extends FunctionalTest
         ]);
         
         $this->domChecker->clickOnElementMatching("css=[data-related-field=\"max_views\"]");
-        $this->domChecker->clickOnElementMatching("css=[data-related-field=\"ghostification_alert\"]");
+        $this->domChecker->clickOnElementMatching("css=[data-related-field=\"alert_parameter\[life_threshold\]\"]");
         
         $this->domChecker->fillElements(['css=[name="max_views"]' => "3" ]);
 
@@ -65,9 +66,7 @@ class LinkAlertComponentTest extends FunctionalTest
         $this->url($linkUrl);
 
         $this->waitForPageToLoad(10000);
-
-        // Nope I do not understand why
-        $this->domChecker->clickOnElementMatching("css=#load-link-max_views");
+        
         $this->domChecker->clickOnElementMatching("css=#load-link-max_views");
 
         $this->domChecker->waitUntilTextPresent("testing mail IS sent");
