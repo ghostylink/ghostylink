@@ -76,13 +76,9 @@ try {
 if (!Configure::read('debug')) {
     Configure::write('Cache._cake_model_.duration', '+1 years');
     Configure::write('Cache._cake_core_.duration', '+1 years');
-} else {
+} else if (!isset($LOAD_TEST_CONFIG) && getenv("CI_SERVER") != "1") {
     Configure::load("app_dev", "default", true);
-}
-
-// This is a tests/bootstrap.php call or a continous integrations server
-// Override configuration
-if (isset($LOAD_TEST_CONFIG) && $LOAD_TEST_CONFIG || getenv("CI_SERVER") == "1") {
+} else {
     Configure::load('app_tests', 'default', true);
 }
 

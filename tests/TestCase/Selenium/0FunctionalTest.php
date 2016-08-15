@@ -47,9 +47,6 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
      * @var LinkHelper
      */
     protected $linkHelper;
-    protected $captureScreenshotOnFailure = TRUE;
-    protected $screenshotPath = '/var/www/html/ghostylink_failures/';
-    protected $screenshotUrl = 'http://localhost/ghostylink_failures/';
 
     public function setUp() {        
         //parent::setUp();     
@@ -62,8 +59,14 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
         $this->userHelper = new UserHelper($this);
         $this->linkHelper = new LinkHelper($this);        
         $this->setBrowser("firefox");
-        
-        $this->setBrowserUrl("http://localhost:8765/");
+        if (getenv("CI_FROM_DOCKER") == 1) {
+            $this->setHost("selenium-hub");
+            exec("hostname --ip-address", $output);
+            $ip = $output[0];
+            $this->setBrowserUrl("http://$ip/");
+        } else {
+            $this->setBrowserUrl("http://localhost/");
+        }
         $this->prepareSession();
         $this->url('/logout');
     }

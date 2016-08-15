@@ -33,9 +33,10 @@
                 <object class="\Cake\TestSuite\Fixture\FixtureManager" />
             </arguments>
         </listener>            
-        <listener class="PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener">
+        <listener class="PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener"
+                  file="./vendor/phpunit/phpunit-selenium/PHPUnit/Extensions/Selenium2TestCase/ScreenshotListener.php">
             <arguments>
-                <string>./build/selenium</string>
+                <string>./build/logs/selenium-screenshots</string>
             </arguments>
         </listener>
     </listeners>

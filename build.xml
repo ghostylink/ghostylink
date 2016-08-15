@@ -17,6 +17,7 @@ Call it with ./vendor/bin/phing <target>
     <target name="prepare" depends="clean">
         <mkdir dir="${build}"/>
         <mkdir dir="${logs}"/>
+        <mkdir dir="${logs}/selenium-screenshots"/>
         <mkdir dir="${results}"/>        
     </target>
     
@@ -42,7 +43,7 @@ Call it with ./vendor/bin/phing <target>
             <arg value="--log-junit"/>
                 <arg value="${results}/junit.xml"/>            
             <arg value="--configuration"/>
-                <arg value="${basedir}/PHPUnitconfig.xml"/> 
+                <arg value="${basedir}/phpunit.xml"/> 
             <arg value="--coverage-clover"/>
                 <arg value="${results}/clover.xml"/>
             <arg value="--coverage-html"/>
@@ -58,22 +59,17 @@ Call it with ./vendor/bin/phing <target>
     <target name="tests-functional">
         
         <echo msg="Launching functional tests" />
-        <exec executable="${bin}/phpunit" output="${logs}/phpunit.log">
+        <exec executable="${bin}/phpunit" output="${logs}/phpunit-selenium.log">
             <arg value="--testsuite"/>
                 <arg value="Functional"/>
             <arg value="--log-junit"/>
                 <arg value="${results}/junit-functional.xml"/>            
             <arg value="--configuration"/>
-                <arg value="${basedir}/PHPUnitconfig.xml"/> 
-            <arg value="--coverage-clover"/>
-                <arg value="${results}/clover.xml"/>
-            <arg value="--coverage-html"/>
-                <arg value="${results}/coverage-html"/>            
+                <arg value="${basedir}/phpunit.xml"/>          
         </exec>
         <echo msg="All functional tests launched" />
 
     </target>
-
     <!-- ============================================  -->
     <!-- Target: quality                               -->
     <!-- ============================================  -->
