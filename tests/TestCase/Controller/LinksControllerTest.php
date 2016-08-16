@@ -434,6 +434,7 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertResponseSuccess();
 
         $linkModified = $this->Links->findById(1)->contain("AlertParameters")->first();
+        // FIXME : this test fail with cakePHP > 3.2.13
         $this->assertFalse($linkModified->alert_parameter->subscribe_notifications, "Turning subscribe notifications to off");
 
         // Test changing subscription flag to on
