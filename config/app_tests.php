@@ -22,8 +22,9 @@ return [
         'default' => [
             'className' => 'Smtp',
             // The following keys are used in SMTP transports
-            'host' => 'localhost',
-            'port' => 1025,
+            'host' => getenv("CI_FROM_DOCKER") == "1" ? "maildev" : "localhost",
+            'port' => getenv("CI_FROM_DOCKER") == "1" ? 25 : 1025,
+            'webport' => getenv("CI_FROM_DOCKER") == "1" ? 80 : 1080,
             'timeout' => 30,
             'username' => null,
             'password' => null,

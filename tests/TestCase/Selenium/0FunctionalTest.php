@@ -48,16 +48,15 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
      */
     protected $linkHelper;
 
-    public function setUp() {        
-        //parent::setUp();     
-        //$this->shareSession(true);        
+    public function setUp()
+    {
         $this->fixtureManager = new Cake\TestSuite\Fixture\FixtureManager();
         $this->fixtureManager->fixturize($this);
         $this->fixtureManager->load($this);
         $this->emailChecker = new EmailChecker($this);
-        $this->domChecker = new DOMChecker($this);        
+        $this->domChecker = new DOMChecker($this);
         $this->userHelper = new UserHelper($this);
-        $this->linkHelper = new LinkHelper($this);        
+        $this->linkHelper = new LinkHelper($this);
         $this->setBrowser("firefox");
         if (getenv("CI_FROM_DOCKER") == 1) {
             $this->setHost("selenium-hub");
@@ -75,14 +74,6 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
     {
         $this->timeouts()->implicitWait($timeout);
     }
-
-    protected function tearDownClass()
-    {        
-        //parent::tearDown();
-        //$this->fixtureManager->unload($this);
-        
-    }
-    
     
     public function getDomChecker()
     {

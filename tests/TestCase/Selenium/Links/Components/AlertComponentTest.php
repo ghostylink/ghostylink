@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @group Functional
  * @group Link
@@ -36,11 +37,9 @@ class LinkAlertComponentTest extends FunctionalTest
         $this->domChecker->clickOnElementMatching("css=form[action=\"/\"] button");
         
         $this->domChecker->waitUntilElementPresent("css=section.generated-link #link-url");
-
-        // # Check mail is not sending (based with maildev tool)
+        
         exec('env CI_SERVER=1 $(pwd)/bin/cake mailer alerts');
-        $this->url("http://localhost:1080/#/");
-        $this->domChecker->assertTextNotPresent("testnotifs@gmail.com");
+        $this->emailChecker->assertMailNotReceived("testnotifs@gmail.com", "Ghostification alert");
         
         // # Adding a link which will be seen
         $this->url("/");
@@ -58,10 +57,10 @@ class LinkAlertComponentTest extends FunctionalTest
         
         $this->domChecker->waitUntilElementPresent("css=section.generated-link #link-url");
         
-        $linkUrl = $this->execute(array('script' => "return $('#link-url').text();",
+        $linkUrl = $this->execute(array('script' => "return $('#link-url').text().trim();",
                              'args' => array()));
 
-        $linkUrl = substr($linkUrl, strpos($linkUrl, ":8765") + 5);
+        $linkUrl = parse_url($linkUrl, PHP_URL_PATH);
 
         $this->url($linkUrl);
 
@@ -82,16 +81,13 @@ class LinkAlertComponentTest extends FunctionalTest
 
         $this->domChecker->clickOnElementMatching("css=#load-link-max_views");
         $this->domChecker->waitUntilTextPresent("testing mail IS sent");
-
-        // # Check mail is sent (based with maildev tool)
+        
         exec('env CI_SERVER=1 $(pwd)/bin/cake mailer alerts');
-        $this->url("http://localhost:1080/#/");
-        $this->domChecker->assertTextPresent("testnotifs@gmail.com");
+        $this->emailChecker->assertMailReceived("testnotifs@gmail.com", "Ghostification alert");
         $this->emailChecker->clearInBox();
-
-        // # Check mail is not sent twice (based with maildev tool)
+        
         exec('env CI_SERVER=1 $(pwd)/bin/cake mailer alerts');
         $this->refresh();
-        $this->domChecker->assertTextNotPresent("testnotifs@gmail.com");
+        $this->emailChecker->assertMailNotReceived("testnotifs@gmail.com", "Ghostification alert");
     }
 }

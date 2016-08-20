@@ -6,6 +6,7 @@
  */
 
 use PHPUnit_Extensions_Selenium2TestCase_WebDriverException as WebDriverException;
+use Cake\Core\Configure;
 
 class EmailChecker {
     
@@ -18,6 +19,8 @@ class EmailChecker {
     public function __construct(PHPUnit_Extensions_Selenium2TestCase $targetTest)
     {
         $this->selTest = $targetTest;
+        $this->mailDevHost = Configure::read("EmailTransport.default.host");
+        $this->mailDevWebPort = Configure::read("EmailTransport.default.webport");
     }
     
     /**
@@ -25,7 +28,7 @@ class EmailChecker {
      */
     public function clearInBox()
     {
-        $this->selTest->url("http://localhost:1080/#/");
+        $this->selTest->url("http://$this->mailDevHost:$this->mailDevWebPort/#/");
         $clearButtonSelector = 'css=.toolbar a[ng-click="deleteAll()"]';
         $DOM = $this->selTest->getDomChecker();
         $DOM->clickOnElementMatching($clearButtonSelector);
@@ -38,7 +41,7 @@ class EmailChecker {
      */
     public function assertMailReceived($receiver, $object, $lastOnly = true)
     {
-        $this->selTest->url("http://localhost:1080/#/");
+        $this->selTest->url("http://$this->mailDevHost:$this->mailDevWebPort/#/");
         $dom = $this->selTest->getDomChecker();
 
         if ($lastOnly) {
@@ -57,7 +60,6 @@ class EmailChecker {
             $email->byCssSelector("span.subline-from")->text(),
             "Mail checking , receiver is as expected"
         );
-        
     }
     
     /**
@@ -68,7 +70,7 @@ class EmailChecker {
      */
     public function assertMailNotReceived($receiver, $object, $lastOnly = true)
     {
-        $this->selTest->url("http://localhost:1080/#/");
+        $this->selTest->url("http://$this->mailDevHost:$this->mailDevWebPort/#/");
         $dom = $this->selTest->getDomChecker();
 
         if ($lastOnly) {
@@ -76,15 +78,11 @@ class EmailChecker {
         }
         try {
             $email = $dom->findElementMatching($selector);
-            $this->selTest->assertNotEquals(
-                $object,
-                $email->byCssSelector("span.title")->text(),
-                "Mail checking , object is as expected"
-            );
-            $this->selTest->assertNotEquals(
-                $receiver,
-                $email->byCssSelector("span.subline-from")->text(),
-                "Mail checking , receiver is as expected"
+            $actualObject = $email->byCssSelector("span.title")->text();
+            $actualReceiver = $email->byCssSelector("span.subline-from")->text();
+            $this->selTest->assertFalse(
+                $receiver == $actualReceiver && $actualObject == $object,
+                "$actualReceiver received a mail with object '$object' and it was not expected"
             );
         } catch (WebDriverException $e) {
             ; // No mail at all; nothing special to check.

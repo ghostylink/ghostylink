@@ -43,7 +43,7 @@ class LinkAddTest extends FunctionalTest {
         $this->domChecker->assertElementNotPresent("css=.alert.alert-danger", "No more error messages");
         $this->domChecker->clickOnElementMatching("css=button.link-copy");
         $this->domChecker->assertTextPresent(
-            "Coplkied !",
+            "Copied !",
             "Instruction is displayed when user click on the copy link button"
         );
     }
