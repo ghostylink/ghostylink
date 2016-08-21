@@ -5,31 +5,38 @@ node {
     stage 'Preparing environment'
     sh 'curl -s https://getcomposer.org/installer | php'
     sh 'php composer.phar update'
-    container = docker.image('ghostylink/ci-tools:latest')
-    container.pull()
-    container.inside('-u root') {            
-        sh '/image/init.sh'
-        sh 'ant prepare'
-        stage 'Unit tests'
-        sh 'ant tests-unit'
-        step_junit()
-        step_clover()
-        
-        stage 'Quality'
-        sh 'ant quality'
-        if (is_pull_request(env.CHANGE_URL)) {    
-            target_merge = commit_id("HEAD^1")
-            changes_commit = commit_id("HEAD^2")
-        }
-        else {
-            changes_commit = commit_id("HEAD")    
-            target_merge = null
-        }
-        
-        step_task_scanner(changes_commit, target_merge)    
-        step_checktyle()  
-        step_pmd()
-        step_cpd() 
+    container = docker.image('ghostylink/ci-tools:latest')    
+    selenium_node = docker.image('selenium/node-firefox:2.53.0')
+    maildev = docker.image('djfarrelly/maildev').withRun("--name maildev"){
+        selenium_node.withRun('--link selenium-hub:hub --link maildev'){
+            container.pull()
+            container.inside('-u root --link maildev --link selenium-hub:hub') {
+                sh 'bash /image/init.sh'
+                sh 'ant prepare'
+                stage 'Unit tests'
+                sh 'ant tests-unit
+'
+                stage 'Functional tests'
+                sh 'ant tests-functional'
+                step_junit()
+                step_clover()
+                stage 'Quality'
+                sh 'ant quality'
+                if (is_pull_request(env.CHANGE_URL)) {    
+                    target_merge = commit_id("HEAD^1")
+                    changes_commit = commit_id("HEAD^2")
+                }
+                else {
+                    changes_commit = commit_id("HEAD")    
+                    target_merge = null
+                }
+                    
+                step_task_scanner(changes_commit, target_merge)    
+                step_checktyle()  
+                step_pmd()
+                step_cpd() 
+            }
+        }    
     }
 }
 
@@ -93,7 +100,7 @@ def step_task_scanner(commit_id, target_merge_id) {
 }
 
 def step_junit() {
-  step([$class: 'JUnitResultArchiver', testResults: '**/build/results/junit.xml'])
+  step([$class: 'JUnitResultArchiver', testResults: '**/build/results/junit*.xml'])
 }
 
 def step_clover() {
