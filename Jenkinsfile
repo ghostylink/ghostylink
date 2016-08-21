@@ -15,7 +15,6 @@ node {
                 sh 'ant prepare'
                 stage 'Unit tests'
                 sh 'ant tests-unit'
-'
                 stage 'Functional tests'
                 sh 'ant tests-functional'
                 step_junit()
