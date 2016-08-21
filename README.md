@@ -1,10 +1,14 @@
 # Ghostylink project
-[![Build Status](http://jenkins.ghostylink.org/job/ghostylink_unit/badge/icon)](http://jenkins.ghostylink.org/job/ghostylink_unit/)
-[![Dependency Status](https://www.versioneye.com/user/projects/5707de60fcd19a005185511c/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5707de60fcd19a005185511c)
-[![License](https://poser.pugx.org/cakephp/app/license.svg)](https://packagist.org/packages/cakephp/app)
 
 This page describe the ghostylink project.
 The projet is based on [CakePHP 3](http://cakephp.org) framework.
+
+| Branches        | Build status           | Development versions  |
+| ------------- |:-------------:|:-----:|
+| develop      |[![Build Status](http://jenkins.ghostylink.org/job/ghostylink/job/auto-scan/job/ghostylink/job/develop/badge/icon)](http://jenkins.ghostylink.org/job/ghostylink/job/auto-scan/job/ghostylink/job/develop/badge/icon) | [![Dependency Status](https://www.versioneye.com/user/projects/5707de57fcd19a00415b0f93/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5707de57fcd19a00415b0f93) |
+| master     |       |    |
+| hotfixes |      |     |
+
 
 ##Purpose
 Ghostylink is an open sources project. It aims at helping people to share 

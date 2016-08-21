@@ -1,7 +1,6 @@
 #/nbproject/private/
 /nbproject/private/
 /composer.phar
-/composer.lock
 /phpunit.phar
 /logs/
 /coverage/
