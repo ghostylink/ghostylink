@@ -14,7 +14,7 @@ node {
                 sh 'bash /image/init.sh'
                 sh 'ant prepare'
                 stage 'Unit tests'
-                sh 'ant tests-unit
+                sh 'ant tests-unit'
 '
                 stage 'Functional tests'
                 sh 'ant tests-functional'
