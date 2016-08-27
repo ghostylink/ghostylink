@@ -5,12 +5,24 @@ node {
     stage 'Preparing environment'
     sh 'curl -s https://getcomposer.org/installer | php'
     sh 'php composer.phar update'
+    
+    // Create an isolated network for the build
+    network_name = env.BUILD_TAG
+    sh 'docker network create ' + network_name
     container = docker.image('ghostylink/ci-tools:latest')    
     selenium_node = docker.image('selenium/node-firefox:2.53.0')
-    maildev = docker.image('djfarrelly/maildev').withRun("--name maildev"){
-        selenium_node.withRun('--link selenium-hub:hub --link maildev'){
+    
+    maildev_name = "maildev-${network_name}"
+    maildev_run_args = "--name $maildev_name --net " + network_name
+    print maildev_run_args
+    maildev = docker.image('djfarrelly/maildev').withRun(maildev_run_args){
+        firefox_node_opt = "-e SE_OPTS='-browser browserName=firefox,maxInstances=1,applicationName=$network_name'"
+        selenium_node_args = "--link selenium-hub:hub $firefox_node_opt  --net " + network_name + " --net bridge"
+        print selenium_node_args
+        selenium_node.withRun(selenium_node_args){
             container.pull()
-            container.inside('-u root --link maildev --link selenium-hub:hub') {
+            citools_args = "-u root --link selenium-hub:hub --net " + network_name + " --net bridge" 
+            container.inside(citools_args) {
                 sh 'bash /image/init.sh'
                 sh 'ant prepare'
                 stage 'Unit tests'
@@ -37,6 +49,7 @@ node {
             }
         }    
     }
+    sh 'docker network rm ' + network_name
 }
 
 def commit_id(expr) {
