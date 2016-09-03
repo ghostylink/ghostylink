@@ -58,13 +58,21 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
         $this->userHelper = new UserHelper($this);
         $this->linkHelper = new LinkHelper($this);
         $this->setBrowser("firefox");
+
+        // Target a selenium node linked with required containers
+        if (getenv("BUILD_TAG") != "") {
+            $this->setDesiredCapabilities([
+                "applicationName" => getenv("BUILD_TAG")
+            ]);
+        }
+        $this->setBrowser("firefox");
         if (getenv("CI_FROM_DOCKER") == 1) {
             $this->setHost("selenium-hub");
             exec("hostname --ip-address", $output);
             $ip = $output[0];
             $this->setBrowserUrl("http://$ip/");
         } else {
-            $this->setBrowserUrl("http://localhost/");
+            $this->setBrowserUrl("http://localhost:8765/");
         }
         $this->prepareSession();
         $this->url('/logout');

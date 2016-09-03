@@ -5,12 +5,23 @@ node {
     stage 'Preparing environment'
     sh 'curl -s https://getcomposer.org/installer | php'
     sh 'php composer.phar update'
+    
+    // Create a suffix specific to the build
+    container_suffix = env.BUILD_TAG    
     container = docker.image('ghostylink/ci-tools:latest')    
     selenium_node = docker.image('selenium/node-firefox:2.53.0')
-    maildev = docker.image('djfarrelly/maildev').withRun("--name maildev"){
-        selenium_node.withRun('--link selenium-hub:hub --link maildev'){
+    
+    maildev_name = "maildev-${container_suffix}"
+    maildev_run_args = "--name $maildev_name"
+    print maildev_run_args
+    maildev = docker.image('djfarrelly/maildev').withRun(maildev_run_args){
+        firefox_node_opt = "-e SE_OPTS='-browser browserName=firefox,maxInstances=1,applicationName=$container_suffix'"
+        selenium_node_args = "--link selenium-hub:hub --link $maildev_name $firefox_node_opt"
+        print selenium_node_args
+        selenium_node.withRun(selenium_node_args){
             container.pull()
-            container.inside('-u root --link maildev --link selenium-hub:hub') {
+            citools_args = "-u root --link selenium-hub:hub --link $maildev_name"
+            container.inside(citools_args) {
                 sh 'bash /image/init.sh'
                 sh 'ant prepare'
                 stage 'Unit tests'
