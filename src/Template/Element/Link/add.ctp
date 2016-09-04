@@ -28,13 +28,13 @@
                     'id' => 'inputTitle',
                     'class' => 'form-control link-add',
                     'placeholder' => "Enter a title",
-                    'required' => 'false',
+                    'required' => 'true',
                     'autofocus' => 'true']);
                 echo $this->Form->input('content', ['type' => 'textarea',
                     'id' => 'inputContent',
                     'class' => 'form-control',
                     'placeholder' => "Enter your private contents",
-                    'required' => 'false']);
+                    'required' => 'true']);
                 ?>
                 <label>Your components</label>
                 <ul id="link-components-chosen" class="col-lg-12">

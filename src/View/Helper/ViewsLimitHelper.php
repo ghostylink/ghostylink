@@ -40,7 +40,7 @@ class ViewsLimitHelper extends LinkHelper implements LinkComponentHelper
             'id' => 'inputContent',
             'class' => 'form-control',
             'placeholder' => "Enter your links life expectancy (number of views)",
-            'required' => 'false']
+            'required' => 'true']
         );
     }
 

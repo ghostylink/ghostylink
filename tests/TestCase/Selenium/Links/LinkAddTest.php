@@ -51,12 +51,13 @@ class LinkAddTest extends FunctionalTest {
     public function testAddLogged()
     {
         $this->userHelper->login("user1", "user1user1");
+        $this->domChecker->removeHTML5Validation("form#links-add");
         $this->domChecker->fillElements([
            'css=input[type=text][name=title]'  => "My super title"
         ]);
         $this->domChecker->clickOnElementMatching("css=form#links-add [type=submit]");
         $this->domChecker->waitUntilElementPresent("css=.alert.alert-danger");
-        
+        $this->domChecker->removeHTML5Validation("form#links-add");
         $this->domChecker->fillElements([
            'css=textarea[name=content]'  => "My super content"
         ]);

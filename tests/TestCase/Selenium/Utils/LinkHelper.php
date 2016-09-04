@@ -37,6 +37,8 @@ class LinkHelper {
     public function create($title, $content, $componentsList = [], $expectCreation = true, $fullURL = false)
     {
         $this->selTest->url("/");
+        // We do not check HTML5 validation yet so let put removing here
+        $this->selTest->getDomChecker()->removeHTML5Validation("form#links-add");
         $this->selTest->getDomChecker()->fillElements([
             "id=inputTitle" => $title,
             "id=inputContent" => $content,

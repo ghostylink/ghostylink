@@ -40,7 +40,7 @@ class DateLimitHelper extends LinkHelper implements LinkComponentHelper
              'id' => 'death_date',
              'class' => 'form-control',
              'placeholder' => "Link death date",
-             'required' => 'false'
+             'required' => 'true'
             ]
         );
     }

@@ -57,7 +57,7 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
         $this->domChecker = new DOMChecker($this);
         $this->userHelper = new UserHelper($this);
         $this->linkHelper = new LinkHelper($this);
-        $this->setBrowser("firefox");
+        //$this->setBrowser("firefox");
 
         // Target a selenium node linked with required containers
         if (getenv("BUILD_TAG") != "") {
