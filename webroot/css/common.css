@@ -173,6 +173,9 @@ ul.list-link-components {
 .flash-message a:hover {    
     text-decoration: none;
 }
+.flash-message.show-later {
+    display: none;
+}
 /****************** End of flash messages style *******************************/
 
 /***************** Start of Bootstrap overriding section **********************/

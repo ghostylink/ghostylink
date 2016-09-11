@@ -81,7 +81,12 @@ class LinkAlertComponentTest extends FunctionalTest
 
         $this->domChecker->clickOnElementMatching("css=#load-link-max_views");
         $this->domChecker->waitUntilTextPresent("testing mail IS sent");
-        
+        $this->execute(
+            ['script' => "window.removeEventListener('beforeunload', beforeunload)",
+            'args' => []
+            ]
+        );
+
         exec('env CI_SERVER=1 $(pwd)/bin/cake mailer alerts');
         $this->emailChecker->assertMailReceived("testnotifs@gmail.com", "Ghostification alert");
         $this->emailChecker->clearInBox();

@@ -75,6 +75,14 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
             $this->setBrowserUrl("http://localhost:8765/");
         }
         $this->prepareSession();
+
+        // Avoid to be blocked by an alert message if we were on a view page
+        $this->execute(
+            ['script' => "if (typeof beforeunload !== 'undefined') {" .
+                            "window.removeEventListener('beforeunload', beforeunload);}",
+            'args' => []
+            ]
+        );
         $this->url('/logout');
     }
 

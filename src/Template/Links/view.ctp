@@ -1,6 +1,12 @@
 <?php
 use Cake\Core\Configure;
 
+echo $this->element(
+    "Flash/warning",
+    ["message" => "This link has a life > 95%, after leaving it may not be accessbile anymore.",
+     "cssClass" => "show-later link-life-alert"]
+);
+
 if ($link->google_captcha) {?>
 <section id="link-information" class="row unloaded">
             <?php
@@ -43,12 +49,10 @@ elseif (isset($link->max_views)) {?>
         </div>
     </section>
 <?php
-}
-else {?>
+} else {?>
     <section id="link-information" class="row">
         <?= $this->element('Link/information');?>
     </section>
 <?php
 }
 ?>
-

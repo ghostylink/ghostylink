@@ -21,7 +21,7 @@ function init_utc_time() {
 }
 
 function init_flash_message() {
-    var $flash = $('.flash-message');
+    var $flash = $('.flash-message:not(.show-later)');
     $flash.find('a').on('click', function() {
         var $this = $(this);
         $this.parent().remove();

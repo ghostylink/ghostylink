@@ -63,11 +63,27 @@ function initHandlers() {
         retrieveLinkInformation("POST", values);
         e.preventDefault();
     }),
-            $('section#link-information.unloaded img').hover(function () {
+    $('section#link-information.unloaded img').hover(function () {
         $('section#link-information').find('img');
         retrieveLinkInformation();
     });
 }
+
+var beforeunload = function(e) {
+  var $flash = $('.flash-message.link-life-alert');
+  if ($("meter.link-life-percentage").val() > 95) {
+    $flash.show();
+    var confirmationMessage = "lol";
+    window.onfocus = function() {
+        var $flash = $('.flash-message.link-life-alert');
+        $flash.hide();
+    };    
+    e.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
+    return confirmationMessage;              // Gecko, WebKit, Chrome <34
+  }
+}
+window.addEventListener("beforeunload", beforeunload);
+//window.removeEventListener('beforeunload', beforeunload);
 
 function decryptMessage() {
     var url = window.location.href;
