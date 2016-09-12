@@ -17,9 +17,9 @@ class LinksTable extends Table
 {
 
     // MySQL specific code here. TODO: see if it can be build with cakePHP 3 expressions
-    private $MYSQL_LIFE_EXP = 'GREATEST(IFNULL(LEAST(100, Links.views * 100.0 / Links.max_views),0),
-                                                IFNULL(LEAST(100,(datediff(CURRENT_TIMESTAMP, Links.created) * 100.0 )
-                            / datediff(Links.death_time, Links.created)),0)) ';
+    private $MYSQL_LIFE_EXP = 'GREATEST(IFNULL(LEAST(100, views * 100.0 / max_views),0),
+                                                IFNULL(LEAST(100,(datediff(CURRENT_TIMESTAMP, created) * 100.0 )
+                            / datediff(death_time, created)),0)) ';
     /**
      * Initialize method
      *
