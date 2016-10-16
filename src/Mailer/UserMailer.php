@@ -52,8 +52,8 @@ class UserMailer extends Mailer implements EventListenerInterface
     public function emailConfirmation($user)
     {
         $installedUrl = Configure::read("App.fullBaseUrl");
-        $posPort = strpos($installedUrl, ":");
-        $ghostylinkHost = substr($installedUrl, 0, $posPort);
+        $urlComponents = parse_url($installedUrl);
+        $ghostylinkHost = $urlComponents["host"];
         $this->helpers(['Html', 'EmailProcessing', 'Url']);
         $this->transport('default');
         $this
