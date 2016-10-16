@@ -54,8 +54,8 @@ return [
      * Google recaptcha keys
      */
     'reCaptchaKeys' => [
-        'private' => '__CAPTCHA_PRIVATE',
-        'public' => '__CAPTCHA_PUBLIC'
+        'private' => null,
+        'public' => null
     ],
     
     /**

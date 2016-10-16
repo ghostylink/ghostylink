@@ -4,6 +4,7 @@
  */
 namespace App\View\Helper;
 
+use Cake\Core\Configure;
 use Cake\View\View;
 use App\Model\Entity\Link;
 use App\Model\Entity\User;
@@ -37,6 +38,12 @@ class GoogleCaptchaHelper extends LinkHelper implements LinkComponentHelper
             ['class' => 'hidden']
         );
         return $content;
+    }
+
+    public function isAllowed(array $user = null)
+    {
+        return Configure::read("reCaptchaKeys.public")
+                && Configure::read("reCaptchaKeys.private");
     }
 
     public function getValue(Link $link)
