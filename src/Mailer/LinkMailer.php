@@ -2,6 +2,7 @@
 namespace App\Mailer;
 
 use Cake\Mailer\Mailer;
+use Cake\Core\Configure;
 
 class LinkMailer extends Mailer
 {
