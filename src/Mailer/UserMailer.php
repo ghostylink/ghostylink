@@ -35,13 +35,13 @@ class UserMailer extends Mailer implements EventListenerInterface
 
     public function onRegistration(Event $event, Entity $entity, \ArrayObject $options)
     {
-        if ($entity->email != null) {
+        $host = Configure::read("EmailTransport.default.host");
+        if ($entity->email != null && isset($host)) {
             if ($entity->isNew()) {
                 $this->send('emailConfirmation', [$entity]);
             } elseif ($entity->dirty('email')) {
-                    $this->set(['user' => $entity]);
-                    $this->send('emailConfirmation', [$entity]);
-                    debug("Email has changed !");
+                $this->set(['user' => $entity]);
+                $this->send('emailConfirmation', [$entity]);
             }
         }
     }

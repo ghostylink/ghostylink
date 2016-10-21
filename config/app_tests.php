@@ -15,6 +15,9 @@ $testSource = [
 //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
 ];
 return [
+    'App' => [
+        'fullBaseUrl' => 'http://localhost'
+    ],
     /**
      * Setting email catcher with maildev tool for testing purpose
      */
