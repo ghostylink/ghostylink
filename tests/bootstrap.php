@@ -1,4 +1,6 @@
 <?php
+use Cake\Log\Log;
+
 /**
  * Test runner bootstrap.
  *
@@ -10,5 +12,3 @@ require_once 'Tests/Selenium2TestCase/BaseTestCase.php';
 
 PHPUnit_Extensions_Selenium2TestCase::shareSession(true);
 require dirname(__DIR__) . '/config/bootstrap.php';
-
-

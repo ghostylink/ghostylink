@@ -63,7 +63,7 @@ return [
         ]
     ],
     /**
-     * Google recaptcha keys Testing specific 
+     * Google recaptcha keys Testing specific
      * https://developers.google.com/recaptcha/docs/faq#im-currently-using-recaptcha-v1-how-do-i-upgrade-to-v2
      */
     'reCaptchaKeys' => [
