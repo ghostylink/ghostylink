@@ -11,7 +11,7 @@
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "*",
         "google/recaptcha": "~1.1",
-        "tijsverkoyen/css-to-inline-styles": "^1.5@dev",
+        "tijsverkoyen/css-to-inline-styles": "^2.0",
         "markstory/asset_compress": "^3.0"
     },
     "require-dev": {        
