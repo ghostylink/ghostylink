@@ -9,6 +9,7 @@
 namespace App\View\Helper;
 
 use Cake\View\View;
+use Cake\Core\Configure;
 use App\Model\Entity\Link;
 use App\Model\Entity\User;
 
@@ -56,7 +57,8 @@ class GhostyficationAlertHelper extends LinkHelper implements LinkComponentHelpe
 
     public function isAllowed(array $user = null)
     {
-        return $user && $user['email_validated'] === true;
+        $mailServerHost = Configure::read("EmailTransport.default.host");
+        return isset($mailServerHost) && $user && $user['email_validated'] === true;
     }
 
     public function getValue(Link $link)

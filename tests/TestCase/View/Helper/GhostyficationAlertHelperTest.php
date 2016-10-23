@@ -3,6 +3,7 @@
 namespace App\Test\TestCase\View\Helper;
 
 use Cake\View\View;
+use Cake\Core\Configure;
 use App\View\Helper\GhostyficationAlertHelper;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
@@ -56,5 +57,13 @@ class GhostyficationAlertHelperTest extends TestCase
     {
         $text = $this->helper->getValue($this->link);
         $this->assertEquals('1 %', $text);
+    }
+
+    public function testIsAllowed()
+    {
+        //
+        Configure::write('EmailTransport.default.host', null);
+        // Simulate a validated user
+        $this->assertFalse($this->helper->isAllowed(["email_validated" => true]));
     }
 }
