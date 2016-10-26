@@ -94,13 +94,15 @@ function moveLinkComponents($component, $targetArea){
         });
 }
 
-function updateSummary() {
+function updateSummary() {    
     $('[data-category]').find(".panel-body ul li").remove();
+    console.log($("ul#link-components-chosen li"));
     $("ul#link-components-chosen li").not(".legend").each(function(){        
         var $chosenComponent = $(this);
         var section = $chosenComponent.attr("data-type");
         var data = $chosenComponent.data();
         var relField = $chosenComponent.attr("data-related-field");
+        console.log(relField);
         var summaryTemplate = $chosenComponent.attr("data-summary-template");        
         var $field;        
         if (relField === "death_time") {
@@ -113,6 +115,9 @@ function updateSummary() {
             $field = $('[name=' + relField + ']');
         }        
         var curValue = $field.val();        
+        console.log($('[data-category=' + section + ']').find(".panel-body ul"));
+        console.log(summaryTemplate);
+        console.log(curValue);
         $('[data-category=' + section + ']')
                 .find(".panel-body ul")
                 .append('<li class="list-group-item">' + summaryTemplate.replace('{value}', curValue) + "</li>");

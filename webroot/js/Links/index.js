@@ -60,17 +60,19 @@ function initAjaxSubmission() {
                 $form.find("ul#link-components-chosen li").each(function() {
                     $(this).on('click', function() {
                         componentsChosenClick($(this),$('ul#link-components-chosen'));
-                    });
-                    $('ul#link-components-chosen li').each(function() {
-                        try {
-                            eval($(this).attr("data-component-name") + '()');
-                        }
-                        catch (e) {
-                            ;
-                        }
-                    });
+                    });                    
+                    try {
+                        eval($(this).attr("data-component-name") + '()');
+                    }
+                    catch (e) {
+                        ;
+                    }                    
+                });
+                $('ul#link-creation a').click(function (e) {
+                    $(this).tab('show');        
                     updateSummary();
-                });             
+                    e.preventDefault();
+                });                
             }
             $form.find('[name="content"]').val(noEncryptedContent);
             
@@ -117,6 +119,7 @@ $(function () {
     initAjaxSubmission(); 
     $('ul#link-creation a').click(function (e) {
         $(this).tab('show');
+        console.log("toto");
         updateSummary();
         e.preventDefault();
     });    
