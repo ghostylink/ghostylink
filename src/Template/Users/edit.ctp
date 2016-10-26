@@ -11,19 +11,36 @@
             echo $this->Form->input('email', ['class' => 'form-control',
                 'placeholder' => "Your email",
                 'required' => 'false']);
+            if ($user->email_validated) {
+                echo $this->Html->tag("span", " Validated", ["class" => "glyphicon glyphicon-ok ok"]);
+            } else {
+                echo $this->Html->tag("span", " Not yet validated", ["class" => "glyphicon glyphicon-remove warning"]);
+            }
+            echo $this->Form->input('subscribe_notifications');
+            ?>
+            <?php
+            $passwordHTML =  $this->Form->input('password', ['class' => 'form-control',
+                                'label' => 'Password*',
+                                'placeholder' => 'Choose a password',
+                                'required' => 'true',
+                                'value' => ""]);
+            $confirmPasswordHTML = $this->Form->input('confirm_password', ['class' => 'form-control',
+                                'label' => 'Confirmation*',
+                                'type' => "password",
+                                'placeholder' => 'Confirm it',
+                                'required' => 'true']);
+            $hasErrors = $this->Form->isFieldError("confirm_password") || $this->Form->isFieldError("password");
             ?>
             <button id="change-pwd" class="btn btn-default center-block margin-sm"
-                    data-on="false"
-                    data-html="<?=
-                    htmlspecialchars($this->Form->input('password', ['class' => 'form-control',
-                                'label' => 'Password*',
-                                'value' => '',
-                                'placeholder' => 'Choose a password',
-                                'required' => 'true']));
-                    ?>">
+                    data-on="<?php echo $hasErrors?'true':'false'?>"
+                    data-html="<?php echo htmlspecialchars($passwordHTML) . htmlspecialchars($confirmPasswordHTML)?>">
                 Change my password
             </button>
-
+            <?php
+            if ($hasErrors) {
+                  echo $passwordHTML . $confirmPasswordHTML;
+            }
+            ?>
             <label for="default_threshold">Default life percentage threshold</label>
             <div id="slider-default_threshold"></div>
             <?=

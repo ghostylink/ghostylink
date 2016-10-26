@@ -5,7 +5,7 @@
  */
 $(function(){   
     init_utc_time();    
-    init_flash_message();
+    init_flash_message();    
 })(jQuery);
 
 function init_utc_time() {
@@ -15,13 +15,13 @@ function init_utc_time() {
         var date = new Date(time);
         var gmt_date =date.toString();
         var index = gmt_date.indexOf('GMT');
-        var str_date = gmt_date.substr(0, index -1);        
+        var str_date = date.toLocaleString();
         $time.text(str_date);
     });
 }
 
 function init_flash_message() {
-    var $flash = $('.flash-message');
+    var $flash = $('.flash-message:not(.show-later)');
     $flash.find('a').on('click', function() {
         var $this = $(this);
         $this.parent().remove();

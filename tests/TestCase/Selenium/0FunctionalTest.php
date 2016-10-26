@@ -1,9 +1,14 @@
 <?php
-
 /**
  * @group Functional
  */
-class FunctionalTest extends PHPUnit_Extensions_SeleniumTestCase {
+
+require_once 'Utils/EmailChecker.php';
+require_once 'Utils/DOMChecker.php';
+require_once 'Utils/UserHelper.php';
+require_once 'Utils/LinkHelper.php';
+
+class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
 
     /**
      * Fixtures
@@ -18,32 +23,76 @@ class FunctionalTest extends PHPUnit_Extensions_SeleniumTestCase {
     public $fixtureManager = null;
     public $autoFixtures = true;
     public $dropTables = true;
-    protected $captureScreenshotOnFailure = TRUE;
-    protected $screenshotPath = '/var/www/html/ghostylink_failures/';
-    protected $screenshotUrl = 'http://localhost/ghostylink_failures/';
+    
+    /**
+     *
+     * @var EmailChecker
+     */
+    protected $emailChecker;
+    
+    /**
+     *
+     * @var DOMChecker
+     */
+    protected $domChecker;
+    
+    /**
+     *
+     * @var UserHelper
+     */
+    protected $userHelper;
+    
+    /**
+     *
+     * @var LinkHelper
+     */
+    protected $linkHelper;
 
-    protected function setUp() {
-        parent::setUp();
-        parent::shareSession(true);
+    public function setUp()
+    {
         $this->fixtureManager = new Cake\TestSuite\Fixture\FixtureManager();
         $this->fixtureManager->fixturize($this);
         $this->fixtureManager->load($this);
-        $this->setBrowser("*firefox");
+        $this->emailChecker = new EmailChecker($this);
+        $this->domChecker = new DOMChecker($this);
+        $this->userHelper = new UserHelper($this);
+        $this->linkHelper = new LinkHelper($this);
+        //$this->setBrowser("firefox");
 
-        if (getenv('CIS_SERVER') == '1') {
-            $this->setHost('jenkins.ghostylink.org');
-            $this->screenshotPath = '/var/www/ghostylink/selenium_failures';
-            $this->screenshotUrl = 'http://selenium.ghostylink.org';
+        // Target a selenium node linked with required containers
+        if (getenv("BUILD_TAG") != "") {
+            $this->setDesiredCapabilities([
+                "applicationName" => getenv("BUILD_TAG")
+            ]);
         }
-        $this->setBrowserUrl("http://localhost:8765/");
+        $this->setBrowser("firefox");
+        if (getenv("CI_FROM_DOCKER") == 1) {
+            $this->setHost("selenium-hub");
+            exec("hostname --ip-address", $output);
+            $ip = $output[0];
+            $this->setBrowserUrl("http://$ip/");
+        } else {
+            $this->setBrowserUrl("http://localhost:8765/");
+        }
+        $this->prepareSession();
+
+        // Avoid to be blocked by an alert message if we were on a view page
+        $this->execute(
+            ['script' => "if (typeof beforeunload !== 'undefined') {" .
+                            "window.removeEventListener('beforeunload', beforeunload);}",
+            'args' => []
+            ]
+        );
+        $this->url('/logout');
     }
 
-    protected function tearDown() {
-        parent::tearDown();
-        $this->open('/logout');
-        $this->fixtureManager->unload($this);
+    public function waitForPageToLoad($timeout = 10000)
+    {
+        $this->timeouts()->implicitWait($timeout);
     }
-
+    
+    public function getDomChecker()
+    {
+        return $this->domChecker;
+    }
 }
-
-?>

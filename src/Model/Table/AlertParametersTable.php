@@ -29,12 +29,14 @@ class AlertParametersTable extends Table
         $this->displayField('id');
         $this->displayField('type');
         $this->displayField('life_threshold');
+        $this->displayField('subscribe_notifications');
         $this->primaryKey('id');
 
         $this->belongsTo('Links', [
             'foreignKey' => 'link_id',
             'joinType' => 'INNER'
         ]);
+        $this->displayField('link_id');
     }
 
     /**
@@ -56,7 +58,8 @@ class AlertParametersTable extends Table
          $validator
             ->add('type', 'valid', ['rule' => [ 'inList', ['email']]]);
         $validator
-            ->add('sending_status', 'valid', ['rule' => 'boolean']);
+            ->add('sending_status', 'valid', ['rule' => 'boolean'])
+            ->add('subscribe_notifications', 'boolean', ['rule' => 'boolean']);
         return $validator;
     }
 

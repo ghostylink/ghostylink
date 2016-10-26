@@ -22,9 +22,7 @@ class EmailProcessingHelper extends Helper
         $file = new File(WWW_ROOT . 'css/libs/bootstrap/bootstrap.min.css');
         $css = $file->read();
         $file->close();
-        $cssToInlineStyles->setCSS($css);
-        //$cssToInlineStyles->setUseInlineStylesBlock(true);
-        $html = $cssToInlineStyles->convert();
+        $html = $cssToInlineStyles->convert($html, $css);
         $this->_View->Blocks->set('content', $html);
     }
 }

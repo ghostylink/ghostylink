@@ -10,6 +10,7 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\ORM\Query;
 use Cake\Validation\Validator;
+use App\Mailer\UserMailer;
 
 /**
  * Users Model
@@ -32,6 +33,9 @@ class UsersTable extends Table
         $this->displayField('password');
         $this->displayField('username');
         $this->displayField('default_threshold');
+        $this->displayField('email_validated');
+        $this->displayField('email_validation_link');
+        $this->displayField('subscribe_notifications');
         $this->addBehavior('User');
         $this->primaryKey('id');
         $this->hasMany('Links', [
@@ -39,7 +43,7 @@ class UsersTable extends Table
             'foreignKey' => 'user_id',
             'dependent' => true
         ]);
-        //$this->displayField('links');
+        $this->eventManager()->on(UserMailer::getInstance());
     }
 
     /**
@@ -50,6 +54,8 @@ class UsersTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
+                // Attach the UserStatistic object to the Order's event manager
+
         $validator->add('id', 'valid', ['rule' => 'numeric'])
                 ->allowEmpty('id', 'create');
 
@@ -108,6 +114,9 @@ class UsersTable extends Table
 
         $validator
                 ->add('default_threshold', 'valid', ['rule' => ['range', 1, 100]]);
+
+        $validator->add("subscribe_notifications", 'boolean', ["rule" => "boolean"]);
+
         return $validator;
     }
 
@@ -123,6 +132,8 @@ class UsersTable extends Table
         })->where(function ($exp, $q) {
             return $exp->isNotNull('email');
         })
+        ->andWhere(["email_validated" => true])
+        ->andWhere(['Users.subscribe_notifications' => true])
         ->group('Users.id')
         ->having(['count(*) >' > 0]);
     }

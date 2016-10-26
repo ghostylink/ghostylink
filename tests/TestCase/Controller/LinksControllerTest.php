@@ -46,6 +46,8 @@ class LinksControllerTest extends IntegrationTestCase
         $this->csrf ['_csrfToken'] = $token;
         $this->goodData['private_token'] = uniqid();
         parent::setUp();
+        $config = TableRegistry::exists('Links') ? [] : ['className' => 'App\Model\Table\LinksTable'];
+        $this->Links = TableRegistry::get('Links', $config);
     }
 
     /**
@@ -126,7 +128,8 @@ class LinksControllerTest extends IntegrationTestCase
         $this->assertEquals($linkBefore->views + 1, $linksAfter->views);
     }
 
-    public function testViewLockedByCaptcha() {
+    public function testViewLockedByCaptcha()
+    {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $this->get('/427103fc86a164ccc6a835ea6gd00273');
         $this->assertResponseError();
@@ -136,7 +139,7 @@ class LinksControllerTest extends IntegrationTestCase
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $data = $this->goodData;
         $data['g-recaptcha-response'] = "This is a bad response";
-        $this->post('/427103fc86a164ccc6a835ea6gd00273',$data);
+        $this->post('/427103fc86a164ccc6a835ea6gd00273', $data);
         //unset( $_SERVER['HTTP_X_REQUESTED_WITH']);
         $this->assertResponseError();
     }
@@ -221,15 +224,13 @@ class LinksControllerTest extends IntegrationTestCase
     public function testAddWithAlertComponent() {
         $this->_authenticateUser(0);
         $data = $this->goodData;
-        $data['title'] = 'Add with alert component';
-        $data['ghostification_alert'] = true;
-        $data['AlertParameters']['life_threshold'] = 40;
+        $data['title'] = 'Add with alert component';        
+        $data['alert_parameter']['life_threshold'] = 40;
         $this->post('/add', $data);
         $this->assertResponseSuccess();
         $links = TableRegistry::get('Links');
         $result = $links->find()->where(['title' => $data['title']])->first();
-        $paramResults = TableRegistry::get('alert_parameters')->find()->where(['link_id' => $result->id])->first();
-
+        $paramResults = TableRegistry::get('alert_parameters')->find()->where(['link_id' => $result->id])->first();        
         $this->assertEquals($result->id, $paramResults->link_id, 'Alert parameters are stored');
         $this->assertEquals($paramResults->life_threshold, 40, 'Custom life threshold defined');
 
@@ -287,10 +288,6 @@ class LinksControllerTest extends IntegrationTestCase
         $badData = $data;
         $badData['title'] = str_repeat( '42', 100);
         $this->post('/edit/1', array_merge($badData, $this->csrf));
-       //Test a flash message is set if something is wrong:
-       // TODO how to test this ?
-//        $this->assertSession('The link could not be saved. Please, try again.',
-//                             'Flash.flash.message');
 
         //Test to get method
         $this->get('/edit/1');
@@ -414,6 +411,48 @@ class LinksControllerTest extends IntegrationTestCase
         $this->get('/me');
         $this->assertResponseContains('My created links');
         $this->session([]);
+    }
+
+    public function testAlertSubscription()
+    {
+        $link = $this->Links->get(1);
+        // Test action require to be authenticated ...
+        $this->get("/alert-subscription/" . $link->private_token);
+        $this->assertResponseCode(302);
+
+         // and the link owner
+        $this->_authenticateUser(2);
+        $this->post("/alert-subscription/" . $link->private_token, $this->csrf);
+        $this->assertResponseCode(302);
+        $this->assertResponseSuccess();
+
+        // Test changing subscription flag to off
+        $this->_authenticateUser(0);
+        $data = $this->csrf;
+        $data['subscribe-notifications'] = 'off';
+        $this->post("/alert-subscription/" . $link->private_token, $data);
+        $this->assertResponseSuccess();
+
+        $linkModified = $this->Links->findById(1)->contain("AlertParameters")->first();
+        // FIXME : this test fail with cakePHP > 3.2.13
+        $this->assertFalse($linkModified->alert_parameter->subscribe_notifications, "Turning subscribe notifications to off");
+
+        // Test changing subscription flag to on
+        $data['subscribe-notifications'] = 'on';
+        $this->post("/alert-subscription/" . $link->private_token, $data);
+        $this->assertResponseSuccess();
+
+        $linkModified = $this->Links->findById(1)->contain("AlertParameters")->first();
+        $this->assertTrue($linkModified->alert_parameter->subscribe_notifications, "Turning subscribe notifications to on");
+
+        // Test get method not allowed
+        $this->get("/alert-subscription/" . $link->private_token);
+        $this->assertResponseError();
+
+        // not able to change alert subscription if there is no alert component
+        $noAlertParameterLink = $this->Links->get(2);
+        $this->post("/alert-subscription" . $noAlertParameterLink->private_token, $data);
+        $this->assertResponseCode(404);
     }
 
     public function _authenticateUser($fixtureIndex)

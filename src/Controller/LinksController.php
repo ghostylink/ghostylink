@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Network\Exception\UnauthorizedException;
@@ -38,6 +39,7 @@ class LinksController extends AppController
     {
         $this->set('links', $this->paginate($this->Links));
         $this->set('_serialize', ['links']);
+        $this->set('user', $this->Auth->user());
     }
 
     /**
@@ -84,12 +86,16 @@ class LinksController extends AppController
      */
     public function checkRobot($link)
     {
-        $secret = '6LdmCQwTAAAAAPqT9OWI2gHcUOHVrOFoy7WCagFS';
+        $secret = Configure::read('reCaptchaKeys.private');
         if (!key_exists('g-recaptcha-response', $this->request->data)) {
             throw new UnauthorizedException();
         }
         $recaptcha = new \ReCaptcha\ReCaptcha($secret);
-        $resp = $recaptcha->verify($this->request->data['g-recaptcha-response'], $this->request->clientIp());
+        $resp = $recaptcha->verify(
+            $this->request->data['g-recaptcha-response'],
+            $this->request->clientIp()
+        );
+
         if ($resp->isSuccess()) {
             $this->set('link', $link);
             return $this->render('ajax/information', 'ajax');
@@ -110,7 +116,6 @@ class LinksController extends AppController
         $this->request->allowMethod(['post', 'ajax']);
 
         $this->request->data['user_id'] = $this->Auth->user('id');
-
         //A specific check for logged in user
         if ($this->Auth->user('id')) {
             $link = $this->Links->patchEntity($link, $this->request->data, ['validate' => 'logged']);
@@ -122,7 +127,6 @@ class LinksController extends AppController
         $link->token = "";
         $link->private_token = "";
         if ($this->Links->save($link)) {
-            $this->addAlertParams($this->request->data, $link->id);
             //Redirect to the link view page
             $this->set('url', $link->token);
             $this->set('private_token', $link->private_token);
@@ -132,25 +136,6 @@ class LinksController extends AppController
             $this->set(compact('link'));
             $this->set('_serialize', ['link']);
             return $this->render('add', 'ajax');
-        }
-    }
-
-    /**
-     * Add if needed the ghostification alert parameters
-     * @param Array $data
-     * @param int $linkId the link id
-     * @return type
-     */
-    private function addAlertParams($data, $linkId)
-    {
-        $alert_component = array_key_exists('ghostification_alert', $data) && $data['ghostification_alert'];
-        if ($alert_component&& $this->Auth->user("id")) {
-            $data['AlertParameters']['link_id'] = $linkId;
-            $parameters = $this->Links->AlertParameters->newEntity($data);
-            if (!$this->Links->AlertParameters->save($parameters)) {
-                $this->Flash->error('Impossible to store alert component.');
-                return $this->redirect(['action' => 'index']);
-            }
         }
     }
 
@@ -275,6 +260,9 @@ class LinksController extends AppController
         $this->paginate = [
             'maxLimit' => 15,
             'limit' => 5,
+            'sortWhitelist' => [
+               'Links.title', 'Links.created'
+            ],
             'finder' => [
                 'history' => ['min_life' => $min_life,
                     'max_life' => $max_life,
@@ -287,6 +275,32 @@ class LinksController extends AppController
             ]
         ];
         $this->set('history', $this->paginate($this->Links));
+        $this->set('user', $this->Auth->user());
         $this->set('_serialize', ['bookmarks']);
+    }
+
+    /**
+     * Subscribe or unsubscribe to alert for the given link
+     * @param type $privateToken the private token to subscribe or unsubscribe to
+     */
+    public function alertSubscribe($privateToken = null)
+    {
+        $this->request->allowMethod(['post']);
+        $link = $this->Links->findByPrivateToken($privateToken)->contain('AlertParameters')->first();
+        if (!$link) {
+            throw new NotFoundException();
+        }
+        if ($link->user_id != $this->Auth->user("id")) {
+            return $this->redirect(["controller" => 'Users', "action" => "login"]);
+        }
+        $targetStatus = $this->request->data("subscribe-notifications");
+        $data = [];
+        $data["alert_parameter"] = [];
+        $data["alert_parameter"]["subscribe_notifications"] = $targetStatus == 'on' ? true : false;
+        $link = $this->Links->patchEntity($link, $data);
+        if (!$this->Links->save($link)) {
+            $this->Flash->error("Alert parameters cannot be saved. Please try again");
+        }
+        return $this->redirect(["controller" => "Links", "action" => "history"]);
     }
 }

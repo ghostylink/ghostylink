@@ -25,7 +25,7 @@ require ROOT . DS . 'vendor' . DS . 'autoload.php';
 /**
  * Bootstrap CakePHP.
  *
- * Does the various bits of setup that CakePHP needs to do.
+ * Does the various bits of setup that CakePHP needs to perform.
  * This includes:
  *
  * - Registering the CakePHP autoloader.
@@ -68,18 +68,18 @@ try {
     die($e->getMessage() . "\n");
 }
 
-// Load an environment local configuration file.
-// You can use a file like app_local.php to provide local overrides to your
-// shared configuration.
-Configure::load('app', 'default');
-//Configure::load('app_tests', 'default');
 
+// Configure::load('prod/app_prod', 'default', true); // PRODUCTION_CONF
 // When debug = false the metadata cache should last
 // for a very very long time, as we don't want
 // to refresh the cache while users are doing requests.
 if (!Configure::read('debug')) {
     Configure::write('Cache._cake_model_.duration', '+1 years');
     Configure::write('Cache._cake_core_.duration', '+1 years');
+} else if (!isset($LOAD_TEST_CONFIG) && getenv("CI_SERVER") != "1") {
+    Configure::load("app_dev", "default", true);
+} else {
+    Configure::load('app_tests', 'default', true);
 }
 
 /**
@@ -135,7 +135,12 @@ if (!Configure::read('App.fullBaseUrl')) {
 
 Cache::config(Configure::consume('Cache'));
 ConnectionManager::config(Configure::consume('Datasources'));
-Email::configTransport(Configure::consume('EmailTransport'));
+// Consume configuration in prod environment
+if (!Configure::read('debug')) {
+    Email::configTransport(Configure::consume('EmailTransport'));
+} else {
+    Email::configTransport(Configure::read('EmailTransport'));
+}
 Email::config(Configure::consume('Email'));
 Log::config(Configure::consume('Log'));
 Security::salt(Configure::consume('Security.salt'));
@@ -182,7 +187,7 @@ Request::addDetector('tablet', function ($request) {
 
 Plugin::load('Migrations');
 
-// Only try to load DebugKit in development mode
+// Only try to load DebugKit in development mode. Load development configuration
 // Debug Kit should not be installed on a production system
 if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);

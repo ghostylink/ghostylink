@@ -20,6 +20,7 @@
  */
 use Cake\Core\Plugin;
 use Cake\Routing\Router;
+use Cake\Core\Configure;
 
 /**
  * The default class to use for all routes
@@ -49,19 +50,24 @@ Router::scope('/', function ($routes) {
      */
     $routes->connect('/', ['controller' => 'Links', 'action' => 'index']);
     $routes->connect('index', ['controller' => 'Links', 'action' => 'index']);
-    $routes->connect('add', ['controller' => 'Links', 'action' => 'add']);
+    $routes->connect('add', ['controller' => 'Links', 'action' => 'add'], ['_name' => 'link-add']);
     $routes->connect('edit/:id', ['controller' => 'Links', 'action' => 'edit'], ['_name' => 'link-edit', 'id' => '\d+', 'pass' => ['id']]);
     $routes->connect('delete/:id', ['controller' => 'Links', 'action' => 'delete'], ['_name' => 'link-delete', 'pass' => ['id']]);
+    $routes->connect("alert-subscription/:token", ['controller' => 'Links', 'action' => 'alertSubscribe'], ['_name' => 'link-alert-subscribe', 'pass' =>["token"]]);
     $routes->connect('disable/:id', ['controller' => 'Links', 'action' => 'disable'], ['_name' => 'link-disable', 'pass' => ['id']]);
     $routes->connect('enable/:id', ['controller' => 'Links', 'action' => 'enable'], ['_name' => 'link-enable', 'pass' => ['id']]);
     $routes->connect('signup', ['controller' => 'Users', 'action' => 'add']);
-    $routes->connect('login', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('login', ['controller' => 'Users', 'action' => 'login'], ['_name' => 'login']);
     $routes->connect('logout', ['controller' => 'Users', 'action' => 'logout']);
     $routes->connect('me', ['controller' => 'Links', 'action' => 'history'], ['_name' => 'history']);
     $routes->connect('me/edit', ['controller' => 'Users', 'action' => 'edit']);
     $routes->connect('me/delete', ['controller' => 'Users', 'action' => 'delete'], ['_name' => 'user-delete']);
     $routes->connect(':token', ['controller' => 'Links', 'action' => 'view'], ['_name' => 'link-view', 'token' => '\w{32}', 'pass' => ['token']]);
-    $routes->connect('sendMail', ['controller' => 'Users', 'action' => 'sendMail']);
+    $routes->connect(
+        'validate-email/:token',
+        ['controller' => 'Users', 'action' => 'validateEmail'],
+        ['_name' => 'user-validate-email', 'token' => '.+', 'pass' => ['token']]
+    );
     //die(Router::url(['_name' => 'link-view']));
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
@@ -89,6 +95,20 @@ Router::scope('/', function ($routes) {
     //$routes->fallbacks('InflectedRoute');
 });
 
+if (Configure::read('debug')) {
+    Router::scope('/cache_js', function ($routes) {
+        $routes->fallbacks('InflectedRoute');
+    });
+    Router::scope('/cache_css', function ($routes) {
+        $routes->fallbacks('InflectedRoute');
+    });
+    Router::scope('/', function ($routes) {
+        $routes->connect("/check-config", 
+                         ['controller' => 'Dev',
+                          'action' => 'checkConfig']);
+    });
+    
+}
 /**
  * Load all plugin routes.  See the Plugin documentation on
  * how to customize the loading of plugin routes.

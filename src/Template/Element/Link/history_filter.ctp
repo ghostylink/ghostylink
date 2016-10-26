@@ -1,11 +1,20 @@
-<section id="filters" class="col-lg-12 panel panel-default">
-    <?= $this->Form->create(null, ['type' => 'get', 'action' => '', 'class' => 'panel-body']); ?>
+<?php
+function reduce_column($content, $max_length = 15) {
+    if (strlen($content) > $max_length) {
+        return substr($content, 0, $max_length) . "...";
+    }
+    return $content;
+}
+?>
+<section id="filters" class="col-lg-12 panel panel-default" data-life-threshold="<?= $user['default_threshold'] ?>">
+    <?= $this->Form->create(null, ['type' => 'get', 'class' => 'panel-body']); ?>
     <div class="col-lg-4">
         <p>
             <label for="amount">Life range:</label>
             <span>
                 <?php
                     $this->Form->templates(['inputContainer' => '{{content}}']);
+                    $this->Form->templates(['nestingLabel' =>  '<label {{attrs}}>{{text}}</label>']);
                     $value = isset($_GET['min_life']) ? $_GET['min_life'] : 25;
                     echo $this->Form->input('min_life', ['id' => 'min_life', 'readonly' => 'readonly',
                                                                         'label' => false, 'value' => $value]);
@@ -49,7 +58,7 @@
         ?>
     </div><!-- /input-group -->
     <div id="div-buttons" class="col-lg-2">
-        <button class="btn-default btn" >Apply filters</button>
+        <button id="apply-filters" class="btn-default btn" >Apply filters</button>
         <button id="almost-ghostified" class="btn-warning btn" >Almost ghostified</button>
     </div>
     <?= $this->Form->end() ?>

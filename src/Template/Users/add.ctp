@@ -49,6 +49,11 @@
                                                  'label' => 'Password*',
                                                  'placeholder' => "Choose a password",
                                                  'required' => 'true']);
+            echo $this->Form->input('confirm_password', ['class' => 'form-control',
+                                                 'label' => 'Confirmation*',
+                                                 'type' => "password",
+                                                 'placeholder' => "Confirm the password",
+                                                 'required' => 'true']);
             echo $this->Form->input('email', ['class' => 'form-control',
                                               'placeholder' => "Your email",
                                               'required' => 'false']);

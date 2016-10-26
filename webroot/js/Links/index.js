@@ -48,6 +48,7 @@ function initAjaxSubmission() {
             if($responseHTML.find('form').size() === 0) {
                 //No error have been found 
                 $('form[action="/add"] div.alert.alert-danger').remove();
+                $('.alert.alert-danger').remove();
                 $('section.generated-link').remove();
                 $responseHTML.find('.link-url').first().append("#" + secretKey);
                 $('#main-content').append($responseHTML);
@@ -59,10 +60,19 @@ function initAjaxSubmission() {
                 $form.find("ul#link-components-chosen li").each(function() {
                     $(this).on('click', function() {
                         componentsChosenClick($(this),$('ul#link-components-chosen'));
-                    });
-                    $('#id_death_time').buttonset();
-                    $('#death_date').datetimepicker();
-                });             
+                    });                    
+                    try {
+                        eval($(this).attr("data-component-name") + '()');
+                    }
+                    catch (e) {
+                        ;
+                    }                    
+                });
+                $('ul#link-creation a').click(function (e) {
+                    $(this).tab('show');        
+                    updateSummary();
+                    e.preventDefault();
+                });                
             }
             $form.find('[name="content"]').val(noEncryptedContent);
             
@@ -107,7 +117,12 @@ function initCopyButton() {
 
 $(function () {
     initAjaxSubmission(); 
-    console.log($("form#links-add"));
+    $('ul#link-creation a').click(function (e) {
+        $(this).tab('show');
+        console.log("toto");
+        updateSummary();
+        e.preventDefault();
+    });    
 });
 
 

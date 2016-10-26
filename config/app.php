@@ -1,4 +1,5 @@
 <?php
+
 return [
     /**
      * Debug Level:
@@ -43,7 +44,7 @@ return [
         'webroot' => 'webroot',
         'wwwRoot' => WWW_ROOT,
         // 'baseUrl' => env('SCRIPT_NAME'),
-        'fullBaseUrl' => false,
+        //'fullBaseUrl' => 'localhost:8765',
         'imageBaseUrl' => 'img/',
         'cssBaseUrl' => 'css/',
         'jsBaseUrl' => 'js/',
@@ -74,7 +75,7 @@ return [
      * enable timestamping regardless of debug value.
      */
     'Asset' => [
-        // 'timestamp' => true,
+    // 'timestamp' => true,
     ],
 
     /**
@@ -182,11 +183,11 @@ return [
         'default' => [
             'className' => 'Smtp',
             // The following keys are used in SMTP transports
-            'host' => 'localhost',
-            'port' => 1025,
-            'timeout' => 30,
-            'username' => null,
-            'password' => null,
+            'host' => 'localhost.localdomain',
+            'port' => 25,
+            'timeout' => 5,
+            'username' => 'ghostylink@localhost',
+            'password' => 'ghostylink',
             'client' => null,
             'tls' => null,
         ],
@@ -196,8 +197,8 @@ return [
         'default' => [
             'transport' => 'default',
             'from' => 'you@localhost',
-            //'charset' => 'utf-8',
-            //'headerCharset' => 'utf-8',
+        //'charset' => 'utf-8',
+        //'headerCharset' => 'utf-8',
         ],
     ],
 
@@ -236,91 +237,72 @@ return [
              */
             'quoteIdentifiers' => false,
 
-            /**
-             * During development, if using MySQL < 5.6, uncommenting the
-             * following line could boost the speed at which schema metadata is
-             * fetched from the database. It can also be set directly with the
-             * mysql configuration directive 'innodb_stats_on_metadata = 0'
-             * which is the recommended value in production environments
-             */
-            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
+        /**
+         * During development, if using MySQL < 5.6, uncommenting the
+         * following line could boost the speed at which schema metadata is
+         * fetched from the database. It can also be set directly with the
+         * mysql configuration directive 'innodb_stats_on_metadata = 0'
+         * which is the recommended value in production environments
+         */
+        //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
+        ],
+    ],
+
+    /**
+         * Configures logging options
+         */
+        'Log' => [
+            'debug' => [
+                'className' => 'Cake\Log\Engine\FileLog',
+                'path' => LOGS,
+                'file' => 'debug',
+                'levels' => ['notice', 'info', 'debug'],
+            ],
+            'error' => [
+                'className' => 'Cake\Log\Engine\FileLog',
+                'path' => LOGS,
+                'file' => 'error',
+                'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
+            ],
         ],
 
         /**
-         * The test connection is used during the test suite.
+         *
+         * Session configuration.
+         *
+         * Contains an array of settings to use for session configuration. The
+         * `defaults` key is used to define a default preset to use for sessions, any
+         * settings declared here will override the settings of the default config.
+         *
+         * ## Options
+         *
+         * - `cookie` - The name of the cookie to use. Defaults to 'CAKEPHP'.
+         * - `cookiePath` - The url path for which session cookie is set. Maps to the
+         *   `session.cookie_path` php.ini config. Defaults to base path of app.
+         * - `timeout` - The time in minutes the session should be valid for.
+         *    Pass 0 to disable checking timeout.
+         * - `defaults` - The default configuration set to use as a basis for your session.
+         *    There are four built-in options: php, cake, cache, database.
+         * - `handler` - Can be used to enable a custom session handler. Expects an
+         *    array with at least the `engine` key, being the name of the Session engine
+         *    class to use for managing the session. CakePHP bundles the `CacheSession`
+         *    and `DatabaseSession` engines.
+         * - `ini` - An associative array of additional ini values to set.
+         *
+         * The built-in `defaults` options are:
+         *
+         * - 'php' - Uses settings defined in your php.ini.
+         * - 'cake' - Saves session files in CakePHP's /tmp directory.
+         * - 'database' - Uses CakePHP's database sessions.
+         * - 'cache' - Use the Cache class to save sessions.
+         *
+         * To define a custom session handler, save it at src/Network/Session/<name>.php.
+         * Make sure the class implements PHP's `SessionHandlerInterface` and set
+         * Session.handler to <name>
+         *
+         * To use database sessions, load the SQL file located at config/Schema/sessions.sql
          */
-        'test' => [
-            'className' => 'Cake\Database\Connection',
-            'driver' => 'Cake\Database\Driver\Mysql',
-            'persistent' => false,
-            'host' => 'localhost',
-            //'port' => 'nonstandard_port_number',
-            'username' => 'ghostylink',
-            'password' => 'ghostylink',
-            'database' => 'ghostylink_test',
-            'encoding' => 'utf8',
-            'timezone' => 'UTC',
-            'cacheMetadata' => true,
-            'quoteIdentifiers' => false,
-            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
-        ],
-    ],
-
-    /**
-     * Configures logging options
-     */
-    'Log' => [
-        'debug' => [
-            'className' => 'Cake\Log\Engine\FileLog',
-            'path' => LOGS,
-            'file' => 'debug',
-            'levels' => ['notice', 'info', 'debug'],
-        ],
-        'error' => [
-            'className' => 'Cake\Log\Engine\FileLog',
-            'path' => LOGS,
-            'file' => 'error',
-            'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
-        ],
-    ],
-
-    /**
-     *
-     * Session configuration.
-     *
-     * Contains an array of settings to use for session configuration. The
-     * `defaults` key is used to define a default preset to use for sessions, any
-     * settings declared here will override the settings of the default config.
-     *
-     * ## Options
-     *
-     * - `cookie` - The name of the cookie to use. Defaults to 'CAKEPHP'.
-     * - `cookiePath` - The url path for which session cookie is set. Maps to the
-     *   `session.cookie_path` php.ini config. Defaults to base path of app.
-     * - `timeout` - The time in minutes the session should be valid for.
-     *    Pass 0 to disable checking timeout.
-     * - `defaults` - The default configuration set to use as a basis for your session.
-     *    There are four built-in options: php, cake, cache, database.
-     * - `handler` - Can be used to enable a custom session handler. Expects an
-     *    array with at least the `engine` key, being the name of the Session engine
-     *    class to use for managing the session. CakePHP bundles the `CacheSession`
-     *    and `DatabaseSession` engines.
-     * - `ini` - An associative array of additional ini values to set.
-     *
-     * The built-in `defaults` options are:
-     *
-     * - 'php' - Uses settings defined in your php.ini.
-     * - 'cake' - Saves session files in CakePHP's /tmp directory.
-     * - 'database' - Uses CakePHP's database sessions.
-     * - 'cache' - Use the Cache class to save sessions.
-     *
-     * To define a custom session handler, save it at src/Network/Session/<name>.php.
-     * Make sure the class implements PHP's `SessionHandlerInterface` and set
-     * Session.handler to <name>
-     *
-     * To use database sessions, load the SQL file located at config/Schema/sessions.sql
-     */
-    'Session' => [
-        'defaults' => 'php',
-    ],
+        'Session' => [
+            'defaults' => 'php',
+        ]
 ];

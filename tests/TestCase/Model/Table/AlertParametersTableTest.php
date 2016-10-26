@@ -23,7 +23,6 @@ class AlertParametersTableTest extends TestCase
     ];
 
     public $goodData = [
-        'link_id' => 2,
         'type' =>'email',
         'sending_status' => 0,
         'life_threshold' => 75
@@ -67,6 +66,7 @@ class AlertParametersTableTest extends TestCase
         $this->assertEquals(1, $this->AlertParameters->hasField('type'));
         $this->assertEquals(1, $this->AlertParameters->hasField('sending_status'));
         $this->assertEquals(1, $this->AlertParameters->hasField('link_id'));
+        $this->assertEquals(1, $this->AlertParameters->hasField('subscribe_notifications'));
     }
 
     /**
@@ -78,6 +78,7 @@ class AlertParametersTableTest extends TestCase
     {
         $goodData = $this->goodData;
         $alertParameters = $this->AlertParameters->newEntity();
+        $alertParameters->link_id = 2;
         $alertParameters = $this->AlertParameters->patchEntity($alertParameters, $goodData);
         $this->assertNotFalse($this->AlertParameters->save($alertParameters));
     }
@@ -104,6 +105,14 @@ class AlertParametersTableTest extends TestCase
         $alertParameters = $this->AlertParameters->patchEntity($alertParameters, $goodData);
         $this->assertFalse($this->AlertParameters->save($alertParameters));
     }
+
+    public function testErrorOnSubscribeNotifications()
+    {
+        $goodData = $this->goodData;
+        $goodData["subscribe_notifications"] = "notaboolean";
+        $alertParameters = $this->AlertParameters->newEntity($goodData);
+        $this->assertFalse($this->AlertParameters->save($alertParameters));
+    }
     /**
      * Test buildRules method
      *
@@ -115,7 +124,7 @@ class AlertParametersTableTest extends TestCase
         //Test the foreign key presence
         $goodData['link_id'] = 8000;
         $alertParameters = $this->AlertParameters->newEntity($goodData);
-        $alertParameters = $this->AlertParameters->newEntity($goodData);
-        $this->assertFalse($this->AlertParameters->save($alertParameters));
+        $this->expectException(\PDOException::class);
+        $this->AlertParameters->save($alertParameters);
     }
 }

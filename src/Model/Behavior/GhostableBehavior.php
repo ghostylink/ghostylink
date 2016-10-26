@@ -40,33 +40,48 @@ class GhostableBehavior extends Behavior
      */
     public function beforeMarshal(Event $event, \ArrayObject $data, \ArrayObject $options)
     {
-        if (array_key_exists('death_date', $data) && isset($data['death_date'])) {
+        if (array_key_exists('death_date', $data)) {
             $parsedDate =  Time::parseDateTime($data['death_date'], 'Y/M/d H:mm');
             if ($parsedDate) {
                 $offset = isset($data['timezone-offset']) ? floor($data['timezone-offset']) : 0;
                 $parsedDate->addMinutes($offset); // also Ok if offset is < 0
-                $data['death_time'] =$parsedDate;
+                $data['death_time'] = $parsedDate;
+            } elseif ($data["death_date"] == "") {
+                $data['death_time'] = new Time('0000-01-01 00:00');
             }
-        }
-        // Compute the death_time according to now and nb days in parameter
-        else if (array_key_exists('death_time', $data)) {
+        } elseif (array_key_exists('death_time', $data)) {
             if ($data['death_time']) {
-                 $deathTime = new Time();
-                 $data['death_time'] = $deathTime->addDays($data['death_time']);
+                $deathTime = new Time();
+                switch ($data['death_time']) {
+                    case 1:
+                        $data['death_time'] = $deathTime->addDay(1);
+                        break;
+                    case 7:
+                        $data['death_time'] = $deathTime->addWeek(1);
+                        break;
+                    case 30:
+                        $data['death_time'] = $deathTime->addMonth(1);
+                        break;
+                    default:
+                        $data['death_time'] = $deathTime->addDays($data['death_time']);
+                        break;
+                }
             } else { // Create an empty death_time in order to check in validator
                  $data['death_time'] = '';
             }
         }
-        // Create an empty max_views in order to check in validator
-        if (!(array_key_exists('max_views', $data))) {
-            $data['max_views'] = '';
-        }
-        // Create an empty death_time in order to check in validator
-        if (!(array_key_exists('death_time', $data))) {
-            $data['death_time'] = '';
-        }
     }
 
+
+    public function afterRules(Event $event, \App\Model\Entity\Link $entity, $options, $result, $operation)
+    {
+        $dummyEmptyDate = '0000-01-01T00:00:00+00:00';
+        if ($entity->death_time && $entity->death_time->toIso8601String() == $dummyEmptyDate) {
+            $entity->errors("death_date", "Death date cannot be left empty", true);
+            $result = false;
+        }
+        return $result;
+    }
     /**
      * Check the life percentage of the link
      * @param Entity $entity the entity the view counter has to be incremented

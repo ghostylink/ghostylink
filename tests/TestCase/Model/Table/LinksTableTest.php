@@ -166,12 +166,7 @@ class LinksTableTest extends TestCase
      * @return void
      */
     public function testMaxViewsErrors() {
-        //Check the max_views argument is required
-        $badData = $this->goodData;
-        $badData['title'] = 'titleTestMaxViewsErrors';
-        unset($badData['max_views']);
-        $this->assertFalse($this->Links->save($this->Links->newEntity($badData)),
-                            'Save: Field max_views is required');
+        //Check the max_views argument is required        
         $badData = $this->goodData;
         $badData['title'] = 'titleTestMaxViewsErrors0';
         $badData['max_views'] = 0;
@@ -379,15 +374,12 @@ class LinksTableTest extends TestCase
         $array = $this->Links->find('history', ['min_life' => $MIN_LIFE , 'max_life' => $MAX_LIFE]);
     }
 
-    /**
-     * @group Develop
-     */
     public function testFinderNeedMailAlert() {
         $array = $this->Links->find('needMailAlert')->all();
         $this->assertEquals(2, count($array),  'Test filter on mail alert');
 
          // Change the life threshold of one of the link to a higher value then the life_percentage;
-         $linkToChange = $array->first();
+        $linkToChange = $array->first();
         $alertToChange = $this->AlertParameters->find('all')->where(["link_id" => $linkToChange->id])->first();
         $alertToChange->life_threshold = $linkToChange->life_percentage + 5;
         $this->AlertParameters->save($alertToChange);
@@ -395,5 +387,32 @@ class LinksTableTest extends TestCase
          $this->assertEquals(1, $array->count(),
                                                         'Need mail alert finder take in account the alert parameter life threshold');
 
+         // Disable notifications for the remaining link
+         $linkToChange = $array->first();
+         $alert = $linkToChange->alert_parameter;
+         $alert->subscribe_notifications = false;
+         $this->AlertParameters->save($alert);
+
+         $array = $this->Links->find('needMailAlert')->contain('AlertParameters')->all();
+         $this->assertEmpty($array, "Finder only retrieved link which have subscribe_notifications set to true");
+    }
+
+    public function testAddWithAlertParameter()
+    {
+        $data = $this->goodData;
+        $data["content"] = "testAlertParameter";
+        $data["alert_parameter"] = [
+            'life_threshold' => 42
+        ];
+        $link = $this->Links->newEntity($data, [
+            'associated' => ['AlertParameters']
+        ]);
+        $this->assertNotFalse($this->Links->save($link), "Link with alert paramter can be saved");
+        $l = $this->Links->findByContent("testAlertParameter")->contain("AlertParameters")->first();
+        $this->assertEquals(
+            42,
+            $l->alert_parameter->life_threshold,
+            "Life threshold is saved"
+        );
     }
 }

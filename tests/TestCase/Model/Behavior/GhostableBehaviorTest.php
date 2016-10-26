@@ -178,7 +178,6 @@ class GhostableBehaviorTest extends TestCase
         $goodData['death_date'] = str_replace('/', 42, $date->format("Y/m/d H:m"));
         $goodData['title'] = 'titletestBMOnDeathDateError';
         $entity = $this->TargetTable->newEntity($goodData);
-
         $this->assertNotFalse($this->TargetTable->save($entity));
         $death_time = $this->TargetTable->findByTitle($goodData['title'])->toArray()[0]->death_time;
         $this->assertNull($death_time, 'death_time is not set if date_date is not in the good format');

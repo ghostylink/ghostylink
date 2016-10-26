@@ -17,9 +17,9 @@ class LinksTable extends Table
 {
 
     // MySQL specific code here. TODO: see if it can be build with cakePHP 3 expressions
-    private $MYSQL_LIFE_EXP = 'GREATEST(IFNULL(LEAST(100, Links.views * 100.0 / Links.max_views),0),
-                                                IFNULL(LEAST(100,(datediff(CURRENT_TIMESTAMP, Links.created) * 100.0 )
-                            / datediff(Links.death_time, Links.created)),0)) ';
+    private $MYSQL_LIFE_EXP = 'GREATEST(IFNULL(LEAST(100, views * 100.0 / max_views),0),
+                                                IFNULL(LEAST(100,(datediff(CURRENT_TIMESTAMP, created) * 100.0 )
+                            / datediff(death_time, created)),0)) ';
     /**
      * Initialize method
      *
@@ -32,6 +32,7 @@ class LinksTable extends Table
         $this->hasOne('AlertParameters');
         $this->displayField('title');
         $this->displayField('max_views');
+        $this->displayField('alert_parameter');
         $this->displayField('views');
         $this->displayField('death_time');
         $this->primaryKey('id');
@@ -53,7 +54,7 @@ class LinksTable extends Table
      */
     public function validationLogged(Validator $validator)
     {
-        $val = $this->_buildCommonValidator($validator);
+        $val = $this->buildCommonValidator($validator);
         $validator->allowEmpty('max_views');
         $validator->allowEmpty('death_time');
         return $val;
@@ -67,31 +68,12 @@ class LinksTable extends Table
      */
     public function validationDefault(Validator $validator)
     {
-        $validator = $this->_buildCommonValidator($validator);
-        $validator->notEmpty('death_time', 'At least one component is required', function ($context) {
-            if (!$context['newRecord']) {
-                return false;
-            }
-            if (array_key_exists('max_views', $context['data'])) {
-                return !isset($context['data']['max_views']) || $context['data']['max_views'] == '';
-            } else {
-                return false;
-            }
-        });
-        $validator->notEmpty('max_views', 'At least one component is required', function ($context) {
-            if (!$context['newRecord']) {
-                return false;
-            }
-            if (array_key_exists('death_time', $context['data'])) {
-                return !isset($context['data']['death_time']) || $context['data']['death_time'] == '';
-            } else {
-                return false;
-            }
-        });
+        $validator = $this->buildCommonValidator($validator);
+        
         return $validator;
     }
 
-    function _buildCommonValidator(Validator $validator)
+    private function buildCommonValidator(Validator $validator)
     {
         $validator
                 ->add('id', 'valid', ['rule' => 'numeric'])
@@ -222,7 +204,9 @@ class LinksTable extends Table
         if (!isset($options['user_id'])) {
             throw new \BadFunctionCallException();
         }
-        $query = $this->findRangeLife($query, $options)->where(['Links.user_id' => $options['user_id']]);
+        $query = $this->findRangeLife($query, $options)
+                                ->contain("AlertParameters")
+                                ->where(['Links.user_id' => $options['user_id']]);
 
         //Filter on status
         if (isset($options['status']) && $options['status'] != '*') {
@@ -250,7 +234,12 @@ class LinksTable extends Table
                    ->matching('AlertParameters', function ($q) {
                                        $filter = $this->MYSQL_LIFE_EXP;
                                        $expr = $q->newExpr("$filter >= AlertParameters.life_threshold");
-                                       return $q->where(['sending_status' => 0, 'type' => 'email', $expr]);
+                                       return $q->where(
+                                           ['sending_status' => 0,
+                                            'type' => 'email',
+                                            'AlertParameters.subscribe_notifications' => 1,
+                                            $expr]
+                                       );
                    });
         return $query;
     }

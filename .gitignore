@@ -9,3 +9,5 @@
 /tmp/cache
 /tmp/
 /vendor
+/config/app_local.php
+/build

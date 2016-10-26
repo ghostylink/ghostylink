@@ -3,8 +3,10 @@
 namespace App\Shell;
 
 use Cake\Console\Shell;
-use Cake\Mailer\Email;
+use Psr\Log\LogLevel;
+use Cake\Core\Configure;
 use Cake\Mailer\MailerAwareTrait;
+use Cake\Network\Exception\SocketException;
 
 /**
  * Class to send email from the command line interface
@@ -42,12 +44,16 @@ class MailerShell extends Shell
      */
     public function alerts()
     {
+        $host = Configure::read("EmailTransport.default.host");
+
+        if (!isset($host)) {
+            $this->log("Mailing is not configured. Skipping alerts sending", LogLevel::INFO);
+            return;
+        }
 
         $users = $this->Users->find('needMailAlert')->all();
-        debug($users);
         foreach ($users as $user) {
             $updatedIds = [];
-            $email = new Email('default');
             $links = $this->Links->find('needMailAlert')->contain('AlertParameters')
                                               ->where(['user_id' => $user->id])->all();
 
@@ -55,23 +61,23 @@ class MailerShell extends Shell
                 array_push($updatedIds, $link->id);
             }
 
-            $params = ['user' => $user,
-                                "links" => $links];
-            $this->getMailer('Link')->send('notification', $params);
+            $params = ['user' => $user, "links" => $links];
+            
+            try {
+                $this->getMailer('Link')->send('notification', $params);
+            } catch (SocketException $ex) {
+                $this->log("Sending mail to {$user->email} failed.\n $ex");
+                return;
+            }
             $alertParams = $this->AlertParameters->query();
             $alertParams->param['updatedIds'] = $updatedIds;
-            //$this->out($updatedIds);
 
             $alertParams->update()
                     ->set(['sending_status' => true])
                     ->where(function ($exp, $q) {
                         return $exp->in('link_id', $q->param['updatedIds']);
                     });
-            debug($alertParams);
             $alertParams->execute();
-            debug($user->email);
-            // TODO log email sending if success
-            //$this->out($updatedIds);
         }
     }
 }
