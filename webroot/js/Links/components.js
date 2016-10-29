@@ -61,7 +61,7 @@ function moveLinkComponents($component, $targetArea){
         var nameNewField = $newField.find('input').attr("name");        
         
         //No component was here, remove the legend
-        if($targetArea.children('li').not('.legend').size() === 0){
+        if($targetArea.children('li').not('.legend').length === 0){
             $targetArea.find('li.legend').remove();
         }
         
@@ -132,7 +132,7 @@ function componentsChosenClick($li, $dropArea) {
     var classWrapper = '.link-component-field';      
     //Elements in the fieldset to remove                                
     var $toRemove = $('input[name=\'' + fieldName + '\']').parents(classWrapper);
-    if ($toRemove.size() === 0) {
+    if ($toRemove.length === 0) {
         $toRemove = $('input[name=\'' + fieldName + '\']');
     }    
     //Mark the component as available
@@ -143,7 +143,7 @@ function componentsChosenClick($li, $dropArea) {
     $toRemove.remove();    
     
     //Restore legend if it was the last element
-    if ($dropArea.children('li').size() === 0) {        
+    if ($dropArea.children('li').length === 0) {        
         $dropArea.html('<li class="legend">Drop some components here</li>');
     }
 }

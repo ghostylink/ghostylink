@@ -75,7 +75,7 @@ function initRemainingViews() {
  */
 function initDownCount() {
     $countDown = $('ul.countdown');
-    if ($countDown.size()) {
+    if ($countDown.length) {
         var deathDate = $('ul.countdown').attr("data-death-date");
         $('.countdown').downCount({
             date: deathDate
