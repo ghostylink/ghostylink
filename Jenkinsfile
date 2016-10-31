@@ -5,9 +5,10 @@ node {
     stage 'Preparing environment'
     sh 'curl -s https://getcomposer.org/installer | php'
     sh 'php composer.phar update'
+    sh 'bower install'
     
     // Create a suffix specific to the build
-    container_suffix = env.BUILD_TAG    
+    container_suffix = URLDecoder.decode(env.BUILD_TAG).replaceAll(/\//, "-")    
     container = docker.image('ghostylink/ci-tools:latest')    
     selenium_node = docker.image('selenium/node-firefox:2.53.0')
     
