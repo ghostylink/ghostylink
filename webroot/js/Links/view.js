@@ -23,7 +23,7 @@ function retrieveLinkInformation(requestType, requestData) {
         beforeSend: function () {
             $section.html('<div class="three-quarters-loader">Loading link ...</div>');
         }
-    }).success(function (html) {
+    }).done(function (html) {
         $section.removeClass('unloaded');
         $section.html(html);
         initRemainingViews();
