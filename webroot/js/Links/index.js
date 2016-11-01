@@ -45,7 +45,7 @@ function initAjaxSubmission() {
             // Log a message to the console            
             var $responseHTML = $(response);
             //Restore non encrypted message            
-            if($responseHTML.find('form').size() === 0) {
+            if($responseHTML.find('form').length === 0) {
                 //No error have been found 
                 $('form[action="/add"] div.alert.alert-danger').remove();
                 $('.alert.alert-danger').remove();

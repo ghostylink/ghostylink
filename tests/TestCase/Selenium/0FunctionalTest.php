@@ -60,9 +60,9 @@ class FunctionalTest extends PHPUnit_Extensions_Selenium2TestCase  {
         //$this->setBrowser("firefox");
 
         // Target a selenium node linked with required containers
-        if (getenv("BUILD_TAG") != "") {
+        if (getenv("BUILD_TAG_SAFE") != "") {
             $this->setDesiredCapabilities([
-                "applicationName" => getenv("BUILD_TAG")
+                "applicationName" => getenv("BUILD_TAG_SAFE")
             ]);
         }
         $this->setBrowser("firefox");

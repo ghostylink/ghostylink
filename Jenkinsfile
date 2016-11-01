@@ -5,48 +5,51 @@ node {
     stage 'Preparing environment'
     sh 'curl -s https://getcomposer.org/installer | php'
     sh 'php composer.phar update'
+    sh 'bower install'
     
     // Create a suffix specific to the build
-    container_suffix = env.BUILD_TAG    
-    container = docker.image('ghostylink/ci-tools:latest')    
-    selenium_node = docker.image('selenium/node-firefox:2.53.0')
-    
-    maildev_name = "maildev-${container_suffix}"
-    maildev_run_args = "--name $maildev_name"
-    print maildev_run_args
-    maildev = docker.image('djfarrelly/maildev').withRun(maildev_run_args){
-        firefox_node_opt = "-e SE_OPTS='-browser browserName=firefox,maxInstances=1,applicationName=$container_suffix'"
-        selenium_node_args = "--link selenium-hub:hub --link $maildev_name $firefox_node_opt"
-        print selenium_node_args
-        selenium_node.withRun(selenium_node_args){
-            container.pull()
-            citools_args = "-u root --link selenium-hub:hub --link $maildev_name"
-            container.inside(citools_args) {
-                sh 'bash /image/init.sh'
-                sh 'ant prepare'
-                stage 'Unit tests'
-                sh 'ant tests-unit'
-                stage 'Functional tests'
-                sh 'ant tests-functional'
-                step_junit()
-                step_clover()
-                stage 'Quality'
-                sh 'ant quality'
-                if (is_pull_request(env.CHANGE_URL)) {    
-                    target_merge = commit_id("HEAD^1")
-                    changes_commit = commit_id("HEAD^2")
+    container_suffix = URLDecoder.decode(env.BUILD_TAG).replaceAll(/\//, "-")
+    withEnv(["BUILD_TAG_SAFE=$container_suffix"]) {    
+        container = docker.image('ghostylink/ci-tools:latest')    
+        selenium_node = docker.image('selenium/node-firefox:2.53.0')
+
+        maildev_name = "maildev-${container_suffix}"
+        maildev_run_args = "--name $maildev_name"
+        print maildev_run_args
+        maildev = docker.image('djfarrelly/maildev').withRun(maildev_run_args){
+            firefox_node_opt = "-e SE_OPTS='-browser browserName=firefox,maxInstances=1,applicationName=$container_suffix'"
+            selenium_node_args = "--link selenium-hub:hub --link $maildev_name $firefox_node_opt"
+            print selenium_node_args
+            selenium_node.withRun(selenium_node_args){
+                container.pull()
+                citools_args = "-u root --link selenium-hub:hub --link $maildev_name"
+                container.inside(citools_args) {
+                    sh 'bash /image/init.sh'
+                    sh 'ant prepare'
+                    stage 'Unit tests'
+                    sh 'ant tests-unit'
+                    stage 'Functional tests'
+                    sh 'ant tests-functional'
+                    step_junit()
+                    step_clover()
+                    stage 'Quality'
+                    sh 'ant quality'
+                    if (is_pull_request(env.CHANGE_URL)) {    
+                        target_merge = commit_id("HEAD^1")
+                        changes_commit = commit_id("HEAD^2")
+                    }
+                    else {
+                        changes_commit = commit_id("HEAD")    
+                        target_merge = null
+                    }
+
+                    step_task_scanner(changes_commit, target_merge)    
+                    step_checktyle()  
+                    step_pmd()
+                    step_cpd() 
                 }
-                else {
-                    changes_commit = commit_id("HEAD")    
-                    target_merge = null
-                }
-                    
-                step_task_scanner(changes_commit, target_merge)    
-                step_checktyle()  
-                step_pmd()
-                step_cpd() 
-            }
-        }    
+            }    
+        }
     }
 }
 
