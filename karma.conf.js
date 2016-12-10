@@ -1,6 +1,6 @@
 // Karma configuration
 // Generated on Sun Nov 13 2016 15:51:21 GMT+0100 (CET)
-
+var istanbul = require('browserify-istanbul');
 module.exports = function(config) {
   config.set({
 
@@ -32,16 +32,38 @@ module.exports = function(config) {
         'tests/Javascript/test_*.js':['browserify']
     },   
     
-    browserify: {
-        debug: true,
+//    babelPreprocessor: {
+//      options: {
+//        presets: ['es2015']
+//      },
+//      filename: function (file) {
+//        return file.originalPath.replace(/\.js$/, '.es5.js');
+//      },
+//      blacklist: ['useStrict']
+//    }
+//    ,
+    browserify: {        
+//        transform:[['babelify', {
+//              ignore: '**/node_modules/'
+//            }],
+//            istanbul({
+//              ignore: ['test/**', '**/node_modules/**']
+//            })
+//          ]
         transform: ["browserify-istanbul"]
     },
     
-    reporters: ['progress', 'coverage'],    
-        
+    reporters: ['dots', 'junit', 'coverage'],    
+    
+    junitReporter: {
+      outputDir: 'build/results/',
+      outputFile: 'junit-javascript.xml'
+    },
+
     coverageReporter: {
         reporters: [
-          {type: "html"},
+          {type: "html", dir:"build/results/"},
+          {type: 'cobertura', dir:"build/results/", subdir: '.', file: 'cobertura.xml' },
           {type: "text-summary"}
         ]
     },
@@ -64,15 +86,15 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Firefox'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+    singleRun: true,
 
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity
-  })
-}
+  });
+};

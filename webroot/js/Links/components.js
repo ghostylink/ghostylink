@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+require('jquery');
 /**
  * Initialize draggable and click properties on the given links components
  * @param {Jquery} $JqueryLi the li jquery element to initialize

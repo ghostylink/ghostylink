@@ -3,12 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var Encryptor = require('../libs/encryptor.js');
+
 $(function () {
     initHandlers();
-
-    // Decrypt
-    if (window.location.href.indexOf('#') > 0) {
-        decryptMessage();
+    var encryptor = new Encryptor();
+    // Decrypt           
+    var url = window.location.href;
+    var index = url.indexOf('#');
+    if (index) {
+        var key = url.substring(index + 1, url.length);
+        var cryptedContent = $('.link-content p').text();
+        var content = encryptor.decrypt({"content":cryptedContent, "key":key});
+        $('.link-content p').text(content);    
     }
 });
 
@@ -84,15 +91,4 @@ var beforeunload = function(e) {
 }
 window.addEventListener("beforeunload", beforeunload);
 //window.removeEventListener('beforeunload', beforeunload);
-
-function decryptMessage() {
-    var url = window.location.href;
-    var index = url.indexOf('#');
-    if (index) {
-        var secretKey = url.substring(url.indexOf('#') + 1, url.length);
-        var bytes = CryptoJS.AES.decrypt($('.link-content p').text(), secretKey);
-        var decryptedText = bytes.toString(CryptoJS.enc.Utf8);
-        $('.link-content p').text(decryptedText);
-    }
-}
 

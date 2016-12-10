@@ -1,3 +1,5 @@
+require('jquery');
+
 $(function () {
     $('button#change-pwd').on('click', function (e) {
         var $button = $(this);

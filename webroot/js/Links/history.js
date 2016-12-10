@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+require('jquery');
+
 function update_range_color(min_life, max_life) {
     var $min_life = $('#min_life');
     var $max_life = $('#max_life');

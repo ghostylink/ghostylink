@@ -3,6 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+require('jquery');
+var Encryptor = require('../libs/encryptor.js');
+var encryptor = Encryptor();
+
 var request;
 function initAjaxSubmission() {
     $("form#links-add").on("submit", function (event) {        
@@ -18,13 +22,10 @@ function initAjaxSubmission() {
         $form.append('<input type="hidden" name="timezone-offset" value="' + new Date().getTimezoneOffset() + '"/>');                
         
         // Encrypt content        
-        var noEncryptedContent = $('[name="content"]').val();
-        var secretKey ;
-        var ciphertext;
+        var noEncryptedContent = $('[name="content"]').val();        
         if (noEncryptedContent !== "") {
-            secretKey = CryptoJS.lib.WordArray.random(16).toString(CryptoJS.enc.Base64);        
-            ciphertext = CryptoJS.AES.encrypt(noEncryptedContent, secretKey.toString());        
-            $('[name="content"]').val(ciphertext.toString());        
+            var cryptedMessage = encryptor.encrypt(noEncryptedContent);            
+            $('[name="content"]').val(cryptedMessage['content']);        
         }
         // Serialize the data in the form
         var serializedData = $form.serialize();        
@@ -50,7 +51,7 @@ function initAjaxSubmission() {
                 $('form[action="/add"] div.alert.alert-danger').remove();
                 $('.alert.alert-danger').remove();
                 $('section.generated-link').remove();
-                $responseHTML.find('.link-url').first().append("#" + secretKey);
+                $responseHTML.find('.link-url').first().append("#" + cryptedMessage["key"]);
                 $('#main-content').append($responseHTML);
                 initCopyButton();
             }
@@ -118,8 +119,7 @@ function initCopyButton() {
 $(function () {
     initAjaxSubmission(); 
     $('ul#link-creation a').click(function (e) {
-        $(this).tab('show');
-        console.log("toto");
+        $(this).tab('show');        
         updateSummary();
         e.preventDefault();
     });    
