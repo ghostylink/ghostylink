@@ -41,13 +41,15 @@ td.actions {
 td.actions a {
     margin-right: 0.3em;
 }
-#slider-range {
+#slider-range{
     background: -webkit-linear-gradient(left, green , yellow, red); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(right, green,yellow, red); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(right, green,yellow, red); /* For Firefox 3.6 to 15 */
     background: linear-gradient(to right, green , yellow, red); /* Standard syntax */  
 }
-
+.slider-range {
+    background-color: #c9c9c9;
+}
 #min_life, #max_life {
     border:0;
     width: 2em;
@@ -75,4 +77,8 @@ div#div-buttons button {
 }
 .ui-buttonset {
     margin-right:0;
+}
+
+#radio input[type="radio"] {
+    display: none;
 }

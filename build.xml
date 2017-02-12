@@ -7,6 +7,7 @@ Call it with ./vendor/bin/phing <target>
 <project name="ghostylink" default="tests-unit" basedir="." description="Build file for ghostylink/ghostylink">
     <property name="basedir" value="." />
     <property name="bin" value="${basedir}/vendor/bin" />
+    <property name="nbin" value="${basedir}/node_modules/.bin" />
     <property name="build" value="${basedir}/build" />
     <property name="results" value="${build}/results" />
     <property name="logs" value="${build}/logs" />
@@ -18,7 +19,19 @@ Call it with ./vendor/bin/phing <target>
         <mkdir dir="${build}"/>
         <mkdir dir="${logs}"/>
         <mkdir dir="${logs}/selenium-screenshots"/>
-        <mkdir dir="${results}"/>        
+        <mkdir dir="${results}"/>
+        <!-- install front end packages -->
+        <exec executable="npm" output="${logs}/npm.log">
+            <arg value="update"/>            
+            <arg value="--dev"/>
+        </exec>
+        <exec executable="${nbin}/bower" output="${logs}/bower.log">
+            <arg value="update"/>
+        </exec>
+        <!-- build throw browserify -->
+        <exec executable="${nbin}/gulp" logoutput="true" checkreturn="true">
+            <arg value="build"></arg>
+        </exec>
     </target>
     
     <!-- ============================================  -->
@@ -34,9 +47,19 @@ Call it with ./vendor/bin/phing <target>
     <!-- ============================================  -->
     <!-- Target: tests-unit                            -->
     <!-- ============================================  -->
-    <target name="tests-unit">
-        
-        <echo msg="Launching unit tests" />
+    <target name="tests-unit" 
+            description="Launch frontend+backend unit tests">
+        <parallel threadCount="2">
+            <phing phingfile="build.xml" target="tests-unit-front"/>
+            <phing phingfile="build.xml" target="tests-unit-back"/>
+        </parallel>
+    </target>
+    
+    <!-- ============================================  -->
+    <!-- Target: tests-unit-back                       -->
+    <!-- ============================================  -->
+    <target name="tests-unit-back" description="Launch backend unit tests">
+        <echo msg="Launching backend unit tests" />
         <exec executable="${bin}/phpunit" output="${logs}/phpunit.log">
             <arg value="--testsuite"/>
                 <arg value="Unit"/>
@@ -49,14 +72,24 @@ Call it with ./vendor/bin/phing <target>
             <arg value="--coverage-html"/>
                 <arg value="${results}/coverage-html"/>            
         </exec>
-        <echo msg="All unit tests launched" />
-
+        <echo msg="All backend unit tests launched" />
+    </target>
+    
+    <!-- ============================================  -->
+    <!-- Target: tests-unit-front                      -->
+    <!-- ============================================  -->
+    <target name="tests-unit-front" description="Launch frontend unit tests">
+        <echo msg="Launching front unit tests" />
+        <exec executable="${nbin}/karma" output="${logs}/phpunit-js.log">
+            <arg value="start"></arg>
+        </exec>
+        <echo msg="All frontend tests launched" />
     </target>
     
     <!-- ============================================  -->
     <!-- Target: tests-functional                      -->
     <!-- ============================================  -->
-    <target name="tests-functional">
+    <target name="tests-functional" description="Launch selenium tests">
         
         <echo msg="Launching functional tests" />
         <exec executable="${bin}/phpunit" output="${logs}/phpunit-selenium.log">
@@ -73,7 +106,7 @@ Call it with ./vendor/bin/phing <target>
     <!-- ============================================  -->
     <!-- Target: quality                               -->
     <!-- ============================================  -->
-    <target name="quality">
+    <target name="quality" description="Collect quality metrics">
         
         <echo msg="Launching quality tools" />
         <echo msg="    - Checkstyle" />

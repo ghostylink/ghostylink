@@ -3,7 +3,7 @@ var CryptoJS = require('crypto-js');
 function Encryptor () {
     ;
 }
- 
+
 /**
  * 
  * @param {Object} encryptedContent object with encrypted key and encrypted content
@@ -26,5 +26,5 @@ Encryptor.prototype.encrypt = function(toEncrypt) {
     var ciphertext = CryptoJS.AES.encrypt(toEncrypt, secretKey.toString());
     return {content:ciphertext.toString(), key: secretKey};
 };
- 
-module.exports = Encryptor;
+
+module.exports = Encryptor

@@ -36,7 +36,7 @@ class LinkHistoryTest extends FunctionalTest
         $this->domChecker->assertTextPresent("2 of 2");
         
         //  Filters (would require  a separate test)
-        $this->execute(['script' => '$("#slider-range").slider("values", 0, 0); $("#min_life").val(0);',
+        $this->execute(['script' => '$("#slider-range")[0].noUiSlider.set(0, 0);',
                         'args'=> []]);
         $local = 'css=[name="title"]';
         $this->domChecker->typeOnElementMatching($local, "User 1 id 10");

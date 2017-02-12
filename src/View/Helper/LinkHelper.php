@@ -166,6 +166,13 @@ class LinkHelper extends Helper
                 $html .= $this->{$helper}->component($link, $user, $valueAsContent);
             }
         }
+        if ($html == '') {
+            $html = $this->Html->tag(
+                'li',
+                "Click on an available component to choose it",
+                ["class" => "legend"]
+            );
+        }
         return $html;
     }
 

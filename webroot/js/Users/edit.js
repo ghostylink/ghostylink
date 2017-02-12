@@ -1,5 +1,5 @@
 require('jquery');
-
+var noUiSlider = require('nouislider');
 $(function () {
     $('button#change-pwd').on('click', function (e) {
         var $button = $(this);
@@ -16,15 +16,19 @@ $(function () {
 
         e.preventDefault();
     });
-
-    $('#slider-default_threshold').slider({
-        range: "max",
-        min: 0,
-        max: 100,
-        value:$('input[name="default_threshold"]').val(),
-        slide: function (event, ui) {
-            $('input[name="default_threshold"]').val(ui.value);
-        }
+    
+    var $slider = $('#slider-default_threshold');
+    noUiSlider.create($slider[0], {
+	start: [ $('input#default_threshold').val()],
+        step: 1,
+	connect: [true, false],
+	range: {
+           'min': 0,
+           'max': 100
+	}       
     });
-    $("#slider-range-max").slider("value",$('input[name="default_threshold"]').val());    
+    $slider[0].noUiSlider.on('update', function(values, handle) {                
+	var value = values[handle];        	
+        $('input#default_threshold').val(Math.round(value));	
+    });       
 });        

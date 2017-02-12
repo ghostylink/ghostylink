@@ -51,7 +51,7 @@ class LinkAlertComponentTest extends FunctionalTest
         $this->domChecker->clickOnElementMatching("css=[data-related-field=\"max_views\"]");
         $this->domChecker->clickOnElementMatching("css=[data-related-field=\"alert_parameter\[life_threshold\]\"]");
         
-        $this->domChecker->fillElements(['css=[name="max_views"]' => "3" ]);
+        $this->domChecker->fillElements(['css=[name="max_views"]' => "4"]);
 
         $this->domChecker->clickOnElementMatching("css=form[action=\"/\"] button");
         
@@ -81,12 +81,11 @@ class LinkAlertComponentTest extends FunctionalTest
 
         $this->domChecker->clickOnElementMatching("css=#load-link-max_views");
         $this->domChecker->waitUntilTextPresent("testing mail IS sent");
-        $this->execute(
-            ['script' => "window.removeEventListener('beforeunload', beforeunload)",
-            'args' => []
-            ]
-        );
-
+//        $this->execute(
+//            ['script' => "window.removeEventListener('beforeunload', beforeunload)",
+//            'args' => []
+//            ]
+//        );
         exec('env CI_SERVER=1 $(pwd)/bin/cake mailer alerts');
         $this->emailChecker->assertMailReceived("testnotifs@gmail.com", "Ghostification alert");
         $this->emailChecker->clearInBox();

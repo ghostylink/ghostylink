@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 require('jquery');
+require('../common.js');
+var Components = require('../Links/components.js');
+
 var Encryptor = require('../libs/encryptor.js');
-var encryptor = Encryptor();
+var Clipboard = require('clipboard');
 
 var request;
 function initAjaxSubmission() {
@@ -24,6 +27,7 @@ function initAjaxSubmission() {
         // Encrypt content        
         var noEncryptedContent = $('[name="content"]').val();        
         if (noEncryptedContent !== "") {
+            var encryptor = new Encryptor();
             var cryptedMessage = encryptor.encrypt(noEncryptedContent);            
             $('[name="content"]').val(cryptedMessage['content']);        
         }
@@ -60,13 +64,13 @@ function initAjaxSubmission() {
                 $form.html($responseHTML.find('form').html());                
                 $form.find("ul#link-components-chosen li").each(function() {
                     $(this).on('click', function() {
-                        componentsChosenClick($(this),$('ul#link-components-chosen'));
-                    });                    
+                        Components.componentsChosenClick($(this),$('ul#link-components-chosen'));
+                    });                                        
                     try {
-                        eval($(this).attr("data-component-name") + '()');
+                        eval('Components.' + $(this).attr("data-component-name") + '()');
                     }
-                    catch (e) {
-                        ;
+                    catch (e) {                        
+                        console.error(e);
                     }                    
                 });
                 $('ul#link-creation a').click(function (e) {
@@ -117,10 +121,11 @@ function initCopyButton() {
 }
 
 $(function () {
+    
     initAjaxSubmission(); 
     $('ul#link-creation a').click(function (e) {
         $(this).tab('show');        
-        updateSummary();
+        Components.updateSummary();
         e.preventDefault();
     });    
 });

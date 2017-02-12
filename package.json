@@ -6,9 +6,25 @@
   "directories": {
     "test": "tests/Javascript"
   },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browser": {
+    "jquery": "./node_modules/jquery/dist/jquery.js"
+  },
+  "browserify-shim": {
+    "jquery": "$"
+  },
   "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bower": "^1.8.0",
+    "clipboard": "^1.5.15",
     "crypto-js": "~3.1.8",
-    "jquery": "~3.1.1"
+    "jquery": "~3.1.1",
+    "jquery-datetimepicker": "^2.5.4",
+    "nouislider": "^9.2.0"
   },
   "devDependencies": {
     "babel-cli": "~6.18.0",
@@ -17,6 +33,7 @@
     "babelify": "~7.3.0",
     "browserify-directory": "^1.0.2",
     "browserify-istanbul": "~2.0.0",
+    "browserify-shim": "^3.8.12",
     "chai": "~3.5.0",
     "del": "^2.2.2",
     "factor-bundle": "~2.5.0",

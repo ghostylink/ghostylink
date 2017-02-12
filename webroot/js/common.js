@@ -1,12 +1,9 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+require("jquery");
+
 $(function(){   
     init_utc_time();    
     init_flash_message();    
-})(jQuery);
+});
 
 function init_utc_time() {
     $('time.utc').each(function() {
@@ -33,3 +30,7 @@ function init_flash_message() {
             			}
             });                
 }
+
+module.exports = {
+    "init_utc_time":init_utc_time
+};

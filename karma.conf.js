@@ -15,14 +15,15 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'webroot/js/libs/**/*.js',
+      'webroot/js/**/*.js',
       'tests/Javascript/*_test.js',
       'tests/Javascript/test_*.js'
+      
     ],
 
 
     // list of files to exclude
-    exclude: ['webroot/js/bower_components'],
+    exclude: ['webroot/js/bower_components/**/*.js', 'webroot/js/browser/**/*.js'],
 
 
     // preprocess matching files before serving them to the browser

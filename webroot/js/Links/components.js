@@ -1,41 +1,24 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-require('jquery');
+require("jquery");
+require('bootstrap');
+var noUiSlider = require('nouislider');
+// Include datetime picker
+// Ok this is weird but see https://github.com/xdan/datetimepicker/issues/412
+DateFormatter = require('php-date-formatter')($);
+require('jquery-mousewheel/jquery.mousewheel.js')($);
+require('jquery-datetimepicker/jquery.datetimepicker.js')($);
+
 /**
  * Initialize draggable and click properties on the given links components
  * @param {Jquery} $JqueryLi the li jquery element to initialize
  * @returns {void}
  */
 function initLinkComponents($JqueryLi) {
-    //An available component can be dragged
-    $JqueryLi.draggable({
-        cursor: "move",
-        revert: "invalid",
-        // At the end of the drag the moveLinkComponents will be called
-        stop: function(event, ui) {
-            var $component = ui.draggable;
-            moveLinkComponents($component,$('ul#link-components-chosen'));
-        }
-    });
-
+    //An available component can be dragged    
     //A click on an available component selects it
     $JqueryLi.on('click',function() {
         moveLinkComponents($(this),$('ul#link-components-chosen')); 
     });
-
-    //An available component can be dropped on the chosen components area
-    $('ul#link-components-chosen').droppable({
-        accept:"ul#link-components-available > li",
-        drop: function(event, ui) {
-            var $target = $(this);                        
-            var $component = ui.draggable;            
-            moveLinkComponents($component, $target);        
-        }
-    });
-}
+}    
 
 /**
  * Move the given component to the given area
@@ -43,59 +26,53 @@ function initLinkComponents($JqueryLi) {
  * @param {Jquery} $targetArea  the ul area wich will receive the component
  * @returns {void}
  */
-function moveLinkComponents($component, $targetArea){
+function moveLinkComponents(component, targetArea){
         //Retrieve the closer fieldset
-        console.log($component);
-        var $fieldset = $targetArea.parentsUntil('fieldset').eq(0);                
+        console.log(component);
+        var $fieldset = targetArea.parentsUntil('fieldset').eq(0);                
         //Add the html corresponding to the field        
-        var $newField = $($component.attr("data-field-html"));        
+        var $newField = $(component.attr("data-field-html"));        
         $fieldset.append($newField);
-        $newField.attr("data-summary-template", $component.attr("data-summary-template"));
-        var toEvaluate = $component.attr("data-component-name");    
+        $newField.attr("data-summary-template", component.attr("data-summary-template"));
+        var toEvaluate = component.attr("data-component-name");    
         try {
             eval(toEvaluate + '()');
         }
         catch(e){
-            ;
+            console.log(e);
         }
         //Add a hidden field to detect the chosen components
         var nameNewField = $newField.find('input').attr("name");        
         
         //No component was here, remove the legend
-        if($targetArea.children('li').not('.legend').length === 0){
-            $targetArea.find('li.legend').remove();
+        if(targetArea.children('li').not('.legend').length === 0){
+            targetArea.find('li.legend').remove();
         }
         
         //Save the original component for an evenutal future delete        
-        $('section.link-components').data('link-component-' + nameNewField, $component.clone());         
+        $('section.link-components').data('link-component-' + nameNewField, component.clone());         
         
         //Jquery ui put inline style (principaly positions) we do not want.
-        $targetArea.append($component.remove().removeAttr("style"));
-        var legend = $component.text();
+        targetArea.append(component.remove().removeAttr("style"));
+        var legend = component.text();
         
         
         //Remove the available component specific class and the text
         var text = '';
-        if ($component.attr("data-content")) {
-            text = $component.attr("data-content");
+        if (component.attr("data-content")) {
+            text = component.attr("data-content");
         }
         //$component.text(text).removeClass('ui-widget-header').attr("title", legend);
         
 
         /* When the chosen component will be clicked, remove it and the corresponding
         html field */
-        $component.on('click', function() {
-            componentsChosenClick($(this), $targetArea);
-        });
-
-        // The new component is now draggable
-        $component.draggable({
-            cursor: "move",
-            revert: "invalid"
+        component.on('click', function() {
+            componentsChosenClick($(this), targetArea);
         });
 }
 
-function updateSummary() {    
+var updateSummary = function updateSummary() {    
     $('[data-category]').find(".panel-body ul li").remove();
     console.log($("ul#link-components-chosen li"));
     $("ul#link-components-chosen li").not(".legend").each(function(){        
@@ -115,10 +92,7 @@ function updateSummary() {
         else {
             $field = $('[name=' + relField + ']');
         }        
-        var curValue = $field.val();        
-        console.log($('[data-category=' + section + ']').find(".panel-body ul"));
-        console.log(summaryTemplate);
-        console.log(curValue);
+        var curValue = $field.val();
         $('[data-category=' + section + ']')
                 .find(".panel-body ul")
                 .append('<li class="list-group-item">' + summaryTemplate.replace('{value}', curValue) + "</li>");
@@ -145,29 +119,53 @@ function componentsChosenClick($li, $dropArea) {
     
     //Restore legend if it was the last element
     if ($dropArea.children('li').length === 0) {        
-        $dropArea.html('<li class="legend">Drop some components here</li>');
+        $dropArea.html('<li class="legend">Click on an available component to choose it</li>');
     }
 }
 function TimeLimit() {
-    $('#id_death_time').buttonset();
-}
-
-function DateLimit() {
-    $('#death_date').datetimepicker();
-}
-
-function GhostyficationAlert() {    
-    $('#slider-default_threshold').slider({
-        range: "max",
-        min: 0,
-        max: 100,
-        value:$('input#default_threshold').val(),
-        slide: function (event, ui) {
-            $('input#default_threshold').val(ui.value);
-        }
+//    var death_time = $('#id_death_time')
+//    death_time.buttonset();
+    var $deathTimeLabels = $('#death_time label');
+    $deathTimeLabels.click(function(){
+       var $this = $(this);
+       $this.siblings('label').removeClass('btn-primary');
+       $this.addClass('btn-primary');
     });
-    $("#slider-range-max").slider("value",$('input#default_threshold').val());    
+    $deathTimeLabels.siblings('input[type="radio"]')
+            .filter(':checked').next('label').click();
 }
-initLinkComponents($('ul#link-components-available li'));
 
+function DateLimit() {       
+    var dt =  jQuery('#death_date');
+    dt.datetimepicker();   
+}
 
+function GhostyficationAlert() {
+    var $slider = $('#slider-default_threshold');
+    noUiSlider.create($slider[0], {
+	start: [ $('input#default_threshold').val()],
+        step: 1,
+	connect: [true, false],
+	range: {
+           'min': 0,
+           'max': 100
+	}       
+    });
+    $slider[0].noUiSlider.on('update', function(values, handle) {                
+	var value = values[handle];        	
+        $('input#default_threshold').val(Math.round(value));	
+    });     
+}
+
+$(function () {    
+    initLinkComponents($('ul#link-components-available li'));    
+});
+
+module.exports = {
+    "updateSummary":updateSummary,
+    "initLinkComponents":initLinkComponents,
+    "componentsChosenClick":componentsChosenClick,
+    "DateLimit":DateLimit,    
+    "GhostyficationAlert":GhostyficationAlert,
+    "TimeLimit":TimeLimit
+};

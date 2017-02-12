@@ -21,4 +21,12 @@ return [
             'tls' => null
         ],
     ],
+    /**
+     * Google recaptcha keys Testing specific
+     * https://developers.google.com/recaptcha/docs/faq#im-currently-using-recaptcha-v1-how-do-i-upgrade-to-v2
+     */
+    'reCaptchaKeys' => [
+        'private' => '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe',
+        'public' => '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
+    ]
 ];

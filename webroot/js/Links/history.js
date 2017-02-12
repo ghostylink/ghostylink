@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 require('jquery');
+var noUiSlider = require('nouislider');
 
-function update_range_color(min_life, max_life) {
+function update_range_color(min_life, max_life) {        
+
     var $min_life = $('#min_life');
     var $max_life = $('#max_life');
     var color = 'orange';
@@ -26,23 +28,58 @@ function update_range_color(min_life, max_life) {
     $max_life.val(max_life).parent().css('color', color);
 }
 $(function () {
-    $("#slider-range").slider({
-        range: true,
-        min: 0,
-        max: 100,
-        values: [$('input[name=min_life]').val(), $('input[name=max_life]').val()],
-        slide: function (event, ui) {
-            update_range_color(ui.values[0], ui.values[1]);
-        }
+    var $min_life = $('[name="min_life"]');
+    var $max_life = $('[name="max_life"]');
+    var $slider = $('#slider-range');
+    noUiSlider.create($slider[0], {
+	start: [ $min_life.val(), $max_life.val() ],
+        step: 1,
+	connect: true,
+	range: {
+           'min': 0,
+           'max': 100
+	}       
     });
-    $("#radio").buttonset().find('.ui-button-text').addClass('glyphicon')
-    $("#radio").buttonset().find('[for !=status-any] .ui-button-text').addClass('glyphicon-flag');
-
-    update_range_color($("#slider-range").slider("values", 0), $("#slider-range").slider("values", 1));
+    $slider[0].noUiSlider.on('update', function(values, handle) {                
+	var value = values[handle];        
+	if ( handle ) {
+            $max_life.val(Math.round(value));                       
+	}
+        else {
+            $min_life.val(Math.round(value));
+        } 
+        update_range_color(Math.round(values[0]), Math.round(values[1]));
+    });
+    $slider.find('.noUi-connect').addClass("slider-range");    
+    var $deathTimeLabels = $('#death_time label');
+    var $status = $('#radio label');
+    $status.click(function(){
+       var $this = $(this);
+       $this.siblings('label').removeClass('btn-primary');
+       $this.addClass('btn-primary');
+    });
+    $status.siblings('input[type="radio"]')
+            .filter(':checked').next('label').click();
+//    $("#slider-range").slider({
+//        range: true,
+//        min: 0,
+//        max: 100,
+//        values: [$('input[name=min_life]').val(), $('input[name=max_life]').val()],
+//        slide: function (event, ui) {
+//            update_range_color(ui.values[0], ui.values[1]);
+//        }
+//    });
+   // $("#radio").buttonset().find('.ui-button-text').addClass('glyphicon')
+    //$("#radio").buttonset().find('[for !=status-any] .ui-button-text').addClass('glyphicon-flag');
+    console.log($slider.get());
+    
+    var min_life = Math.round($slider[0].noUiSlider.get()[0]);
+    var max_life = Math.round($slider[0].noUiSlider.get()[1]);
+    update_range_color(min_life, max_life);
 
     /* Build click event on the 'almost ghostified button' */
     $('#almost-ghostified').on('click', function () {
-        $("#slider-range").slider("option", "values", [$('#filters').attr("data-life-threshold"), 100]);
+        $slider[0].noUiSlider.set( [$('#filters').attr("data-life-threshold"), 100]);        
         $('[name="status"]').val(1);
         update_range_color($('#filters').attr("data-life-threshold"), 100);
     });

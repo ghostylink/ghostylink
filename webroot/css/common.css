@@ -90,6 +90,12 @@ ul.list-link-components {
     content:"--";
     color: transparent;
 }
+#death_time input[type="radio"] {    
+    display: none;
+}
+#slider-default_threshold .noUi-connect {
+	background: #c0392b;
+}
 /****************************************************************************/
 /*************************** Some basic tools classes *************************/
 .margin-sm {

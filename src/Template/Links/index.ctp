@@ -3,7 +3,7 @@
         Produce temporary link by adding components to your content.
         You will then be able to share it without writting it permanently to
         a social network or a chat system.
-    </p>    
+    </p>
     <?= $this->Html->image("logos/ghostylink-logo-300x250.png",
                             array('class' => 'logo hidden-xs col-lg-12',
                                   'alt' => 'ghostylink logo'));?>     

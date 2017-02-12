@@ -39,17 +39,16 @@ class TimeLimitHelper extends LinkHelper implements LinkComponentHelper
             ['text' => '1 week', 'value' => 7],
             ['text' => '1 month', 'value' => 30]
         );
-
         $attributes = ['nestedInput' => false];
 
         $this->Form->templates(
-            ['nestingLabel' => '<label {{attrs}}>{{text}}</label>']
+            ['nestingLabel' => '<label {{attrs}} class="btn btn-default">{{text}}</label>']
         );
         $radioHTML = $this->Form->radio('death_time', $options, $attributes);
         return $this->Html->tag(
             "div",
             $label . $radioHTML,
-            ['id' => 'id_death_time', 'class' => 'input']
+            ['id' => 'death_time', 'class' => ['input', 'btn-group']]
         );
     }
 

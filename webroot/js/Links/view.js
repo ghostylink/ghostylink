@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var Life = require('../Links/life.js');
 var Encryptor = require('../libs/encryptor.js');
-
-$(function () {
+var init_utc_time = require("../common.js").init_utc_time
+$(function () {    
     initHandlers();
     var encryptor = new Encryptor();
     // Decrypt           
@@ -16,13 +17,20 @@ $(function () {
         var cryptedContent = $('.link-content p').text();
         var content = encryptor.decrypt({"content":cryptedContent, "key":key});
         $('.link-content p').text(content);    
-    }
+    }   
+    Life.initRemainingViews();
+    $(window).resize(function () {
+        $('canvas.round').remove();
+        Life.initRemainingViews();
+    });
+    Life.initDownCount();    
 });
 
 function retrieveLinkInformation(requestType, requestData) {
     var $section = $('section#link-information');
     $section.find('.alert.alert-danger').remove()
     var savedHtml = $section.html();
+    var encryptor = new Encryptor();
     $.ajax({
         type: requestType,
         url: window.location.pathname,
@@ -33,12 +41,17 @@ function retrieveLinkInformation(requestType, requestData) {
     }).done(function (html) {
         $section.removeClass('unloaded');
         $section.html(html);
-        initRemainingViews();
-        initDownCount();
+        Life.initRemainingViews();
+        Life.initDownCount();
         init_utc_time();
         // Decrypt
-        if (window.location.href.indexOf('#') > 0)  {
-            decryptMessage();
+        var url = window.location.href;
+        var index = url.indexOf('#')
+        if ( index > 0)  {
+            var key = url.substring(index + 1, url.length);
+            var cryptedContent = $('.link-content p').text();
+            var content = encryptor.decrypt({"content":cryptedContent, "key":key});
+            $('.link-content p').text(content); 
         }
     }).fail(function (error) {
         $section.html(savedHtml);
@@ -88,7 +101,10 @@ var beforeunload = function(e) {
     e.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
     return confirmationMessage;              // Gecko, WebKit, Chrome <34
   }
-}
+};
 window.addEventListener("beforeunload", beforeunload);
 //window.removeEventListener('beforeunload', beforeunload);
+module.exports = {
+    "beforeunload":beforeunload
+};
 

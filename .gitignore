@@ -12,4 +12,5 @@
 /config/app_local.php
 /build
 /webroot/js/bower_components
+/webroot/js/browser
 /node_modules

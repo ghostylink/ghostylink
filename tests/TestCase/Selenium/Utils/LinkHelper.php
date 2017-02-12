@@ -82,7 +82,7 @@ class LinkHelper {
     {
         $selector = 'css=li[data-related-field="death_time"]';
         $this->selTest->getDomChecker()->clickOnElementMatching($selector);
-        $selector = 'css=label[for="death-time-' . $nbOfDays . '"] span';
+        $selector = 'css=label[for="death-time-' . $nbOfDays . '"]';
         $this->selTest->getDomChecker()->clickOnElementMatching($selector);
     }
     
