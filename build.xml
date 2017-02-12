@@ -22,8 +22,7 @@ Call it with ./vendor/bin/phing <target>
         <mkdir dir="${results}"/>
         <!-- install front end packages -->
         <exec executable="npm" output="${logs}/npm.log">
-            <arg value="update"/>            
-            <arg value="--dev"/>
+            <arg value="update"/>
         </exec>
         <exec executable="${nbin}/bower" output="${logs}/bower.log">
             <arg value="update"/>
