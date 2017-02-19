@@ -19,7 +19,7 @@
         "psy/psysh": "@stable",
         "cakephp/debug_kit": "~3.0",
         "cakephp/bake": "~1.0",
-        "phpunit/phpunit": "*.*",
+        "phpunit/phpunit": "5.*",
         "phpunit/php-code-coverage":"*",
         "phpunit/phpunit-selenium": ">=1.2",
 	"squizlabs/php_codesniffer": "*",
