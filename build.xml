@@ -27,6 +27,7 @@ Call it with ./vendor/bin/phing <target>
         </exec>
         <exec executable="${nbin}/bower" output="${logs}/bower.log">
             <arg value="update"/>
+            <arg value="--allow-root"/>
         </exec>
         <!-- build throw browserify -->
         <exec executable="${nbin}/gulp" logoutput="true" checkreturn="true">
