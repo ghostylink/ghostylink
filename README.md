@@ -87,3 +87,5 @@ If you find any issue please open a bug on the
 ## Contact developers
 You can find all contributor of the project
 [here](https://github.com/beljul/ghostylink/graphs/contributors)
+
+
