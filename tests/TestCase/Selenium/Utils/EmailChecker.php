@@ -28,7 +28,9 @@ class EmailChecker {
      */
     public function clearInBox()
     {
-        $this->selTest->url("http://$this->mailDevHost:$this->mailDevWebPort/#/");
+        print_r("-----------------------------------------------");
+        print_r("http://$this->mailDevHost:$this->mailDevWebPort");
+        $this->selTest->url("http://$this->mailDevHost:$this->mailDevWebPort");
         $clearButtonSelector = 'css=.toolbar a[ng-click="deleteAll()"]';
         $DOM = $this->selTest->getDomChecker();
         $DOM->clickOnElementMatching($clearButtonSelector);
@@ -70,7 +72,7 @@ class EmailChecker {
      */
     public function assertMailNotReceived($receiver, $object, $lastOnly = true)
     {
-        $this->selTest->url("http://$this->mailDevHost:$this->mailDevWebPort/#/");
+        $this->selTest->url("http://$this->mailDevHost:$this->mailDevWebPort");
         $dom = $this->selTest->getDomChecker();
 
         if ($lastOnly) {
