@@ -46,7 +46,6 @@ class UserRegisterTest extends FunctionalTest {
             "signup.mailsuccess@mail.fr",
             "Ghostylink - Email verification"
         );
-        
     }
     
     public function testSignupFailServer()
