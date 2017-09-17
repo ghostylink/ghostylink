@@ -61,7 +61,7 @@ class MailerShell extends Shell
                 array_push($updatedIds, $link->id);
             }
 
-            $params = ['user' => $user, "links" => $links];
+            $params = [$user, $links];
             
             try {
                 $this->getMailer('Link')->send('notification', $params);
