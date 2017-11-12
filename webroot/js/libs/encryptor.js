@@ -27,4 +27,4 @@ Encryptor.prototype.encrypt = function(toEncrypt) {
     return {content:ciphertext.toString(), key: secretKey};
 };
 
-module.exports = Encryptor
+module.exports = Encryptor;

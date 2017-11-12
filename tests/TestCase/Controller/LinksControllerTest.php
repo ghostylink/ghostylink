@@ -1,7 +1,7 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\LinksController;
+use Cake\Core\Configure;
 use Cake\TestSuite\IntegrationTestCase;
 use Cake\ORM\TableRegistry;
 use Cake\I18n\Time;
@@ -133,7 +133,7 @@ class LinksControllerTest extends IntegrationTestCase
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $this->get('/427103fc86a164ccc6a835ea6gd00273');
         $this->assertResponseError();
-
+        
         $this->get('/427103fc86a164ccc6a835ea6gd00273');
         $this->assertResponseContains('id="load-link-captcha"');
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
@@ -141,7 +141,18 @@ class LinksControllerTest extends IntegrationTestCase
         $data['g-recaptcha-response'] = "This is a bad response";
         $this->post('/427103fc86a164ccc6a835ea6gd00273', $data);
         //unset( $_SERVER['HTTP_X_REQUESTED_WITH']);
-        $this->assertResponseError();
+        $this->assertResponseSuccess();
+
+        //TODO mock to check the unauthorized method
+//        // only mock the update() method.
+//        $observer = $this
+//                         ->getMock(\App\Controller\LinksController::class, ['checkReCaptcha']);
+//        $observer->expects($this->once())
+//                 ->method('isSuccess')
+//                 ->willReturn(false);
+//        $this->post('/427103fc86a164ccc6a835ea6gd00273', $data);
+//        //unset( $_SERVER['HTTP_X_REQUESTED_WITH']);
+//        $this->assertResponseError();
     }
 
 

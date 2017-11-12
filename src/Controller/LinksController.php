@@ -86,25 +86,34 @@ class LinksController extends AppController
      */
     public function checkRobot($link)
     {
-        $secret = Configure::read('reCaptchaKeys.private');
+        
         if (!key_exists('g-recaptcha-response', $this->request->data)) {
             throw new UnauthorizedException();
         }
+        
+        if ($this->checkReCaptcha()) {
+            $this->set('link', $link);
+            return $this->render('ajax/information', 'ajax');
+        } else {
+            throw new UnauthorizedException();
+        }
+    }
+
+
+    /**
+     * Give the result of the recpatcha validation
+     * @return boolean
+     */
+    public function checkReCaptcha()
+    {
+        $secret = Configure::read('reCaptchaKeys.private');
         $recaptcha = new \ReCaptcha\ReCaptcha($secret);
         $resp = $recaptcha->verify(
             $this->request->data['g-recaptcha-response'],
             $this->request->clientIp()
         );
-
-        if ($resp->isSuccess()) {
-            $this->set('link', $link);
-            return $this->render('ajax/information', 'ajax');
-        } else {
-            $errors = $resp->getErrorCodes();
-            throw new UnauthorizedException();
-        }
+        return $resp->isSuccess();
     }
-
     /**
      * Add method
      *

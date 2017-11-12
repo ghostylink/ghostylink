@@ -15,7 +15,7 @@ gulp.task('build', ['clean'], function () {
   var basedir = path.join(__dirname, 'webroot/js/');  
   // Create a browserify instance 
   // same with `browserify(opts)` 
-  var b = reduce.create({ basedir: basedir });  
+  var b = reduce.create({ basedir: basedir, insertGlobals : true });  
   // find entries 
   // same with gulp.src() 
   return reduce.src(['**/*.js','!./bower_components/**'], { cwd: basedir })

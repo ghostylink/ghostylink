@@ -3,9 +3,9 @@ require('bootstrap');
 var noUiSlider = require('nouislider');
 // Include datetime picker
 // Ok this is weird but see https://github.com/xdan/datetimepicker/issues/412
-DateFormatter = require('php-date-formatter')($);
-require('jquery-mousewheel/jquery.mousewheel.js')($);
-require('jquery-datetimepicker/jquery.datetimepicker.js')($);
+//DateFormatter = require('php-date-formatter')($);
+//require('jquery-mousewheel/jquery.mousewheel.js')($);
+require('jquery-datetimepicker/jquery.datetimepicker.js');
 
 /**
  * Initialize draggable and click properties on the given links components
